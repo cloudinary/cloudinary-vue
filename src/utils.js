@@ -12,7 +12,7 @@ export function pick(subject, allowed) {
   return reduce(
     allowed,
     (result, key) =>
-      key in subject >= 0 ? merge(result, kv(key, subject[key])) : result,
+      key in subject ? merge(result, kv(key, subject[key])) : result,
     {}
   );
 }

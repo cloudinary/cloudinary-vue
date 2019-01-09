@@ -1,7 +1,7 @@
 import { State } from "./State";
 import { merge } from "./utils";
 
-export class CompoundState {
+export class CombinedState {
   constructor() {
     this.chunkedState = new State([]);
     this.solidState = new State({});
@@ -17,12 +17,18 @@ export class CompoundState {
 
   spawn() {
     let last = {};
-    this.chunkedState.next(p => p.concat([last]));
+    let didStatePushedEmpty = false;
     const newSpawn = new State(last);
     newSpawn.subscribe({
       next: v => {
+        if (!didStatePushedEmpty) {
+          didStatePushedEmpty = true;
+          return;
+        }
         this.chunkedState.next(currentState =>
-          currentState.map(chunk => (chunk === last ? (last = v) : chunk))
+          currentState.indexOf(last) >= 0
+            ? currentState.map(chunk => (chunk === last ? (last = v) : chunk))
+            : currentState.concat([(last = v)])
         );
       },
       error: () => {

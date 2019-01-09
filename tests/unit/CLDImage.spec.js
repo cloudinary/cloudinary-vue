@@ -1,7 +1,7 @@
 import { shallowMount } from "@vue/test-utils";
 import CLDImage from "../../src/components/CLDImage.vue";
 
-xdescribe("CLDImage", () => {
+describe("CLDImage", () => {
   it("renders", () => {
     const wrapper = shallowMount(CLDImage, {
       propsData: {

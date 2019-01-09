@@ -1,5 +1,12 @@
 <template>
-  <img v-bind="imageAttrs">
+  <picture>
+    v-bind:class="{
+    cld-image: true,
+    cld-image-src: ready
+    }"
+    <img v-bind="imageAttrs">
+    <slot/>
+  </picture>
 </template>
 
 <script>
@@ -9,8 +16,9 @@ import {
   Transformation,
   Util
 } from "cloudinary-core";
-import { pick, merge } from "../utils";
-import { CompoundState } from "../CompoundState";
+import { pick, merge, shallowEqual } from "../utils";
+import { CombinedState } from "../CombinedState";
+import { configuration, transformation } from "../attributes";
 
 /**
  * Cloudinary image element
@@ -30,30 +38,37 @@ export default {
       }
     }
   },
-  // provide: {
-  //   getCLDImageState() {
-  //     return this.compoundState;
-  //   }
-  // },
-  data() {
-    const compoundState = new CompoundState();
+  provide() {
     return {
-      compoundState,
-      compoundStateValue: {}
+      CLDContextState: this.combinedState
+    };
+  },
+  data() {
+    const combinedState = new CombinedState();
+    return {
+      combinedState,
+      combinedStateValue: combinedState.get(),
+      ready: false
     };
   },
   methods: {
     getConfig() {
-      return pick(this, ["cloudName", "publicId"]);
+      return merge(
+        pick(this, configuration),
+        pick(this.$attrs, transformation)
+      );
     }
   },
   computed: {
     imageAttrs() {
-      const cfg = merge(
-        {},
-        this.compoundStateValue,
-        Util.withSnakeCaseKeys(this.compoundStateValue)
+      if (!this.ready) {
+        return {};
+      }
+      const attrs = pick(
+        this.combinedStateValue,
+        configuration.concat(transformation)
       );
+      const cfg = merge(attrs, Util.withSnakeCaseKeys(attrs));
       try {
         const htmlAttrs = Transformation.new(cfg).toHtmlAttributes();
         const src = Cloudinary.new(cfg).url(this.publicId, cfg);
@@ -69,23 +84,27 @@ export default {
     }
   },
   created() {
-    this.ownState = this.compoundState.spawn();
+    this.ownState = this.combinedState.spawn();
     const current = this.getConfig();
     this.ownState.next(current);
 
-    this.compoundStateSub = this.compoundState.subscribe({
+    this.combinedStateSub = this.combinedState.subscribe({
       next: v => {
-        this.compoundStateValue = v;
+        this.combinedStateValue = v;
       }
     });
 
     if (this.CLDContextState) {
-      this.contextState = this.compoundState.spawn();
+      this.contextState = this.combinedState.spawn();
       this.contextStateSub = this.CLDContextState.subscribe({
         next: v => {
           this.contextState.next(v);
         }
       });
+    }
+
+    if (!this.$slots || !this.$slots.default || !this.$slots.default.length) {
+      this.ready = true;
     }
   },
   updated() {
@@ -95,8 +114,13 @@ export default {
       this.ownState.next(current);
     }
   },
+  mounted() {
+    if (!this.ready) {
+      this.ready = true;
+    }
+  },
   destroyed() {
-    this.compoundStateSub();
+    this.combinedStateSub();
     this.ownState.complete();
 
     if (this.contextStateSub) {
@@ -110,4 +134,9 @@ export default {
 </script>
 
 <style lang="scss">
+.cld-image {
+  &:not(&-src) {
+    display: none;
+  }
+}
 </style>

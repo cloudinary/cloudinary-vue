@@ -8,6 +8,9 @@ import {
   Util
 } from "cloudinary-core";
 
+/**
+ * Cloudinary video element
+ */
 export default {
   name: "CLDVideo"
 };

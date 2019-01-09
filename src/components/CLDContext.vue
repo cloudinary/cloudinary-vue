@@ -5,9 +5,12 @@
 </template>
 
 <script>
-import { pick } from "../utils";
-import { CompoundState } from "../CompoundState";
+import { pick, shallowEqual } from "../utils";
+import { CombinedState } from "../CombinedState";
 
+/**
+ * Cloudinary context providing element
+ */
 export default {
   name: "CLDContext",
   props: {
@@ -16,7 +19,7 @@ export default {
   },
   provide() {
     return {
-      CLDContextState: this.compoundState
+      CLDContextState: this.combinedState
     };
   },
   methods: {
@@ -25,20 +28,20 @@ export default {
     }
   },
   data() {
-    const compoundState = new CompoundState();
+    const combinedState = new CombinedState();
     return {
-      compoundState,
-      compoundStateValue: {}
+      combinedState,
+      combinedStateValue: combinedState.get()
     };
   },
   created() {
-    this.ownState = this.compoundState.spawn();
+    this.ownState = this.combinedState.spawn();
     const current = this.getConfig();
     this.ownState.next(current);
 
-    this.compoundStateSub = this.compoundState.subscribe({
+    this.combinedStateSub = this.combinedState.subscribe({
       next: v => {
-        this.compoundStateValue = v;
+        this.combinedStateValue = v;
       }
     });
   },
@@ -50,7 +53,7 @@ export default {
     }
   },
   destroyed() {
-    this.compoundStateSub();
+    this.combinedStateSub();
     this.ownState.complete();
   }
 };

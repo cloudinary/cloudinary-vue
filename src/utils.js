@@ -1,3 +1,20 @@
+export function format(subject, instructions) {
+  if (keysCount(instructions) === 0) {
+    return subject;
+  }
+  return reduce(keys(subject), (result, key) =>
+    key in instructions
+      ? merge(result, kv(key, instructions[key](subject[key])))
+      : merge(result, kv(key, subject[key]))
+  );
+}
+
+export function normalize(subject) {
+  return reduce(keys(subject), (result, key) =>
+    subject[key] == undefined ? result : merge(result, kv(key, subject[key]))
+  );
+}
+
 export function shallowEqual(subjectA, subjectB) {
   const allKeys = uniq(keys(subjectA), keys(subjectB));
   for (let i = 0; i < allKeys.length; i++) {
@@ -49,10 +66,14 @@ export function merge() {
   if (args.length === 2) {
     const result = {};
     forEach(keys(args[0]), k => {
-      result[k] = args[0][k];
+      if (args[0][k] !== undefined) {
+        result[k] = args[0][k];
+      }
     });
     forEach(keys(args[1]), k => {
-      result[k] = args[1][k];
+      if (args[1][k] !== undefined) {
+        result[k] = args[1][k];
+      }
     });
     return result;
   }
@@ -60,7 +81,13 @@ export function merge() {
 }
 
 export function keys(subject) {
-  return Object.keys(subject);
+  const result = [];
+  for (let k in subject) {
+    if (Object.prototype.hasOwnProperty.call(subject, k)) {
+      result.push(k);
+    }
+  }
+  return result;
 }
 
 export function reduce(subject, folder, init) {

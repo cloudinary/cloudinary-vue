@@ -7,7 +7,7 @@ export class CombinedState {
     this.solidState = new State({});
     this.chunkedState.subscribe({
       next: v => {
-        const nextSum = merge.apply(null, [{}].concat(v));
+        const nextSum = merge.apply(null, v ? v : []);
         this.solidState.next(nextSum);
       },
       error: e => this.solidState.error(e),

@@ -1,10 +1,6 @@
 <template>
-  <picture>
-    v-bind:class="{
-    cld-image: true,
-    cld-image-src: ready
-    }"
-    <img v-bind="imageAttrs">
+  <picture class="cld-image">
+    <img v-if="ready" v-bind="imageAttrs">
     <slot/>
   </picture>
 </template>
@@ -18,7 +14,7 @@ import {
 } from "cloudinary-core";
 import { pick, merge, shallowEqual } from "../utils";
 import { CombinedState } from "../CombinedState";
-import { configuration, transformation } from "../attributes";
+import { normalizeTransformation, normalizeConfiguration } from "../attributes";
 
 /**
  * Cloudinary image element
@@ -26,8 +22,6 @@ import { configuration, transformation } from "../attributes";
 export default {
   name: "CLDImage",
   props: {
-    /** Your cloudinary account name */
-    cloudName: { type: String },
     /** ID of your media file */
     publicId: { type: String, default: "", required: true }
   },
@@ -54,8 +48,10 @@ export default {
   methods: {
     getConfig() {
       return merge(
-        pick(this, configuration),
-        pick(this.$attrs, transformation)
+        normalizeConfiguration(this),
+        normalizeConfiguration(this.$attrs),
+        normalizeTransformation(this),
+        normalizeTransformation(this.$attrs)
       );
     }
   },
@@ -64,11 +60,9 @@ export default {
       if (!this.ready) {
         return {};
       }
-      const attrs = pick(
-        this.combinedStateValue,
-        configuration.concat(transformation)
-      );
+      const attrs = this.combinedStateValue;
       const cfg = merge(attrs, Util.withSnakeCaseKeys(attrs));
+      console.log("Image:attrs", JSON.stringify(cfg));
       try {
         const htmlAttrs = Transformation.new(cfg).toHtmlAttributes();
         const src = Cloudinary.new(cfg).url(this.publicId, cfg);
@@ -84,24 +78,27 @@ export default {
     }
   },
   created() {
-    this.ownState = this.combinedState.spawn();
-    const current = this.getConfig();
-    this.ownState.next(current);
-
-    this.combinedStateSub = this.combinedState.subscribe({
-      next: v => {
-        this.combinedStateValue = v;
-      }
-    });
-
     if (this.CLDContextState) {
       this.contextState = this.combinedState.spawn();
       this.contextStateSub = this.CLDContextState.subscribe({
         next: v => {
+          console.log("Image:parent", JSON.stringify(v));
           this.contextState.next(v);
         }
       });
     }
+
+    this.ownState = this.combinedState.spawn();
+    const current = this.getConfig();
+    console.log("Image:own", JSON.stringify(current));
+    this.ownState.next(current);
+
+    this.combinedStateSub = this.combinedState.subscribe({
+      next: v => {
+        console.log("Image:all", JSON.stringify(v));
+        this.combinedStateValue = v;
+      }
+    });
 
     if (!this.$slots || !this.$slots.default || !this.$slots.default.length) {
       this.ready = true;
@@ -111,6 +108,7 @@ export default {
     const prev = this.ownState.get();
     const current = this.getConfig();
     if (!shallowEqual(prev, current)) {
+      console.log("Image:own", JSON.stringify(current));
       this.ownState.next(current);
     }
   },
@@ -120,6 +118,7 @@ export default {
     }
   },
   destroyed() {
+    console.log("Image:destroyed");
     this.combinedStateSub();
     this.ownState.complete();
 
@@ -134,9 +133,4 @@ export default {
 </script>
 
 <style lang="scss">
-.cld-image {
-  &:not(&-src) {
-    display: none;
-  }
-}
 </style>

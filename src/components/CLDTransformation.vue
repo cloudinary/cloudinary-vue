@@ -1,4 +1,8 @@
-<template></template>
+<template>
+  <span v-if="$slots.default" class="cld-transformation">
+    <slot/>
+  </span>
+</template>
 
 <script>
 import { pick, merge, shallowEqual } from "../utils";
@@ -10,6 +14,7 @@ import { configuration, transformation } from "../attributes";
  */
 export default {
   name: "CLDTransformation",
+  inheritAttrs: false,
   props: {},
   inject: {
     CLDContextState: {
@@ -20,17 +25,17 @@ export default {
   },
   methods: {
     getConfig() {
-      return merge(
-        pick(this, configuration),
-        pick(this.$attrs, transformation)
-      );
+      return pick(this.$attrs, transformation);
     }
   },
   created() {
     if (this.CLDContextState) {
       const current = this.getConfig();
       this.ownState = this.CLDContextState.spawn();
+      console.log("Transformation:POST", JSON.stringify(current));
       this.ownState.next(current);
+    } else {
+      console.warn("Transformation:NO_PARENT");
     }
   },
   updated() {
@@ -38,6 +43,7 @@ export default {
       const prev = this.ownState.get();
       const current = this.getConfig();
       if (!shallowEqual(prev, current)) {
+        console.log("Transformation:POST", JSON.stringify(current));
         this.ownState.next(current);
       }
     }
@@ -51,4 +57,7 @@ export default {
 </script>
 
 <style lang="scss">
+.cld-transformation {
+  display: none;
+}
 </style>

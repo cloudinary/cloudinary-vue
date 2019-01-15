@@ -14,54 +14,7 @@ import { normalizeConfiguration } from "../attributes";
  */
 export default {
   name: "CLDContext",
-  props: {
-    /** Your cloudinary account name */
-    cloudName: { type: String },
-    /** TODO */
-    apiKey: { type: String },
-    /** TODO */
-    apiSecret: { type: String },
-    /** TODO */
-    callback: { type: String },
-    /** TODO */
-    cdnSubdomain: { type: String },
-    /** TODO */
-    cname: { type: String },
-    /** TODO */
-    privateCdn: { type: String },
-    /** TODO */
-    protocol: { type: String },
-    /** TODO */
-    resourceType: { type: String },
-    /** TODO */
-    responsive: { type: String },
-    /** TODO */
-    responsiveClass: { type: String },
-    /** TODO */
-    responsiveUseBreakpoints: { type: String },
-    /** TODO */
-    responsiveWidth: { type: String },
-    /** TODO */
-    roundDpr: { type: String },
-    /** TODO */
-    secure: { type: String },
-    /** TODO */
-    secureCdnSubdomain: { type: String },
-    /** TODO */
-    secureDistribution: { type: String },
-    /** TODO */
-    shorten: { type: String },
-    /** TODO */
-    type: { type: String },
-    /** TODO */
-    uploadPreset: { type: String },
-    /** TODO */
-    urlSuffix: { type: String },
-    /** TODO */
-    useRootPath: { type: String },
-    /** TODO */
-    version: { type: String }
-  },
+  props: {},
   inject: {
     CLDContextState: {
       default() {
@@ -75,7 +28,7 @@ export default {
     };
   },
   methods: {
-    getConfig() {
+    getOwnAttrs() {
       return merge(
         normalizeConfiguration(this),
         normalizeConfiguration(this.$attrs)
@@ -86,7 +39,7 @@ export default {
     const combinedState = new CombinedState();
     return {
       combinedState,
-      combinedStateValue: combinedState.get()
+      allAttrsCombined: combinedState.get()
     };
   },
   created() {
@@ -101,20 +54,20 @@ export default {
     }
 
     this.ownState = this.combinedState.spawn();
-    const current = this.getConfig();
+    const current = this.getOwnAttrs();
     console.log("Context:own", JSON.stringify(current));
     this.ownState.next(current);
 
     this.combinedStateSub = this.combinedState.subscribe({
       next: v => {
         console.log("Context:all", JSON.stringify(v));
-        this.combinedStateValue = v;
+        this.allAttrsCombined = v;
       }
     });
   },
   updated() {
     const prev = this.ownState.get();
-    const current = this.getConfig();
+    const current = this.getOwnAttrs();
     if (!shallowEqual(prev, current)) {
       console.log("Context:own", JSON.stringify(current));
       this.ownState.next(current);

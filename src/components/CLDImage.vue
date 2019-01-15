@@ -19,7 +19,7 @@ import {
   Transformation,
   Util
 } from "cloudinary-core";
-import { pick, merge, shallowEqual } from "../utils";
+import { pick, merge, shallowEqual, kv } from "../utils";
 import { CombinedState } from "../CombinedState";
 import { normalizeTransformation, normalizeConfiguration } from "../attributes";
 import { setTimeout, clearTimeout } from "timers";
@@ -46,7 +46,24 @@ export default {
      * <CLDImage publicId="example" responsive />
      * ```
      */
-    responsive: { type: String }
+    responsive: { type: String },
+    breakpoints: {
+      type: [Array, Function, String],
+      default:
+        "Symbol" in window && Symbol.iterator
+          ? kv(Symbol.iterator, () => {
+              let last = 0;
+              return {
+                next: () => {
+                  last += 100;
+                  return { value: last - 100, done: false };
+                },
+                throw: () => {},
+                return: () => {}
+              };
+            })
+          : [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
+    }
   },
   inject: {
     CLDContextState: {
@@ -64,13 +81,13 @@ export default {
     const combinedState = new CombinedState();
     return {
       combinedState,
-      combinedStateValue: combinedState.get(),
+      allAttrsCombined: combinedState.get(),
       ready: false,
       size: null
     };
   },
   methods: {
-    getConfig() {
+    getOwnAttrs() {
       return merge(
         normalizeConfiguration(this),
         normalizeConfiguration(this.$attrs),
@@ -80,39 +97,73 @@ export default {
       );
     },
     getResponsiveAttrs() {
+      const breakpoints = evaluateArray(this.breakpoints);
       return {
-        fill: this.size
-          ? {
-              ...("devicePixelRatio" in window
-                ? { dpr: window.devicePixelRatio }
-                : {}),
-              crop: "scale",
-              width: Math.floor(this.size.width),
-              height: Math.floor(this.size.height)
-            }
-          : {},
-        width: this.size
-          ? {
-              ...("devicePixelRatio" in window
-                ? { dpr: window.devicePixelRatio }
-                : {}),
-              crop: "scale",
-              width: Math.floor(this.size.width)
-              // height: Math.floor(this.size.height)
-            }
-          : {},
-        height: this.size
-          ? {
-              ...("devicePixelRatio" in window
-                ? { dpr: window.devicePixelRatio }
-                : {}),
-              crop: "scale",
-              // width: Math.floor(this.size.width),
-              height: Math.floor(this.size.height)
-            }
-          : {},
+        fill: merge(
+          getDPRAttr(),
+          {
+            crop: "crop"
+          },
+          !this.size
+            ? { width: 0, height: 0 }
+            : breakpoints
+            ? {
+                width: Math.floor(findBreakpoint(breakpoints, this.size.width)),
+                height: Math.floor(
+                  (this.size.height / this.size.width) *
+                    findBreakpoint(breakpoints, this.size.width)
+                )
+              }
+            : {
+                width: Math.floor(this.size.width),
+                height: Math.floor(this.size.height)
+              }
+        ),
+        width: merge(getDPRAttr(), {
+          crop: "scale",
+          width: Math.floor(
+            !this.size
+              ? 0
+              : breakpoints
+              ? findBreakpoint(breakpoints, this.size.width)
+              : this.size.width
+          )
+        }),
+        height: merge(getDPRAttr(), {
+          crop: "scale",
+          height: Math.floor(
+            !this.size
+              ? 0
+              : breakpoints
+              ? findBreakpoint(breakpoints, this.size.height)
+              : this.size.height
+          )
+        }),
         none: {}
-      }[this.responsiveness];
+      }[this.responsiveMode];
+    },
+    startWatchingSize() {
+      if ("ResizeObserver" in window) {
+        const resizeObserver = new ResizeObserver(entries => {
+          if (this.responsiveMode !== "none") {
+            for (const entry of entries) {
+              this.resize(pick(entry.contentRect, ["width", "height"]));
+            }
+          }
+        });
+        resizeObserver.observe(this.$el.querySelector("img"));
+        this.stopWatchingSize = () => {
+          resizeObserver.disconnect();
+          this.stopWatchingSize = null;
+        };
+      } else {
+        window.addEventListener("resize", this.handleWindowResize);
+        this.handleWindowResize();
+        this.stopWatchingSize = () => {
+          window.removeEventListener("resize", this.handleWindowResize);
+          this.stopWatchingSize = null;
+        };
+      }
     },
     handleWindowResize(event) {
       this.resize(pick(this.$el.getBoundingClientRect(), ["width", "height"]));
@@ -126,7 +177,6 @@ export default {
           this.size.width !== size.width ||
           this.size.height !== size.height
         ) {
-          console.log("update", this.$attrs.title, this.size, size);
           this.size = size;
           this.$forceUpdate();
         }
@@ -134,36 +184,26 @@ export default {
     }
   },
   computed: {
-    responsiveness() {
-      return typeof this.responsive === "string"
-        ? {
-            fill: "fill",
-            width: "width",
-            height: "height",
-            "": "width"
-          }[this.responsive]
-        : "none";
-    },
     pictureAttrs() {
       return {
         fill: { class: "cld-fill" },
         width: { class: "cld-fill-width" },
         height: { class: "cld-fill-height" },
         none: {}
-      }[this.responsiveness];
+      }[this.responsiveMode];
     },
     imageAttrs() {
-      if (!this.ready) {
-        return {};
-      }
       if (
-        this.responsiveness !== "none" &&
-        (this.width === null || this.height === null)
+        !this.ready ||
+        this.allAttrsCombined.width === 0 ||
+        this.allAttrsCombined.height === 0
       ) {
         return {};
       }
-      const attrs = this.combinedStateValue;
-      const cfg = merge(attrs, Util.withSnakeCaseKeys(attrs));
+      const cfg = merge(
+        this.allAttrsCombined,
+        Util.withSnakeCaseKeys(this.allAttrsCombined)
+      );
       // console.log("Image:attrs", JSON.stringify(cfg));
       try {
         const htmlAttrs = Transformation.new(cfg).toHtmlAttributes();
@@ -176,6 +216,16 @@ export default {
         console.error(e);
         return {};
       }
+    },
+    responsiveMode() {
+      return typeof this.responsive === "string"
+        ? {
+            fill: "fill",
+            width: "width",
+            height: "height",
+            "": "width"
+          }[this.responsive]
+        : "none";
     }
   },
   created() {
@@ -190,14 +240,14 @@ export default {
     }
 
     this.ownState = this.combinedState.spawn();
-    const current = this.getConfig();
+    const current = this.getOwnAttrs();
     // console.log("Image:own", JSON.stringify(current));
     this.ownState.next(current);
 
     this.combinedStateSub = this.combinedState.subscribe({
       next: v => {
         // console.log("Image:all", JSON.stringify(v));
-        this.combinedStateValue = v;
+        this.allAttrsCombined = v;
       }
     });
 
@@ -207,34 +257,27 @@ export default {
   },
   updated() {
     const prev = this.ownState.get();
-    const current = this.getConfig();
+    const current = this.getOwnAttrs();
     if (!shallowEqual(prev, current)) {
       // console.log("Image:own", JSON.stringify(current));
       this.ownState.next(current);
     }
-    if (this.ready && !this.resizeHandlersRegistered) {
-      this.resizeHandlersRegistered = true;
 
-      if ("ResizeObserver" in window) {
-        this.resizeObserver = new ResizeObserver(entries => {
-          if (this.responsiveness !== "none") {
-            for (const entry of entries) {
-              const size = pick(entry.contentRect, ["width", "height"]);
-              console.log({ size });
-              this.resize(size);
-            }
-          }
-        });
-        this.resizeObserver.observe(this.$el.querySelector("img"));
-      } else {
-        window.addEventListener("resize", this.handleWindowResize);
-        this.handleWindowResize();
-      }
+    if (
+      this.ready &&
+      this.responsiveMode !== "none" &&
+      !this.stopWatchingSize
+    ) {
+      this.startWatchingSize();
     }
   },
   mounted() {
     if (!this.ready) {
       this.ready = true;
+    }
+
+    if (this.responsiveMode !== "none") {
+      this.startWatchingSize();
     }
   },
   destroyed() {
@@ -249,13 +292,38 @@ export default {
       this.contextState.complete();
     }
 
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-    } else {
-      window.removeEventListener("resize", this.handleWindowResize);
+    if (this.stopWatchingSize) {
+      this.stopWatchingSize();
     }
   }
 };
+
+function evaluateArray(valueOrGetter, args) {
+  if (typeof valueOrGetter === "function") {
+    return valueOrGetter.apply(null, args);
+  }
+  if (typeof valueOrGetter === "string") {
+    return JSON.parse(
+      (valueOrGetter.slice(0, 1) === "[" ? "" : "[") +
+        valueOrGetter +
+        (valueOrGetter.slice(0, 1) === "]" ? "" : "]")
+    );
+  }
+  return valueOrGetter;
+}
+
+function getDPRAttr() {
+  return "devicePixelRatio" in window ? { dpr: window.devicePixelRatio } : {};
+}
+
+function findBreakpoint(stops, value) {
+  for (const stop of stops) {
+    if (stop >= value) {
+      return stop;
+    }
+  }
+  return stops.slice(-1)[0];
+}
 </script>
 
 <style lang="scss">

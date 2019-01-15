@@ -26,6 +26,9 @@ export function shallowEqual(subjectA, subjectB) {
 }
 
 export function pick(subject, allowed) {
+  if (subject == null) {
+    return subject;
+  }
   return reduce(
     allowed,
     (result, key) =>

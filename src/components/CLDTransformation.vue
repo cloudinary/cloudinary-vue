@@ -24,13 +24,13 @@ export default {
     }
   },
   methods: {
-    getConfig() {
+    getOwnAttrs() {
       return pick(this.$attrs, transformation);
     }
   },
   created() {
     if (this.CLDContextState) {
-      const current = this.getConfig();
+      const current = this.getOwnAttrs();
       this.ownState = this.CLDContextState.spawn();
       console.log("Transformation:POST", JSON.stringify(current));
       this.ownState.next(current);
@@ -41,7 +41,7 @@ export default {
   updated() {
     if (this.ownState) {
       const prev = this.ownState.get();
-      const current = this.getConfig();
+      const current = this.getOwnAttrs();
       if (!shallowEqual(prev, current)) {
         console.log("Transformation:POST", JSON.stringify(current));
         this.ownState.next(current);

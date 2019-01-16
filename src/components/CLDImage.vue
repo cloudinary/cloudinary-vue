@@ -22,7 +22,12 @@ import {
 import { pick, merge, shallowEqual, kv } from "../utils";
 import { CombinedState } from "../CombinedState";
 import { normalizeTransformation, normalizeConfiguration } from "../attributes";
-import { setTimeout, clearTimeout } from "timers";
+import { getDPRAttr } from "../getDPRAttr";
+import { findBreakpoint } from "../findBreakpoint";
+import { evalBreakpoints } from "../evalBreakpoints";
+import { hundredsIterator } from "../hundredsIterator";
+import { getResizeTransformation } from "../getResizeTransformation";
+import { watchElementSize } from "../watchElementSize";
 
 /**
  * Cloudinary image element
@@ -47,22 +52,11 @@ export default {
      * ```
      */
     responsive: { type: String },
+    /**
+     *
+     */
     breakpoints: {
-      type: [Array, Function, String],
-      default:
-        "Symbol" in window && Symbol.iterator
-          ? kv(Symbol.iterator, () => {
-              let last = 0;
-              return {
-                next: () => {
-                  last += 100;
-                  return { value: last - 100, done: false };
-                },
-                throw: () => {},
-                return: () => {}
-              };
-            })
-          : [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
+      type: [Array, Function, String, Object]
     }
   },
   inject: {
@@ -87,6 +81,9 @@ export default {
     };
   },
   methods: {
+    /**
+     * @private
+     */
     getOwnAttrs() {
       return merge(
         normalizeConfiguration(this),
@@ -96,91 +93,44 @@ export default {
         normalizeTransformation(this.getResponsiveAttrs())
       );
     },
+    /**
+     * @private
+     */
     getResponsiveAttrs() {
-      const breakpoints = evaluateArray(this.breakpoints);
-      return {
-        fill: merge(
-          getDPRAttr(),
-          {
-            crop: "crop"
-          },
-          !this.size
-            ? { width: 0, height: 0 }
-            : breakpoints
-            ? {
-                width: Math.floor(findBreakpoint(breakpoints, this.size.width)),
-                height: Math.floor(
-                  (this.size.height / this.size.width) *
-                    findBreakpoint(breakpoints, this.size.width)
-                )
-              }
-            : {
-                width: Math.floor(this.size.width),
-                height: Math.floor(this.size.height)
-              }
-        ),
-        width: merge(getDPRAttr(), {
-          crop: "scale",
-          width: Math.floor(
-            !this.size
-              ? 0
-              : breakpoints
-              ? findBreakpoint(breakpoints, this.size.width)
-              : this.size.width
-          )
-        }),
-        height: merge(getDPRAttr(), {
-          crop: "scale",
-          height: Math.floor(
-            !this.size
-              ? 0
-              : breakpoints
-              ? findBreakpoint(breakpoints, this.size.height)
-              : this.size.height
-          )
-        }),
-        none: {}
-      }[this.responsiveMode];
+      return getResizeTransformation(
+        this.responsiveMode,
+        this.size,
+        evalBreakpoints(this.breakpoints || hundredsIterator)
+      );
     },
+    /**
+     * @private
+     */
     startWatchingSize() {
-      if ("ResizeObserver" in window) {
-        const resizeObserver = new ResizeObserver(entries => {
-          if (this.responsiveMode !== "none") {
-            for (const entry of entries) {
-              this.resize(pick(entry.contentRect, ["width", "height"]));
-            }
-          }
-        });
-        resizeObserver.observe(this.$el.querySelector("img"));
-        this.stopWatchingSize = () => {
-          resizeObserver.disconnect();
-          this.stopWatchingSize = null;
-        };
-      } else {
-        window.addEventListener("resize", this.handleWindowResize);
-        this.handleWindowResize();
-        this.stopWatchingSize = () => {
-          window.removeEventListener("resize", this.handleWindowResize);
-          this.stopWatchingSize = null;
-        };
+      if (!this._stopWatchingSize) {
+        this._stopWatchingSize = watchElementSize(
+          this.$el.querySelector("img"),
+          size => this.resize(size)
+        );
       }
     },
-    handleWindowResize(event) {
-      this.resize(pick(this.$el.getBoundingClientRect(), ["width", "height"]));
+    /**
+     * @private
+     */
+    stopWatchingSize() {
+      if (this._stopWatchingSize) {
+        this._stopWatchingSize();
+        this._stopWatchingSize = null;
+      }
     },
+    /**
+     * @private
+     */
     resize(size) {
-      clearTimeout(this.forceUpdateTimeoutToken);
-      this.forceUpdateTimeoutToken = setTimeout(() => {
-        // console.log("Image:size", size);
-        if (
-          this.size == null ||
-          this.size.width !== size.width ||
-          this.size.height !== size.height
-        ) {
-          this.size = size;
-          this.$forceUpdate();
-        }
-      }, 150);
+      if (!shallowEqual(this.size, size)) {
+        this.size = size;
+        this.$forceUpdate();
+      }
     }
   },
   computed: {
@@ -263,21 +213,23 @@ export default {
       this.ownState.next(current);
     }
 
-    if (
-      this.ready &&
-      this.responsiveMode !== "none" &&
-      !this.stopWatchingSize
-    ) {
-      this.startWatchingSize();
+    if (this.ready) {
+      if (this.responsiveMode === "none") {
+        if (this.stopWatchingSize) {
+          this.stopWatchingSize();
+        }
+      } else {
+        this.startWatchingSize();
+      }
     }
   },
   mounted() {
-    if (!this.ready) {
+    if (this.ready) {
+      if (this.responsiveMode !== "none") {
+        this.startWatchingSize();
+      }
+    } else {
       this.ready = true;
-    }
-
-    if (this.responsiveMode !== "none") {
-      this.startWatchingSize();
     }
   },
   destroyed() {
@@ -297,33 +249,6 @@ export default {
     }
   }
 };
-
-function evaluateArray(valueOrGetter, args) {
-  if (typeof valueOrGetter === "function") {
-    return valueOrGetter.apply(null, args);
-  }
-  if (typeof valueOrGetter === "string") {
-    return JSON.parse(
-      (valueOrGetter.slice(0, 1) === "[" ? "" : "[") +
-        valueOrGetter +
-        (valueOrGetter.slice(0, 1) === "]" ? "" : "]")
-    );
-  }
-  return valueOrGetter;
-}
-
-function getDPRAttr() {
-  return "devicePixelRatio" in window ? { dpr: window.devicePixelRatio } : {};
-}
-
-function findBreakpoint(stops, value) {
-  for (const stop of stops) {
-    if (stop >= value) {
-      return stop;
-    }
-  }
-  return stops.slice(-1)[0];
-}
 </script>
 
 <style lang="scss">

@@ -6,7 +6,7 @@ It is crucial for the `CLDImage` to get both `cloudName` and `publicId`. All the
 <CLDImage cloudName="demo" publicId="small_dinosaur" />
 ```
 
-Of those two, only `publicId` is image-specific. Other configuration may be passed through a `CLDContext` like in:
+Of those two, only `publicId` is image-specific. Other configuration options may be passed through a `CLDContext` like in:
 
 ```jsx
 <CLDContext cloudName="demo">
@@ -69,7 +69,7 @@ You can specify `CLDImage`'s transformations also by setting transformation for 
   flex-direction:column;
   align-items:center"
 >
-  <div class="explain" style="width: 25%;">
+  <div class="explain" style="width: 66%;">
     <CLDImage cloudName="demo" publicId="small_dinosaur" responsive>
       <CLDTransformation effect="sharpen:300" />
     </CLDImage>
@@ -88,7 +88,7 @@ Responsive mode, but adjusting to height:
 ```
 
 ```jsx
-<style style="display: none">
+<style>
 div.explain {
   position: relative;
   border: 1px dotted black;
@@ -107,6 +107,11 @@ div.explain:before {
   z-index: 3;
   width: 25%;
   padding: 4px;
+  opacity: 0.5;
+}
+div.explain:hover:before {
+  z-index: 4;
+  opacity: 1;
 }
 
 div.explain,

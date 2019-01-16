@@ -16,9 +16,25 @@ export function normalize(subject) {
 }
 
 export function shallowEqual(subjectA, subjectB) {
+  if (subjectA === null && subjectB === null) {
+    return true;
+  }
+  if (subjectA === undefined && subjectB === undefined) {
+    return true;
+  }
+  if (subjectA == null && subjectB == null) {
+    return false;
+  }
+  if (subjectA == null && subjectB != null) {
+    return false;
+  }
+  if (subjectA != null && subjectB == null) {
+    return false;
+  }
   const allKeys = uniq(keys(subjectA), keys(subjectB));
   for (let i = 0; i < allKeys.length; i++) {
-    if (subjectA[allKeys[i]] !== subjectB[allKeys[i]]) {
+    const k = allKeys[i];
+    if (subjectA[k] !== subjectB[k]) {
       return false;
     }
   }
@@ -48,13 +64,10 @@ export function keysCount(subject) {
 }
 
 export function uniq(subjectA, subjectB) {
-  return keys(
-    merge.apply(
-      {},
-      []
-        .concat(subjectA.map(k => ({ [k]: true })))
-        .concat(subjectB.map(k => ({ [k]: true })))
-    )
+  return reduce(
+    (subjectA || []).concat(subjectB || []),
+    (r, i) => (r.indexOf(i) < 0 ? r.concat([i]) : r),
+    []
   );
 }
 
@@ -84,6 +97,9 @@ export function merge() {
 }
 
 export function keys(subject) {
+  if (subject == null) {
+    return [];
+  }
   const result = [];
   for (let k in subject) {
     if (Object.prototype.hasOwnProperty.call(subject, k)) {

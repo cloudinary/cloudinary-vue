@@ -21,7 +21,11 @@ import {
 } from "cloudinary-core";
 import { pick, merge, shallowEqual, kv } from "../utils";
 import { CombinedState } from "../CombinedState";
-import { normalizeTransformation, normalizeConfiguration } from "../attributes";
+import {
+  normalizeTransformation,
+  normalizeConfiguration,
+  normalizeRest
+} from "../attributes";
 import { getDPRAttr } from "../getDPRAttr";
 import { findBreakpoint } from "../findBreakpoint";
 import { evalBreakpoints } from "../evalBreakpoints";
@@ -34,6 +38,7 @@ import { watchElementSize } from "../watchElementSize";
  */
 export default {
   name: "CLDImage",
+  inheritAttrs: false,
   props: {
     /** ID of your media file */
     publicId: { type: String, default: "", required: true },
@@ -81,9 +86,7 @@ export default {
     };
   },
   methods: {
-    /**
-     * @private
-     */
+    /** @private */
     getOwnAttrs() {
       return merge(
         normalizeConfiguration(this),
@@ -93,9 +96,7 @@ export default {
         normalizeTransformation(this.getResponsiveAttrs())
       );
     },
-    /**
-     * @private
-     */
+    /** @private */
     getResponsiveAttrs() {
       return getResizeTransformation(
         this.responsiveMode,
@@ -103,9 +104,7 @@ export default {
         evalBreakpoints(this.breakpoints || hundredsIterator)
       );
     },
-    /**
-     * @private
-     */
+    /** @private */
     startWatchingSize() {
       if (!this._stopWatchingSize) {
         this._stopWatchingSize = watchElementSize(
@@ -114,18 +113,14 @@ export default {
         );
       }
     },
-    /**
-     * @private
-     */
+    /** @private */
     stopWatchingSize() {
       if (this._stopWatchingSize) {
         this._stopWatchingSize();
         this._stopWatchingSize = null;
       }
     },
-    /**
-     * @private
-     */
+    /** @private */
     resize(size) {
       if (!shallowEqual(this.size, size)) {
         this.size = size;
@@ -146,10 +141,12 @@ export default {
       if (
         !this.ready ||
         this.allAttrsCombined.width === 0 ||
-        this.allAttrsCombined.height === 0
+        this.allAttrsCombined.height === 0 ||
+        !this.publicId
       ) {
-        return {};
+        return { src: undefined };
       }
+
       const cfg = merge(
         this.allAttrsCombined,
         Util.withSnakeCaseKeys(this.allAttrsCombined)
@@ -158,13 +155,13 @@ export default {
       try {
         const htmlAttrs = Transformation.new(cfg).toHtmlAttributes();
         const src = Cloudinary.new(cfg).url(this.publicId, cfg);
-        return merge(htmlAttrs, {
+        return merge(normalizeRest(this.$attrs), htmlAttrs, {
           src
         });
       } catch (e) {
         console.error("image attributes generation error");
         console.error(e);
-        return {};
+        return { src: undefined };
       }
     },
     responsiveMode() {

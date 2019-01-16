@@ -20,8 +20,7 @@ describe("CLDImage", () => {
         `
       },
       {
-        components: { CLDTransformation, CLDImage, CLDContext },
-        propsData: {}
+        components: { CLDTransformation, CLDImage, CLDContext }
       }
     );
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="cld-context">
+  <div class="cld-context" v-bind="rootAttrs">
     <slot/>
   </div>
 </template>
@@ -7,13 +7,14 @@
 <script>
 import { pick, shallowEqual, merge, normalize } from "../utils";
 import { CombinedState } from "../CombinedState";
-import { normalizeConfiguration } from "../attributes";
+import { normalizeConfiguration, normalizeRest } from "../attributes";
 
 /**
  * Cloudinary context providing element
  */
 export default {
   name: "CLDContext",
+  inheritAttrs: false,
   props: {},
   inject: {
     CLDContextState: {
@@ -28,11 +29,17 @@ export default {
     };
   },
   methods: {
-    getOwnAttrs() {
+    /** @private */
+    getOwnCLDAttrs() {
       return merge(
         normalizeConfiguration(this),
         normalizeConfiguration(this.$attrs)
       );
+    }
+  },
+  computed: {
+    rootAttrs() {
+      return normalizeRest(this.$attrs);
     }
   },
   data() {
@@ -54,7 +61,7 @@ export default {
     }
 
     this.ownState = this.combinedState.spawn();
-    const current = this.getOwnAttrs();
+    const current = this.getOwnCLDAttrs();
     // console.log("Context:own", JSON.stringify(current));
     this.ownState.next(current);
 
@@ -67,7 +74,7 @@ export default {
   },
   updated() {
     const prev = this.ownState.get();
-    const current = this.getOwnAttrs();
+    const current = this.getOwnCLDAttrs();
     if (!shallowEqual(prev, current)) {
       // console.log("Context:own", JSON.stringify(current));
       this.ownState.next(current);

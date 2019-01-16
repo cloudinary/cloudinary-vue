@@ -2,8 +2,35 @@ import { mount } from "@vue/test-utils";
 import CLDContext from "../../src/components/CLDContext.vue";
 import CLDImage from "../../src/components/CLDImage.vue";
 
-describe("CLDImage", () => {
-  it("with CLDContext", () => {
+describe("CLDContext", () => {
+  it("renders", () => {
+    mount(
+      {
+        template: `
+          <CLDContext cloudName="demo" />`
+      },
+      {
+        components: { CLDContext }
+      }
+    );
+  });
+
+  it("bypasses non-cloudinary attributes", () => {
+    const wrapper = mount(
+      {
+        template: `
+          <CLDContext cloudName="demo" aria-hidden="true" />`
+      },
+      {
+        components: { CLDContext }
+      }
+    );
+    expect(wrapper.findAll("div").length).toBe(1);
+    expect(wrapper.find("div").attributes("aria-hidden")).toBe("true");
+    expect(wrapper.find("div").attributes("cloudName")).toBe(undefined);
+  });
+
+  it("works single-layered", () => {
     const wrapper = mount(
       {
         template: `
@@ -24,7 +51,7 @@ describe("CLDImage", () => {
     );
   });
 
-  it("with CLDContext nested", () => {
+  it("works when nested", () => {
     const wrapper = mount(
       {
         template: `

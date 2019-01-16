@@ -1,5 +1,5 @@
 export function format(subject, instructions) {
-  if (keysCount(instructions) === 0) {
+  if (keys(instructions).length === 0) {
     return subject;
   }
   return reduce(keys(subject), (result, key) =>
@@ -41,6 +41,20 @@ export function shallowEqual(subjectA, subjectB) {
   return true;
 }
 
+export function omit(subject, disallowed) {
+  if (subject == null) {
+    return subject;
+  }
+  return reduce(
+    keys(subject),
+    (result, key) =>
+      disallowed.indexOf(key) < 0
+        ? merge(result, kv(key, subject[key]))
+        : result,
+    {}
+  );
+}
+
 export function pick(subject, allowed) {
   if (subject == null) {
     return subject;
@@ -57,10 +71,6 @@ export function kv(k, v) {
   const result = {};
   result[k] = v;
   return result;
-}
-
-export function keysCount(subject) {
-  return keys(subject).length;
 }
 
 export function uniq(subjectA, subjectB) {

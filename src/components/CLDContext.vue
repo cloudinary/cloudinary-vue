@@ -18,7 +18,7 @@ export default {
   inject: {
     CLDContextState: {
       default() {
-        return null;
+        return this.CLDGlobalContextState ? this.CLDGlobalContextState : null;
       }
     }
   },
@@ -47,7 +47,7 @@ export default {
       this.contextState = this.combinedState.spawn();
       this.contextStateSub = this.CLDContextState.subscribe({
         next: v => {
-          console.log("Context:parent", JSON.stringify(v));
+          // console.log("Context:parent", JSON.stringify(v));
           this.contextState.next(v);
         }
       });
@@ -55,12 +55,12 @@ export default {
 
     this.ownState = this.combinedState.spawn();
     const current = this.getOwnAttrs();
-    console.log("Context:own", JSON.stringify(current));
+    // console.log("Context:own", JSON.stringify(current));
     this.ownState.next(current);
 
     this.combinedStateSub = this.combinedState.subscribe({
       next: v => {
-        console.log("Context:all", JSON.stringify(v));
+        // console.log("Context:all", JSON.stringify(v));
         this.allAttrsCombined = v;
       }
     });
@@ -69,7 +69,7 @@ export default {
     const prev = this.ownState.get();
     const current = this.getOwnAttrs();
     if (!shallowEqual(prev, current)) {
-      console.log("Context:own", JSON.stringify(current));
+      // console.log("Context:own", JSON.stringify(current));
       this.ownState.next(current);
     }
   },

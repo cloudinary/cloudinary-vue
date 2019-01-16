@@ -62,7 +62,7 @@ export default {
   inject: {
     CLDContextState: {
       default() {
-        return null;
+        return this.CLDGlobalContextState ? this.CLDGlobalContextState : null;
       }
     }
   },

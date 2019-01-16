@@ -32,7 +32,7 @@ export default {
     if (this.CLDContextState) {
       const current = this.getOwnAttrs();
       this.ownState = this.CLDContextState.spawn();
-      console.log("Transformation:POST", JSON.stringify(current));
+      // console.log("Transformation:POST", JSON.stringify(current));
       this.ownState.next(current);
     } else {
       console.warn("Transformation:NO_PARENT");
@@ -43,7 +43,7 @@ export default {
       const prev = this.ownState.get();
       const current = this.getOwnAttrs();
       if (!shallowEqual(prev, current)) {
-        console.log("Transformation:POST", JSON.stringify(current));
+        // console.log("Transformation:POST", JSON.stringify(current));
         this.ownState.next(current);
       }
     }

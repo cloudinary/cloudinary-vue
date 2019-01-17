@@ -1,17 +1,3 @@
-<template>
-  <picture
-    v-bind:class="{
-    'cld-image': true,
-    'cld-fill': this.responsive === 'fill',
-    'cld-fill-width': this.responsive === 'width' || this.responsive === '',
-    'cld-fill-height': this.responsive === 'height'
-  }"
-  >
-    <img v-if="ready" v-bind="imageAttrs">
-    <slot/>
-  </picture>
-</template>
-
 <script>
 import {
   Cloudinary,
@@ -19,7 +5,7 @@ import {
   Transformation,
   Util
 } from "cloudinary-core";
-import { pick, merge, shallowEqual, kv } from "../utils";
+import { pick, merge, shallowEqual, kv, keys } from "../utils";
 import { CombinedState } from "../CombinedState";
 import {
   normalizeTransformation,
@@ -39,6 +25,9 @@ import { watchElementSize } from "../watchElementSize";
 export default {
   name: "CLDImage",
   inheritAttrs: false,
+  render(h) {
+    return h("img", this.imageAttrs, this.$slots.default);
+  },
   props: {
     /** ID of your media file */
     publicId: { type: String, default: "", required: true },
@@ -107,9 +96,8 @@ export default {
     /** @private */
     startWatchingSize() {
       if (!this._stopWatchingSize) {
-        this._stopWatchingSize = watchElementSize(
-          this.$el.querySelector("img"),
-          size => this.resize(size)
+        this._stopWatchingSize = watchElementSize(this.$el, size =>
+          this.resize(size)
         );
       }
     },
@@ -130,13 +118,19 @@ export default {
   },
   computed: {
     imageAttrs() {
+      const className = {
+        "cld-image": true,
+        "cld-fill": this.responsiveMode === "fill",
+        "cld-fill-width": this.responsiveMode === "width",
+        "cld-fill-height": this.responsiveMode === "height"
+      };
       if (
         !this.ready ||
         this.allAttrsCombined.width === 0 ||
         this.allAttrsCombined.height === 0 ||
         !this.publicId
       ) {
-        return { src: undefined };
+        return { class: className };
       }
 
       const cfg = merge(
@@ -147,13 +141,18 @@ export default {
       try {
         const htmlAttrs = Transformation.new(cfg).toHtmlAttributes();
         const src = Cloudinary.new(cfg).url(this.publicId, cfg);
-        return merge(normalizeRest(this.$attrs), htmlAttrs, {
-          src
-        });
+        return {
+          class: className,
+          attrs: merge(normalizeRest(this.$attrs), htmlAttrs, {
+            src
+          })
+        };
       } catch (e) {
         console.error("image attributes generation error");
         console.error(e);
-        return { src: undefined };
+        return {
+          class: className
+        };
       }
     },
     responsiveMode() {
@@ -245,38 +244,21 @@ export default {
 
 <style lang="scss">
 .cld-image {
-  &,
-  img {
-    display: inline-block;
-  }
-  img {
-    width: 100%;
-  }
-
   &.cld-fill-height {
-    &,
-    img {
-      display: block;
-      height: 100%;
-      width: auto;
-    }
+    display: block;
+    height: 100%;
+    width: auto;
   }
 
   &.cld-fill-width {
-    &,
-    img {
-      display: block;
-      width: 100%;
-    }
+    display: block;
+    width: 100%;
   }
 
   &.cld-fill {
-    &,
-    img {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

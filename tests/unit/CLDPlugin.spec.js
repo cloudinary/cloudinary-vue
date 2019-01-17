@@ -4,7 +4,7 @@ import CLDImage from "../../src/components/CLDImage.vue";
 import * as Plugin from "../../src/plugin";
 
 describe("CLD plugin", () => {
-  it("works", done => {
+  it("works", async () => {
     Vue.use(Plugin, { cloudName: "demo2" });
 
     const wrapper = mount(
@@ -19,15 +19,12 @@ describe("CLD plugin", () => {
     );
 
     Vue.nextTick(() => {
-      try {
-        expect(wrapper.find("img").element.getAttribute("src")).toEqual(
-          `http://res.cloudinary.com/demo2/image/upload/face_top`
-        );
-        done();
-      } catch (e) {
-        done(e);
-      }
+      expect(wrapper.is("img")).toBe(true);
+      expect(wrapper.attributes("src")).toEqual(
+        `http://res.cloudinary.com/demo2/image/upload/face_top`
+      );
     });
-    Vue.nextTick(() => {});
+
+    await new Promise(r => Vue.nextTick(() => r()));
   });
 });

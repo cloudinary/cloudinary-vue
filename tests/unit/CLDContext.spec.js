@@ -42,8 +42,7 @@ describe("CLDContext", () => {
           </div>`
       },
       {
-        components: { CLDContext, CLDImage },
-        propsData: {}
+        components: { CLDContext, CLDImage }
       }
     );
 
@@ -62,24 +61,25 @@ describe("CLDContext", () => {
       {
         template: `
           <div class="test">
-            <CLDContext cloudName="demo">
-              <CLDContext secure="true">
-                <CLDImage publicId="face_top"/>
+            <CLDContext cloudName="demo" secure="false">
+              <CLDContext secure="true" quality="auto">
+                <CLDImage publicId="face_top" quality="80" />
               </CLDContext>
             </CLDContext>
           </div>`
       },
       {
-        components: { CLDContext, CLDImage },
-        propsData: {}
+        components: { CLDContext, CLDImage }
       }
     );
+
     Vue.nextTick(() => {
       expect(wrapper.contains("img")).toBe(true);
       expect(wrapper.find("img").element.getAttribute("src")).toEqual(
-        `https://res.cloudinary.com/demo/image/upload/face_top`
+        `https://res.cloudinary.com/demo/image/upload/q_80/face_top`
       );
     });
+
     await new Promise(r => Vue.nextTick(() => r()));
   });
 });

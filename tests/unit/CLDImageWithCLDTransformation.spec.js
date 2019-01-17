@@ -5,7 +5,7 @@ import CLDImage from "../../src/components/CLDImage.vue";
 import Sepia from "./Sepia.vue";
 
 describe("CLDImage", () => {
-  it("with CLDTransformation", done => {
+  it("with CLDTransformation", async () => {
     const wrapper = mount(
       {
         template: `
@@ -15,23 +15,24 @@ describe("CLDImage", () => {
         `
       },
       {
-        components: { CLDTransformation, CLDImage },
-        propsData: {}
+        components: { CLDTransformation, CLDImage }
       }
     );
 
-    expect(wrapper.contains("img")).toBe(false);
+    expect(wrapper.is("img")).toBe(true);
+    expect(wrapper.attributes("src")).toEqual(undefined);
 
     Vue.nextTick(() => {
-      expect(wrapper.contains("img")).toBe(true);
-      expect(wrapper.find("img").element.getAttribute("src")).toEqual(
+      expect(wrapper.is("img")).toBe(true);
+      expect(wrapper.attributes("src")).toEqual(
         `http://res.cloudinary.com/demo/image/upload/e_sepia:20/face_top`
       );
-      done();
     });
+
+    await new Promise(r => Vue.nextTick(() => r()));
   });
 
-  it("with CLDTransformation nested", done => {
+  it("with CLDTransformation nested", async () => {
     const wrapper = mount(
       {
         template: `
@@ -43,23 +44,24 @@ describe("CLDImage", () => {
         `
       },
       {
-        components: { CLDTransformation, CLDImage },
-        propsData: {}
+        components: { CLDTransformation, CLDImage }
       }
     );
 
-    expect(wrapper.contains("img")).toBe(false);
+    expect(wrapper.is("img")).toBe(true);
+    expect(wrapper.attributes("src")).toEqual(undefined);
 
     Vue.nextTick(() => {
-      expect(wrapper.contains("img")).toBe(true);
-      expect(wrapper.find("img").element.getAttribute("src")).toEqual(
+      expect(wrapper.is("img")).toBe(true);
+      expect(wrapper.attributes("src")).toEqual(
         `http://res.cloudinary.com/demo/image/upload/c_scale,w_100/face_top`
       );
-      done();
     });
+
+    await new Promise(r => Vue.nextTick(() => r()));
   });
 
-  it("with CLDTransformation in another component", done => {
+  it("with CLDTransformation in another component", async () => {
     const wrapper = mount(
       {
         template: `
@@ -69,19 +71,20 @@ describe("CLDImage", () => {
         `
       },
       {
-        components: { Sepia, CLDImage },
-        propsData: {}
+        components: { Sepia, CLDImage }
       }
     );
 
-    expect(wrapper.contains("img")).toBe(false);
+    expect(wrapper.is("img")).toBe(true);
+    expect(wrapper.attributes("src")).toEqual(undefined);
 
     Vue.nextTick(() => {
-      expect(wrapper.contains("img")).toBe(true);
-      expect(wrapper.find("img").element.getAttribute("src")).toEqual(
+      expect(wrapper.is("img")).toBe(true);
+      expect(wrapper.attributes("src")).toEqual(
         `http://res.cloudinary.com/demo/image/upload/e_sepia:20/face_top`
       );
-      done();
     });
+
+    await new Promise(r => Vue.nextTick(() => r()));
   });
 });

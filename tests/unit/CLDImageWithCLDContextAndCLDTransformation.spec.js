@@ -24,11 +24,12 @@ describe("CLDImage", () => {
       }
     );
 
-    expect(wrapper.contains("img")).toBe(false);
+    expect(wrapper.contains("img")).toBe(true);
+    expect(wrapper.find("img").attributes("src")).toBe(undefined);
 
     Vue.nextTick(() => {
       expect(wrapper.contains("img")).toBe(true);
-      expect(wrapper.find("img").element.getAttribute("src")).toEqual(
+      expect(wrapper.find("img").attributes("src")).toBe(
         `http://res.cloudinary.com/demo/image/upload/c_scale,h_100,w_100/face_top`
       );
       done();

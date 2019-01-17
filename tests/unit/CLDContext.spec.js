@@ -1,3 +1,4 @@
+import Vue from "vue";
 import { mount } from "@vue/test-utils";
 import CLDContext from "../../src/components/CLDContext.vue";
 import CLDImage from "../../src/components/CLDImage.vue";
@@ -30,7 +31,7 @@ describe("CLDContext", () => {
     expect(wrapper.find("div").attributes("cloudName")).toBe(undefined);
   });
 
-  it("works single-layered", () => {
+  it("works single-layered", async () => {
     const wrapper = mount(
       {
         template: `
@@ -45,13 +46,18 @@ describe("CLDContext", () => {
         propsData: {}
       }
     );
-    expect(wrapper.contains("img")).toBe(true);
-    expect(wrapper.find("img").element.getAttribute("src")).toEqual(
-      `http://res.cloudinary.com/demo/image/upload/face_top`
-    );
+
+    Vue.nextTick(() => {
+      expect(wrapper.contains("img")).toBe(true);
+      expect(wrapper.find("img").element.getAttribute("src")).toEqual(
+        `http://res.cloudinary.com/demo/image/upload/face_top`
+      );
+    });
+
+    await new Promise(r => Vue.nextTick(() => r()));
   });
 
-  it("works when nested", () => {
+  it("works when nested", async () => {
     const wrapper = mount(
       {
         template: `
@@ -68,9 +74,12 @@ describe("CLDContext", () => {
         propsData: {}
       }
     );
-    expect(wrapper.contains("img")).toBe(true);
-    expect(wrapper.find("img").element.getAttribute("src")).toEqual(
-      `https://res.cloudinary.com/demo/image/upload/face_top`
-    );
+    Vue.nextTick(() => {
+      expect(wrapper.contains("img")).toBe(true);
+      expect(wrapper.find("img").element.getAttribute("src")).toEqual(
+        `https://res.cloudinary.com/demo/image/upload/face_top`
+      );
+    });
+    await new Promise(r => Vue.nextTick(() => r()));
   });
 });

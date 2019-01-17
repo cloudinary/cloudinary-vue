@@ -190,7 +190,10 @@ export default {
       }
     });
 
-    if (!this.$slots || !this.$slots.default || !this.$slots.default.length) {
+    if (
+      !this.CLDContextState &&
+      (!this.$slots || !this.$slots.default || !this.$slots.default.length)
+    ) {
       this.ready = true;
     }
   },

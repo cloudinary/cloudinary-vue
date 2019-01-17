@@ -129,14 +129,6 @@ export default {
     }
   },
   computed: {
-    pictureAttrs() {
-      return {
-        fill: { class: "cld-fill" },
-        width: { class: "cld-fill-width" },
-        height: { class: "cld-fill-height" },
-        none: {}
-      }[this.responsiveMode];
-    },
     imageAttrs() {
       if (
         !this.ready ||

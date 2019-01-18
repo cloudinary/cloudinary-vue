@@ -5,9 +5,8 @@
 </template>
 
 <script>
-import { pick, merge, shallowEqual } from "../utils";
-import { CombinedState } from "../CombinedState";
-import { configuration, transformation } from "../attributes";
+import { pick, shallowEqual } from "../utils";
+import { normalizeTransformation } from "../helpers/attributes";
 
 /**
  * Cloudinary transformation modifier
@@ -21,21 +20,41 @@ export default {
       default() {
         return null;
       }
+    },
+    CLDImageState: {
+      default() {
+        return null;
+      }
+    },
+    CLDVideoState: {
+      default() {
+        return null;
+      }
+    },
+    CLDPosterStateOPosterTag: {
+      default() {
+        return null;
+      }
     }
   },
   methods: {
     getOwnAttrs() {
-      return pick(this.$attrs, transformation);
+      return normalizeTransformation(this.$attrs);
     }
   },
   created() {
-    if (this.CLDContextState) {
-      const current = this.getOwnAttrs();
-      this.ownState = this.CLDContextState.spawn();
-      // console.log("Transformation:POST", JSON.stringify(current));
-      this.ownState.next(current);
+    const parentState =
+      this.CLDPosterStateOPosterTag ||
+      this.CLDVideoState ||
+      this.CLDImageState ||
+      this.CLDContextState;
+    if (parentState) {
+      this.ownState = parentState.spawn();
+      this.ownState.next(this.getOwnAttrs());
     } else {
-      console.warn("Transformation:NO_PARENT");
+      throw new Error(
+        "CLDTransform without a CLDContext/CLDImage/CLDVideo parent"
+      );
     }
   },
   updated() {
@@ -43,7 +62,6 @@ export default {
       const prev = this.ownState.get();
       const current = this.getOwnAttrs();
       if (!shallowEqual(prev, current)) {
-        // console.log("Transformation:POST", JSON.stringify(current));
         this.ownState.next(current);
       }
     }

@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import { pick, shallowEqual, merge, normalize } from "../utils";
-import { CombinedState } from "../CombinedState";
-import { normalizeConfiguration, normalizeRest } from "../attributes";
+import { shallowEqual, merge } from "../utils";
+import { CombinedState } from "../reactive/CombinedState";
+import { normalizeConfiguration, normalizeRest } from "../helpers/attributes";
 
 /**
  * Cloudinary context providing element

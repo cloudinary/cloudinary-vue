@@ -1,23 +1,16 @@
 <script>
-import {
-  Cloudinary,
-  Configuration,
-  Transformation,
-  Util
-} from "cloudinary-core";
-import { pick, merge, shallowEqual, kv, keys } from "../utils";
-import { CombinedState } from "../CombinedState";
+import { Cloudinary, Transformation, Util } from "cloudinary-core";
+import { merge, shallowEqual } from "../utils";
+import { CombinedState } from "../reactive/CombinedState";
 import {
   normalizeTransformation,
   normalizeConfiguration,
   normalizeRest
-} from "../attributes";
-import { getDPRAttr } from "../getDPRAttr";
-import { findBreakpoint } from "../findBreakpoint";
-import { evalBreakpoints } from "../evalBreakpoints";
-import { hundredsIterator } from "../hundredsIterator";
-import { getResizeTransformation } from "../getResizeTransformation";
-import { watchElementSize } from "../watchElementSize";
+} from "../helpers/attributes";
+import { evalBreakpoints } from "../helpers/evalBreakpoints";
+import { hundredsIterator } from "../helpers/hundredsIterator";
+import { getResizeTransformation } from "../helpers/getResizeTransformation";
+import { watchElementSize } from "../helpers/watchElementSize";
 
 /**
  * Cloudinary image element
@@ -62,30 +55,26 @@ export default {
   },
   provide() {
     return {
-      CLDContextState: this.combinedState
+      CLDImageState: this.attrsCombinedState
     };
   },
   data() {
-    const combinedState = new CombinedState();
+    const attrsCombinedState = new CombinedState();
     return {
-      combinedState,
-      allAttrsCombined: combinedState.get(),
+      attrsCombinedState,
+      attrsCombined: attrsCombinedState.get(),
       ready: false,
       size: null
     };
   },
   methods: {
-    /** @private */
     getOwnAttrs() {
       return merge(
-        normalizeConfiguration(this),
         normalizeConfiguration(this.$attrs),
-        normalizeTransformation(this),
         normalizeTransformation(this.$attrs),
         normalizeTransformation(this.getResponsiveAttrs())
       );
     },
-    /** @private */
     getResponsiveAttrs() {
       return getResizeTransformation(
         this.responsiveMode,
@@ -93,7 +82,6 @@ export default {
         evalBreakpoints(this.breakpoints || hundredsIterator)
       );
     },
-    /** @private */
     startWatchingSize() {
       if (!this._stopWatchingSize) {
         this._stopWatchingSize = watchElementSize(this.$el, size =>
@@ -101,14 +89,12 @@ export default {
         );
       }
     },
-    /** @private */
     stopWatchingSize() {
       if (this._stopWatchingSize) {
         this._stopWatchingSize();
         this._stopWatchingSize = null;
       }
     },
-    /** @private */
     resize(size) {
       if (!shallowEqual(this.size, size)) {
         this.size = size;
@@ -126,34 +112,26 @@ export default {
       };
       if (
         !this.ready ||
-        this.allAttrsCombined.width === 0 ||
-        this.allAttrsCombined.height === 0 ||
+        this.attrsCombined.width === 0 ||
+        this.attrsCombined.height === 0 ||
         !this.publicId
       ) {
         return { class: className };
       }
 
-      const cfg = merge(
-        this.allAttrsCombined,
-        Util.withSnakeCaseKeys(this.allAttrsCombined)
+      const htmlAttrs = Transformation.new(
+        this.attrsCombined
+      ).toHtmlAttributes();
+      const src = Cloudinary.new(this.attrsCombined).url(
+        this.publicId,
+        this.attrsCombined
       );
-      // console.log("Image:attrs", JSON.stringify(cfg));
-      try {
-        const htmlAttrs = Transformation.new(cfg).toHtmlAttributes();
-        const src = Cloudinary.new(cfg).url(this.publicId, cfg);
-        return {
-          class: className,
-          attrs: merge(normalizeRest(this.$attrs), htmlAttrs, {
-            src
-          })
-        };
-      } catch (e) {
-        console.error("image attributes generation error");
-        console.error(e);
-        return {
-          class: className
-        };
-      }
+      return {
+        class: className,
+        attrs: merge(normalizeRest(this.$attrs), htmlAttrs, {
+          src
+        })
+      };
     },
     responsiveMode() {
       return typeof this.responsive === "string"
@@ -168,24 +146,21 @@ export default {
   },
   created() {
     if (this.CLDContextState) {
-      this.contextState = this.combinedState.spawn();
+      this.contextState = this.attrsCombinedState.spawn();
       this.contextStateSub = this.CLDContextState.subscribe({
         next: v => {
-          // console.log("Image:parent", JSON.stringify(v));
           this.contextState.next(v);
         }
       });
     }
 
-    this.ownState = this.combinedState.spawn();
+    this.ownState = this.attrsCombinedState.spawn();
     const current = this.getOwnAttrs();
-    // console.log("Image:own", JSON.stringify(current));
     this.ownState.next(current);
 
-    this.combinedStateSub = this.combinedState.subscribe({
+    this.attrsCombinedStateSub = this.attrsCombinedState.subscribe({
       next: v => {
-        // console.log("Image:all", JSON.stringify(v));
-        this.allAttrsCombined = v;
+        this.attrsCombined = v;
       }
     });
 
@@ -200,7 +175,6 @@ export default {
     const prev = this.ownState.get();
     const current = this.getOwnAttrs();
     if (!shallowEqual(prev, current)) {
-      // console.log("Image:own", JSON.stringify(current));
       this.ownState.next(current);
     }
 
@@ -224,14 +198,11 @@ export default {
     }
   },
   destroyed() {
-    // console.log("Image:destroyed");
-    this.combinedStateSub();
+    this.attrsCombinedStateSub();
     this.ownState.complete();
 
     if (this.contextStateSub) {
       this.contextStateSub();
-    }
-    if (this.contextState) {
       this.contextState.complete();
     }
 

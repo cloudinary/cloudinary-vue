@@ -18,13 +18,11 @@ describe("CLD plugin", () => {
       }
     );
 
-    Vue.nextTick(() => {
-      expect(wrapper.is("img")).toBe(true);
-      expect(wrapper.attributes("src")).toEqual(
-        `http://res.cloudinary.com/demo2/image/upload/face_top`
-      );
-    });
-
     await new Promise(r => Vue.nextTick(() => r()));
+
+    expect(wrapper.is("img")).toBe(true);
+    expect(wrapper.attributes("src")).toEqual(
+      `http://res.cloudinary.com/demo2/image/upload/face_top`
+    );
   });
 });

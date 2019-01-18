@@ -46,14 +46,12 @@ describe("CLDContext", () => {
       }
     );
 
-    Vue.nextTick(() => {
-      expect(wrapper.contains("img")).toBe(true);
-      expect(wrapper.find("img").element.getAttribute("src")).toEqual(
-        `http://res.cloudinary.com/demo/image/upload/face_top`
-      );
-    });
-
     await new Promise(r => Vue.nextTick(() => r()));
+
+    expect(wrapper.contains("img")).toBe(true);
+    expect(wrapper.find("img").element.getAttribute("src")).toEqual(
+      `http://res.cloudinary.com/demo/image/upload/face_top`
+    );
   });
 
   it("works when nested", async () => {
@@ -73,13 +71,11 @@ describe("CLDContext", () => {
       }
     );
 
-    Vue.nextTick(() => {
-      expect(wrapper.contains("img")).toBe(true);
-      expect(wrapper.find("img").element.getAttribute("src")).toEqual(
-        `https://res.cloudinary.com/demo/image/upload/q_80/face_top`
-      );
-    });
-
     await new Promise(r => Vue.nextTick(() => r()));
+
+    expect(wrapper.contains("img")).toBe(true);
+    expect(wrapper.find("img").element.getAttribute("src")).toEqual(
+      `https://res.cloudinary.com/demo/image/upload/q_80/face_top`
+    );
   });
 });

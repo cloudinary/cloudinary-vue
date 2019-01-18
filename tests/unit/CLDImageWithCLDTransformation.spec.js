@@ -22,14 +22,12 @@ describe("CLDImage", () => {
     expect(wrapper.is("img")).toBe(true);
     expect(wrapper.attributes("src")).toEqual(undefined);
 
-    Vue.nextTick(() => {
-      expect(wrapper.is("img")).toBe(true);
-      expect(wrapper.attributes("src")).toEqual(
-        `http://res.cloudinary.com/demo/image/upload/e_sepia:20/face_top`
-      );
-    });
-
     await new Promise(r => Vue.nextTick(() => r()));
+
+    expect(wrapper.is("img")).toBe(true);
+    expect(wrapper.attributes("src")).toEqual(
+      `http://res.cloudinary.com/demo/image/upload/e_sepia:20/face_top`
+    );
   });
 
   it("with CLDTransformation nested", async () => {
@@ -51,14 +49,12 @@ describe("CLDImage", () => {
     expect(wrapper.is("img")).toBe(true);
     expect(wrapper.attributes("src")).toEqual(undefined);
 
-    Vue.nextTick(() => {
-      expect(wrapper.is("img")).toBe(true);
-      expect(wrapper.attributes("src")).toEqual(
-        `http://res.cloudinary.com/demo/image/upload/c_scale,w_100/face_top`
-      );
-    });
-
     await new Promise(r => Vue.nextTick(() => r()));
+
+    expect(wrapper.is("img")).toBe(true);
+    expect(wrapper.attributes("src")).toEqual(
+      `http://res.cloudinary.com/demo/image/upload/c_scale,w_100/face_top`
+    );
   });
 
   it("with CLDTransformation in another component", async () => {
@@ -78,13 +74,11 @@ describe("CLDImage", () => {
     expect(wrapper.is("img")).toBe(true);
     expect(wrapper.attributes("src")).toEqual(undefined);
 
-    Vue.nextTick(() => {
-      expect(wrapper.is("img")).toBe(true);
-      expect(wrapper.attributes("src")).toEqual(
-        `http://res.cloudinary.com/demo/image/upload/e_sepia:20/face_top`
-      );
-    });
-
     await new Promise(r => Vue.nextTick(() => r()));
+
+    expect(wrapper.is("img")).toBe(true);
+    expect(wrapper.attributes("src")).toEqual(
+      `http://res.cloudinary.com/demo/image/upload/e_sepia:20/face_top`
+    );
   });
 });

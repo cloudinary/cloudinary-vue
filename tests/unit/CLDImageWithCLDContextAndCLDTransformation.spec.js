@@ -5,7 +5,7 @@ import CLDImage from "../../src/components/CLDImage.vue";
 import CLDContext from "../../src/components/CLDContext.vue";
 
 describe("CLDImage", () => {
-  it("with CLDTransformation and CLDContext", done => {
+  it("with CLDTransformation and CLDContext", async () => {
     const wrapper = mount(
       {
         template: `
@@ -27,12 +27,11 @@ describe("CLDImage", () => {
     expect(wrapper.contains("img")).toBe(true);
     expect(wrapper.find("img").attributes("src")).toBe(undefined);
 
-    Vue.nextTick(() => {
-      expect(wrapper.contains("img")).toBe(true);
-      expect(wrapper.find("img").attributes("src")).toBe(
-        `http://res.cloudinary.com/demo/image/upload/c_scale,h_100,w_100/face_top`
-      );
-      done();
-    }, 1000);
+    await new Promise(r => Vue.nextTick(() => r()));
+
+    expect(wrapper.contains("img")).toBe(true);
+    expect(wrapper.find("img").attributes("src")).toBe(
+      `http://res.cloudinary.com/demo/image/upload/c_scale,h_100,w_100/face_top`
+    );
   });
 });

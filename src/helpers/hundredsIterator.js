@@ -1,4 +1,4 @@
-import { kv } from "./utils";
+import { kv } from "../utils";
 
 const defaultNaiveBreakpoints = [
   100,

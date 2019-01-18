@@ -1,5 +1,4 @@
-import { pick } from "./utils";
-import { debounce } from "./debounce";
+import { pick, debounce } from "../utils";
 
 /**
  *

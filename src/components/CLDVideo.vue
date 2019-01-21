@@ -80,10 +80,11 @@ export default {
         this.posterAttrsCombined &&
         Object.keys(this.posterAttrsCombined).length > 0
           ? Cloudinary.new(this.posterAttrsCombined).url(
-              this.publicId,
+              this.posterAttrsCombined.publicId,
               this.posterAttrsCombined
             )
           : undefined;
+      console.log("@video[](poster)", this.posterAttrsCombined, poster);
       return merge(normalizeRest(this.$attrs), htmlAttrs, {
         poster
       });
@@ -134,6 +135,7 @@ export default {
 
     this.posterCombinedStateSub = this.posterCombinedState.subscribe({
       next: v => {
+        console.log("@video.poster", v);
         this.posterAttrsCombined = v;
       }
     });

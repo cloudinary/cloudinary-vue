@@ -1,8 +1,10 @@
 import Vue from "vue";
 import { mount } from "@vue/test-utils";
 import CLDVideo from "../../src/components/CLDVideo.vue";
+import CLDPoster from "../../src/components/CLDPoster.vue";
+import CLDTransformation from "../../src/components/CLDTransformation.vue";
 
-describe("CLDVideo", () => {
+describe("CLDPoster", () => {
   function sourcesOfVideo(element) {
     const sources = element.findAll("source");
     const result = {};
@@ -17,9 +19,11 @@ describe("CLDVideo", () => {
   it("renders", async () => {
     const video = mount({
       template: `
-        <CLDVideo cloudName="demo" publicId="face_top" />
+        <CLDVideo cloudName="demo" publicId="face_top">
+          <CLDPoster cloudName="demo" publicId="small_dinosaur" />
+        </CLDVideo>
       `,
-      components: { CLDVideo }
+      components: { CLDVideo, CLDPoster }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));
@@ -30,14 +34,22 @@ describe("CLDVideo", () => {
       "video/mp4": "http://res.cloudinary.com/demo/video/upload/face_top.mp4",
       "video/ogg": "http://res.cloudinary.com/demo/video/upload/face_top.ogv"
     });
+    expect(video.attributes("poster")).toBe(
+      "http://res.cloudinary.com/demo/image/upload/small_dinosaur"
+    );
   });
 
-  it("allows transformation as props", async () => {
+  it("doesn't mix transformations", async () => {
     const video = mount({
       template: `
-        <CLDVideo cloudName="demo" publicId="face_top" effect="sepia" />
+        <CLDVideo cloudName="demo" publicId="face_top">
+          <CLDTransformation effect="sepia" />
+          <CLDPoster cloudName="demo" publicId="small_dinosaur">
+            <CLDTransformation effect="blur" />
+          </CLDPoster>
+        </CLDVideo>
       `,
-      components: { CLDVideo }
+      components: { CLDVideo, CLDPoster, CLDTransformation }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));
@@ -51,34 +63,8 @@ describe("CLDVideo", () => {
       "video/ogg":
         "http://res.cloudinary.com/demo/video/upload/e_sepia/face_top.ogv"
     });
-  });
-
-  it("bypasses non-cloudinary attributes", async () => {
-    const video = mount({
-      template: `
-        <CLDVideo cloudName="demo" publicId="face_top" aria-hidden="true" />
-      `,
-      components: { CLDVideo }
-    });
-
-    await new Promise(r => Vue.nextTick(() => r()));
-
-    expect(video.is("video")).toBe(true);
-    expect(video.attributes("aria-hidden")).toBe("true");
-    expect(video.attributes("cloudName")).toBe(undefined);
-  });
-
-  it("should render a src property with an undefined value if a src is not defined", async () => {
-    const video = mount({
-      template: `
-        <CLDVideo cloudName="demo" publicId="" />
-      `,
-      components: { CLDVideo }
-    });
-
-    await new Promise(r => Vue.nextTick(() => r()));
-
-    expect(video.is("video")).toBe(true);
-    expect(sourcesOfVideo(video)).toEqual({});
+    expect(video.attributes("poster")).toBe(
+      "http://res.cloudinary.com/demo/image/upload/e_blur/small_dinosaur"
+    );
   });
 });

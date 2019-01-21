@@ -84,7 +84,6 @@ export default {
               this.posterAttrsCombined
             )
           : undefined;
-      console.log("@video[](poster)", this.posterAttrsCombined, poster);
       return merge(normalizeRest(this.$attrs), htmlAttrs, {
         poster
       });
@@ -135,7 +134,6 @@ export default {
 
     this.posterCombinedStateSub = this.posterCombinedState.subscribe({
       next: v => {
-        console.log("@video.poster", v);
         this.posterAttrsCombined = v;
       }
     });

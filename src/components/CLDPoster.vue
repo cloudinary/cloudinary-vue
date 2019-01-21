@@ -57,14 +57,12 @@ export default {
     }
 
     this.ownState = this.CLDPosterStateOfVideoTag.spawn();
-    console.log("@poster", this.getOwnAttrs());
     this.ownState.next(this.getOwnAttrs());
   },
   updated() {
     const prev = this.ownState.get();
     const current = this.getOwnAttrs();
     if (!shallowEqual(prev, current)) {
-      console.log("@poster", this.getOwnAttrs());
       this.ownState.next(current);
     }
   },

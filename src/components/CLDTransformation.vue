@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { pick, shallowEqual } from "../utils";
+import { shallowEqual } from "../utils";
 import { normalizeTransformation } from "../helpers/attributes";
 
 /**

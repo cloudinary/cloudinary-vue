@@ -1,4 +1,4 @@
-import { Channel } from "./channel";
+import { Channel } from "./Channel";
 
 export class State {
   constructor(value) {

@@ -1,5 +1,5 @@
 <script>
-import { Cloudinary, Transformation, Util } from "cloudinary-core";
+import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, shallowEqual } from "../utils";
 import { CombinedState } from "../reactive/CombinedState";
 import {

@@ -1,39 +1,37 @@
-# sdk
+# Cloudinary Vue SDK
 
-## Project setup
+## Usage
+
+### Installation
+
+Install the library with npm
+
 ```
-npm install
+npm i cloudinary-vue
 ```
 
-### Compiles and hot-reloads for development
+or refer to it using unpkg CDN
+
+```html
+<script src="//unpkg.com/cloudinary-vue/dist/Cloudinary.umd.min.js">
 ```
-npm run serve
-```
+
+## Development
 
 ### Compiles and minifies for production
+
 ```
 npm run build
 ```
 
-### Run your tests
-```
-npm run test
-```
-
 ### Lints and fixes files
+
 ```
 npm run lint
 ```
 
-### Run your end-to-end tests
-```
-npm run test:e2e
-```
-
 ### Run your unit tests
-```
-npm run test:unit
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```
+npm t
+```

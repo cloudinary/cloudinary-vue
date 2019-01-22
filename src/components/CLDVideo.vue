@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { Cloudinary, Transformation, Util } from "cloudinary-core";
+import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, shallowEqual, kv } from "../utils";
 import { CombinedState } from "../reactive/CombinedState";
 import {

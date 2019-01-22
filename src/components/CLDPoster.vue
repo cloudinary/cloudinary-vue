@@ -5,13 +5,10 @@
 </template>
 
 <script>
-import { Cloudinary, Transformation, Util } from "cloudinary-core";
 import { merge, shallowEqual } from "../utils";
-import { CombinedState } from "../reactive/CombinedState";
 import {
   normalizeTransformation,
-  normalizeConfiguration,
-  normalizeRest
+  normalizeConfiguration
 } from "../helpers/attributes";
 
 /**

@@ -86,7 +86,7 @@ outputs HTML `img` tag with a correct `src` attribute for provided Cloudinary re
 
 #### CLDVideo
 
-outputs HTML `video` tag with a correct `src` attribute for provided Cloudinary resource, based on configuration and transformation parameters provided as attributes of this component instance, parent `CLDContext` and children `CLDTransformation` instances.
+outputs HTML `video` tag with a correct `sources` for provided Cloudinary resource, based on configuration and transformation parameters provided as attributes of this component instance, parent `CLDContext` and children `CLDTransformation` instances.
 
 #### CLDTransformation
 
@@ -94,25 +94,18 @@ The Transformation element allows you to defined additional transformations on t
 
 For example:
 
-```
+```jsx
 <CLDImage cloudName="demo" publicId="sample">
-    <CLDTransformation angle="-45"/>
-    <CLDTransformation
-        effect="trim"
-        angle="45"
-        crop="scale"
-        width="600"
-    >
-        <CLDTransformation
-            overlay="text:Arial_100:Hello"
-        />
-    </CLDTransformation>
+  <CLDTransformation angle="-45" />
+  <CLDTransformation effect="trim" angle="45" crop="scale" width="600">
+    <CLDTransformation overlay="text:Arial_100:Hello" />
+  </CLDTransformation>
 </CLDImage>
 ```
 
 #### CLDPoster
 
-an optional `CLDVideo` children element that will specify image resource to be visible provided to `poster` attribute of the `video` element.
+an optional `CLDVideo` child element that will specify image resource to be provided to `poster` attribute of the `video` element.
 
 ## Additional resources
 

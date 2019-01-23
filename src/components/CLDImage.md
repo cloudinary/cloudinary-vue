@@ -1,4 +1,4 @@
-### Simple usage
+### Usage
 
 It is crucial for the `CLDImage` to get both `cloudName` and `publicId`. All the other arguments are optional.
 
@@ -19,22 +19,34 @@ Of those two, only `publicId` is image-specific. Other configuration options may
 Compare:
 
 ```jsx
-<CLDImage
-  cloudName="demo"
-  publicId="small_dinosaur"
-  effect="blur:300"
-  crop="scale"
-  width="100"
-/>
-```
-
-...to:
-
-```jsx
-<CLDImage cloudName="demo" publicId="small_dinosaur">
-  <CLDTransformation effect="blur:300" />
-  <CLDTransformation crop="scale" width="100" />
-</CLDImage>
+<table width="100%">
+  <tbody>
+    <tr>
+      <th align="center">On element</th>
+      <th align="center">
+        On <code>CLDTransformation</code> tags
+      </th>
+    </tr>
+    <tr>
+      <td align="center">
+        <CLDImage
+          cloudName="demo"
+          publicId="small_dinosaur"
+          effect="blur:300"
+          crop="scale"
+          width="100"
+        />
+      </td>
+      <td align="center">
+        <CLDImage cloudName="demo" publicId="small_dinosaur">
+          <CLDTransformation effect="blur:300" />
+          <CLDTransformation crop="scale" />
+          <CLDTransformation width="100" />
+        </CLDImage>
+      </td>
+    </tr>
+  </tbody>
+</table>
 ```
 
 You can specify `CLDImage`'s transformations also by setting transformation for whole set of images with `CLDContext`.
@@ -57,7 +69,7 @@ You can specify `CLDImage`'s transformations also by setting transformation for 
 </CLDContext>
 ```
 
----
+#### See [Image transformations documentation](http://cloudinary.com/documentation/image_transformations) for all the options accepted by `CLDImage` and `CLDTransformation`.
 
 ### Responsive mode
 

@@ -1,3 +1,43 @@
+### Attributes
+
+Refer to base [Cloudinary JS SDK](https://github.com/cloudinary/cloudinary_js#configuration) for configuration options.
+
+See [Image transformations documentation](http://cloudinary.com/documentation/image_transformations) for all the options accepted by `CLDImage` and `CLDTransformation`.
+
+Options provided to the component instance are going to be transformed from lower camel case to snake case.
+
+### Events
+
+Use `v-on:*.native` to listen to native DOM events. `CLDImage` outputs an `img` element and does not have any events on it's own.
+
+```vue
+<template>
+  <CLDImage
+    cloudName="demo"
+    publicId="small_dinosaur"
+    v-on:click.native="alert"
+  >
+    <CLDTransformation
+      overlay="text:Arial_45:CLICK ME"
+      background="red"
+      radius="10"
+      opacity="90"
+      color="white"
+    />
+    <CLDTransformation crop="scale" :height="100" />
+  </CLDImage>
+</template>
+<script>
+export default {
+  methods: {
+    alert() {
+      alert("I've used native event listener to bind to a click");
+    }
+  }
+};
+</script>
+```
+
 ### Usage
 
 It is crucial for the `CLDImage` to get both `cloudName` and `publicId`. All the other arguments are optional.
@@ -69,84 +109,23 @@ You can specify `CLDImage`'s transformations also by setting transformation for 
 </CLDContext>
 ```
 
-#### See [Image transformations documentation](http://cloudinary.com/documentation/image_transformations) for all the options accepted by `CLDImage` and `CLDTransformation`.
-
 ### Responsive mode
 
 ```jsx
-<div
-  class="explain"
-  style="
-  display: flex;
-  flex-direction:column;
-  align-items:center"
->
-  <div class="explain" style="width: 66%;">
-    <CLDImage cloudName="demo" publicId="small_dinosaur" responsive>
-      <CLDTransformation effect="sharpen:300" />
-    </CLDImage>
-  </div>
-</div>
+<CLDImage cloudName="demo" publicId="small_dinosaur" responsive>
+  <CLDTransformation effect="sharpen:300" />
+</CLDImage>
 ```
 
 Responsive mode, but adjusting to height:
 
 ```jsx
-<div class="explain" style="height: 75px;">
+<div
+  class="explain"
+  style="height: 75px; border-top: 3px solid black; border-bottom: 3px solid black;"
+>
   <CLDImage cloudName="demo" publicId="small_dinosaur" responsive="height">
     <CLDTransformation effect="sepia:95" />
   </CLDImage>
 </div>
-```
-
-```jsx
-<style>
-div.explain {
-  position: relative;
-  border: 1px dotted black;
-}
-div.explain:before {
-  content: "div { " attr(style) " }";
-  display: block;
-  position: absolute;
-  top: -1px;
-  right: -1px;
-  background: white;
-  color: white;
-  font-size: 10px;
-  font-family: sans-serif;
-  border: 1px dotted black;
-  z-index: 3;
-  width: 25%;
-  padding: 4px;
-  opacity: 0.5;
-}
-div.explain:hover:before {
-  z-index: 4;
-  opacity: 1;
-}
-
-div.explain,
-div.explain:before {
-  background: #dc832788;
-  border-color: #dc8327;
-}
-div.explain
-div.explain,
-div.explain
-div.explain:before {
-  background: #0071ce88;
-  border-color: #0071ce;
-  border-style: solid;
-}
-div.explain
-div.explain
-div.explain,
-div.explain
-div.explain
-div.explain:before {
-  background: #f2d86488;
-  border-color: #f2d864;
-}
-</style>
 ```

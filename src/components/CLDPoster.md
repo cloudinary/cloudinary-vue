@@ -1,5 +1,17 @@
 `CLDPoster` is an optional `CLDVideo` child that will specify image resource to be provided to `poster` attribute of the `video` element.
 
+### Attributes
+
+Refer to base [Cloudinary JS SDK](https://github.com/cloudinary/cloudinary_js#configuration) for configuration options.
+
+See [Image transformations documentation](http://cloudinary.com/documentation/image_transformations) for all the options accepted by `CLDImage` and `CLDTransformation`.
+
+Options provided to the component instance are going to be transformed from lower camel case to snake case.
+
+### Events
+
+Component instance does not emit any events.
+
 ### Usage
 
 ```jsx

@@ -11,11 +11,11 @@ describe("CLDImage", () => {
         template: `
           <CLDContext cloudName="demo">
             <CLDImage publicId="face_top">
-              <CLDTransformation width="100">
-                <CLDTransformation height="100" />
+              <CLDTransformation effect="sepia" >
+                <CLDTransformation effect="blur" />
               </CLDTransformation>
             </CLDImage>
-            <CLDTransformation crop="scale" />
+            <CLDTransformation crop="scale" width="100" height="100" />
           </CLDContext>          
         `
       },
@@ -31,7 +31,7 @@ describe("CLDImage", () => {
 
     expect(wrapper.contains("img")).toBe(true);
     expect(wrapper.find("img").attributes("src")).toBe(
-      `http://res.cloudinary.com/demo/image/upload/c_scale,h_100,w_100/face_top`
+      `http://res.cloudinary.com/demo/image/upload/c_scale,h_100,w_100/e_sepia/e_blur/face_top`
     );
   });
 });

@@ -4,6 +4,7 @@ export { merge } from "./merge";
 export { normalizeObject } from "./normalizeObject";
 export { omit } from "./omit";
 export { pick } from "./pick";
-export { shallowEqual } from "./shallowEqual";
+export { equal } from "./equal";
 export { uniq } from "./uniq";
 export { debounce } from "./debounce";
+export { find } from "./find";

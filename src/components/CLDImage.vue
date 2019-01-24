@@ -1,6 +1,6 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
-import { merge, shallowEqual } from "../utils";
+import { merge, equal, find } from "../utils";
 import { CombinedState } from "../reactive/CombinedState";
 import {
   normalizeTransformation,
@@ -8,9 +8,9 @@ import {
   normalizeRest
 } from "../helpers/attributes";
 import { evalBreakpoints } from "../helpers/evalBreakpoints";
-import { hundredsIterator } from "../helpers/hundredsIterator";
 import { getResizeTransformation } from "../helpers/getResizeTransformation";
 import { watchElementSize } from "../helpers/watchElementSize";
+import { combineOptions } from "../helpers/combineOptions";
 
 /**
  * Cloudinary image element
@@ -40,10 +40,57 @@ export default {
      */
     responsive: { type: String },
     /**
+     * Should be:
      *
+     * - an array of numbers
+     * - comma separated list of numbers in a `string`
+     * - function that returns an array of numbers
      */
     breakpoints: {
-      type: [Array, Function, String, Object]
+      type: [Array, Function, String],
+      default() {
+        return [
+          100,
+          200,
+          300,
+          400,
+          500,
+          600,
+          700,
+          800,
+          900,
+          1000,
+          1100,
+          1200,
+          1300,
+          1400,
+          1500,
+          1600,
+          1700,
+          1800,
+          1900,
+          2000,
+          2100,
+          2200,
+          2300,
+          2400,
+          2500,
+          2600,
+          2700,
+          2800,
+          2900,
+          3000,
+          3100,
+          3200,
+          3300,
+          3400,
+          3500,
+          3600,
+          3700,
+          3800,
+          3900
+        ];
+      }
     }
   },
   inject: {
@@ -59,7 +106,7 @@ export default {
     };
   },
   data() {
-    const attrsCombinedState = new CombinedState();
+    const attrsCombinedState = new CombinedState(combineOptions);
     return {
       attrsCombinedState,
       attrsCombined: attrsCombinedState.get(),
@@ -68,18 +115,23 @@ export default {
     };
   },
   methods: {
-    getOwnAttrs() {
-      return merge(
-        normalizeConfiguration(this.$attrs),
-        normalizeTransformation(this.$attrs),
-        normalizeTransformation(this.getResponsiveAttrs())
-      );
+    getOwnCLDAttrs() {
+      const responsive = this.getResponsiveAttrs();
+      return {
+        configuration: normalizeConfiguration(this.$attrs),
+        transformation: responsive
+          ? [
+              normalizeTransformation(this.$attrs),
+              normalizeTransformation(responsive)
+            ]
+          : normalizeTransformation(this.$attrs)
+      };
     },
     getResponsiveAttrs() {
       return getResizeTransformation(
         this.responsiveMode,
         this.size,
-        evalBreakpoints(this.breakpoints || hundredsIterator)
+        evalBreakpoints(this.breakpoints)
       );
     },
     startWatchingSize() {
@@ -96,7 +148,7 @@ export default {
       }
     },
     resize(size) {
-      if (!shallowEqual(this.size, size)) {
+      if (!equal(this.size, size)) {
         this.size = size;
         this.$forceUpdate();
       }
@@ -112,25 +164,31 @@ export default {
       };
       if (
         !this.ready ||
-        this.attrsCombined.width === 0 ||
-        this.attrsCombined.height === 0 ||
-        !this.publicId
+        !this.publicId ||
+        find(this.attrsCombined.transformation, t => t.width === 0) ||
+        find(this.attrsCombined.transformation, t => t.height === 0)
       ) {
         return { class: className };
       }
 
-      const htmlAttrs = Transformation.new(
-        this.attrsCombined
-      ).toHtmlAttributes();
-      const src = Cloudinary.new(this.attrsCombined).url(
+      const htmlAttrs = Transformation.new({
+        transformation: this.attrsCombined.transformation
+      }).toHtmlAttributes();
+      const src = Cloudinary.new(this.attrsCombined.configuration).url(
         this.publicId,
         this.attrsCombined
       );
       return {
         class: className,
-        attrs: merge(normalizeRest(this.$attrs), htmlAttrs, {
+        attrs: merge(
+          normalizeRest(this.$attrs),
+          htmlAttrs,
           src
-        })
+            ? {
+                src
+              }
+            : {}
+        )
       };
     },
     responsiveMode() {
@@ -155,7 +213,7 @@ export default {
     }
 
     this.ownState = this.attrsCombinedState.spawn();
-    const current = this.getOwnAttrs();
+    const current = this.getOwnCLDAttrs();
     this.ownState.next(current);
 
     this.attrsCombinedStateSub = this.attrsCombinedState.subscribe({
@@ -173,8 +231,8 @@ export default {
   },
   updated() {
     const prev = this.ownState.get();
-    const current = this.getOwnAttrs();
-    if (!shallowEqual(prev, current)) {
+    const current = this.getOwnCLDAttrs();
+    if (!equal(prev, current)) {
       this.ownState.next(current);
     }
 

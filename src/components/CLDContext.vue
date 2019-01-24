@@ -5,9 +5,10 @@
 </template>
 
 <script>
-import { shallowEqual, merge } from "../utils";
+import { equal, merge } from "../utils";
 import { CombinedState } from "../reactive/CombinedState";
 import { normalizeConfiguration, normalizeRest } from "../helpers/attributes";
+import { combineOptions } from "../helpers/combineOptions";
 
 /**
  * Cloudinary context providing element
@@ -29,12 +30,13 @@ export default {
     };
   },
   methods: {
-    /** @private */
     getOwnCLDAttrs() {
-      return merge(
-        normalizeConfiguration(this),
-        normalizeConfiguration(this.$attrs)
-      );
+      return {
+        configuration: merge(
+          normalizeConfiguration(this),
+          normalizeConfiguration(this.$attrs)
+        )
+      };
     }
   },
   computed: {
@@ -43,7 +45,7 @@ export default {
     }
   },
   data() {
-    const combinedState = new CombinedState();
+    const combinedState = new CombinedState(combineOptions);
     return {
       combinedState,
       allAttrsCombined: combinedState.get()
@@ -75,7 +77,7 @@ export default {
   updated() {
     const prev = this.ownState.get();
     const current = this.getOwnCLDAttrs();
-    if (!shallowEqual(prev, current)) {
+    if (!equal(prev, current)) {
       // console.log("Context:own", JSON.stringify(current));
       this.ownState.next(current);
     }

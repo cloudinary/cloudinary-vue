@@ -2,7 +2,9 @@ import { Transformation, Util, Configuration } from "cloudinary-core";
 import { formatObject, normalizeObject, pick, omit } from "../utils";
 
 export const configuration = Configuration.CONFIG_PARAMS.map(Util.camelCase);
-export const transformation = Transformation.PARAM_NAMES.map(Util.camelCase);
+export const transformation = Transformation.PARAM_NAMES.map(
+  Util.camelCase
+).filter(name => configuration.indexOf(name) < 0);
 
 export function normalizeConfiguration(cfg) {
   return Util.withSnakeCaseKeys(

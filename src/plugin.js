@@ -15,8 +15,8 @@ export function install(Vue, options) {
   Vue.component("CLDVideo", CLDVideo);
 
   if (options) {
-    Vue.prototype.CLDGlobalContextState = new State(
-      normalizeConfiguration(options)
-    );
+    Vue.prototype.CLDGlobalContextState = new State({
+      configuration: normalizeConfiguration(options)
+    });
   }
 }

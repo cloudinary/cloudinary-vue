@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { merge, shallowEqual } from "../utils";
+import { merge, equal } from "../utils";
 import {
   normalizeTransformation,
   normalizeConfiguration
@@ -36,11 +36,11 @@ export default {
   },
   methods: {
     getOwnAttrs() {
-      return merge(
-        { publicId: this.publicId },
-        normalizeConfiguration(this.$attrs),
-        normalizeTransformation(this.$attrs)
-      );
+      return {
+        publicId: this.publicId,
+        configuration: normalizeConfiguration(this.$attrs),
+        transformation: normalizeTransformation(this.$attrs)
+      };
     }
   },
   created() {
@@ -59,7 +59,7 @@ export default {
   updated() {
     const prev = this.ownState.get();
     const current = this.getOwnAttrs();
-    if (!shallowEqual(prev, current)) {
+    if (!equal(prev, current)) {
       this.ownState.next(current);
     }
   },

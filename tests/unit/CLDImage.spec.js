@@ -16,12 +16,13 @@ describe("CLDImage", () => {
   });
 
   it("allows transformation as props", () => {
-    const image = shallowMount(CLDImage, {
-      propsData: {
-        cloudName: "demo",
-        publicId: "face_top",
-        effect: "sepia"
-      }
+    const image = mount({
+      template: `<CLDImage 
+        cloudName="demo"
+        publicId="face_top"
+        effect="sepia"
+      />`,
+      components: { CLDImage }
     });
     expect(image.is("img")).toBe(true);
     expect(image.attributes("src")).toEqual(

@@ -2,12 +2,12 @@ import { State } from "./State";
 import { merge } from "../utils";
 
 export class CombinedState {
-  constructor() {
+  constructor(composition) {
     this.chunkedState = new State([]);
     this.solidState = new State({});
     this.chunkedState.subscribe({
       next: v => {
-        const nextSum = merge.apply(null, v ? v : []);
+        const nextSum = (composition || merge).apply(null, v ? v : []);
         this.solidState.next(nextSum);
       },
       error: e => this.solidState.error(e),
@@ -25,11 +25,10 @@ export class CombinedState {
           didStatePushedEmpty = true;
           return;
         }
-        this.chunkedState.next(
-          currentState =>
-            currentState.indexOf(last) >= 0
-              ? currentState.map(chunk => (chunk === last ? (last = v) : chunk))
-              : currentState.concat([(last = v)])
+        this.chunkedState.next(currentState =>
+          currentState.indexOf(last) >= 0
+            ? currentState.map(chunk => (chunk === last ? (last = v) : chunk))
+            : currentState.concat([(last = v)])
         );
       },
       error: () => {

@@ -1,19 +1,16 @@
-<template>
-  <video v-bind="videoAttrs">
-    <source v-for="source in sources" v-bind:key="source.mimeType" v-bind="source">
-    <slot/>
-  </video>
-</template>
-
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
-import { merge, shallowEqual, kv } from "../utils";
+import { merge, equal, kv, find } from "../utils";
 import { CombinedState } from "../reactive/CombinedState";
 import {
   normalizeTransformation,
   normalizeConfiguration,
   normalizeRest
 } from "../helpers/attributes";
+import {
+  combineOptions,
+  combineTransformations
+} from "../helpers/combineOptions";
 
 /**
  * Cloudinary image element
@@ -21,10 +18,26 @@ import {
 export default {
   name: "CLDVideo",
   inheritAttrs: false,
+  render(h) {
+    return h(
+      "video",
+      this.videoAttrs,
+      this.sources
+        .map(attrs => h("source", { key: attrs.mimeType, attrs }))
+        .concat(this.$slots.default)
+    );
+  },
   props: {
     /** ID of your media file */
-    publicId: { type: String, default: "", required: true },
-    /** TODO */
+    publicId: { type: String, required: true },
+    /**
+     * A dictionary of media type (`string`) to additional transformation options (or an empty object)
+     *
+     * Example:
+     * ```
+     * <CLDVideo :sourceTypes="{ mp4: { quality: 10 } }" />
+     * ```
+     */
     sourceTypes: {
       type: Object,
       default() {
@@ -49,8 +62,8 @@ export default {
     };
   },
   data() {
-    const attrsCombinedState = new CombinedState();
-    const posterCombinedState = new CombinedState();
+    const attrsCombinedState = new CombinedState(combineOptions);
+    const posterCombinedState = new CombinedState(combineOptions);
     return {
       attrsCombinedState,
       posterCombinedState,
@@ -60,33 +73,53 @@ export default {
     };
   },
   methods: {
-    getOwnAttrs() {
-      return merge(
-        normalizeConfiguration(this.$attrs),
-        normalizeTransformation(this.$attrs)
-      );
+    getOwnCLDAttrs() {
+      return {
+        configuration: normalizeConfiguration(this.$attrs),
+        transformation: normalizeTransformation(this.$attrs)
+      };
     }
   },
   computed: {
     videoAttrs() {
-      if (!this.ready || !this.publicId) {
-        return {};
+      const className = {
+        "cld-video": true
+      };
+
+      if (
+        !this.ready ||
+        !this.publicId ||
+        find(this.attrsCombined.transformation, t => t.width === 0) ||
+        find(this.attrsCombined.transformation, t => t.height === 0)
+      ) {
+        return { class: className };
       }
 
-      const htmlAttrs = Transformation.new(
-        this.attrsCombined
-      ).toHtmlAttributes();
+      const htmlAttrs = Transformation.new({
+        transformation: this.attrsCombined.transformation
+      }).toHtmlAttributes();
+
       const poster =
         this.posterAttrsCombined &&
         Object.keys(this.posterAttrsCombined).length > 0
-          ? Cloudinary.new(this.posterAttrsCombined).url(
+          ? Cloudinary.new(this.posterAttrsCombined.configuration).url(
               this.posterAttrsCombined.publicId,
-              this.posterAttrsCombined
+              { transformation: this.posterAttrsCombined.transformation }
             )
           : undefined;
-      return merge(normalizeRest(this.$attrs), htmlAttrs, {
-        poster
-      });
+
+      return {
+        class: className,
+        attrs: merge(
+          normalizeRest(this.$attrs),
+          htmlAttrs,
+          poster
+            ? {
+                poster
+              }
+            : {}
+        )
+      };
     },
     sources() {
       if (!this.ready || !this.publicId) {
@@ -94,20 +127,22 @@ export default {
       }
 
       return Object.keys(this.sourceTypes).map(srcType => {
-        const cfg = merge(
-          this.attrsCombined,
+        const configuration = merge(
+          this.attrsCombined.configuration,
           normalizeConfiguration(this.sourceTypes[srcType] || {})
         );
-        const xt = merge(
-          this.attrsCombined,
-          normalizeTransformation(this.sourceTypes[srcType] || {}),
-          {
-            resource_type: "video",
-            format: srcType
-          }
+        const transformation = combineTransformations(
+          this.attrsCombined.transformation,
+          normalizeTransformation(this.sourceTypes[srcType] || {})
         );
-        let src = Cloudinary.new(cfg).url(this.publicId, xt);
-        let mimeType = "video/" + (srcType === "ogv" ? "ogg" : srcType);
+        const src = Cloudinary.new(configuration).url(this.publicId, {
+          resource_type: "video",
+          format: srcType,
+          transformation
+        });
+        const mimeType = "video/" + (srcType === "ogv" ? "ogg" : srcType);
+
+        // console.log({ srcType, configuration, transformation, src });
         return { mimeType, src };
       });
     }
@@ -123,7 +158,7 @@ export default {
     }
 
     this.ownState = this.attrsCombinedState.spawn();
-    const current = this.getOwnAttrs();
+    const current = this.getOwnCLDAttrs();
     this.ownState.next(current);
 
     this.attrsCombinedStateSub = this.attrsCombinedState.subscribe({
@@ -140,8 +175,8 @@ export default {
   },
   updated() {
     const prev = this.ownState.get();
-    const current = this.getOwnAttrs();
-    if (!shallowEqual(prev, current)) {
+    const current = this.getOwnCLDAttrs();
+    if (!equal(prev, current)) {
       this.ownState.next(current);
     }
   },

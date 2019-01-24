@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { shallowEqual } from "../utils";
+import { equal } from "../utils";
 import { normalizeTransformation } from "../helpers/attributes";
 
 /**
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     getOwnAttrs() {
-      return normalizeTransformation(this.$attrs);
+      return { transformation: normalizeTransformation(this.$attrs) };
     }
   },
   created() {
@@ -61,7 +61,7 @@ export default {
     if (this.ownState) {
       const prev = this.ownState.get();
       const current = this.getOwnAttrs();
-      if (!shallowEqual(prev, current)) {
+      if (!equal(prev, current)) {
         this.ownState.next(current);
       }
     }

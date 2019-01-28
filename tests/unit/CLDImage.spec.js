@@ -54,20 +54,33 @@ describe("CLDImage", () => {
   });
 
   it("should render a src property with an undefined value if a src is not defined", () => {
-    const image = mount(
-      {
-        template: `
+    const image = mount({
+      template: `
           <CLDImage
             cloudName="demo"
             publicId=""
           />
-        `
-      },
-      {
-        components: { CLDImage }
-      }
-    );
+        `,
+      components: { CLDImage }
+    });
     expect(image.is("img")).toBe(true);
     expect(image.attributes("src")).toBe(undefined);
+  });
+
+  it("respects progressive prop", () => {
+    const image = mount({
+      template: `
+          <CLDImage
+            cloudName="demo"
+            publicId="face_top"
+            progressive
+          />
+        `,
+      components: { CLDImage }
+    });
+    expect(image.is("img")).toBe(true);
+    expect(image.attributes("src")).toEqual(
+      `http://res.cloudinary.com/demo/image/upload/fl_progressive/face_top`
+    );
   });
 });

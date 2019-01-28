@@ -91,6 +91,12 @@ export default {
           3900
         ];
       }
+    },
+    /**
+     *
+     */
+    progressive: {
+      type: Boolean
     }
   },
   inject: {
@@ -116,15 +122,23 @@ export default {
   },
   methods: {
     getOwnCLDAttrs() {
+      const attrs =
+        this.progressive == true
+          ? merge(this.$attrs, {
+              flags: this.$attrs.flags
+                ? [].concat(cfg.flags).concat("progressive")
+                : ["progressive"]
+            })
+          : this.$attrs;
       const responsive = this.getResponsiveAttrs();
       return {
-        configuration: normalizeConfiguration(this.$attrs),
+        configuration: normalizeConfiguration(attrs),
         transformation: responsive
           ? [
-              normalizeTransformation(this.$attrs),
+              normalizeTransformation(attrs),
               normalizeTransformation(responsive)
             ]
-          : normalizeTransformation(this.$attrs)
+          : normalizeTransformation(attrs)
       };
     },
     getResponsiveAttrs() {

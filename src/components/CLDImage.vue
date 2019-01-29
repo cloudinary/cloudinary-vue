@@ -93,10 +93,12 @@ export default {
       }
     },
     /**
-     *
+     * If true sets an additional flag in a request path that indicates that
+     * [Cloudinary should generate a JPEG using the progressive (interlaced) JPEG format](https://cloudinary.com/documentation/transformation_flags#delivery_and_image_format_flags)
      */
     progressive: {
-      type: Boolean
+      type: Boolean,
+      default: false
     }
   },
   inject: {
@@ -125,20 +127,17 @@ export default {
       const attrs =
         this.progressive == true
           ? merge(this.$attrs, {
-              flags: this.$attrs.flags
-                ? [].concat(cfg.flags).concat("progressive")
-                : ["progressive"]
+              flags: []
+                .concat(this.$attrs.flags ? this.$attrs.flags : [])
+                .concat("progressive")
             })
           : this.$attrs;
       const responsive = this.getResponsiveAttrs();
       return {
         configuration: normalizeConfiguration(attrs),
-        transformation: responsive
-          ? [
-              normalizeTransformation(attrs),
-              normalizeTransformation(responsive)
-            ]
-          : normalizeTransformation(attrs)
+        transformation: [normalizeTransformation(attrs)].concat(
+          responsive ? normalizeTransformation(responsive) : []
+        )
       };
     },
     getResponsiveAttrs() {

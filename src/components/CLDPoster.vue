@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { merge, equal } from "../utils";
+import { equal } from "../utils";
 import {
   normalizeTransformation,
   normalizeConfiguration

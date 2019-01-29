@@ -1,5 +1,5 @@
 import { Transformation, Util, Configuration } from "cloudinary-core";
-import { formatObject, normalizeObject, pick, omit, merge } from "../utils";
+import { formatObject, normalizeObject, pick, omit } from "../utils";
 
 export const configuration = Configuration.CONFIG_PARAMS.map(Util.camelCase);
 export const transformation = Transformation.PARAM_NAMES.map(

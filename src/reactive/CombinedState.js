@@ -56,10 +56,11 @@ export class CombinedState {
           didStatePushedEmpty = true;
           return;
         }
-        this.chunkedState.next(currentState =>
-          currentState.indexOf(last) >= 0
-            ? currentState.map(chunk => (chunk === last ? (last = v) : chunk))
-            : currentState.concat([(last = v)])
+        this.chunkedState.next(
+          currentState =>
+            currentState.indexOf(last) >= 0
+              ? currentState.map(chunk => (chunk === last ? (last = v) : chunk))
+              : currentState.concat([(last = v)])
         );
       },
       error: () => {

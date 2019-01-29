@@ -1,6 +1,6 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
-import { merge, equal, find, range } from "../utils";
+import { merge, equal, find, range, assign } from "../utils";
 import { CombinedState } from "../reactive/CombinedState";
 import {
   normalizeTransformation,
@@ -9,8 +9,10 @@ import {
 } from "../helpers/attributes";
 import { evalBreakpoints } from "../helpers/evalBreakpoints";
 import { getResizeTransformation } from "../helpers/getResizeTransformation";
-import { watchElementSize } from "../helpers/watchElementSize";
 import { combineOptions } from "../helpers/combineOptions";
+import { BehaviourGroup } from "../behaviours/BehaviourGroup";
+import { Resizing } from "../behaviours/Resizing";
+import { Mounting } from "../behaviours/Mounting";
 
 /**
  * Cloudinary image element
@@ -104,25 +106,6 @@ export default {
         this.size,
         evalBreakpoints(this.breakpoints)
       );
-    },
-    startWatchingSize() {
-      if (!this._stopWatchingSize) {
-        this._stopWatchingSize = watchElementSize(this.$el, size =>
-          this.resize(size)
-        );
-      }
-    },
-    stopWatchingSize() {
-      if (this._stopWatchingSize) {
-        this._stopWatchingSize();
-        this._stopWatchingSize = null;
-      }
-    },
-    resize(size) {
-      if (!equal(this.size, size)) {
-        this.size = size;
-        this.$forceUpdate();
-      }
     }
   },
   computed: {
@@ -193,12 +176,17 @@ export default {
       }
     });
 
-    if (
-      !this.CLDContextState &&
-      (!this.$slots || !this.$slots.default || !this.$slots.default.length)
-    ) {
-      this.ready = true;
-    }
+    this.behaviours = new BehaviourGroup(
+      { resizing: Resizing, mounting: Mounting },
+      this,
+      ({ ready, data }) => {
+        this.ready = ready;
+        assign(this, data);
+        this.$forceUpdate();
+      }
+    );
+
+    this.behaviours.onCreated();
   },
   updated() {
     const prev = this.ownState.get();
@@ -207,24 +195,10 @@ export default {
       this.ownState.next(current);
     }
 
-    if (this.ready) {
-      if (this.responsiveMode === "none") {
-        if (this.stopWatchingSize) {
-          this.stopWatchingSize();
-        }
-      } else {
-        this.startWatchingSize();
-      }
-    }
+    this.behaviours.onUpdated();
   },
   mounted() {
-    if (this.ready) {
-      if (this.responsiveMode !== "none") {
-        this.startWatchingSize();
-      }
-    } else {
-      this.ready = true;
-    }
+    this.behaviours.onMounted();
   },
   destroyed() {
     this.attrsCombinedStateSub();
@@ -235,9 +209,7 @@ export default {
       this.contextState.complete();
     }
 
-    if (this.stopWatchingSize) {
-      this.stopWatchingSize();
-    }
+    this.behaviours.onDestroyed();
   }
 };
 </script>

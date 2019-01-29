@@ -1,7 +1,7 @@
 export function findBreakpoint(stops, value) {
   return stops
     .concat([])
-    .sort()
+    .sort((a, b) => a - b)
     .filter(stop => stop >= value)
     .concat(stop)[0];
 }

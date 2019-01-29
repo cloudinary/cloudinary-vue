@@ -8,3 +8,4 @@ export { equal } from "./equal";
 export { uniq } from "./uniq";
 export { debounce } from "./debounce";
 export { find } from "./find";
+export { range } from "./range";

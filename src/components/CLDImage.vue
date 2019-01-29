@@ -1,6 +1,6 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
-import { merge, equal, find } from "../utils";
+import { merge, equal, find, range } from "../utils";
 import { CombinedState } from "../reactive/CombinedState";
 import {
   normalizeTransformation,
@@ -48,49 +48,7 @@ export default {
      */
     breakpoints: {
       type: [Array, Function, String],
-      default() {
-        return [
-          100,
-          200,
-          300,
-          400,
-          500,
-          600,
-          700,
-          800,
-          900,
-          1000,
-          1100,
-          1200,
-          1300,
-          1400,
-          1500,
-          1600,
-          1700,
-          1800,
-          1900,
-          2000,
-          2100,
-          2200,
-          2300,
-          2400,
-          2500,
-          2600,
-          2700,
-          2800,
-          2900,
-          3000,
-          3100,
-          3200,
-          3300,
-          3400,
-          3500,
-          3600,
-          3700,
-          3800,
-          3900
-        ];
-      }
+      default: () => range(100, 4000, 100)
     },
     /**
      * If true sets an additional flag in a request path that indicates that

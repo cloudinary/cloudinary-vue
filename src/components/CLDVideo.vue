@@ -13,7 +13,7 @@ import {
 } from "../helpers/combineOptions";
 
 /**
- * Cloudinary image element
+ * Cloudinary video element
  */
 export default {
   name: "CLDVideo",

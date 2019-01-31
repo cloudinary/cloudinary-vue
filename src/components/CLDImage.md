@@ -80,8 +80,7 @@ Compare:
       <td align="center">
         <CLDImage cloudName="demo" publicId="small_dinosaur">
           <CLDTransformation effect="blur:300" />
-          <CLDTransformation crop="scale" />
-          <CLDTransformation width="100" />
+          <CLDTransformation crop="scale" width="100" />
         </CLDImage>
       </td>
     </tr>
@@ -120,10 +119,7 @@ You can specify `CLDImage`'s transformations also by setting transformation for 
 Responsive mode, but adjusting to height:
 
 ```jsx
-<div
-  class="explain"
-  style="height: 75px; border-top: 3px solid black; border-bottom: 3px solid black;"
->
+<div class="explain" style="height: 75px; padding: 20px;">
   <CLDImage cloudName="demo" publicId="small_dinosaur" responsive="height">
     <CLDTransformation effect="sepia:95" />
   </CLDImage>

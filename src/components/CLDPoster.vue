@@ -12,7 +12,7 @@ import {
 } from "../helpers/attributes";
 
 /**
- * Cloudinary image element
+ * Cloudinary poster for video element
  */
 export default {
   name: "CLDPoster",

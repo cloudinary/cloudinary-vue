@@ -1,3 +1,5 @@
+import { assign } from "../utils";
+
 export class BehaviourGroup {
   /**
    *
@@ -5,12 +7,15 @@ export class BehaviourGroup {
    * @param {Vue} vueInstance
    * @param {Function} setState
    */
-  constructor(behaviours, vueInstance, setState) {
+  constructor(behaviours, vueInstance) {
     const behavioursNames = Object.keys(behaviours);
 
     const readySwitches = behavioursNames
       ? behavioursNames.map(() => false)
       : [];
+
+    const ready = () =>
+      readySwitches.reduce((result, ready) => (result ? ready : false), true);
 
     this.behaviours = behaviours
       ? behavioursNames.map(
@@ -20,13 +25,11 @@ export class BehaviourGroup {
                 readySwitches[i] = update.ready;
               }
 
-              setState({
-                ready: readySwitches.reduce(
-                  (result, ready) => (result ? ready : false),
-                  true
-                ),
-                data: update.data === undefined ? {} : update.data
-              });
+              if (vueInstance.ready !== ready()) {
+                vueInstance.ready = ready();
+              }
+              assign(vueInstance, update.data === undefined ? {} : update.data);
+              vueInstance.$forceUpdate();
             })
         )
       : {};
@@ -35,13 +38,10 @@ export class BehaviourGroup {
       this[behavioursNames[i]] = behaviour;
     });
 
-    setState({
-      ready: readySwitches.reduce(
-        (result, ready) => (result ? ready : false),
-        true
-      ),
-      data: {}
-    });
+    if (vueInstance.ready !== ready()) {
+      vueInstance.ready = ready();
+      vueInstance.$forceUpdate();
+    }
   }
 
   onCreated() {

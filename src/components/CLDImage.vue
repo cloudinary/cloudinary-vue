@@ -13,6 +13,9 @@ import { combineOptions } from "../helpers/combineOptions";
 import { BehaviourGroup } from "../behaviours/BehaviourGroup";
 import { Resizing } from "../behaviours/Resizing";
 import { Mounting } from "../behaviours/Mounting";
+import { CombineWithContext } from "../behaviours/CombineWithContext";
+import { MaterializeCombinedState } from "../behaviours/MaterializeCombinedState";
+import { CombineWithOwn } from "../behaviours/CombineWithOwn";
 
 /**
  * Cloudinary image element
@@ -157,58 +160,26 @@ export default {
     }
   },
   created() {
-    if (this.CLDContextState) {
-      this.contextState = this.attrsCombinedState.spawn();
-      this.contextStateSub = this.CLDContextState.subscribe({
-        next: v => {
-          this.contextState.next(v);
-        }
-      });
-    }
-
-    this.ownState = this.attrsCombinedState.spawn();
-    const current = this.getOwnCLDAttrs();
-    this.ownState.next(current);
-
-    this.attrsCombinedStateSub = this.attrsCombinedState.subscribe({
-      next: v => {
-        this.attrsCombined = v;
-      }
-    });
-
     this.behaviours = new BehaviourGroup(
-      { resizing: Resizing, mounting: Mounting },
-      this,
-      ({ ready, data }) => {
-        this.ready = ready;
-        assign(this, data);
-        this.$forceUpdate();
-      }
+      {
+        mounting: Mounting,
+        resizing: Resizing,
+        context: CombineWithContext,
+        own: CombineWithOwn,
+        materialize: MaterializeCombinedState
+      },
+      this
     );
 
     this.behaviours.onCreated();
   },
   updated() {
-    const prev = this.ownState.get();
-    const current = this.getOwnCLDAttrs();
-    if (!equal(prev, current)) {
-      this.ownState.next(current);
-    }
-
     this.behaviours.onUpdated();
   },
   mounted() {
     this.behaviours.onMounted();
   },
   destroyed() {
-    this.attrsCombinedStateSub();
-    this.ownState.complete();
-
-    if (this.contextStateSub) {
-      this.contextStateSub();
-      this.contextState.complete();
-    }
-
     this.behaviours.onDestroyed();
   }
 };

@@ -11,6 +11,12 @@ import {
   combineOptions,
   combineTransformations
 } from "../helpers/combineOptions";
+import { BehaviourGroup } from "../behaviours/BehaviourGroup";
+import { Resizing } from "../behaviours/Resizing";
+import { Mounting } from "../behaviours/Mounting";
+import { CombineWithContext } from "../behaviours/CombineWithContext";
+import { MaterializeCombinedState } from "../behaviours/MaterializeCombinedState";
+import { CombineWithOwn } from "../behaviours/CombineWithOwn";
 
 /**
  * Cloudinary image element
@@ -148,24 +154,17 @@ export default {
     }
   },
   created() {
-    if (this.CLDContextState) {
-      this.contextState = this.attrsCombinedState.spawn();
-      this.contextStateSub = this.CLDContextState.subscribe({
-        next: v => {
-          this.contextState.next(v);
-        }
-      });
-    }
+    this.behaviours = new BehaviourGroup(
+      {
+        mounting: Mounting,
+        context: CombineWithContext,
+        own: CombineWithOwn,
+        materialize: MaterializeCombinedState
+      },
+      this
+    );
 
-    this.ownState = this.attrsCombinedState.spawn();
-    const current = this.getOwnCLDAttrs();
-    this.ownState.next(current);
-
-    this.attrsCombinedStateSub = this.attrsCombinedState.subscribe({
-      next: v => {
-        this.attrsCombined = v;
-      }
-    });
+    this.behaviours.onCreated();
 
     this.posterCombinedStateSub = this.posterCombinedState.subscribe({
       next: v => {
@@ -174,26 +173,15 @@ export default {
     });
   },
   updated() {
-    const prev = this.ownState.get();
-    const current = this.getOwnCLDAttrs();
-    if (!equal(prev, current)) {
-      this.ownState.next(current);
-    }
+    this.behaviours.onUpdated();
   },
   mounted() {
-    if (!this.ready) {
-      this.ready = true;
-    }
+    this.behaviours.onMounted();
   },
   destroyed() {
-    this.attrsCombinedStateSub();
     this.posterCombinedStateSub();
-    this.ownState.complete();
 
-    if (this.contextStateSub) {
-      this.contextStateSub();
-      this.contextState.complete();
-    }
+    this.behaviours.onDestroyed();
   }
 };
 </script>

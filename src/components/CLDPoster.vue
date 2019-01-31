@@ -10,6 +10,9 @@ import {
   normalizeTransformation,
   normalizeConfiguration
 } from "../helpers/attributes";
+import { BehaviourGroup } from "../behaviours/BehaviourGroup";
+import { CombineWithContext } from "../behaviours/CombineWithContext";
+import { CombineWithOwn } from "../behaviours/CombineWithOwn";
 
 /**
  * Cloudinary image element
@@ -27,7 +30,8 @@ export default {
         return this.CLDGlobalContextState ? this.CLDGlobalContextState : null;
       }
     },
-    CLDPosterStateOfVideoTag: {}
+    CLDPosterStateOfVideoTag: {},
+    attrsCombinedState: { from: "CLDPosterStateOfVideoTag" }
   },
   provide() {
     return {
@@ -35,7 +39,7 @@ export default {
     };
   },
   methods: {
-    getOwnAttrs() {
+    getOwnCLDAttrs() {
       return {
         publicId: this.publicId,
         configuration: normalizeConfiguration(this.$attrs),
@@ -44,32 +48,21 @@ export default {
     }
   },
   created() {
-    if (this.CLDContextState) {
-      this.contextState = this.CLDPosterStateOfVideoTag.spawn();
-      this.contextStateSub = this.CLDContextState.subscribe({
-        next: v => {
-          this.contextState.next(v);
-        }
-      });
-    }
+    this.behaviours = new BehaviourGroup(
+      { context: CombineWithContext, own: CombineWithOwn },
+      this
+    );
 
-    this.ownState = this.CLDPosterStateOfVideoTag.spawn();
-    this.ownState.next(this.getOwnAttrs());
+    this.behaviours.onCreated();
   },
   updated() {
-    const prev = this.ownState.get();
-    const current = this.getOwnAttrs();
-    if (!equal(prev, current)) {
-      this.ownState.next(current);
-    }
+    this.behaviours.onUpdated();
+  },
+  mounted() {
+    this.behaviours.onMounted();
   },
   destroyed() {
-    this.ownState.complete();
-
-    if (this.contextStateSub) {
-      this.contextStateSub();
-      this.contextState.complete();
-    }
+    this.behaviours.onDestroyed();
   }
 };
 </script>

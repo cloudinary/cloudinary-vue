@@ -9,6 +9,10 @@ import { equal, merge } from "../utils";
 import { CombinedState } from "../reactive/CombinedState";
 import { normalizeConfiguration, normalizeRest } from "../helpers/attributes";
 import { combineOptions } from "../helpers/combineOptions";
+import { BehaviourGroup } from "../behaviours/BehaviourGroup";
+import { CombineWithContext } from "../behaviours/CombineWithContext";
+import { MaterializeCombinedState } from "../behaviours/MaterializeCombinedState";
+import { CombineWithOwn } from "../behaviours/CombineWithOwn";
 
 /**
  * Cloudinary context providing element
@@ -26,16 +30,13 @@ export default {
   },
   provide() {
     return {
-      CLDContextState: this.combinedState
+      CLDContextState: this.attrsCombinedState
     };
   },
   methods: {
     getOwnCLDAttrs() {
       return {
-        configuration: merge(
-          normalizeConfiguration(this),
-          normalizeConfiguration(this.$attrs)
-        )
+        configuration: normalizeConfiguration(this.$attrs)
       };
     }
   },
@@ -45,53 +46,30 @@ export default {
     }
   },
   data() {
-    const combinedState = new CombinedState(combineOptions);
+    const attrsCombinedState = new CombinedState(combineOptions);
     return {
-      combinedState,
-      allAttrsCombined: combinedState.get()
+      attrsCombinedState
     };
   },
   created() {
-    if (this.CLDContextState) {
-      this.contextState = this.combinedState.spawn();
-      this.contextStateSub = this.CLDContextState.subscribe({
-        next: v => {
-          // console.log("Context:parent", JSON.stringify(v));
-          this.contextState.next(v);
-        }
-      });
-    }
+    this.behaviours = new BehaviourGroup(
+      {
+        context: CombineWithContext,
+        own: CombineWithOwn
+      },
+      this
+    );
 
-    this.ownState = this.combinedState.spawn();
-    const current = this.getOwnCLDAttrs();
-    // console.log("Context:own", JSON.stringify(current));
-    this.ownState.next(current);
-
-    this.combinedStateSub = this.combinedState.subscribe({
-      next: v => {
-        // console.log("Context:all", JSON.stringify(v));
-        this.allAttrsCombined = v;
-      }
-    });
+    this.behaviours.onCreated();
   },
   updated() {
-    const prev = this.ownState.get();
-    const current = this.getOwnCLDAttrs();
-    if (!equal(prev, current)) {
-      // console.log("Context:own", JSON.stringify(current));
-      this.ownState.next(current);
-    }
+    this.behaviours.onUpdated();
+  },
+  mounted() {
+    this.behaviours.onMounted();
   },
   destroyed() {
-    this.combinedStateSub();
-    this.ownState.complete();
-
-    if (this.contextStateSub) {
-      this.contextStateSub();
-    }
-    if (this.contextState) {
-      this.contextState.complete();
-    }
+    this.behaviours.onDestroyed();
   }
 };
 </script>

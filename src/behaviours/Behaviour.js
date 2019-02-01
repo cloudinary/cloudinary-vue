@@ -1,16 +1,19 @@
 export class Behaviour {
-  constructor(vueInstance, setState) {
-    this.vueInstance = vueInstance;
-    this.setState = setState;
-    this.mounted = false;
+  constructor(vue, state) {
+    this.vue = vue;
+    this.state = state;
   }
 
-  setReady(ready) {
-    this.setState({ ready });
+  next(value) {
+    return this.state.next(value);
   }
 
-  setData(data) {
-    this.setState({ data });
+  error(error) {
+    return this.state.error(error);
+  }
+
+  complete() {
+    return this.state.complete();
   }
 
   onCreated() {
@@ -22,10 +25,10 @@ export class Behaviour {
   }
 
   onMounted() {
-    this.mounted = true;
+    return;
   }
 
   onDestroyed() {
-    this.mounted = false;
+    return;
   }
 }

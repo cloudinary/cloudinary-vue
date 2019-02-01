@@ -148,7 +148,6 @@ export default {
         });
         const mimeType = "video/" + (srcType === "ogv" ? "ogg" : srcType);
 
-        // console.log({ srcType, configuration, transformation, src });
         return { mimeType, src };
       });
     }

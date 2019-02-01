@@ -6,19 +6,16 @@ export class Mounting extends Behaviour {
     // potential CLDTransformations
     // not created yet
     if (
-      !this.vueInstance.CLDContextState &&
-      (!this.vueInstance.$slots ||
-        !this.vueInstance.$slots.default ||
-        !this.vueInstance.$slots.default.length)
+      !this.vue.CLDContextState &&
+      (!this.vue.$slots ||
+        !this.vue.$slots.default ||
+        !this.vue.$slots.default.length)
     ) {
-      this.setReady(true);
+      this.next({ ready: true });
     }
   }
-  onMounted() {
-    this.setReady(true);
-  }
 
-  onDestroyed() {
-    this.setReady(false);
+  onMounted() {
+    this.next({ ready: true });
   }
 }

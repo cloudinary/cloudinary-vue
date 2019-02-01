@@ -2,11 +2,16 @@ import { Behaviour } from "./Behaviour";
 
 export class MaterializeCombinedState extends Behaviour {
   onCreated() {
-    this.setReady(true);
+    if (this.vue.attrsCombinedState === undefined) {
+      throw new Error(
+        "Component does not contain required attrsCombinedState object"
+      );
+    }
+    this.next({ ready: true });
 
-    this.attrsCombinedStateSub = this.vueInstance.attrsCombinedState.subscribe({
+    this.attrsCombinedStateSub = this.vue.attrsCombinedState.subscribe({
       next: v => {
-        this.vueInstance.attrsCombined = v;
+        this.vue.attrsCombined = v;
       }
     });
   }

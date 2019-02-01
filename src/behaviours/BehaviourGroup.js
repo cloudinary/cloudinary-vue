@@ -1,47 +1,46 @@
-import { assign } from "../utils";
+import { assign, merge } from "../utils";
+import { CombinedState } from "../reactive/CombinedState";
 
 export class BehaviourGroup {
   /**
    *
    * @param {Array} behaviours
-   * @param {Vue} vueInstance
-   * @param {Function} setState
+   * @param {Vue} vue
    */
-  constructor(behaviours, vueInstance) {
-    const behavioursNames = Object.keys(behaviours);
+  constructor(behaviours, vue) {
+    const behavioursNames = behaviours ? Object.keys(behaviours) : [];
 
-    const readySwitches = behavioursNames
-      ? behavioursNames.map(() => false)
-      : [];
+    const behaviourStates = new CombinedState(function() {
+      const states = Array.prototype.slice.call(arguments, 0);
+      return {
+        ready:
+          states.length != behavioursNames.length
+            ? false
+            : states
+                .map(_ => !!_.ready)
+                .reduce((result, ready) => (result ? ready : false), true),
+        data: merge.apply(this, states.map(_ => _.data || {}))
+      };
+    });
 
-    const ready = () =>
-      readySwitches.reduce((result, ready) => (result ? ready : false), true);
+    this.behaviourStatesSub = behaviourStates.subscribe({
+      next: state => {
+        vue.ready = state.ready;
+        assign(vue, state.data);
+        vue.$forceUpdate();
+      }
+    });
 
-    this.behaviours = behaviours
-      ? behavioursNames.map(
-          (name, i) =>
-            new behaviours[name](vueInstance, update => {
-              if (update.ready !== undefined) {
-                readySwitches[i] = update.ready;
-              }
-
-              if (vueInstance.ready !== ready()) {
-                vueInstance.ready = ready();
-              }
-              assign(vueInstance, update.data === undefined ? {} : update.data);
-              vueInstance.$forceUpdate();
-            })
-        )
+    this.behaviours = behavioursNames.length
+      ? behavioursNames.map((name, i) => {
+          const behaviourState = behaviourStates.spawn();
+          return new behaviours[name](vue, behaviourState);
+        })
       : {};
 
     this.behaviours.forEach((behaviour, i) => {
       this[behavioursNames[i]] = behaviour;
     });
-
-    if (vueInstance.ready !== ready()) {
-      vueInstance.ready = ready();
-      vueInstance.$forceUpdate();
-    }
   }
 
   onCreated() {
@@ -58,5 +57,6 @@ export class BehaviourGroup {
 
   onDestroyed() {
     this.behaviours.forEach(behaviour => behaviour.onDestroyed());
+    this.behaviourStatesSub();
   }
 }

@@ -3,20 +3,25 @@ import { Behaviour } from "./Behaviour";
 
 export class CombineWithOwn extends Behaviour {
   onCreated() {
-    if (this.vueInstance.getOwnCLDAttrs === undefined) {
+    if (this.vue.getOwnCLDAttrs === undefined) {
       throw new Error(
         "Component does not define required getOwnCLDAttrs method"
       );
     }
-    this.setReady(true);
+    if (this.vue.attrsCombinedState === undefined) {
+      throw new Error(
+        "Component does not contain required attrsCombinedState object"
+      );
+    }
+    this.next({ ready: true });
 
-    this.ownState = this.vueInstance.attrsCombinedState.spawn();
-    this.ownState.next(this.vueInstance.getOwnCLDAttrs());
+    this.ownState = this.vue.attrsCombinedState.spawn();
+    this.ownState.next(this.vue.getOwnCLDAttrs());
   }
 
   onUpdated() {
     const prev = this.ownState.get();
-    const current = this.vueInstance.getOwnCLDAttrs();
+    const current = this.vue.getOwnCLDAttrs();
     if (!equal(prev, current)) {
       this.ownState.next(current);
     }

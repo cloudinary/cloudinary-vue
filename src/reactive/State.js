@@ -20,7 +20,7 @@ export class State {
 
   /**
    * Push a new state to all active listeners
-   * @param {*} state
+   * @param {Function|*} state
    * @returns {undefined}
    */
   next(value) {

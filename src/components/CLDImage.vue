@@ -16,6 +16,7 @@ import { Mounting } from "../behaviours/Mounting";
 import { CombineWithContext } from "../behaviours/CombineWithContext";
 import { MaterializeCombinedState } from "../behaviours/MaterializeCombinedState";
 import { CombineWithOwn } from "../behaviours/CombineWithOwn";
+import { Lazy } from "../behaviours/Lazy";
 
 /**
  * Cloudinary image element
@@ -60,6 +61,15 @@ export default {
      * [Cloudinary should generate a JPEG using the progressive (interlaced) JPEG format](https://cloudinary.com/documentation/transformation_flags#delivery_and_image_format_flags)
      */
     progressive: {
+      type: Boolean,
+      default: false
+    },
+    /**
+     * If set to true activates a behaviour
+     * where the image is not loaded
+     * unless the HTML element is visible on page
+     */
+    lazy: {
       type: Boolean,
       default: false
     }
@@ -157,6 +167,9 @@ export default {
             "": "width"
           }[this.responsive]
         : "none";
+    },
+    lazyMode() {
+      return this.lazy ? "lazy" : "none";
     }
   },
   created() {
@@ -166,7 +179,8 @@ export default {
         resizing: Resizing,
         context: CombineWithContext,
         own: CombineWithOwn,
-        materialize: MaterializeCombinedState
+        materialize: MaterializeCombinedState,
+        lazy: Lazy
       },
       this
     );

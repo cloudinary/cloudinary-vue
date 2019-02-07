@@ -32,7 +32,7 @@ export class BehaviourGroup {
     });
 
     this.behaviours = behavioursNames.length
-      ? behavioursNames.map((name, i) => {
+      ? behavioursNames.map(name => {
           const behaviourState = behaviourStates.spawn();
           return new behaviours[name](vue, behaviourState);
         })

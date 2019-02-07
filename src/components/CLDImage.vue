@@ -1,6 +1,6 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
-import { merge, equal, find, range, assign } from "../utils";
+import { merge, find, range } from "../utils";
 import { CombinedState } from "../reactive/CombinedState";
 import {
   normalizeTransformation,

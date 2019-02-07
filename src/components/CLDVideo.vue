@@ -1,6 +1,6 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
-import { merge, equal, kv, find, pick } from "../utils";
+import { merge, kv, find } from "../utils";
 import { CombinedState } from "../reactive/CombinedState";
 import {
   normalizeTransformation,
@@ -12,7 +12,6 @@ import {
   combineTransformations
 } from "../helpers/combineOptions";
 import { BehaviourGroup } from "../behaviours/BehaviourGroup";
-import { Resizing } from "../behaviours/Resizing";
 import { Mounting } from "../behaviours/Mounting";
 import { CombineWithContext } from "../behaviours/CombineWithContext";
 import { MaterializeCombinedState } from "../behaviours/MaterializeCombinedState";
@@ -113,13 +112,13 @@ export default {
         typeof this.$attrs.poster === "string"
           ? { poster: this.$attrs.poster }
           : this.posterOptions
-          ? {
-              poster: Cloudinary.new(this.posterOptions.configuration).url(
-                this.posterOptions.publicId,
-                this.posterOptions.transformation
-              )
-            }
-          : {},
+            ? {
+                poster: Cloudinary.new(this.posterOptions.configuration).url(
+                  this.posterOptions.publicId,
+                  this.posterOptions.transformation
+                )
+              }
+            : {},
         Transformation.new(this.attrsCombined.transformation).toHtmlAttributes()
       );
 

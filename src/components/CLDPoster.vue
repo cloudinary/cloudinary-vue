@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import { equal } from "../utils";
 import {
   normalizeTransformation,
   normalizeConfiguration

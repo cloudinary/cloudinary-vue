@@ -1,4 +1,4 @@
-import { merge, omit, flatten } from "../utils";
+import { merge } from "../utils";
 
 export function combineOptions(...options) {
   const publicId = merge.apply(this, options).publicId;

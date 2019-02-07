@@ -5,13 +5,11 @@
 </template>
 
 <script>
-import { equal, merge } from "../utils";
 import { CombinedState } from "../reactive/CombinedState";
 import { normalizeConfiguration, normalizeRest } from "../helpers/attributes";
 import { combineOptions } from "../helpers/combineOptions";
 import { BehaviourGroup } from "../behaviours/BehaviourGroup";
 import { CombineWithContext } from "../behaviours/CombineWithContext";
-import { MaterializeCombinedState } from "../behaviours/MaterializeCombinedState";
 import { CombineWithOwn } from "../behaviours/CombineWithOwn";
 
 /**

@@ -1,4 +1,4 @@
-import { Cloudinary, Transformation } from "cloudinary-core";
+import { Cloudinary } from "cloudinary-core";
 import { combineOptions } from "./combineOptions";
 
 export function getPlaceholderURL(options, mode) {

@@ -143,8 +143,9 @@ The feature is backed by `IntersectionObserver` and behaviour will be disabled i
     publicId="small_dinosaur"
     lazy
     v-on:load.native="alert"
+    placeholder="color"
   >
-    <CLDTransformation crop="scale" :height="100" />
+    <CLDTransformation crop="scale" :height="1000" />
   </CLDImage>
 </template>
 

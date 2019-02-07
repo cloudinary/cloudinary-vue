@@ -72,6 +72,12 @@ export default {
     lazy: {
       type: Boolean,
       default: false
+    },
+    /**
+     */
+    placeholder: {
+      type: String,
+      default: ""
     }
   },
   inject: {
@@ -119,6 +125,42 @@ export default {
         this.size,
         evalBreakpoints(this.breakpoints)
       );
+    },
+    getPlaceholder() {
+      return (
+        {
+          lqip: Cloudinary.new(this.attrsCombined.configuration).url(
+            this.publicId,
+            this.attrsCombined.transformation.concat({
+              rawTransformation: "$nw_iw,w_20,q_20/w_$nw"
+            })
+          ),
+          color: Cloudinary.new(this.attrsCombined.configuration).url(
+            this.publicId,
+            {
+              transformation: this.attrsCombined.transformation
+                // .concat({
+                //   rawTransformation: "$nh_ih,$nw_iw,w_1,h_1,q_20/w_$nw,h_$nh"
+                // })
+                .concat([
+                  {
+                    variables: [["nh", "ih"], ["nw", "iw"]],
+                    width: "1",
+                    height: "1",
+                    quality: 20
+                  },
+                  { width: "$nw", height: "nh" }
+                ])
+            }
+          ),
+          pixelate: Cloudinary.new(this.attrsCombined.configuration).url(
+            this.publicId,
+            this.attrsCombined.transformation.concat({
+              rawTransformation: "e_pixelate:100"
+            })
+          )
+        }[this.placeholder] || this.placeholder
+      );
     }
   },
   computed: {
@@ -135,7 +177,15 @@ export default {
         find(this.attrsCombined.transformation, t => t.width === 0) ||
         find(this.attrsCombined.transformation, t => t.height === 0)
       ) {
-        return { class: className };
+        return {
+          class: className,
+          attrs:
+            this.publicId && this.placeholder
+              ? {
+                  src: this.getPlaceholder()
+                }
+              : {}
+        };
       }
 
       const htmlAttrs = Transformation.new({

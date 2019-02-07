@@ -81,4 +81,57 @@ describe("CLDVideo", () => {
     expect(video.is("video")).toBe(true);
     expect(sourcesOfVideo(video)).toEqual({});
   });
+
+  it("respects simple poster attribute", async () => {
+    const video = mount({
+      template: `
+        <CLDVideo cloudName="demo" publicId="face_top" poster="zxc" />
+      `,
+      components: { CLDVideo }
+    });
+
+    await new Promise(r => Vue.nextTick(() => r()));
+
+    expect(video.is("video")).toBe(true);
+    expect(video.attributes("poster")).toBe("zxc");
+  });
+
+  it("respects poster object-attribute", async () => {
+    const video = mount({
+      template: `
+        <CLDVideo
+          cloudName="demo"
+          publicId="face_top"
+          :poster="{ publicId: 'small_dinosaur', effect: 'blur' }"
+        />
+      `,
+      components: { CLDVideo }
+    });
+
+    await new Promise(r => Vue.nextTick(() => r()));
+
+    expect(video.is("video")).toBe(true);
+    expect(video.attributes("poster")).toBe(
+      "http://res.cloudinary.com/demo/image/upload/e_blur/small_dinosaur"
+    );
+  });
+
+  it("will contain default poster if no poster data is provided", async () => {
+    const video = mount({
+      template: `
+        <CLDVideo
+          cloudName="demo"
+          publicId="face_top"
+        />
+      `,
+      components: { CLDVideo }
+    });
+
+    await new Promise(r => Vue.nextTick(() => r()));
+
+    expect(video.is("video")).toBe(true);
+    expect(video.attributes("poster")).toBe(
+      "http://res.cloudinary.com/demo/image/upload/face_top"
+    );
+  });
 });

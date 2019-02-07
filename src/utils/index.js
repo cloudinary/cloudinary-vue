@@ -10,3 +10,4 @@ export { debounce } from "./debounce";
 export { find } from "./find";
 export { range } from "./range";
 export { assign } from "./assign";
+export { flatten } from "./flatten";

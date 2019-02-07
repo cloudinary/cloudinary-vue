@@ -111,13 +111,13 @@ export default {
                 .concat("progressive")
             })
           : this.$attrs;
+      const configuration = normalizeConfiguration(attrs);
+      const transformation = normalizeTransformation(attrs);
       const responsive = this.getResponsiveAttrs();
-      return {
-        configuration: normalizeConfiguration(attrs),
-        transformation: [normalizeTransformation(attrs)].concat(
-          responsive ? normalizeTransformation(responsive) : []
-        )
-      };
+      return combineOptions(
+        { configuration, transformation },
+        responsive ? { transformation: { transformation: [responsive] } } : {}
+      );
     },
     getResponsiveAttrs() {
       return getResizeTransformation(
@@ -174,8 +174,16 @@ export default {
       if (
         !this.ready ||
         !this.publicId ||
-        find(this.attrsCombined.transformation, t => t.width === 0) ||
-        find(this.attrsCombined.transformation, t => t.height === 0)
+        this.attrsCombined.width === 0 ||
+        this.attrsCombined.height === 0 ||
+        find(
+          this.attrsCombined.transformation.transformation || [],
+          t => t.width === 0
+        ) ||
+        find(
+          this.attrsCombined.transformation.transformation || [],
+          t => t.height === 0
+        )
       ) {
         return {
           class: className,

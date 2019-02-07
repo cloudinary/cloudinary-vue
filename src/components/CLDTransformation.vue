@@ -5,8 +5,9 @@
 </template>
 
 <script>
-import { equal } from "../utils";
+import { equal, omit } from "../utils";
 import { normalizeTransformation } from "../helpers/attributes";
+import { combineOptions } from "../helpers/combineOptions";
 
 /**
  * Cloudinary transformation modifier
@@ -39,7 +40,23 @@ export default {
   },
   methods: {
     getOwnAttrs() {
-      return { transformation: normalizeTransformation(this.$attrs) };
+      return combineOptions(
+        {
+          transformation: {
+            transformation: [
+              omit(normalizeTransformation(this.$attrs), ["transformation"])
+            ]
+          }
+        },
+        {
+          transformation: {
+            transformation: [
+              normalizeTransformation(this.$attrs).transformation
+            ]
+          }
+        }
+      );
+      return;
     }
   },
   created() {

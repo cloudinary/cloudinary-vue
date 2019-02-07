@@ -1,6 +1,6 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
-import { merge, equal, kv, find } from "../utils";
+import { merge, equal, kv, find, pick } from "../utils";
 import { CombinedState } from "../reactive/CombinedState";
 import {
   normalizeTransformation,
@@ -95,36 +95,37 @@ export default {
       if (
         !this.ready ||
         !this.publicId ||
-        find(this.attrsCombined.transformation, t => t.width === 0) ||
-        find(this.attrsCombined.transformation, t => t.height === 0)
+        this.attrsCombined.width === 0 ||
+        this.attrsCombined.height === 0 ||
+        find(
+          this.attrsCombined.transformation.transformation || [],
+          t => t.width === 0
+        ) ||
+        find(
+          this.attrsCombined.transformation.transformation || [],
+          t => t.height === 0
+        )
       ) {
         return { class: className };
       }
 
-      const htmlAttrs = Transformation.new({
-        transformation: this.attrsCombined.transformation
-      }).toHtmlAttributes();
-
-      const poster =
-        this.posterAttrsCombined &&
-        Object.keys(this.posterAttrsCombined).length > 0
-          ? Cloudinary.new(this.posterAttrsCombined.configuration).url(
-              this.posterAttrsCombined.publicId,
-              { transformation: this.posterAttrsCombined.transformation }
-            )
-          : undefined;
+      const htmlAttrs = merge(
+        typeof this.$attrs.poster === "string"
+          ? { poster: this.$attrs.poster }
+          : this.posterOptions
+          ? {
+              poster: Cloudinary.new(this.posterOptions.configuration).url(
+                this.posterOptions.publicId,
+                this.posterOptions.transformation
+              )
+            }
+          : {},
+        Transformation.new(this.attrsCombined.transformation).toHtmlAttributes()
+      );
 
       return {
         class: className,
-        attrs: merge(
-          normalizeRest(this.$attrs),
-          htmlAttrs,
-          poster
-            ? {
-                poster
-              }
-            : {}
-        )
+        attrs: merge(normalizeRest(this.$attrs), htmlAttrs)
       };
     },
     sources() {
@@ -150,6 +151,36 @@ export default {
 
         return { mimeType, src };
       });
+    },
+    posterOptions() {
+      const ownPosterAttrs = combineOptions(
+        { configuration: this.attrsCombined.configuration },
+        {
+          publicId:
+            typeof this.$attrs.poster === "object"
+              ? (this.$attrs.poster || {}).publicId
+              : null,
+          configuration: normalizeConfiguration(
+            typeof this.$attrs.poster === "object" && this.$attrs.poster
+              ? this.$attrs.poster
+              : {}
+          ),
+          transformation: normalizeTransformation(
+            typeof this.$attrs.poster === "object" && this.$attrs.poster
+              ? this.$attrs.poster
+              : {}
+          )
+        }
+      );
+      const extPosterAttrs = this.posterAttrsCombined || {};
+      const defaultPoster = combineOptions(
+        { publicId: this.publicId },
+        this.attrsCombined
+      );
+      return find(
+        [extPosterAttrs, ownPosterAttrs, defaultPoster],
+        _ => _.publicId
+      );
     }
   },
   created() {

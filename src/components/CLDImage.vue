@@ -9,6 +9,7 @@ import {
 } from "../helpers/attributes";
 import { evalBreakpoints } from "../helpers/evalBreakpoints";
 import { getResizeTransformation } from "../helpers/getResizeTransformation";
+import { getPlaceholderURL } from "../helpers/getPlaceholderURL";
 import { combineOptions } from "../helpers/combineOptions";
 import { BehaviourGroup } from "../behaviours/BehaviourGroup";
 import { Resizing } from "../behaviours/Resizing";
@@ -125,42 +126,6 @@ export default {
         this.size,
         evalBreakpoints(this.breakpoints)
       );
-    },
-    getPlaceholder() {
-      return (
-        {
-          lqip: Cloudinary.new(this.attrsCombined.configuration).url(
-            this.publicId,
-            this.attrsCombined.transformation.concat({
-              rawTransformation: "$nw_iw,w_20,q_20/w_$nw"
-            })
-          ),
-          color: Cloudinary.new(this.attrsCombined.configuration).url(
-            this.publicId,
-            {
-              transformation: this.attrsCombined.transformation
-                // .concat({
-                //   rawTransformation: "$nh_ih,$nw_iw,w_1,h_1,q_20/w_$nw,h_$nh"
-                // })
-                .concat([
-                  {
-                    variables: [["nh", "ih"], ["nw", "iw"]],
-                    width: "1",
-                    height: "1",
-                    quality: 20
-                  },
-                  { width: "$nw", height: "nh" }
-                ])
-            }
-          ),
-          pixelate: Cloudinary.new(this.attrsCombined.configuration).url(
-            this.publicId,
-            this.attrsCombined.transformation.concat({
-              rawTransformation: "e_pixelate:100"
-            })
-          )
-        }[this.placeholder] || this.placeholder
-      );
     }
   },
   computed: {
@@ -190,7 +155,14 @@ export default {
           attrs:
             this.publicId && this.placeholder
               ? {
-                  src: this.getPlaceholder()
+                  src:
+                    getPlaceholderURL(
+                      combineOptions(
+                        { publicId: this.publicId },
+                        this.attrsCombined
+                      ),
+                      this.placeholder
+                    ) || this.placeholder
                 }
               : {}
         };

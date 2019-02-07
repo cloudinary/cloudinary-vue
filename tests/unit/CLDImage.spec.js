@@ -1,3 +1,4 @@
+import Vue from "vue";
 import { shallowMount, mount } from "@vue/test-utils";
 import CLDImage from "../../src/components/CLDImage.vue";
 
@@ -82,5 +83,79 @@ describe("CLDImage", () => {
     expect(image.attributes("src")).toEqual(
       `http://res.cloudinary.com/demo/image/upload/fl_progressive/face_top`
     );
+  });
+
+  describe("handles placeholder attribute", () => {
+    it("color", async () => {
+      const image = mount({
+        template: `
+          <CLDImage
+            cloudName="demo"
+            publicId="face_top"
+            placeholder="color"
+          >
+            <span /> <!-- this is to enforce async final image -->
+          </CLDImage>
+        `,
+        components: { CLDImage }
+      });
+      expect(image.is("img")).toBe(true);
+      expect(image.attributes("src")).toEqual(
+        `http://res.cloudinary.com/demo/image/upload/$nh_ih,$nw_iw,c_scale,q_1,w_1/c_scale,h_$nh,w_$nw/face_top`
+      );
+      await new Promise(r => Vue.nextTick(r));
+      expect(image.is("img")).toBe(true);
+      expect(image.attributes("src")).toEqual(
+        `http://res.cloudinary.com/demo/image/upload/face_top`
+      );
+    });
+
+    it("LQ", async () => {
+      const image = mount({
+        template: `
+          <CLDImage
+            cloudName="demo"
+            publicId="face_top"
+            placeholder="lqip"
+          >
+            <span /> <!-- this is to enforce async final image -->
+          </CLDImage>
+        `,
+        components: { CLDImage }
+      });
+      expect(image.is("img")).toBe(true);
+      expect(image.attributes("src")).toEqual(
+        `http://res.cloudinary.com/demo/image/upload/$nh_ih,$nw_iw,c_scale,q_auto,w_20/c_scale,h_$nh,w_$nw/face_top`
+      );
+      await new Promise(r => Vue.nextTick(r));
+      expect(image.is("img")).toBe(true);
+      expect(image.attributes("src")).toEqual(
+        `http://res.cloudinary.com/demo/image/upload/face_top`
+      );
+    });
+
+    it("pixelate", async () => {
+      const image = mount({
+        template: `
+          <CLDImage
+            cloudName="demo"
+            publicId="face_top"
+            placeholder="pixelate"
+          >
+            <span /> <!-- this is to enforce async final image -->
+          </CLDImage>
+        `,
+        components: { CLDImage }
+      });
+      expect(image.is("img")).toBe(true);
+      expect(image.attributes("src")).toEqual(
+        `http://res.cloudinary.com/demo/image/upload/e_pixelate:100/face_top`
+      );
+      await new Promise(r => Vue.nextTick(r));
+      expect(image.is("img")).toBe(true);
+      expect(image.attributes("src")).toEqual(
+        `http://res.cloudinary.com/demo/image/upload/face_top`
+      );
+    });
   });
 });

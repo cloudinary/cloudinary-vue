@@ -134,19 +134,41 @@ Released under the MIT license.
 
 ## Development
 
-### Compiles and minifies for production
+### Installation
+
+```
+// in repository folder
+npm i -g @vue/cli
+npm i
+```
+
+### Compile and minify for production
 
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### Documentation
+
+#### Run local styleguidist server
+
+```
+npm run styleguidist
+```
+
+#### Build styleguidist output
+
+```
+npm run styleguidist:build
+```
+
+### Lint files
 
 ```
 npm run lint
 ```
 
-### Run all unit tests
+### Run all tests
 
 ```
 npm t

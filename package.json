@@ -5,7 +5,8 @@
   "main": "dist/Cloudinary.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "npm run styleguide:build; vue-cli-service build --target lib --name Cloudinary src/index.js",
+    "build": "npm run styleguide:build; npm run lib:build",
+    "lib:build": "vue-cli-service build --target lib --name Cloudinary src/index.js",
     "lint": "vue-cli-service lint",
     "test": "vue-cli-service test:unit",
     "styleguide": "vue-styleguidist server",

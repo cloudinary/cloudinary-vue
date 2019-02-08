@@ -1,5 +1,5 @@
 export function merge() {
-  const args = Array.prototype.slice.call(arguments, 0);
+  const args = Array.prototype.slice.call(arguments, 0).filter(x => x != null);
   if (args.length === 0) {
     return {};
   }

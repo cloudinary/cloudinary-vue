@@ -125,3 +125,33 @@ Responsive mode, but adjusting to height:
   </CLDImage>
 </div>
 ```
+
+### Lazy mode
+
+Setting `lazy` attribute will make the component to not load an actual image file until the produced `img` HTML element is actually visible on screen.
+
+The feature is backed by `IntersectionObserver` and behaviour will be disabled if it is not available.
+
+```vue
+<template>
+  <CLDImage
+    cloudName="demo"
+    publicId="small_dinosaur"
+    lazy
+    v-on:load.native="alert"
+    placeholder="color"
+  >
+    <CLDTransformation crop="scale" :height="1000" />
+  </CLDImage>
+</template>
+
+<script>
+export default {
+  methods: {
+    alert() {
+      console.log("lazy image loaded");
+    }
+  }
+};
+</script>
+```

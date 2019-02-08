@@ -1,6 +1,6 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
-import { merge, equal, find, range } from "../utils";
+import { merge, find, range } from "../utils";
 import { CombinedState } from "../reactive/CombinedState";
 import {
   normalizeTransformation,
@@ -9,8 +9,15 @@ import {
 } from "../helpers/attributes";
 import { evalBreakpoints } from "../helpers/evalBreakpoints";
 import { getResizeTransformation } from "../helpers/getResizeTransformation";
-import { watchElementSize } from "../helpers/watchElementSize";
+import { getPlaceholderURL } from "../helpers/getPlaceholderURL";
 import { combineOptions } from "../helpers/combineOptions";
+import { BehaviourGroup } from "../behaviours/BehaviourGroup";
+import { Resizing } from "../behaviours/Resizing";
+import { Mounting } from "../behaviours/Mounting";
+import { CombineWithContext } from "../behaviours/CombineWithContext";
+import { MaterializeCombinedState } from "../behaviours/MaterializeCombinedState";
+import { CombineWithOwn } from "../behaviours/CombineWithOwn";
+import { Lazy } from "../behaviours/Lazy";
 
 /**
  * Cloudinary image element
@@ -57,6 +64,21 @@ export default {
     progressive: {
       type: Boolean,
       default: false
+    },
+    /**
+     * If set to true activates a behaviour
+     * where the image is not loaded
+     * unless the HTML element is visible on page
+     */
+    lazy: {
+      type: Boolean,
+      default: false
+    },
+    /**
+     */
+    placeholder: {
+      type: String,
+      default: ""
     }
   },
   inject: {
@@ -90,13 +112,13 @@ export default {
                 .concat("progressive")
             })
           : this.$attrs;
+      const configuration = normalizeConfiguration(attrs);
+      const transformation = normalizeTransformation(attrs);
       const responsive = this.getResponsiveAttrs();
-      return {
-        configuration: normalizeConfiguration(attrs),
-        transformation: [normalizeTransformation(attrs)].concat(
-          responsive ? normalizeTransformation(responsive) : []
-        )
-      };
+      return combineOptions(
+        { configuration, transformation },
+        responsive ? { transformation: { transformation: [responsive] } } : {}
+      );
     },
     getResponsiveAttrs() {
       return getResizeTransformation(
@@ -104,25 +126,6 @@ export default {
         this.size,
         evalBreakpoints(this.breakpoints)
       );
-    },
-    startWatchingSize() {
-      if (!this._stopWatchingSize) {
-        this._stopWatchingSize = watchElementSize(this.$el, size =>
-          this.resize(size)
-        );
-      }
-    },
-    stopWatchingSize() {
-      if (this._stopWatchingSize) {
-        this._stopWatchingSize();
-        this._stopWatchingSize = null;
-      }
-    },
-    resize(size) {
-      if (!equal(this.size, size)) {
-        this.size = size;
-        this.$forceUpdate();
-      }
     }
   },
   computed: {
@@ -136,10 +139,33 @@ export default {
       if (
         !this.ready ||
         !this.publicId ||
-        find(this.attrsCombined.transformation, t => t.width === 0) ||
-        find(this.attrsCombined.transformation, t => t.height === 0)
+        this.attrsCombined.width === 0 ||
+        this.attrsCombined.height === 0 ||
+        find(
+          this.attrsCombined.transformation.transformation || [],
+          t => t.width === 0
+        ) ||
+        find(
+          this.attrsCombined.transformation.transformation || [],
+          t => t.height === 0
+        )
       ) {
-        return { class: className };
+        return {
+          class: className,
+          attrs:
+            this.publicId && this.placeholder
+              ? {
+                  src:
+                    getPlaceholderURL(
+                      combineOptions(
+                        { publicId: this.publicId },
+                        this.attrsCombined
+                      ),
+                      this.placeholder
+                    ) || this.placeholder
+                }
+              : {}
+        };
       }
 
       const htmlAttrs = Transformation.new({
@@ -171,73 +197,34 @@ export default {
             "": "width"
           }[this.responsive]
         : "none";
+    },
+    lazyMode() {
+      return this.lazy ? "lazy" : "none";
     }
   },
   created() {
-    if (this.CLDContextState) {
-      this.contextState = this.attrsCombinedState.spawn();
-      this.contextStateSub = this.CLDContextState.subscribe({
-        next: v => {
-          this.contextState.next(v);
-        }
-      });
-    }
+    this.behaviours = new BehaviourGroup(
+      {
+        mounting: Mounting,
+        resizing: Resizing,
+        context: CombineWithContext,
+        own: CombineWithOwn,
+        materialize: MaterializeCombinedState,
+        lazy: Lazy
+      },
+      this
+    );
 
-    this.ownState = this.attrsCombinedState.spawn();
-    const current = this.getOwnCLDAttrs();
-    this.ownState.next(current);
-
-    this.attrsCombinedStateSub = this.attrsCombinedState.subscribe({
-      next: v => {
-        this.attrsCombined = v;
-      }
-    });
-
-    if (
-      !this.CLDContextState &&
-      (!this.$slots || !this.$slots.default || !this.$slots.default.length)
-    ) {
-      this.ready = true;
-    }
+    this.behaviours.onCreated();
   },
   updated() {
-    const prev = this.ownState.get();
-    const current = this.getOwnCLDAttrs();
-    if (!equal(prev, current)) {
-      this.ownState.next(current);
-    }
-
-    if (this.ready) {
-      if (this.responsiveMode === "none") {
-        if (this.stopWatchingSize) {
-          this.stopWatchingSize();
-        }
-      } else {
-        this.startWatchingSize();
-      }
-    }
+    this.behaviours.onUpdated();
   },
   mounted() {
-    if (this.ready) {
-      if (this.responsiveMode !== "none") {
-        this.startWatchingSize();
-      }
-    } else {
-      this.ready = true;
-    }
+    this.behaviours.onMounted();
   },
   destroyed() {
-    this.attrsCombinedStateSub();
-    this.ownState.complete();
-
-    if (this.contextStateSub) {
-      this.contextStateSub();
-      this.contextState.complete();
-    }
-
-    if (this.stopWatchingSize) {
-      this.stopWatchingSize();
-    }
+    this.behaviours.onDestroyed();
   }
 };
 </script>

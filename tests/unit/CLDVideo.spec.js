@@ -68,7 +68,7 @@ describe("CLDVideo", () => {
     expect(video.attributes("cloudName")).toBe(undefined);
   });
 
-  it("should render a src property with an undefined value if a src is not defined", async () => {
+  it("should render a video without sources if publicId is not defined", async () => {
     const video = mount({
       template: `
         <CLDVideo cloudName="demo" publicId="" />

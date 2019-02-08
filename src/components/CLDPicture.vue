@@ -18,17 +18,18 @@ import { MaterializeCombinedState } from "../behaviours/MaterializeCombinedState
 import { CombineWithOwn } from "../behaviours/CombineWithOwn";
 
 /**
- * Cloudinary image element
+ * Cloudinary picture element
  */
 export default {
-  name: "CLDVideo",
+  name: "CLDPicture",
   inheritAttrs: false,
   render(h) {
     return h(
-      "video",
-      this.videoAttrs,
+      "picture",
+      this.pictureAttrs,
       this.sources
         .map(attrs => h("source", { key: attrs.mimeType, attrs }))
+        .concat(h("img", { key: "img" }))
         .concat(this.$slots.default)
     );
   },
@@ -40,16 +41,16 @@ export default {
      *
      * Example:
      * ```
-     * <CLDVideo :sourceTypes="{ mp4: { quality: 10 } }" />
+     * <CLDVideo :sourceTypes="{ jpeg: { quality: 10 } }" />
      * ```
      */
     sourceTypes: {
       type: Object,
       default() {
-        return merge.apply(
-          this,
-          Cloudinary.DEFAULT_VIDEO_PARAMS.source_types.map(type => kv(type, {}))
-        );
+        return {
+          webp: {},
+          jpeg: {}
+        };
       }
     }
   },
@@ -62,18 +63,14 @@ export default {
   },
   provide() {
     return {
-      CLDVideoState: this.attrsCombinedState,
-      CLDPosterStateOfVideoTag: this.posterCombinedState
+      CLDImageState: this.attrsCombinedState
     };
   },
   data() {
     const attrsCombinedState = new CombinedState(combineOptions);
-    const posterCombinedState = new CombinedState(combineOptions);
     return {
       attrsCombinedState,
-      posterCombinedState,
       attrsCombined: attrsCombinedState.get(),
-      posterAttrsCombined: null,
       ready: false
     };
   },
@@ -86,9 +83,9 @@ export default {
     }
   },
   computed: {
-    videoAttrs() {
+    pictureAttrs() {
       const className = {
-        "cld-video": true
+        "cld-picture": true
       };
 
       if (
@@ -108,19 +105,9 @@ export default {
         return { class: className };
       }
 
-      const htmlAttrs = merge(
-        typeof this.$attrs.poster === "string"
-          ? { poster: this.$attrs.poster }
-          : this.posterOptions
-          ? {
-              poster: Cloudinary.new(this.posterOptions.configuration).url(
-                this.posterOptions.publicId,
-                this.posterOptions.transformation
-              )
-            }
-          : {},
-        Transformation.new(this.attrsCombined.transformation).toHtmlAttributes()
-      );
+      const htmlAttrs = Transformation.new(
+        this.attrsCombined.transformation
+      ).toHtmlAttributes();
 
       return {
         class: className,
@@ -137,51 +124,22 @@ export default {
           this.attrsCombined.configuration,
           normalizeConfiguration(this.sourceTypes[srcType] || {})
         );
+
         const transformation = combineTransformations(
           this.attrsCombined.transformation,
           normalizeTransformation(this.sourceTypes[srcType] || {})
         );
+
         const htmlAttrs = normalizeRest(this.sourceTypes[srcType] || {});
 
         const src = Cloudinary.new(configuration).url(this.publicId, {
-          resource_type: "video",
+          resource_type: "image",
           format: srcType,
           transformation
         });
-        const mimeType = "video/" + (srcType === "ogv" ? "ogg" : srcType);
 
-        return merge(htmlAttrs, { mimeType, src });
+        return merge(htmlAttrs, { type: `image/${srcType}`, srcset: src });
       });
-    },
-    posterOptions() {
-      const ownPosterAttrs = combineOptions(
-        { configuration: this.attrsCombined.configuration },
-        {
-          publicId:
-            typeof this.$attrs.poster === "object"
-              ? (this.$attrs.poster || {}).publicId
-              : null,
-          configuration: normalizeConfiguration(
-            typeof this.$attrs.poster === "object" && this.$attrs.poster
-              ? this.$attrs.poster
-              : {}
-          ),
-          transformation: normalizeTransformation(
-            typeof this.$attrs.poster === "object" && this.$attrs.poster
-              ? this.$attrs.poster
-              : {}
-          )
-        }
-      );
-      const extPosterAttrs = this.posterAttrsCombined || {};
-      const defaultPoster = combineOptions(
-        { publicId: this.publicId },
-        this.attrsCombined
-      );
-      return find(
-        [extPosterAttrs, ownPosterAttrs, defaultPoster],
-        _ => _.publicId
-      );
     }
   },
   created() {
@@ -196,12 +154,6 @@ export default {
     );
 
     this.behaviours.onCreated();
-
-    this.posterCombinedStateSub = this.posterCombinedState.subscribe({
-      next: v => {
-        this.posterAttrsCombined = v;
-      }
-    });
   },
   updated() {
     this.behaviours.onUpdated();
@@ -210,14 +162,12 @@ export default {
     this.behaviours.onMounted();
   },
   destroyed() {
-    this.posterCombinedStateSub();
-
     this.behaviours.onDestroyed();
   }
 };
 </script>
 
 <style lang="scss">
-.cld-video {
+.cld-picture {
 }
 </style>

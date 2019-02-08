@@ -41,7 +41,7 @@ export default {
      *
      * Example:
      * ```
-     * <CLDVideo :sourceTypes="{ jpeg: { quality: 10 } }" />
+     * <CLDPicture :sourceTypes="{ jpeg: { quality: 10 } }" />
      * ```
      */
     sourceTypes: {

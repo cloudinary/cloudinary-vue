@@ -112,13 +112,13 @@ export default {
         typeof this.$attrs.poster === "string"
           ? { poster: this.$attrs.poster }
           : this.posterOptions
-          ? {
-              poster: Cloudinary.new(this.posterOptions.configuration).url(
-                this.posterOptions.publicId,
-                this.posterOptions.transformation
-              )
-            }
-          : {},
+            ? {
+                poster: Cloudinary.new(this.posterOptions.configuration).url(
+                  this.posterOptions.publicId,
+                  this.posterOptions.transformation
+                )
+              }
+            : {},
         Transformation.new(this.attrsCombined.transformation).toHtmlAttributes()
       );
 

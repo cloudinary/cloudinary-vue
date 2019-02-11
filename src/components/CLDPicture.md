@@ -9,3 +9,7 @@ Options provided to the component instance are going to be transformed from lowe
 ### Events
 
 Use `v-on:*.native` to listen to native DOM events. `CLDPicture` outputs an `picture`, `img` and `source`s elements and does not have any events on it's own.
+
+```jsx
+<CLDPicture cloudName="demo" publicId="small_dinosaur" />
+```

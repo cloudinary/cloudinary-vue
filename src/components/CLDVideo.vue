@@ -16,6 +16,7 @@ import { Mounting } from "../behaviours/Mounting";
 import { CombineWithContext } from "../behaviours/CombineWithContext";
 import { MaterializeCombinedState } from "../behaviours/MaterializeCombinedState";
 import { CombineWithOwn } from "../behaviours/CombineWithOwn";
+import { Lazy } from "../behaviours/Lazy";
 
 /**
  * Cloudinary video element
@@ -51,6 +52,15 @@ export default {
           Cloudinary.DEFAULT_VIDEO_PARAMS.source_types.map(type => kv(type, {}))
         );
       }
+    },
+    /**
+     * If set to true activates a behaviour
+     * where the video is not loaded
+     * until the HTML element is visible on page
+     */
+    lazy: {
+      type: Boolean,
+      default: false
     }
   },
   inject: {
@@ -182,6 +192,9 @@ export default {
         [extPosterAttrs, ownPosterAttrs, defaultPoster],
         _ => _.publicId
       );
+    },
+    lazyMode() {
+      return this.lazy ? "lazy" : "none";
     }
   },
   created() {
@@ -190,7 +203,8 @@ export default {
         mounting: Mounting,
         context: CombineWithContext,
         own: CombineWithOwn,
-        materialize: MaterializeCombinedState
+        materialize: MaterializeCombinedState,
+        lazy: Lazy
       },
       this
     );

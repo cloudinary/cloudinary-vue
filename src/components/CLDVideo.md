@@ -13,7 +13,7 @@ Use `v-on:*.native` to listen to native DOM events. `CLDVideo` outputs `video` e
 ### Usage
 
 ```jsx
-<CLDVideo cloudName="demo" publicId="dog" controls />
+<CLDVideo cloudName="demo" publicId="dog" controls lazy />
 ```
 
 Just like the [`CLDImage`](#cldimage), `CLDVideo` will get its configuration from plugin provided options, parent `CLDContext` component instance and `CLDTransformation` component children instances.

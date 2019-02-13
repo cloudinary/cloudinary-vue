@@ -68,7 +68,7 @@ export default {
     /**
      * If set to true activates a behaviour
      * where the image is not loaded
-     * unless the HTML element is visible on page
+     * until the HTML element is visible on page
      */
     lazy: {
       type: Boolean,

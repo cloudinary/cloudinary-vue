@@ -17,7 +17,7 @@ import { Mounting } from "../behaviours/Mounting";
 import { CombineWithContext } from "../behaviours/CombineWithContext";
 import { MaterializeCombinedState } from "../behaviours/MaterializeCombinedState";
 import { CombineWithOwn } from "../behaviours/CombineWithOwn";
-import { Lazy } from "../behaviours/Lazy";
+import { Visible } from "../behaviours/Visible";
 
 /**
  * Cloudinary image element
@@ -75,6 +75,12 @@ export default {
       default: false
     },
     /**
+     * Paired with
+     *
+     * Possible values:
+     * - `"lqip"` - low quality image
+     * - `"color"` - average color
+     * - `"pixelate"` - pixelated image
      */
     placeholder: {
       type: String,
@@ -95,12 +101,15 @@ export default {
   },
   data() {
     const attrsCombinedState = new CombinedState(combineOptions);
-    return {
-      attrsCombinedState,
-      attrsCombined: attrsCombinedState.get(),
-      ready: false,
-      size: null
-    };
+    return merge(
+      {
+        attrsCombinedState,
+        attrsCombined: attrsCombinedState.get(),
+        ready: false
+      },
+      Visible.data(),
+      Resizing.data()
+    );
   },
   methods: {
     getOwnCLDAttrs() {
@@ -143,28 +152,29 @@ export default {
         this.attrsCombined.height === 0 ||
         find(
           (this.attrsCombined.transformation || {}).transformation || [],
-          t => t.width === 0
-        ) ||
-        find(
-          (this.attrsCombined.transformation || {}).transformation || [],
-          t => t.height === 0
+          t => t.width === 0 || t.height === 0
         )
       ) {
         return {
+          class: className
+        };
+      }
+
+      if (this.lazy && !this.visible) {
+        return {
           class: className,
-          attrs:
-            this.publicId && this.placeholder
-              ? {
-                  src:
-                    getPlaceholderURL(
-                      combineOptions(
-                        { publicId: this.publicId },
-                        this.attrsCombined
-                      ),
-                      this.placeholder
-                    ) || this.placeholder
-                }
-              : {}
+          attrs: this.placeholder
+            ? {
+                src:
+                  getPlaceholderURL(
+                    combineOptions(
+                      { publicId: this.publicId },
+                      this.attrsCombined
+                    ),
+                    this.placeholder
+                  ) || this.placeholder
+              }
+            : {}
         };
       }
 
@@ -197,9 +207,6 @@ export default {
             "": "width"
           }[this.responsive]
         : "none";
-    },
-    lazyMode() {
-      return this.lazy ? "lazy" : "none";
     }
   },
   created() {
@@ -210,7 +217,7 @@ export default {
         context: CombineWithContext,
         own: CombineWithOwn,
         materialize: MaterializeCombinedState,
-        lazy: Lazy
+        visible: Visible
       },
       this
     );

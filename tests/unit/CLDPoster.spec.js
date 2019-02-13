@@ -30,7 +30,7 @@ describe("CLDPoster", () => {
 
     expect(video.is("video")).toBe(true);
     expect(video.attributes("poster")).toBe(
-      "http://res.cloudinary.com/demo/image/upload/small_dinosaur"
+      "http://res.cloudinary.com/demo/video/upload/small_dinosaur.jpeg"
     );
   });
 
@@ -51,7 +51,7 @@ describe("CLDPoster", () => {
 
     expect(video.is("video")).toBe(true);
     expect(video.attributes("poster")).toBe(
-      "http://res.cloudinary.com/demo/image/upload/e_blur/small_dinosaur"
+      "http://res.cloudinary.com/demo/video/upload/e_blur/small_dinosaur.jpeg"
     );
   });
 
@@ -72,7 +72,7 @@ describe("CLDPoster", () => {
 
     expect(video.is("video")).toBe(true);
     expect(video.attributes("poster")).toBe(
-      "http://res.cloudinary.com/demo/image/upload/e_blur/face_top"
+      "http://res.cloudinary.com/demo/video/upload/e_blur/face_top.jpeg"
     );
   });
 });

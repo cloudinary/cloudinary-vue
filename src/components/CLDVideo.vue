@@ -16,7 +16,7 @@ import { Mounting } from "../behaviours/Mounting";
 import { CombineWithContext } from "../behaviours/CombineWithContext";
 import { MaterializeCombinedState } from "../behaviours/MaterializeCombinedState";
 import { CombineWithOwn } from "../behaviours/CombineWithOwn";
-import { Lazy } from "../behaviours/Lazy";
+import { Visible } from "../behaviours/Visible";
 
 /**
  * Cloudinary video element
@@ -79,13 +79,16 @@ export default {
   data() {
     const attrsCombinedState = new CombinedState(combineOptions);
     const posterCombinedState = new CombinedState(combineOptions);
-    return {
-      attrsCombinedState,
-      posterCombinedState,
-      attrsCombined: attrsCombinedState.get(),
-      posterAttrsCombined: null,
-      ready: false
-    };
+    return merge(
+      {
+        attrsCombinedState,
+        posterCombinedState,
+        attrsCombined: attrsCombinedState.get(),
+        posterAttrsCombined: null,
+        ready: false
+      },
+      Visible.data()
+    );
   },
   methods: {
     getOwnCLDAttrs() {
@@ -108,11 +111,7 @@ export default {
         this.attrsCombined.height === 0 ||
         find(
           (this.attrsCombined.transformation || {}).transformation || [],
-          t => t.width === 0
-        ) ||
-        find(
-          (this.attrsCombined.transformation || {}).transformation || [],
-          t => t.height === 0
+          t => t.width === 0 || t.height === 0
         )
       ) {
         return { class: className };
@@ -137,8 +136,13 @@ export default {
         attrs: merge(normalizeRest(this.$attrs), htmlAttrs)
       };
     },
+
     sources() {
       if (!this.ready || !this.publicId) {
+        return [];
+      }
+
+      if (this.lazy && !this.visible) {
         return [];
       }
 
@@ -153,11 +157,16 @@ export default {
         );
         const htmlAttrs = normalizeRest(this.sourceTypes[srcType] || {});
 
-        const src = Cloudinary.new(configuration).url(this.publicId, {
-          resource_type: "video",
-          format: srcType,
-          transformation
-        });
+        const src = Cloudinary.new(configuration).url(
+          this.publicId,
+          merge(
+            {
+              resource_type: "video",
+              format: srcType
+            },
+            transformation
+          )
+        );
         const mimeType = "video/" + (srcType === "ogv" ? "ogg" : srcType);
 
         return merge(htmlAttrs, { mimeType, src });
@@ -200,12 +209,16 @@ export default {
       );
 
       return find(
-        [extPosterAttrs, ownPosterAttrs, defaultPoster],
+        [extPosterAttrs, ownPosterAttrs, defaultPoster].map(options =>
+          combineOptions(options, {
+            transformation: {
+              resource_type: "video",
+              format: "jpeg"
+            }
+          })
+        ),
         _ => _.publicId
       );
-    },
-    lazyMode() {
-      return this.lazy ? "lazy" : "none";
     }
   },
   created() {
@@ -215,7 +228,7 @@ export default {
         context: CombineWithContext,
         own: CombineWithOwn,
         materialize: MaterializeCombinedState,
-        lazy: Lazy
+        visible: Visible
       },
       this
     );

@@ -95,11 +95,7 @@ export default {
         this.attrsCombined.height === 0 ||
         find(
           (this.attrsCombined.transformation || {}).transformation || [],
-          t => t.width === 0
-        ) ||
-        find(
-          (this.attrsCombined.transformation || {}).transformation || [],
-          t => t.height === 0
+          t => t.width === 0 || t.height === 0
         )
       ) {
         return { class: className };

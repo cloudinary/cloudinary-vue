@@ -3,14 +3,16 @@ import { watchElementSize } from "../helpers/watchElementSize";
 import { equal, pick } from "../utils";
 
 export class Resizing extends Behaviour {
+  static data() {
+    return { size: { width: -1, height: -1 } };
+  }
+
   onCreated() {
     if (this.vue.responsiveMode === undefined) {
       throw new Error(
         "Resizing behaviour applied, yet the component does not have responsiveMode field"
       );
     }
-
-    this.size = { width: -1, height: -1 };
     this.fix();
   }
 

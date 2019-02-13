@@ -92,9 +92,9 @@ describe("CLDImage", () => {
           <CLDImage
             cloudName="demo"
             publicId="face_top"
+            lazy
             placeholder="color"
           >
-            <span /> <!-- this is to enforce async final image -->
           </CLDImage>
         `,
         components: { CLDImage }
@@ -104,7 +104,6 @@ describe("CLDImage", () => {
         `http://res.cloudinary.com/demo/image/upload/$nh_ih,$nw_iw,c_scale,q_1,w_1/c_scale,h_$nh,w_$nw/face_top`
       );
       await new Promise(r => Vue.nextTick(r));
-      expect(image.is("img")).toBe(true);
       expect(image.attributes("src")).toEqual(
         `http://res.cloudinary.com/demo/image/upload/face_top`
       );
@@ -116,9 +115,9 @@ describe("CLDImage", () => {
           <CLDImage
             cloudName="demo"
             publicId="face_top"
+            lazy
             placeholder="lqip"
           >
-            <span /> <!-- this is to enforce async final image -->
           </CLDImage>
         `,
         components: { CLDImage }
@@ -128,7 +127,6 @@ describe("CLDImage", () => {
         `http://res.cloudinary.com/demo/image/upload/$nh_ih,$nw_iw,c_scale,q_auto,w_20/c_scale,h_$nh,w_$nw/face_top`
       );
       await new Promise(r => Vue.nextTick(r));
-      expect(image.is("img")).toBe(true);
       expect(image.attributes("src")).toEqual(
         `http://res.cloudinary.com/demo/image/upload/face_top`
       );
@@ -140,9 +138,9 @@ describe("CLDImage", () => {
           <CLDImage
             cloudName="demo"
             publicId="face_top"
+            lazy
             placeholder="pixelate"
           >
-            <span /> <!-- this is to enforce async final image -->
           </CLDImage>
         `,
         components: { CLDImage }
@@ -152,7 +150,6 @@ describe("CLDImage", () => {
         `http://res.cloudinary.com/demo/image/upload/e_pixelate:100/face_top`
       );
       await new Promise(r => Vue.nextTick(r));
-      expect(image.is("img")).toBe(true);
       expect(image.attributes("src")).toEqual(
         `http://res.cloudinary.com/demo/image/upload/face_top`
       );

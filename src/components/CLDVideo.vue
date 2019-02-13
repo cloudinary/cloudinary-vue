@@ -199,23 +199,6 @@ export default {
         this.attrsCombined
       );
 
-      // console.log(
-      //   JSON.stringify(
-      //     {
-      //       attrs: this.$attrs,
-      //       extPosterAttrs,
-      //       ownPosterAttrs,
-      //       defaultPoster,
-      //       find: find(
-      //         [extPosterAttrs, ownPosterAttrs, defaultPoster],
-      //         _ => _.publicId
-      //       )
-      //     },
-      //     null,
-      //     "  "
-      //   )
-      // );
-
       return find(
         [extPosterAttrs, ownPosterAttrs, defaultPoster],
         _ => _.publicId

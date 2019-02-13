@@ -94,11 +94,11 @@ export default {
         this.attrsCombined.width === 0 ||
         this.attrsCombined.height === 0 ||
         find(
-          this.attrsCombined.transformation.transformation || [],
+          (this.attrsCombined.transformation || {}).transformation || [],
           t => t.width === 0
         ) ||
         find(
-          this.attrsCombined.transformation.transformation || [],
+          (this.attrsCombined.transformation || {}).transformation || [],
           t => t.height === 0
         )
       ) {

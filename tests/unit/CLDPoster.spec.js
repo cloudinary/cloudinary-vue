@@ -20,7 +20,7 @@ describe("CLDPoster", () => {
     const video = mount({
       template: `
         <CLDVideo cloudName="demo" publicId="face_top">
-          <CLDPoster cloudName="demo" publicId="small_dinosaur" />
+          <CLDPoster publicId="small_dinosaur" />
         </CLDVideo>
       `,
       components: { CLDVideo, CLDPoster }
@@ -29,11 +29,6 @@ describe("CLDPoster", () => {
     await new Promise(r => Vue.nextTick(() => r()));
 
     expect(video.is("video")).toBe(true);
-    expect(sourcesOfVideo(video)).toEqual({
-      "video/webm": "http://res.cloudinary.com/demo/video/upload/face_top.webm",
-      "video/mp4": "http://res.cloudinary.com/demo/video/upload/face_top.mp4",
-      "video/ogg": "http://res.cloudinary.com/demo/video/upload/face_top.ogv"
-    });
     expect(video.attributes("poster")).toBe(
       "http://res.cloudinary.com/demo/image/upload/small_dinosaur"
     );
@@ -44,7 +39,7 @@ describe("CLDPoster", () => {
       template: `
         <CLDVideo cloudName="demo" publicId="face_top">
           <CLDTransformation effect="sepia" />
-          <CLDPoster cloudName="demo" publicId="small_dinosaur">
+          <CLDPoster publicId="small_dinosaur">
             <CLDTransformation effect="blur" />
           </CLDPoster>
         </CLDVideo>
@@ -55,16 +50,29 @@ describe("CLDPoster", () => {
     await new Promise(r => Vue.nextTick(() => r()));
 
     expect(video.is("video")).toBe(true);
-    expect(sourcesOfVideo(video)).toEqual({
-      "video/webm":
-        "http://res.cloudinary.com/demo/video/upload/e_sepia/face_top.webm",
-      "video/mp4":
-        "http://res.cloudinary.com/demo/video/upload/e_sepia/face_top.mp4",
-      "video/ogg":
-        "http://res.cloudinary.com/demo/video/upload/e_sepia/face_top.ogv"
-    });
     expect(video.attributes("poster")).toBe(
       "http://res.cloudinary.com/demo/image/upload/e_blur/small_dinosaur"
+    );
+  });
+
+  it("no publicId means video publicId is used", async () => {
+    const video = mount({
+      template: `
+        <CLDVideo cloudName="demo" publicId="face_top">
+          <CLDTransformation effect="sepia" />
+          <CLDPoster>
+            <CLDTransformation effect="blur" />
+          </CLDPoster>
+        </CLDVideo>
+      `,
+      components: { CLDVideo, CLDPoster, CLDTransformation }
+    });
+
+    await new Promise(r => Vue.nextTick(() => r()));
+
+    expect(video.is("video")).toBe(true);
+    expect(video.attributes("poster")).toBe(
+      "http://res.cloudinary.com/demo/image/upload/e_blur/face_top"
     );
   });
 });

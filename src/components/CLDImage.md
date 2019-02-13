@@ -141,7 +141,7 @@ The feature is backed by `IntersectionObserver` and behaviour will be disabled i
     v-on:load.native="alert"
     placeholder="color"
   >
-    <CLDTransformation crop="scale" :height="1000" />
+    <CLDTransformation crop="scale" :height="300" />
   </CLDImage>
 </template>
 

@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { normalizeObject } from "../utils";
 import {
   normalizeTransformation,
   normalizeConfiguration
@@ -21,7 +22,7 @@ export default {
   inheritAttrs: false,
   props: {
     /** ID of your media file */
-    publicId: { type: String, default: "", required: true }
+    publicId: { type: String, default: "" }
   },
   inject: {
     CLDContextState: {
@@ -39,11 +40,11 @@ export default {
   },
   methods: {
     getOwnCLDAttrs() {
-      return {
-        publicId: this.publicId,
+      return normalizeObject({
+        publicId: this.publicId ? this.publicId : undefined,
         configuration: normalizeConfiguration(this.$attrs),
         transformation: normalizeTransformation(this.$attrs)
-      };
+      });
     }
   },
   created() {

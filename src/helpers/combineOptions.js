@@ -1,27 +1,39 @@
-import { merge } from "../utils";
+import { merge, normalizeObject } from "../utils";
 
 export function combineOptions(...options) {
   const publicId = merge.apply(this, options).publicId;
 
-  const configuration = merge.apply(
-    this,
-    options.map(_ => _.configuration).filter(isObjectWithKeys)
+  const configuration = normalizeObject(
+    merge.apply(
+      this,
+      options
+        .filter(isObjectWithKeys)
+        .map(_ => _.configuration)
+        .filter(isObjectWithKeys)
+    )
   );
 
-  const transformation = combineTransformations.apply(
-    this,
-    options.map(_ => _.transformation).filter(isObjectWithKeys)
+  const transformation = normalizeObject(
+    combineTransformations.apply(
+      this,
+      options
+        .filter(isObjectWithKeys)
+        .map(_ => _.transformation)
+        .filter(isObjectWithKeys)
+    )
   );
 
-  return {
-    publicId,
-    configuration,
-    transformation
-  };
+  return normalizeObject({
+    publicId: publicId ? publicId : undefined,
+    configuration: isObjectWithKeys(configuration) ? configuration : undefined,
+    transformation: isObjectWithKeys(transformation)
+      ? transformation
+      : undefined
+  });
 }
 
 export function combineTransformations(...transformations) {
-  return transformations.reduce((result, item) => {
+  return transformations.filter(isObjectWithKeys).reduce((result, item) => {
     const transformation = []
       .concat(result.transformation)
       .concat(item.transformation)

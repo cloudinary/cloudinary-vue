@@ -1,6 +1,6 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
-import { merge, kv, find } from "../utils";
+import { merge, kv, find, pick } from "../utils";
 import { CombinedState } from "../reactive/CombinedState";
 import {
   normalizeTransformation,
@@ -107,11 +107,11 @@ export default {
         this.attrsCombined.width === 0 ||
         this.attrsCombined.height === 0 ||
         find(
-          this.attrsCombined.transformation.transformation || [],
+          (this.attrsCombined.transformation || {}).transformation || [],
           t => t.width === 0
         ) ||
         find(
-          this.attrsCombined.transformation.transformation || [],
+          (this.attrsCombined.transformation || {}).transformation || [],
           t => t.height === 0
         )
       ) {
@@ -122,13 +122,13 @@ export default {
         typeof this.$attrs.poster === "string"
           ? { poster: this.$attrs.poster }
           : this.posterOptions
-            ? {
-                poster: Cloudinary.new(this.posterOptions.configuration).url(
-                  this.posterOptions.publicId,
-                  this.posterOptions.transformation
-                )
-              }
-            : {},
+          ? {
+              poster: Cloudinary.new(this.posterOptions.configuration).url(
+                this.posterOptions.publicId,
+                this.posterOptions.transformation
+              )
+            }
+          : {},
         Transformation.new(this.attrsCombined.transformation).toHtmlAttributes()
       );
 
@@ -183,11 +183,39 @@ export default {
           )
         }
       );
-      const extPosterAttrs = this.posterAttrsCombined || {};
+
+      const extPosterAttrs = this.posterAttrsCombined
+        ? combineOptions(
+            {
+              publicId: this.publicId,
+              configuration: this.attrsCombined.configuration
+            },
+            this.posterAttrsCombined
+          )
+        : {};
+
       const defaultPoster = combineOptions(
         { publicId: this.publicId },
         this.attrsCombined
       );
+
+      // console.log(
+      //   JSON.stringify(
+      //     {
+      //       attrs: this.$attrs,
+      //       extPosterAttrs,
+      //       ownPosterAttrs,
+      //       defaultPoster,
+      //       find: find(
+      //         [extPosterAttrs, ownPosterAttrs, defaultPoster],
+      //         _ => _.publicId
+      //       )
+      //     },
+      //     null,
+      //     "  "
+      //   )
+      // );
+
       return find(
         [extPosterAttrs, ownPosterAttrs, defaultPoster],
         _ => _.publicId
@@ -213,7 +241,9 @@ export default {
 
     this.posterCombinedStateSub = this.posterCombinedState.subscribe({
       next: v => {
-        this.posterAttrsCombined = v;
+        if (Object.keys(v).length) {
+          this.posterAttrsCombined = v;
+        }
       }
     });
   },

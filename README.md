@@ -33,8 +33,24 @@ import Cloudinary from "cloudinary-vue";
 Vue.use(Cloudinary);
 // ..or..
 Vue.use(Cloudinary, {
-  // options, for example:
-  cloudName: "demo"
+  configuration: { cloudName: "demo" }
+  //             ^ cloudinary configuration options
+});
+// ..or specify which components to install..
+Vue.use(Cloudinary, {
+  configuration: { cloudName: "demo" },
+  components: ["CLDImage"]
+});
+// ..or rename all or some components..
+Vue.use(Cloudinary, {
+  configuration: { cloudName: "demo" },
+  components: {
+    CLDImage: true,
+    // component name
+    //        ^ true just turns if on
+    CLDTransformation: "CLDXF"
+    //                 ^ a custom name
+  }
 });
 ```
 

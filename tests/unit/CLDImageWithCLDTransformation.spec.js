@@ -53,7 +53,7 @@ describe("CLDImage with CLDTransformation ", () => {
     );
   });
 
-  it(" in another component", async () => {
+  it("in another component", async () => {
     const wrapper = mount(
       {
         template: `

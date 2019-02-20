@@ -217,7 +217,7 @@ export default {
             }
           })
         ),
-        _ => _.publicId
+        options => options.publicId
       );
     }
   },

@@ -23,7 +23,7 @@ import { Visible } from "../behaviours/Visible";
  * Cloudinary image element
  */
 export default {
-  name: "CLDImage",
+  // name: "CLDImage",
   inheritAttrs: false,
   render(h) {
     return h("img", this.imageAttrs, this.$slots.default);

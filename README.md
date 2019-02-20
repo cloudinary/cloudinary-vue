@@ -65,11 +65,11 @@ In order to properly use this library you have to provide it with a few configur
 
     <CLDImage cloudName="demo" publicId="sample" crop="scale" width="300" />
 
-    <CloudinaryContext cloudName="demo">
+    <CLDContext cloudName="demo">
       <CLDImage publicId="sample">
         <CLDTransformation crop="scale" width="200" angle="10" />
       </CLDImage>
-    </CloudinaryContext>
+    </CLDContext>
   </div>
 </template>
 ```

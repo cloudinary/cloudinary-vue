@@ -1,16 +1,16 @@
 import * as plugin from "./plugin";
-import CLDContext from "./components/CLDContext";
-import CLDImage from "./components/CLDImage";
-import CLDVideo from "./components/CLDVideo";
-import CLDPoster from "./components/CLDPoster";
-import CLDTransformation from "./components/CLDTransformation";
+import CldContext from "./components/CldContext";
+import CldImage from "./components/CldImage";
+import CldVideo from "./components/CldVideo";
+import CldPoster from "./components/CldPoster";
+import CldTransformation from "./components/CldTransformation";
 
 const components = {
-  CLDContext,
-  CLDImage,
-  CLDVideo,
-  CLDPoster,
-  CLDTransformation
+  CldContext,
+  CldImage,
+  CldVideo,
+  CldPoster,
+  CldTransformation
 };
 
 export default plugin;
@@ -18,9 +18,9 @@ export default plugin;
 export {
   plugin,
   components,
-  CLDContext,
-  CLDImage,
-  CLDVideo,
-  CLDPoster,
-  CLDTransformation
+  CldContext,
+  CldImage,
+  CldVideo,
+  CldPoster,
+  CldTransformation
 };

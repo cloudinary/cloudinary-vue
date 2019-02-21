@@ -2,30 +2,30 @@
 
 Refer to base [Cloudinary JS SDK](https://github.com/cloudinary/cloudinary_js#configuration) for configuration options.
 
-See [Image transformations documentation](http://cloudinary.com/documentation/image_transformations) for all the options accepted by `CLDImage` and `CLDTransformation`.
+See [Image transformations documentation](http://cloudinary.com/documentation/image_transformations) for all the options accepted by `CldImage` and `CldTransformation`.
 
 Options provided to the component instance are going to be transformed from lower camel case to snake case.
 
 ### Events
 
-Use `v-on:*.native` to listen to native DOM events. `CLDImage` outputs an `img` element and does not have any events on it's own.
+Use `v-on:*.native` to listen to native DOM events. `CldImage` outputs an `img` element and does not have any events on it's own.
 
 ```vue
 <template>
-  <CLDImage
+  <cld-image
     cloudName="demo"
     publicId="small_dinosaur"
     v-on:click.native="alert"
   >
-    <CLDTransformation
+    <cld-transformation
       overlay="text:Arial_45:CLICK ME"
       background="red"
       radius="10"
       opacity="90"
       color="white"
     />
-    <CLDTransformation crop="scale" :height="100" />
-  </CLDImage>
+    <cld-transformation crop="scale" :height="100" />
+  </cld-image>
 </template>
 <script>
 export default {
@@ -40,21 +40,21 @@ export default {
 
 ### Usage
 
-It is crucial for the `CLDImage` to get both `cloudName` and `publicId`. All the other arguments are optional.
+It is crucial for the `CldImage` to get both `cloudName` and `publicId`. All the other arguments are optional.
 
 ```jsx
-<CLDImage cloudName="demo" publicId="small_dinosaur" />
+<cld-image cloudName="demo" publicId="small_dinosaur" />
 ```
 
-Of those two, only `publicId` is image-specific. Other configuration options may be passed through a `CLDContext` like in:
+Of those two, only `publicId` is image-specific. Other configuration options may be passed through a `CldContext` like in:
 
 ```jsx
-<CLDContext cloudName="demo">
-  <CLDImage publicId="small_dinosaur" />
-</CLDContext>
+<cld-context cloudName="demo">
+  <cld-image publicId="small_dinosaur" />
+</cld-context>
 ```
 
-`CLDImage` can also get a image transformation data by directly setting manipulation attributes onto the component or through `CLDTransformation` instances.
+`CldImage` can also get a image transformation data by directly setting manipulation attributes onto the component or through `CldTransformation` instances.
 
 Compare:
 
@@ -64,12 +64,12 @@ Compare:
     <tr>
       <th align="center">On element</th>
       <th align="center">
-        On <code>CLDTransformation</code> tags
+        On <code>CldTransformation</code> tags
       </th>
     </tr>
     <tr>
       <td align="center">
-        <CLDImage
+        <cld-image
           cloudName="demo"
           publicId="small_dinosaur"
           effect="blur:300"
@@ -78,51 +78,51 @@ Compare:
         />
       </td>
       <td align="center">
-        <CLDImage cloudName="demo" publicId="small_dinosaur">
-          <CLDTransformation effect="blur:300" />
-          <CLDTransformation crop="scale" width="100" />
-        </CLDImage>
+        <cld-image cloudName="demo" publicId="small_dinosaur">
+          <cld-transformation crop="scale" width="100" />
+          <cld-transformation effect="blur:300" />
+        </cld-image>
       </td>
     </tr>
   </tbody>
 </table>
 ```
 
-You can specify `CLDImage`'s transformations also by setting transformation for whole set of images with `CLDContext`.
+You can specify `CldImage`'s transformations also by setting transformation for whole set of images with `CldContext`.
 
 ```jsx
-<CLDContext cloudName="demo">
-  <CLDTransformation effect="blur:300" />
+<cld-context cloudName="demo">
+  <cld-transformation effect="blur:999" />
 
-  <CLDImage cloudName="demo" publicId="small_dinosaur">
-    <CLDTransformation crop="scale" width="50" />
-  </CLDImage>
+  <cld-image cloudName="demo" publicId="small_dinosaur">
+    <cld-transformation crop="scale" width="50" />
+  </cld-image>
 
-  <CLDImage cloudName="demo" publicId="small_dinosaur">
-    <CLDTransformation crop="scale" width="100" />
-  </CLDImage>
+  <cld-image cloudName="demo" publicId="small_dinosaur">
+    <cld-transformation crop="scale" width="100" />
+  </cld-image>
 
-  <CLDImage cloudName="demo" publicId="small_dinosaur">
-    <CLDTransformation crop="scale" width="150" />
-  </CLDImage>
-</CLDContext>
+  <cld-image cloudName="demo" publicId="small_dinosaur">
+    <cld-transformation crop="scale" width="150" />
+  </cld-image>
+</cld-context>
 ```
 
 ### Responsive mode
 
 ```jsx
-<CLDImage cloudName="demo" publicId="small_dinosaur" responsive>
-  <CLDTransformation effect="sharpen:300" />
-</CLDImage>
+<cld-image cloudName="demo" publicId="small_dinosaur" responsive>
+  <cld-transformation effect="sharpen:300" />
+</cld-image>
 ```
 
 Responsive mode, but adjusting to height:
 
 ```jsx
 <div class="explain" style="height: 75px; padding: 20px;">
-  <CLDImage cloudName="demo" publicId="small_dinosaur" responsive="height">
-    <CLDTransformation effect="sepia:95" />
-  </CLDImage>
+  <cld-image cloudName="demo" publicId="small_dinosaur" responsive="height">
+    <cld-transformation effect="sepia:95" />
+  </cld-image>
 </div>
 ```
 
@@ -134,15 +134,15 @@ The feature is backed by `IntersectionObserver` and behaviour will be disabled i
 
 ```vue
 <template>
-  <CLDImage
+  <cld-image
     cloudName="demo"
     publicId="small_dinosaur"
     lazy
     v-on:load.native="alert"
     placeholder="color"
   >
-    <CLDTransformation crop="scale" :height="300" />
-  </CLDImage>
+    <cld-transformation crop="scale" :height="300" />
+  </cld-image>
 </template>
 
 <script>

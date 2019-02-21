@@ -9,7 +9,7 @@ describe("CLD plugin", () => {
 
     const wrapper = mount(
       {
-        template: `<CLDImage publicId="face_top" />`
+        template: `<cld-image publicId="face_top" />`
       },
       { localVue }
     );
@@ -29,7 +29,7 @@ describe("CLD plugin", () => {
 
       const wrapper = mount(
         {
-          template: `<CLDImage cloudName="demo" publicId="face_top" />`
+          template: `<cld-image cloudName="demo" publicId="face_top" />`
         },
         { localVue }
       );
@@ -42,7 +42,7 @@ describe("CLD plugin", () => {
 
       const wrapper = mount(
         {
-          template: `<CLDImage cloudName="demo" publicId="face_top" />`
+          template: `<cld-image cloudName="demo" publicId="face_top" />`
         },
         { localVue }
       );
@@ -51,11 +51,11 @@ describe("CLD plugin", () => {
 
     it("array should contain component names", async () => {
       const localVue = createLocalVue();
-      localVue.use(Cloudinary, { components: ["CLDImage"] });
+      localVue.use(Cloudinary, { components: ["CldImage"] });
 
       const wrapper = mount(
         {
-          template: `<CLDImage cloudName="demo" publicId="face_top" />`
+          template: `<cld-image cloudName="demo" publicId="face_top" />`
         },
         { localVue }
       );
@@ -63,7 +63,7 @@ describe("CLD plugin", () => {
 
       const wrapper2 = mount(
         {
-          template: `<CLDVideo cloudName="demo" publicId="face_top" />`
+          template: `<cld-video cloudName="demo" publicId="face_top" />`
         },
         { localVue }
       );
@@ -72,11 +72,11 @@ describe("CLD plugin", () => {
 
     it("object specifies if component should be installed", async () => {
       const localVue = createLocalVue();
-      localVue.use(Cloudinary, { components: { CLDImage: true } });
+      localVue.use(Cloudinary, { components: { CldImage: true } });
 
       const wrapper = mount(
         {
-          template: `<CLDImage cloudName="demo" publicId="face_top" />`
+          template: `<cld-image cloudName="demo" publicId="face_top" />`
         },
         { localVue }
       );
@@ -84,7 +84,7 @@ describe("CLD plugin", () => {
 
       const wrapper2 = mount(
         {
-          template: `<CLDVideo cloudName="demo" publicId="face_top" />`
+          template: `<cld-video cloudName="demo" publicId="face_top" />`
         },
         { localVue }
       );
@@ -93,11 +93,11 @@ describe("CLD plugin", () => {
 
     it("object with a string specifies under what name a component should be installed", async () => {
       const localVue = createLocalVue();
-      localVue.use(Cloudinary, { components: { CLDImage: "CloudinaryImage" } });
+      localVue.use(Cloudinary, { components: { CldImage: "CloudinaryImage" } });
 
       const wrapper = mount(
         {
-          template: `<CloudinaryImage cloudName="demo" publicId="face_top" />`
+          template: `<cloudinary-image cloudName="demo" publicId="face_top" />`
         },
         { localVue }
       );
@@ -105,7 +105,7 @@ describe("CLD plugin", () => {
 
       const wrapper2 = mount(
         {
-          template: `<CLDImage cloudName="demo" publicId="face_top" />`
+          template: `<cld-image cloudName="demo" publicId="face_top" />`
         },
         { localVue }
       );

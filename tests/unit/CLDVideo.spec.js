@@ -1,8 +1,8 @@
 import Vue from "vue";
 import { mount } from "@vue/test-utils";
-import CLDVideo from "../../src/components/CLDVideo.vue";
+import CldVideo from "../../src/components/CldVideo.vue";
 
-describe("CLDVideo", () => {
+describe("CldVideo", () => {
   function sourcesOfVideo(element) {
     const sources = element.findAll("source");
     const result = {};
@@ -17,9 +17,9 @@ describe("CLDVideo", () => {
   it("renders", async () => {
     const video = mount({
       template: `
-        <CLDVideo cloudName="demo" publicId="face_top" />
+        <cld-video cloudName="demo" publicId="face_top" />
       `,
-      components: { CLDVideo }
+      components: { CldVideo }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));
@@ -35,9 +35,9 @@ describe("CLDVideo", () => {
   it("allows transformation as props", async () => {
     const video = mount({
       template: `
-        <CLDVideo cloudName="demo" publicId="face_top" effect="sepia" />
+        <cld-video cloudName="demo" publicId="face_top" effect="sepia" />
       `,
-      components: { CLDVideo }
+      components: { CldVideo }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));
@@ -56,9 +56,9 @@ describe("CLDVideo", () => {
   it("bypasses non-cloudinary attributes", async () => {
     const video = mount({
       template: `
-        <CLDVideo cloudName="demo" publicId="face_top" aria-hidden="true" />
+        <cld-video cloudName="demo" publicId="face_top" aria-hidden="true" />
       `,
-      components: { CLDVideo }
+      components: { CldVideo }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));
@@ -71,9 +71,9 @@ describe("CLDVideo", () => {
   it("should render a video without sources if publicId is not defined", async () => {
     const video = mount({
       template: `
-        <CLDVideo cloudName="demo" publicId="" />
+        <cld-video cloudName="demo" publicId="" />
       `,
-      components: { CLDVideo }
+      components: { CldVideo }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));
@@ -85,9 +85,9 @@ describe("CLDVideo", () => {
   it("respects simple poster attribute", async () => {
     const video = mount({
       template: `
-        <CLDVideo cloudName="demo" publicId="face_top" poster="zxc" />
+        <cld-video cloudName="demo" publicId="face_top" poster="zxc" />
       `,
-      components: { CLDVideo }
+      components: { CldVideo }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));
@@ -99,13 +99,13 @@ describe("CLDVideo", () => {
   it("respects poster object-attribute", async () => {
     const video = mount({
       template: `
-        <CLDVideo
+        <cld-video
           cloudName="demo"
           publicId="face_top"
           :poster="{ publicId: 'small_dinosaur', effect: 'blur' }"
         />
       `,
-      components: { CLDVideo }
+      components: { CldVideo }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));
@@ -119,12 +119,12 @@ describe("CLDVideo", () => {
   it("will contain default poster if no poster data is provided", async () => {
     const video = mount({
       template: `
-        <CLDVideo
+        <cld-video
           cloudName="demo"
           publicId="face_top"
         />
       `,
-      components: { CLDVideo }
+      components: { CldVideo }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));

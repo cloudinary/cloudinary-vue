@@ -1,10 +1,10 @@
 import Vue from "vue";
 import { shallowMount, mount } from "@vue/test-utils";
-import CLDImage from "../../src/components/CLDImage.vue";
+import CldImage from "../../src/components/CldImage.vue";
 
-describe("CLDImage", () => {
+describe("CldImage", () => {
   it("renders", () => {
-    const image = shallowMount(CLDImage, {
+    const image = shallowMount(CldImage, {
       propsData: {
         cloudName: "demo",
         publicId: "face_top"
@@ -18,12 +18,12 @@ describe("CLDImage", () => {
 
   it("allows transformation as props", () => {
     const image = mount({
-      template: `<CLDImage 
+      template: `<cld-image 
         cloudName="demo"
         publicId="face_top"
         effect="sepia"
       />`,
-      components: { CLDImage }
+      components: { CldImage }
     });
     expect(image.is("img")).toBe(true);
     expect(image.attributes("src")).toEqual(
@@ -35,7 +35,7 @@ describe("CLDImage", () => {
     const image = mount(
       {
         template: `
-          <CLDImage
+          <cld-image
             cloudName="demo"
             publicId="face_top"
             aria-hidden="true"
@@ -43,7 +43,7 @@ describe("CLDImage", () => {
         `
       },
       {
-        components: { CLDImage }
+        components: { CldImage }
       }
     );
     expect(image.is("img")).toBe(true);
@@ -57,12 +57,12 @@ describe("CLDImage", () => {
   it("should render a src property with an undefined value if a src is not defined", () => {
     const image = mount({
       template: `
-          <CLDImage
+          <cld-image
             cloudName="demo"
             publicId=""
           />
         `,
-      components: { CLDImage }
+      components: { CldImage }
     });
     expect(image.is("img")).toBe(true);
     expect(image.attributes("src")).toBe(undefined);
@@ -71,13 +71,13 @@ describe("CLDImage", () => {
   it("respects progressive prop", () => {
     const image = mount({
       template: `
-          <CLDImage
+          <cld-image
             cloudName="demo"
             publicId="face_top"
             progressive
           />
         `,
-      components: { CLDImage }
+      components: { CldImage }
     });
     expect(image.is("img")).toBe(true);
     expect(image.attributes("src")).toEqual(
@@ -89,15 +89,14 @@ describe("CLDImage", () => {
     it("color", async () => {
       const image = mount({
         template: `
-          <CLDImage
+          <cld-image
             cloudName="demo"
             publicId="face_top"
             lazy
             placeholder="color"
-          >
-          </CLDImage>
+          />
         `,
-        components: { CLDImage }
+        components: { CldImage }
       });
       expect(image.is("img")).toBe(true);
       expect(image.attributes("src")).toEqual(
@@ -112,15 +111,14 @@ describe("CLDImage", () => {
     it("LQ", async () => {
       const image = mount({
         template: `
-          <CLDImage
+          <cld-image
             cloudName="demo"
             publicId="face_top"
             lazy
             placeholder="lqip"
-          >
-          </CLDImage>
+          />
         `,
-        components: { CLDImage }
+        components: { CldImage }
       });
       expect(image.is("img")).toBe(true);
       expect(image.attributes("src")).toEqual(
@@ -135,15 +133,14 @@ describe("CLDImage", () => {
     it("pixelate", async () => {
       const image = mount({
         template: `
-          <CLDImage
+          <cld-image
             cloudName="demo"
             publicId="face_top"
             lazy
             placeholder="pixelate"
-          >
-          </CLDImage>
+          />
         `,
-        components: { CLDImage }
+        components: { CldImage }
       });
       expect(image.is("img")).toBe(true);
       expect(image.attributes("src")).toEqual(

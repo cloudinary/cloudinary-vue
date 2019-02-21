@@ -13,26 +13,26 @@ import { combineOptions } from "../helpers/combineOptions";
  * Cloudinary transformation modifier
  */
 export default {
-  name: "CLDTransformation",
+  name: "CldTransformation",
   inheritAttrs: false,
   props: {},
   inject: {
-    CLDContextState: {
+    CldContextState: {
       default() {
         return null;
       }
     },
-    CLDImageState: {
+    CldImageState: {
       default() {
         return null;
       }
     },
-    CLDVideoState: {
+    CldVideoState: {
       default() {
         return null;
       }
     },
-    CLDPosterStateOPosterTag: {
+    CldPosterStateOPosterTag: {
       default() {
         return null;
       }
@@ -60,16 +60,16 @@ export default {
   },
   created() {
     const parentState =
-      this.CLDPosterStateOPosterTag ||
-      this.CLDVideoState ||
-      this.CLDImageState ||
-      this.CLDContextState;
+      this.CldPosterStateOPosterTag ||
+      this.CldVideoState ||
+      this.CldImageState ||
+      this.CldContextState;
     if (parentState) {
       this.ownState = parentState.spawn();
       this.ownState.next(this.getOwnAttrs());
     } else {
       throw new Error(
-        "CLDTransform without a CLDContext/CLDImage/CLDVideo parent"
+        "CldTransform without a CldContext/CldImage/CldVideo parent"
       );
     }
   },

@@ -1,12 +1,12 @@
 <template>
-  <CLDTransformation effect="sepia:20"/>
+  <cld-transformation effect="sepia:20"/>
 </template>
 
 <script>
-import CLDTransformation from "@/components/CLDTransformation.vue";
+import CldTransformation from "@/components/CldTransformation.vue";
 
 export default {
   name: "Sepia",
-  components: { CLDTransformation }
+  components: { CldTransformation }
 };
 </script>

@@ -1,21 +1,21 @@
 import Vue from "vue";
 import { mount } from "@vue/test-utils";
-import CLDTransformation from "../../src/components/CLDTransformation.vue";
-import CLDImage from "../../src/components/CLDImage.vue";
+import CldTransformation from "../../src/components/CldTransformation.vue";
+import CldImage from "../../src/components/CldImage.vue";
 import Sepia from "./Sepia.vue";
 
-describe("CLDImage with CLDTransformation ", () => {
+describe("CldImage with CldTransformation ", () => {
   it("renders", async () => {
     const wrapper = mount(
       {
         template: `
-          <CLDImage cloudName="demo" publicId="face_top">
-            <CLDTransformation effect="sepia:20" />
-          </CLDImage>
+          <cld-image cloudName="demo" publicId="face_top">
+            <cld-transformation effect="sepia:20" />
+          </cld-image>
         `
       },
       {
-        components: { CLDTransformation, CLDImage }
+        components: { CldTransformation, CldImage }
       }
     );
 
@@ -30,16 +30,16 @@ describe("CLDImage with CLDTransformation ", () => {
     );
   });
 
-  it(" nested", async () => {
+  it("nested", async () => {
     const wrapper = mount({
       template: `
-          <CLDImage cloudName="demo" publicId="face_top">
-            <CLDTransformation crop="scale" width="100">
-              <CLDTransformation effect="sepia" />
-            </CLDTransformation>
-          </CLDImage>
+          <cld-image cloudName="demo" publicId="face_top">
+            <cld-transformation crop="scale" width="100">
+              <cld-transformation effect="sepia" />
+            </cld-transformation>
+          </cld-image>
         `,
-      components: { CLDTransformation, CLDImage }
+      components: { CldTransformation, CldImage }
     });
 
     expect(wrapper.is("img")).toBe(true);
@@ -57,13 +57,13 @@ describe("CLDImage with CLDTransformation ", () => {
     const wrapper = mount(
       {
         template: `
-          <CLDImage cloudName="demo" publicId="face_top">
+          <cld-image cloudName="demo" publicId="face_top">
             <Sepia />
-          </CLDImage>
+          </cld-image>
         `
       },
       {
-        components: { Sepia, CLDImage }
+        components: { Sepia, CldImage }
       }
     );
 
@@ -81,14 +81,14 @@ describe("CLDImage with CLDTransformation ", () => {
   it("should allow chained transformations", async () => {
     const wrapper = mount({
       template: `
-        <CLDImage publicId="sample" cloudName="demo">
-          <CLDTransformation width="100" crop="scale" />
-          <CLDTransformation width="200" crop="pad">
-            <CLDTransformation angle="30" />
-          </CLDTransformation>
-        </CLDImage>
+        <cld-image publicId="sample" cloudName="demo">
+          <cld-transformation width="100" crop="scale" />
+          <cld-transformation width="200" crop="pad">
+            <cld-transformation angle="30" />
+          </cld-transformation>
+        </cld-image>
       `,
-      components: { CLDTransformation, CLDImage }
+      components: { CldTransformation, CldImage }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));

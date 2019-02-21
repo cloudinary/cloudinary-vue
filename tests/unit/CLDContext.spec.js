@@ -1,17 +1,17 @@
 import Vue from "vue";
 import { mount } from "@vue/test-utils";
-import CLDContext from "../../src/components/CLDContext.vue";
-import CLDImage from "../../src/components/CLDImage.vue";
+import CldContext from "../../src/components/CldContext.vue";
+import CldImage from "../../src/components/CldImage.vue";
 
-describe("CLDContext", () => {
+describe("CldContext", () => {
   it("renders", () => {
     mount(
       {
         template: `
-          <CLDContext cloudName="demo" />`
+          <cld-context cloudName="demo" />`
       },
       {
-        components: { CLDContext }
+        components: { CldContext }
       }
     );
   });
@@ -20,10 +20,10 @@ describe("CLDContext", () => {
     const wrapper = mount(
       {
         template: `
-          <CLDContext cloudName="demo" aria-hidden="true" />`
+          <cld-context cloudName="demo" aria-hidden="true" />`
       },
       {
-        components: { CLDContext }
+        components: { CldContext }
       }
     );
     expect(wrapper.findAll("div").length).toBe(1);
@@ -36,13 +36,13 @@ describe("CLDContext", () => {
       {
         template: `
           <div class="test">
-            <CLDContext cloudName="demo">
-              <CLDImage publicId="face_top"/>
-            </CLDContext>
+            <cld-context cloudName="demo">
+              <cld-image publicId="face_top"/>
+            </cld-context>
           </div>`
       },
       {
-        components: { CLDContext, CLDImage }
+        components: { CldContext, CldImage }
       }
     );
 
@@ -59,15 +59,15 @@ describe("CLDContext", () => {
       {
         template: `
           <div class="test">
-            <CLDContext cloudName="demo" secure="false">
-              <CLDContext secure="true" quality="auto">
-                <CLDImage publicId="face_top" quality="80" />
-              </CLDContext>
-            </CLDContext>
+            <cld-context cloudName="demo" secure="false">
+              <cld-context secure="true" quality="auto">
+                <cld-image publicId="face_top" quality="80" />
+              </cld-context>
+            </cld-context>
           </div>`
       },
       {
-        components: { CLDContext, CLDImage }
+        components: { CldContext, CldImage }
       }
     );
 

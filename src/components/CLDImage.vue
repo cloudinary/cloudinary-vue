@@ -23,7 +23,7 @@ import { Visible } from "../behaviours/Visible";
  * Cloudinary image element
  */
 export default {
-  // name: "CLDImage",
+  // name: "CldImage",
   inheritAttrs: false,
   render(h) {
     return h("img", this.imageAttrs, this.$slots.default);
@@ -40,10 +40,6 @@ export default {
      * - `height` sets the image *height* as it's container and allows image *width* to be set by the browser
      *
      * If you set this property without a value, `width` will be assumed.
-     *
-     * ```jsx
-     * <CLDImage publicId="example" responsive />
-     * ```
      */
     responsive: { type: String },
     /**
@@ -88,15 +84,15 @@ export default {
     }
   },
   inject: {
-    CLDContextState: {
+    CldContextState: {
       default() {
-        return this.CLDGlobalContextState ? this.CLDGlobalContextState : null;
+        return this.CldGlobalContextState ? this.CldGlobalContextState : null;
       }
     }
   },
   provide() {
     return {
-      CLDImageState: this.attrsCombinedState
+      CldImageState: this.attrsCombinedState
     };
   },
   data() {
@@ -112,7 +108,7 @@ export default {
     );
   },
   methods: {
-    getOwnCLDAttrs() {
+    getOwnCldAttrs() {
       const attrs =
         this.progressive == true
           ? merge(this.$attrs, {

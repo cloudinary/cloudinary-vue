@@ -39,16 +39,16 @@ Vue.use(Cloudinary, {
 // ..or specify which components to install..
 Vue.use(Cloudinary, {
   configuration: { cloudName: "demo" },
-  components: ["CLDImage"]
+  components: ["CldImage"]
 });
 // ..or rename all or some components..
 Vue.use(Cloudinary, {
   configuration: { cloudName: "demo" },
   components: {
-    CLDImage: true,
+    CldImage: true,
     // component name
     //        ^ true just turns if on
-    CLDTransformation: "CLDXF"
+    CldTransformation: "CldXf"
     //                 ^ a custom name
   }
 });
@@ -56,20 +56,20 @@ Vue.use(Cloudinary, {
 
 ### General usage
 
-In order to properly use this library you have to provide it with a few configuration parameters. All configuration parameters can be applied directly to the element, using a CLDContext component or while installing a plugin (second argument of `Vue.use`).
+In order to properly use this library you have to provide it with a few configuration parameters. All configuration parameters can be applied directly to the element, using a CldContext component or while installing a plugin (second argument of `Vue.use`).
 
 ```html
 <template>
   <div>
     <h1>Hello, world!</h1>
 
-    <CLDImage cloudName="demo" publicId="sample" crop="scale" width="300" />
+    <cld-image cloudName="demo" publicId="sample" crop="scale" width="300" />
 
-    <CLDContext cloudName="demo">
-      <CLDImage publicId="sample">
-        <CLDTransformation crop="scale" width="200" angle="10" />
-      </CLDImage>
-    </CLDContext>
+    <cld-context cloudName="demo">
+      <cld-image publicId="sample">
+        <cld-transformation crop="scale" width="200" angle="10" />
+      </cld-image>
+    </cld-context>
   </div>
 </template>
 ```
@@ -86,42 +86,42 @@ Optional:
 
 The library includes 5 components:
 
-- `CLDContext`
-- `CLDTransformation`
-- `CLDImage`
-- `CLDVideo`
-- `CLDPoster`
+- `CldContext`
+- `CldTransformation`
+- `CldImage`
+- `CldVideo`
+- `CldPoster`
 
-#### CLDContext
+#### CldContext
 
-`CLDContext` allows you to define shared configuration and resource transformation parameters that are applied to all children elements.
+`CldContext` allows you to define shared configuration and resource transformation parameters that are applied to all children elements.
 
-#### CLDImage
+#### CldImage
 
-outputs HTML `img` tag with a correct `src` attribute for provided Cloudinary resource, based on configuration and transformation parameters provided as attributes of this component instance, parent `CLDContext` and children `CLDTransformation` instances.
+outputs HTML `img` tag with a correct `src` attribute for provided Cloudinary resource, based on configuration and transformation parameters provided as attributes of this component instance, parent `CldContext` and children `CldTransformation` instances.
 
-#### CLDVideo
+#### CldVideo
 
-outputs HTML `video` tag with a correct `sources` for provided Cloudinary resource, based on configuration and transformation parameters provided as attributes of this component instance, parent `CLDContext` and children `CLDTransformation` instances.
+outputs HTML `video` tag with a correct `sources` for provided Cloudinary resource, based on configuration and transformation parameters provided as attributes of this component instance, parent `CldContext` and children `CldTransformation` instances.
 
-#### CLDTransformation
+#### CldTransformation
 
 The Transformation element allows you to defined additional transformations on the parent element.
 
 For example:
 
 ```jsx
-<CLDImage cloudName="demo" publicId="sample">
-  <CLDTransformation angle="-45" />
-  <CLDTransformation effect="trim" angle="45" crop="scale" width="600">
-    <CLDTransformation overlay="text:Arial_100:Hello" />
-  </CLDTransformation>
-</CLDImage>
+<cld-image cloudName="demo" publicId="sample">
+  <cld-transformation angle="-45" />
+  <cld-transformation effect="trim" angle="45" crop="scale" width="600">
+    <cld-transformation overlay="text:Arial_100:Hello" />
+  </cld-transformation>
+</cld-image>
 ```
 
-#### CLDPoster
+#### CldPoster
 
-an optional `CLDVideo` child element that will specify image resource to be provided to `poster` attribute of the `video` element.
+an optional `CldVideo` child element that will specify image resource to be provided to `poster` attribute of the `video` element.
 
 ## Additional resources
 

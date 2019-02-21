@@ -1,29 +1,18 @@
 import Vue from "vue";
 import { mount } from "@vue/test-utils";
-import CLDVideo from "../../src/components/CLDVideo.vue";
-import CLDPoster from "../../src/components/CLDPoster.vue";
-import CLDTransformation from "../../src/components/CLDTransformation.vue";
+import CldVideo from "../../src/components/CldVideo.vue";
+import CldPoster from "../../src/components/CldPoster.vue";
+import CldTransformation from "../../src/components/CldTransformation.vue";
 
-describe("CLDPoster", () => {
-  function sourcesOfVideo(element) {
-    const sources = element.findAll("source");
-    const result = {};
-    for (let i = 0; i < sources.length; i++) {
-      result[sources.at(i).attributes("mimetype")] = sources
-        .at(i)
-        .attributes("src");
-    }
-    return result;
-  }
-
+describe("CldPoster", () => {
   it("renders", async () => {
     const video = mount({
       template: `
-        <CLDVideo cloudName="demo" publicId="face_top">
-          <CLDPoster publicId="small_dinosaur" />
-        </CLDVideo>
+        <cld-video cloudName="demo" publicId="face_top">
+          <cld-poster publicId="small_dinosaur" />
+        </cld-video>
       `,
-      components: { CLDVideo, CLDPoster }
+      components: { CldVideo, CldPoster }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));
@@ -37,14 +26,14 @@ describe("CLDPoster", () => {
   it("doesn't mix transformations", async () => {
     const video = mount({
       template: `
-        <CLDVideo cloudName="demo" publicId="face_top">
-          <CLDTransformation effect="sepia" />
-          <CLDPoster publicId="small_dinosaur">
-            <CLDTransformation effect="blur" />
-          </CLDPoster>
-        </CLDVideo>
+        <cld-video cloudName="demo" publicId="face_top">
+          <cld-transformation effect="sepia" />
+          <cld-poster publicId="small_dinosaur">
+            <cld-transformation effect="blur" />
+          </cld-poster>
+        </cld-video>
       `,
-      components: { CLDVideo, CLDPoster, CLDTransformation }
+      components: { CldVideo, CldPoster, CldTransformation }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));
@@ -58,14 +47,14 @@ describe("CLDPoster", () => {
   it("no publicId means video publicId is used", async () => {
     const video = mount({
       template: `
-        <CLDVideo cloudName="demo" publicId="face_top">
-          <CLDTransformation effect="sepia" />
-          <CLDPoster>
-            <CLDTransformation effect="blur" />
-          </CLDPoster>
-        </CLDVideo>
+        <cld-video cloudName="demo" publicId="face_top">
+          <cld-transformation effect="sepia" />
+          <cld-poster>
+            <cld-transformation effect="blur" />
+          </cld-poster>
+        </cld-video>
       `,
-      components: { CLDVideo, CLDPoster, CLDTransformation }
+      components: { CldVideo, CldPoster, CldTransformation }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));

@@ -18,28 +18,28 @@ import { CombineWithOwn } from "../behaviours/CombineWithOwn";
  * Cloudinary poster for video element
  */
 export default {
-  name: "CLDPoster",
+  name: "CldPoster",
   inheritAttrs: false,
   props: {
     /** ID of your media file */
     publicId: { type: String, default: "" }
   },
   inject: {
-    CLDContextState: {
+    CldContextState: {
       default() {
-        return this.CLDGlobalContextState ? this.CLDGlobalContextState : null;
+        return this.CldGlobalContextState ? this.CldGlobalContextState : null;
       }
     },
-    CLDPosterStateOfVideoTag: {},
-    attrsCombinedState: { from: "CLDPosterStateOfVideoTag" }
+    CldPosterStateOfVideoTag: {},
+    attrsCombinedState: { from: "CldPosterStateOfVideoTag" }
   },
   provide() {
     return {
-      CLDPosterStateOPosterTag: this.CLDPosterStateOfVideoTag
+      CldPosterStateOPosterTag: this.CldPosterStateOfVideoTag
     };
   },
   methods: {
-    getOwnCLDAttrs() {
+    getOwnCldAttrs() {
       return normalizeObject({
         publicId: this.publicId ? this.publicId : undefined,
         configuration: normalizeConfiguration(this.$attrs),

@@ -1,9 +1,9 @@
 import Vue from "vue";
 import { mount } from "@vue/test-utils";
-import CLDPicture from "../../src/components/CLDPicture.vue";
-import CLDTransformation from "../../src/components/CLDTransformation.vue";
+import CldPicture from "../../src/components/CldPicture.vue";
+import CldTransformation from "../../src/components/CldTransformation.vue";
 
-describe("CLDPicture", () => {
+describe("CldPicture", () => {
   function sourcesOfPicture(element) {
     const sources = element.findAll("source");
     const result = {};
@@ -18,9 +18,9 @@ describe("CLDPicture", () => {
   it("renders", async () => {
     const picture = mount({
       template: `
-        <CLDPicture cloudName="demo" publicId="face_top" />
+        <cld-picture cloudName="demo" publicId="face_top" />
       `,
-      components: { CLDPicture }
+      components: { CldPicture }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));
@@ -37,9 +37,9 @@ describe("CLDPicture", () => {
   it("allows transformation as props", async () => {
     const picture = mount({
       template: `
-        <CLDPicture cloudName="demo" publicId="face_top" effect="sepia" />
+        <cld-picture cloudName="demo" publicId="face_top" effect="sepia" />
       `,
-      components: { CLDPicture }
+      components: { CldPicture }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));
@@ -58,7 +58,7 @@ describe("CLDPicture", () => {
   it("allows transformation for each source", async () => {
     const picture = mount({
       template: `
-        <CLDPicture
+        <cld-picture
             cloudName="demo" publicId="face_top"
             :sourceTypes="{
                 webp: { effect: 'sepia' },
@@ -66,7 +66,7 @@ describe("CLDPicture", () => {
             }"
         />
       `,
-      components: { CLDPicture }
+      components: { CldPicture }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));
@@ -82,22 +82,22 @@ describe("CLDPicture", () => {
     });
   });
 
-  it("allows transformation from CLDTransformation", async () => {
+  it("allows transformation from CldTransformation", async () => {
     const picture = mount({
       template: `
-        <CLDPicture
+        <cld-picture
             cloudName="demo" publicId="face_top"
             :sourceTypes="{
                 webp: { effect: 'sepia' },
                 jpeg: { effect: 'pixelate' }
             }"
         >
-            <CLDTransformation
+            <cld-transformation
                 effect="blur"
             />
-        </CLDPicture>
+        </cld-picture>
       `,
-      components: { CLDPicture, CLDTransformation }
+      components: { CldPicture, CldTransformation }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));
@@ -116,9 +116,9 @@ describe("CLDPicture", () => {
   it("bypasses non-cloudinary attributes", async () => {
     const picture = mount({
       template: `
-        <CLDPicture cloudName="demo" publicId="face_top" aria-hidden="true" />
+        <cld-picture cloudName="demo" publicId="face_top" aria-hidden="true" />
       `,
-      components: { CLDPicture }
+      components: { CldPicture }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));
@@ -133,9 +133,9 @@ describe("CLDPicture", () => {
   it("should render a picture with no sources if a publicId is not defined", async () => {
     const picture = mount({
       template: `
-        <CLDPicture cloudName="demo" publicId="" />
+        <cld-picture cloudName="demo" publicId="" />
       `,
-      components: { CLDPicture }
+      components: { CldPicture }
     });
 
     await new Promise(r => Vue.nextTick(() => r()));

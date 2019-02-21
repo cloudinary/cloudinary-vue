@@ -1,4 +1,4 @@
-This component can be used to provide complete or extend other configuration options set, also provided with `CLDContext` or as plugin installation options.
+This component can be used to provide complete or extend other configuration options set, also provided with `CldContext` or as plugin installation options.
 
 ### Attributes
 
@@ -8,44 +8,44 @@ Options provided to the component instance are going to be transformed from lowe
 
 ### Events
 
-Use `v-on:*.native` to listen to native DOM events. `CLDContext` outputs a `div` element and does not have any events on it's own.
+Use `v-on:*.native` to listen to native DOM events. `CldContext` outputs a `div` element and does not have any events on it's own.
 
 ### Usage
 
 ```vue
 <template>
   <!-- Context that carries an account name -->
-  <CLDContext cloudName="demo">
+  <cld-context cloudName="demo">
     <!--  -->
     <!-- A context that does not require secure connection -->
-    <CLDContext secure="false">
-      <CLDImage publicId="face_top" v-on:load.native="confirmLoad">
-        <CLDTransformation
+    <cld-context secure="false">
+      <cld-image publicId="face_top" v-on:load.native="confirmLoad">
+        <cld-transformation
           overlay="text:Arial_45:HTTP"
           background="red"
           radius="5"
           opacity="50"
           color="white"
         />
-        <CLDTransformation crop="scale" :height="200" />
-      </CLDImage>
-    </CLDContext>
+        <cld-transformation crop="scale" :height="200" />
+      </cld-image>
+    </cld-context>
 
     <!--  -->
     <!-- A context that sets secure connection requirement for media inside it -->
-    <CLDContext secure="true">
-      <CLDImage publicId="face_top">
-        <CLDTransformation
+    <cld-context secure="true">
+      <cld-image publicId="face_top">
+        <cld-transformation
           overlay="text:Arial_45:HTTPS"
           background="green"
           radius="5"
           opacity="50"
           color="white"
         />
-        <CLDTransformation crop="scale" :height="200" />
-      </CLDImage>
-    </CLDContext>
-  </CLDContext>
+        <cld-transformation crop="scale" :height="200" />
+      </cld-image>
+    </cld-context>
+  </cld-context>
 </template>
 
 <script>

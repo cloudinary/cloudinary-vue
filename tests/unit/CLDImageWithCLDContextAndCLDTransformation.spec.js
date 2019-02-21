@@ -1,26 +1,26 @@
 import Vue from "vue";
 import { mount } from "@vue/test-utils";
-import CLDTransformation from "../../src/components/CLDTransformation.vue";
-import CLDImage from "../../src/components/CLDImage.vue";
-import CLDContext from "../../src/components/CLDContext.vue";
+import CldTransformation from "../../src/components/CldTransformation.vue";
+import CldImage from "../../src/components/CldImage.vue";
+import CldContext from "../../src/components/CldContext.vue";
 
-describe("CLDImage", () => {
-  it("with CLDTransformation and CLDContext", async () => {
+describe("CldImage", () => {
+  it("with CldTransformation and CldContext", async () => {
     const wrapper = mount(
       {
         template: `
-          <CLDContext cloudName="demo">
-            <CLDImage publicId="face_top">
-              <CLDTransformation effect="sepia" >
-                <CLDTransformation effect="blur" />
-              </CLDTransformation>
-            </CLDImage>
-            <CLDTransformation crop="scale" width="100" height="100" />
-          </CLDContext>          
+          <cld-context cloudName="demo">
+            <cld-image publicId="face_top">
+              <cld-transformation effect="sepia" >
+                <cld-transformation effect="blur" />
+              </cld-transformation>
+            </cld-image>
+            <cld-transformation crop="scale" width="100" height="100" />
+          </cld-context>          
         `
       },
       {
-        components: { CLDTransformation, CLDImage, CLDContext }
+        components: { CldTransformation, CldImage, CldContext }
       }
     );
 

@@ -21,7 +21,7 @@ import { CombineWithOwn } from "../behaviours/CombineWithOwn";
  * Cloudinary picture element
  */
 export default {
-  name: "CLDPicture",
+  name: "CldPicture",
   inheritAttrs: false,
   render(h) {
     return h(
@@ -41,7 +41,7 @@ export default {
      *
      * Example:
      * ```
-     * <CLDPicture :sourceTypes="{ jpeg: { quality: 10 } }" />
+     * <CldPicture :sourceTypes="{ jpeg: { quality: 10 } }" />
      * ```
      */
     sourceTypes: {
@@ -55,15 +55,15 @@ export default {
     }
   },
   inject: {
-    CLDContextState: {
+    CldContextState: {
       default() {
-        return this.CLDGlobalContextState ? this.CLDGlobalContextState : null;
+        return this.CldGlobalContextState ? this.CldGlobalContextState : null;
       }
     }
   },
   provide() {
     return {
-      CLDImageState: this.attrsCombinedState
+      CldImageState: this.attrsCombinedState
     };
   },
   data() {
@@ -75,7 +75,7 @@ export default {
     };
   },
   methods: {
-    getOwnCLDAttrs() {
+    getOwnCldAttrs() {
       return {
         configuration: normalizeConfiguration(this.$attrs),
         transformation: normalizeTransformation(this.$attrs)

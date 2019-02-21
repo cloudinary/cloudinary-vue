@@ -16,23 +16,23 @@ import { CombineWithOwn } from "../behaviours/CombineWithOwn";
  * Cloudinary context providing element
  */
 export default {
-  name: "CLDContext",
+  name: "CldContext",
   inheritAttrs: false,
   props: {},
   inject: {
-    CLDContextState: {
+    CldContextState: {
       default() {
-        return this.CLDGlobalContextState ? this.CLDGlobalContextState : null;
+        return this.CldGlobalContextState ? this.CldGlobalContextState : null;
       }
     }
   },
   provide() {
     return {
-      CLDContextState: this.attrsCombinedState
+      CldContextState: this.attrsCombinedState
     };
   },
   methods: {
-    getOwnCLDAttrs() {
+    getOwnCldAttrs() {
       return {
         configuration: normalizeConfiguration(this.$attrs)
       };

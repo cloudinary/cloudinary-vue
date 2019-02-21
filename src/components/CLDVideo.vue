@@ -22,7 +22,7 @@ import { Visible } from "../behaviours/Visible";
  * Cloudinary video element
  */
 export default {
-  name: "CLDVideo",
+  name: "CldVideo",
   inheritAttrs: false,
   render(h) {
     return h(
@@ -41,7 +41,7 @@ export default {
      *
      * Example:
      * ```
-     * <CLDVideo :sourceTypes="{ mp4: { quality: 10 } }" />
+     * <CldVideo :sourceTypes="{ mp4: { quality: 10 } }" />
      * ```
      */
     sourceTypes: {
@@ -64,16 +64,16 @@ export default {
     }
   },
   inject: {
-    CLDContextState: {
+    CldContextState: {
       default() {
-        return this.CLDGlobalContextState ? this.CLDGlobalContextState : null;
+        return this.CldGlobalContextState ? this.CldGlobalContextState : null;
       }
     }
   },
   provide() {
     return {
-      CLDVideoState: this.attrsCombinedState,
-      CLDPosterStateOfVideoTag: this.posterCombinedState
+      CldVideoState: this.attrsCombinedState,
+      CldPosterStateOfVideoTag: this.posterCombinedState
     };
   },
   data() {
@@ -91,7 +91,7 @@ export default {
     );
   },
   methods: {
-    getOwnCLDAttrs() {
+    getOwnCldAttrs() {
       return {
         configuration: normalizeConfiguration(this.$attrs),
         transformation: normalizeTransformation(this.$attrs)

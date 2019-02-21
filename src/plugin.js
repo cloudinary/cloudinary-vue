@@ -1,18 +1,18 @@
 import { State } from "./reactive/State";
 import { normalizeConfiguration } from "./helpers/attributes";
 
-import CLDContext from "./components/CLDContext";
-import CLDImage from "./components/CLDImage";
-import CLDPoster from "./components/CLDPoster";
-import CLDTransformation from "./components/CLDTransformation";
-import CLDVideo from "./components/CLDVideo";
-import CLDPicture from "./components/CLDPicture";
+import CldContext from "./components/CldContext";
+import CldImage from "./components/CldImage";
+import CldPoster from "./components/CldPoster";
+import CldTransformation from "./components/CldTransformation";
+import CldVideo from "./components/CldVideo";
+import CldPicture from "./components/CldPicture";
 
 export function install(Vue, options) {
-  if (Vue.CLDInstalled) {
+  if (Vue.CldInstalled) {
     throw new Error("Cloudinary plugin already installed");
   }
-  Vue.CLDInstalled = true;
+  Vue.CldInstalled = true;
 
   options = options || {};
 
@@ -30,27 +30,27 @@ export function install(Vue, options) {
         : null
       : null;
 
-  if (getComponentName("CLDContext") != null) {
-    Vue.component(getComponentName("CLDContext"), CLDContext);
+  if (getComponentName("CldContext") != null) {
+    Vue.component(getComponentName("CldContext"), CldContext);
   }
-  if (getComponentName("CLDImage") != null) {
-    Vue.component(getComponentName("CLDImage"), CLDImage);
+  if (getComponentName("CldImage") != null) {
+    Vue.component(getComponentName("CldImage"), CldImage);
   }
-  if (getComponentName("CLDPoster") != null) {
-    Vue.component(getComponentName("CLDPoster"), CLDPoster);
+  if (getComponentName("CldPoster") != null) {
+    Vue.component(getComponentName("CldPoster"), CldPoster);
   }
-  if (getComponentName("CLDTransformation") != null) {
-    Vue.component(getComponentName("CLDTransformation"), CLDTransformation);
+  if (getComponentName("CldTransformation") != null) {
+    Vue.component(getComponentName("CldTransformation"), CldTransformation);
   }
-  if (getComponentName("CLDVideo") != null) {
-    Vue.component(getComponentName("CLDVideo"), CLDVideo);
+  if (getComponentName("CldVideo") != null) {
+    Vue.component(getComponentName("CldVideo"), CldVideo);
   }
-  if (getComponentName("CLDPicture") != null) {
-    Vue.component(getComponentName("CLDPicture"), CLDPicture);
+  if (getComponentName("CldPicture") != null) {
+    Vue.component(getComponentName("CldPicture"), CldPicture);
   }
 
   if (options.configuration) {
-    Vue.prototype.CLDGlobalContextState = new State({
+    Vue.prototype.CldGlobalContextState = new State({
       configuration: normalizeConfiguration(options.configuration)
     });
   }

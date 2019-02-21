@@ -9,9 +9,9 @@ export class CombineWithContext extends Behaviour {
     }
     this.next({ ready: true });
 
-    if (this.vue.CLDContextState) {
+    if (this.vue.CldContextState) {
       this.contextState = this.vue.attrsCombinedState.spawn();
-      this.contextStateSub = this.vue.CLDContextState.subscribe({
+      this.contextStateSub = this.vue.CldContextState.subscribe({
         next: v => {
           this.contextState.next(v);
         }

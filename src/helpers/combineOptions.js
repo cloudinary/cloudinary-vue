@@ -1,5 +1,10 @@
 import { merge, normalizeObject } from "../utils";
 
+/** Combines many objects
+ * { publicId, configuration, transformation }
+ * provided as arguments into one
+ * @param  {...{ publicId, configuration, transformation }} transformations
+ */
 export function combineOptions(...options) {
   const publicId = merge.apply(this, options).publicId;
 
@@ -32,6 +37,12 @@ export function combineOptions(...options) {
   });
 }
 
+/**
+ * Combines many transformations
+ * provided as arguments
+ * into one
+ * @param  {...object} transformations
+ */
 export function combineTransformations(...transformations) {
   return transformations.filter(isObjectWithKeys).reduce((result, item) => {
     const transformation = []

@@ -1,7 +1,8 @@
 import { pick, debounce } from "../utils";
 
 /**
- *
+ * Call back a provided function
+ * whenever element changed it's size
  * @param {HTMLElement} element
  * @param {Function} cb
  */

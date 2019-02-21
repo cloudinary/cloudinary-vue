@@ -167,11 +167,11 @@ export default {
             ? {
                 src:
                   getPlaceholderURL(
+                    this.placeholder,
                     combineOptions(
                       { publicId: this.publicId },
                       this.attrsCombined
-                    ),
-                    this.placeholder
+                    )
                   ) || this.placeholder
               }
             : {}

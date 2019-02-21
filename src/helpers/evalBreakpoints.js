@@ -1,6 +1,10 @@
-export function evalBreakpoints(valueOrGetter, args) {
+/**
+ * Normalizes `breakpoint` component attribute to an array of numbers
+ * @param {Function|Array|String} valueOrGetter
+ */
+export function evalBreakpoints(valueOrGetter) {
   if (typeof valueOrGetter === "function") {
-    return valueOrGetter.apply(null, args);
+    return valueOrGetter();
   }
   if (typeof valueOrGetter === "string") {
     return JSON.parse(

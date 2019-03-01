@@ -11,7 +11,6 @@ import { combineOptions } from "./combineOptions";
  */
 export function getPlaceholderURL(mode, options) {
   const placeholderOptions = combineOptions(
-    options,
     {
       lqip: {
         transformation: {
@@ -44,7 +43,8 @@ export function getPlaceholderURL(mode, options) {
           transformation: [{ effect: "pixelate:100" }]
         }
       }
-    }[mode]
+    }[mode],
+    options
   );
 
   return Cloudinary.new(placeholderOptions.configuration).url(

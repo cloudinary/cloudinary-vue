@@ -138,8 +138,8 @@ The feature is backed by `IntersectionObserver` and behaviour will be disabled i
     cloudName="demo"
     publicId="small_dinosaur"
     lazy
-    v-on:load.native="alert"
     placeholder="color"
+    @load.native="alert"
   >
     <cld-transformation crop="scale" :height="300" />
   </cld-image>

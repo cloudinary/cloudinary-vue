@@ -1,6 +1,7 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, kv, find, pick } from "../utils";
+import { findInTransformations } from "../helpers/findInTransformations";
 import { CombinedState } from "../reactive/CombinedState";
 import {
   normalizeTransformation,
@@ -11,12 +12,12 @@ import {
   combineOptions,
   combineTransformations
 } from "../helpers/combineOptions";
-import { BehaviourGroup } from "../behaviours/BehaviourGroup";
-import { Mounting } from "../behaviours/Mounting";
-import { CombineWithContext } from "../behaviours/CombineWithContext";
-import { MaterializeCombinedState } from "../behaviours/MaterializeCombinedState";
-import { CombineWithOwn } from "../behaviours/CombineWithOwn";
-import { Visible } from "../behaviours/Visible";
+
+import { ready } from "../mixins/ready";
+import { mounted } from "../mixins/mounted";
+import { lazy } from "../mixins/lazy";
+import { cldAttrsInherited } from "../mixins/cldAttrsInherited";
+import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
 
 /**
  * Cloudinary video element
@@ -24,6 +25,7 @@ import { Visible } from "../behaviours/Visible";
 export default {
   name: "CldVideo",
   inheritAttrs: false,
+  mixins: [ready, mounted, lazy, cldAttrsInherited, cldAttrsOwned],
   render(h) {
     return h(
       "video",
@@ -52,51 +54,19 @@ export default {
           Cloudinary.DEFAULT_VIDEO_PARAMS.source_types.map(type => kv(type, {}))
         );
       }
-    },
-    /**
-     * If set to true activates a behaviour
-     * where the video is not loaded
-     * until the HTML element is visible on page
-     */
-    lazy: {
-      type: Boolean,
-      default: false
-    }
-  },
-  inject: {
-    CldContextState: {
-      default() {
-        return this.CldGlobalContextState ? this.CldGlobalContextState : null;
-      }
     }
   },
   provide() {
     return {
-      CldVideoState: this.attrsCombinedState,
-      CldPosterStateOfVideoTag: this.posterCombinedState
+      CldPosterState: this.posterCombinedState
     };
   },
   data() {
-    const attrsCombinedState = new CombinedState(combineOptions);
     const posterCombinedState = new CombinedState(combineOptions);
-    return merge(
-      {
-        attrsCombinedState,
-        posterCombinedState,
-        attrsCombined: attrsCombinedState.get(),
-        posterAttrsCombined: null,
-        ready: false
-      },
-      Visible.data()
-    );
-  },
-  methods: {
-    getOwnCldAttrs() {
-      return {
-        configuration: normalizeConfiguration(this.$attrs),
-        transformation: normalizeTransformation(this.$attrs)
-      };
-    }
+    return {
+      posterCombinedState,
+      postercldAttrs: null
+    };
   },
   computed: {
     videoAttrs() {
@@ -105,12 +75,10 @@ export default {
       };
 
       if (
-        !this.ready ||
+        !this.isReady ||
         !this.publicId ||
-        this.attrsCombined.width === 0 ||
-        this.attrsCombined.height === 0 ||
-        find(
-          (this.attrsCombined.transformation || {}).transformation || [],
+        !!findInTransformations(
+          this.cldAttrs.transformation,
           t => t.width === 0 || t.height === 0
         )
       ) {
@@ -128,7 +96,7 @@ export default {
               )
             }
           : {},
-        Transformation.new(this.attrsCombined.transformation).toHtmlAttributes()
+        Transformation.new(this.cldAttrs.transformation).toHtmlAttributes()
       );
 
       return {
@@ -138,7 +106,7 @@ export default {
     },
 
     sources() {
-      if (!this.ready || !this.publicId) {
+      if (!this.isReady || !this.publicId) {
         return [];
       }
 
@@ -148,11 +116,11 @@ export default {
 
       return Object.keys(this.sourceTypes).map(srcType => {
         const configuration = merge(
-          this.attrsCombined.configuration,
+          this.cldAttrs.configuration,
           normalizeConfiguration(this.sourceTypes[srcType] || {})
         );
         const transformation = combineTransformations(
-          this.attrsCombined.transformation,
+          this.cldAttrs.transformation,
           normalizeTransformation(this.sourceTypes[srcType] || {})
         );
         const htmlAttrs = normalizeRest(this.sourceTypes[srcType] || {});
@@ -172,9 +140,10 @@ export default {
         return merge(htmlAttrs, { mimeType, src });
       });
     },
+
     posterOptions() {
       const ownPosterAttrs = combineOptions(
-        { configuration: this.attrsCombined.configuration },
+        { configuration: this.cldAttrs.configuration },
         {
           publicId:
             typeof this.$attrs.poster === "object"
@@ -193,19 +162,19 @@ export default {
         }
       );
 
-      const extPosterAttrs = this.posterAttrsCombined
+      const extPosterAttrs = this.postercldAttrs
         ? combineOptions(
             {
               publicId: this.publicId,
-              configuration: this.attrsCombined.configuration
+              configuration: this.cldAttrs.configuration
             },
-            this.posterAttrsCombined
+            this.postercldAttrs
           )
         : {};
 
       const defaultPoster = combineOptions(
         { publicId: this.publicId },
-        this.attrsCombined
+        this.cldAttrs
       );
 
       return find(
@@ -222,37 +191,16 @@ export default {
     }
   },
   created() {
-    this.behaviours = new BehaviourGroup(
-      {
-        mounting: Mounting,
-        context: CombineWithContext,
-        own: CombineWithOwn,
-        materialize: MaterializeCombinedState,
-        visible: Visible
-      },
-      this
-    );
-
-    this.behaviours.onCreated();
-
     this.posterCombinedStateSub = this.posterCombinedState.subscribe({
       next: v => {
         if (Object.keys(v).length) {
-          this.posterAttrsCombined = v;
+          this.postercldAttrs = v;
         }
       }
     });
   },
-  updated() {
-    this.behaviours.onUpdated();
-  },
-  mounted() {
-    this.behaviours.onMounted();
-  },
   destroyed() {
     this.posterCombinedStateSub();
-
-    this.behaviours.onDestroyed();
   }
 };
 </script>

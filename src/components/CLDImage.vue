@@ -1,6 +1,7 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, find, range } from "../utils";
+import { findInTransformations } from "../helpers/findInTransformations";
 import { CombinedState } from "../reactive/CombinedState";
 import {
   normalizeTransformation,
@@ -11,37 +12,27 @@ import { evalBreakpoints } from "../helpers/evalBreakpoints";
 import { getResizeTransformation } from "../helpers/getResizeTransformation";
 import { getPlaceholderURL } from "../helpers/getPlaceholderURL";
 import { combineOptions } from "../helpers/combineOptions";
-import { BehaviourGroup } from "../behaviours/BehaviourGroup";
-import { Resizing } from "../behaviours/Resizing";
-import { Mounting } from "../behaviours/Mounting";
-import { CombineWithContext } from "../behaviours/CombineWithContext";
-import { MaterializeCombinedState } from "../behaviours/MaterializeCombinedState";
-import { CombineWithOwn } from "../behaviours/CombineWithOwn";
-import { Visible } from "../behaviours/Visible";
+
+import { ready } from "../mixins/ready";
+import { size } from "../mixins/size";
+import { mounted } from "../mixins/mounted";
+import { cldAttrsInherited } from "../mixins/cldAttrsInherited";
+import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
+import { lazy } from "../mixins/lazy";
 
 /**
  * Cloudinary image element
  */
 export default {
-  // name: "CldImage",
+  name: "CldImage",
   inheritAttrs: false,
+  mixins: [ready, size, mounted, lazy, cldAttrsInherited, cldAttrsOwned],
   render(h) {
     return h("img", this.imageAttrs, this.$slots.default);
   },
   props: {
     /** ID of your media file */
     publicId: { type: String, default: "", required: true },
-    /**
-     * Should the component conclude requested image size based on layout.
-     * Potential values:
-     *
-     * - `fill` sets the image size as it's container,
-     * - `width` sets the image *width* as it's container and allows image *height* to be set by the browser
-     * - `height` sets the image *height* as it's container and allows image *width* to be set by the browser
-     *
-     * If you set this property without a value, `width` will be assumed.
-     */
-    responsive: { type: String },
     /**
      * Should be:
      *
@@ -62,15 +53,6 @@ export default {
       default: false
     },
     /**
-     * If set to true activates a behaviour
-     * where the image is not loaded
-     * until the HTML element is visible on page
-     */
-    lazy: {
-      type: Boolean,
-      default: false
-    },
-    /**
      * Paired with
      *
      * Possible values:
@@ -81,59 +63,58 @@ export default {
     placeholder: {
       type: String,
       default: ""
-    }
+    },
+    /**
+     * Should the component conclude requested image size based on layout.
+     * Potential values:
+     *
+     * - `fill` sets the image size as it's container,
+     * - `width` sets the image *width* as it's container and allows image *height* to be set by the browser
+     * - `height` sets the image *height* as it's container and allows image *width* to be set by the browser
+     *
+     * If you set this property without a value, `width` will be assumed.
+     */
+    responsive: { type: String }
   },
-  inject: {
-    CldContextState: {
-      default() {
-        return this.CldGlobalContextState ? this.CldGlobalContextState : null;
-      }
-    }
-  },
-  provide() {
-    return {
-      CldImageState: this.attrsCombinedState
-    };
-  },
-  data() {
-    const attrsCombinedState = new CombinedState(combineOptions);
-    return merge(
-      {
-        attrsCombinedState,
-        attrsCombined: attrsCombinedState.get(),
-        ready: false
-      },
-      Visible.data(),
-      Resizing.data()
-    );
-  },
-  methods: {
-    getOwnCldAttrs() {
-      const attrs =
+  computed: {
+    attributes() {
+      return merge(
+        this.$attrs,
         this.progressive == true
-          ? merge(this.$attrs, {
+          ? {
               flags: []
                 .concat(this.$attrs.flags ? this.$attrs.flags : [])
                 .concat("progressive")
-            })
-          : this.$attrs;
-      const configuration = normalizeConfiguration(attrs);
-      const transformation = normalizeTransformation(attrs);
-      const responsive = this.getResponsiveAttrs();
-      return combineOptions(
-        { configuration, transformation },
-        responsive ? { transformation: { transformation: [responsive] } } : {}
+            }
+          : {},
+        this.responsiveMode !== "none" && this.size
+          ? {
+              transformation: []
+                .concat(this.$attrs.transformation || [])
+                .concat(
+                  getResizeTransformation(
+                    this.responsiveMode,
+                    this.size,
+                    evalBreakpoints(this.breakpoints)
+                  )
+                )
+            }
+          : {}
       );
     },
-    getResponsiveAttrs() {
-      return getResizeTransformation(
-        this.responsiveMode,
-        this.size,
-        evalBreakpoints(this.breakpoints)
-      );
-    }
-  },
-  computed: {
+    responsiveMode() {
+      return typeof this.responsive === "string"
+        ? {
+            fill: "fill",
+            width: "width",
+            height: "height",
+            "": "width"
+          }[this.responsive]
+        : "none";
+    },
+    shouldMeasureSize() {
+      return this.responsiveMode !== "none";
+    },
     imageAttrs() {
       const className = {
         "cld-image": true,
@@ -142,12 +123,10 @@ export default {
         "cld-fill-height": this.responsiveMode === "height"
       };
       if (
-        !this.ready ||
+        !this.isReady ||
         !this.publicId ||
-        this.attrsCombined.width === 0 ||
-        this.attrsCombined.height === 0 ||
-        find(
-          (this.attrsCombined.transformation || {}).transformation || [],
+        !!findInTransformations(
+          this.cldAttrs.transformation,
           t => t.width === 0 || t.height === 0
         )
       ) {
@@ -164,10 +143,7 @@ export default {
                 src:
                   getPlaceholderURL(
                     this.placeholder,
-                    combineOptions(
-                      { publicId: this.publicId },
-                      this.attrsCombined
-                    )
+                    combineOptions({ publicId: this.publicId }, this.cldAttrs)
                   ) || this.placeholder
               }
             : {}
@@ -175,11 +151,11 @@ export default {
       }
 
       const htmlAttrs = Transformation.new({
-        transformation: this.attrsCombined.transformation
+        transformation: this.cldAttrs.transformation
       }).toHtmlAttributes();
-      const src = Cloudinary.new(this.attrsCombined.configuration).url(
+      const src = Cloudinary.new(this.cldAttrs.configuration).url(
         this.publicId,
-        this.attrsCombined
+        this.cldAttrs
       );
       return {
         class: className,
@@ -193,41 +169,7 @@ export default {
             : {}
         )
       };
-    },
-    responsiveMode() {
-      return typeof this.responsive === "string"
-        ? {
-            fill: "fill",
-            width: "width",
-            height: "height",
-            "": "width"
-          }[this.responsive]
-        : "none";
     }
-  },
-  created() {
-    this.behaviours = new BehaviourGroup(
-      {
-        mounting: Mounting,
-        resizing: Resizing,
-        context: CombineWithContext,
-        own: CombineWithOwn,
-        materialize: MaterializeCombinedState,
-        visible: Visible
-      },
-      this
-    );
-
-    this.behaviours.onCreated();
-  },
-  updated() {
-    this.behaviours.onUpdated();
-  },
-  mounted() {
-    this.behaviours.onMounted();
-  },
-  destroyed() {
-    this.behaviours.onDestroyed();
   }
 };
 </script>

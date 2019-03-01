@@ -27,7 +27,7 @@ describe("CldImage", () => {
     expect(wrapper.contains("img")).toBe(true);
     expect(wrapper.find("img").attributes("src")).toBe(undefined);
 
-    await new Promise(r => Vue.nextTick(() => r()));
+    await Vue.nextTick();
 
     expect(wrapper.contains("img")).toBe(true);
     expect(wrapper.find("img").attributes("src")).toBe(

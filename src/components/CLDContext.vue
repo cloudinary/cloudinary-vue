@@ -1,16 +1,17 @@
 <template>
-  <div class="cld-context" v-bind="rootAttrs">
+  <div class="cld-context" v-bind="htmlAttributes">
     <slot/>
   </div>
 </template>
+
 
 <script>
 import { CombinedState } from "../reactive/CombinedState";
 import { normalizeConfiguration, normalizeRest } from "../helpers/attributes";
 import { combineOptions } from "../helpers/combineOptions";
-import { BehaviourGroup } from "../behaviours/BehaviourGroup";
-import { CombineWithContext } from "../behaviours/CombineWithContext";
-import { CombineWithOwn } from "../behaviours/CombineWithOwn";
+import { mounted } from "../mixins/mounted";
+import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
+import { cldAttrsInherited } from "../mixins/cldAttrsInherited";
 
 /**
  * Cloudinary context providing element
@@ -18,63 +19,18 @@ import { CombineWithOwn } from "../behaviours/CombineWithOwn";
 export default {
   name: "CldContext",
   inheritAttrs: false,
+  mixins: [mounted, cldAttrsInherited, cldAttrsOwned],
   props: {},
-  inject: {
-    CldContextState: {
-      default() {
-        return this.CldGlobalContextState ? this.CldGlobalContextState : null;
-      }
-    }
-  },
-  provide() {
-    return {
-      CldContextState: this.attrsCombinedState
-    };
-  },
-  methods: {
-    getOwnCldAttrs() {
-      return {
-        configuration: normalizeConfiguration(this.$attrs)
-      };
-    }
-  },
   computed: {
-    rootAttrs() {
+    htmlAttributes() {
       return normalizeRest(this.$attrs);
     }
-  },
-  data() {
-    const attrsCombinedState = new CombinedState(combineOptions);
-    return {
-      attrsCombinedState
-    };
-  },
-  created() {
-    this.behaviours = new BehaviourGroup(
-      {
-        context: CombineWithContext,
-        own: CombineWithOwn
-      },
-      this
-    );
-
-    this.behaviours.onCreated();
-  },
-  updated() {
-    this.behaviours.onUpdated();
-  },
-  mounted() {
-    this.behaviours.onMounted();
-  },
-  destroyed() {
-    this.behaviours.onDestroyed();
   }
 };
 </script>
 
 <style>
 .cld-context {
-  display: inline-flex;
   display: contents;
 }
 </style>

@@ -1,6 +1,7 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, find } from "../utils";
+import { findInTransformations } from "../helpers/findInTransformations";
 import { CombinedState } from "../reactive/CombinedState";
 import {
   normalizeTransformation,
@@ -11,11 +12,11 @@ import {
   combineOptions,
   combineTransformations
 } from "../helpers/combineOptions";
-import { BehaviourGroup } from "../behaviours/BehaviourGroup";
-import { Mounting } from "../behaviours/Mounting";
-import { CombineWithContext } from "../behaviours/CombineWithContext";
-import { MaterializeCombinedState } from "../behaviours/MaterializeCombinedState";
-import { CombineWithOwn } from "../behaviours/CombineWithOwn";
+
+import { ready } from "../mixins/ready";
+import { mounted } from "../mixins/mounted";
+import { cldAttrsInherited } from "../mixins/cldAttrsInherited";
+import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
 
 /**
  * Cloudinary picture element
@@ -23,6 +24,7 @@ import { CombineWithOwn } from "../behaviours/CombineWithOwn";
 export default {
   name: "CldPicture",
   inheritAttrs: false,
+  mixins: [ready, mounted, cldAttrsInherited, cldAttrsOwned],
   render(h) {
     return h(
       "picture",
@@ -54,34 +56,6 @@ export default {
       }
     }
   },
-  inject: {
-    CldContextState: {
-      default() {
-        return this.CldGlobalContextState ? this.CldGlobalContextState : null;
-      }
-    }
-  },
-  provide() {
-    return {
-      CldImageState: this.attrsCombinedState
-    };
-  },
-  data() {
-    const attrsCombinedState = new CombinedState(combineOptions);
-    return {
-      attrsCombinedState,
-      attrsCombined: attrsCombinedState.get(),
-      ready: false
-    };
-  },
-  methods: {
-    getOwnCldAttrs() {
-      return {
-        configuration: normalizeConfiguration(this.$attrs),
-        transformation: normalizeTransformation(this.$attrs)
-      };
-    }
-  },
   computed: {
     pictureAttrs() {
       const className = {
@@ -89,12 +63,10 @@ export default {
       };
 
       if (
-        !this.ready ||
+        !this.isReady ||
         !this.publicId ||
-        this.attrsCombined.width === 0 ||
-        this.attrsCombined.height === 0 ||
-        find(
-          (this.attrsCombined.transformation || {}).transformation || [],
+        !!findInTransformations(
+          this.cldAttrs.transformation,
           t => t.width === 0 || t.height === 0
         )
       ) {
@@ -102,7 +74,7 @@ export default {
       }
 
       const htmlAttrs = Transformation.new(
-        this.attrsCombined.transformation
+        this.cldAttrs.transformation
       ).toHtmlAttributes();
 
       return {
@@ -111,18 +83,18 @@ export default {
       };
     },
     sources() {
-      if (!this.ready || !this.publicId) {
+      if (!this.isReady || !this.publicId) {
         return [];
       }
 
       return Object.keys(this.sourceTypes).map(srcType => {
         const configuration = merge(
-          this.attrsCombined.configuration,
+          this.cldAttrs.configuration,
           normalizeConfiguration(this.sourceTypes[srcType] || {})
         );
 
         const transformation = combineTransformations(
-          this.attrsCombined.transformation,
+          this.cldAttrs.transformation,
           normalizeTransformation(this.sourceTypes[srcType] || {})
         );
 
@@ -137,28 +109,6 @@ export default {
         return merge(htmlAttrs, { type: `image/${srcType}`, srcset: src });
       });
     }
-  },
-  created() {
-    this.behaviours = new BehaviourGroup(
-      {
-        mounting: Mounting,
-        context: CombineWithContext,
-        own: CombineWithOwn,
-        materialize: MaterializeCombinedState
-      },
-      this
-    );
-
-    this.behaviours.onCreated();
-  },
-  updated() {
-    this.behaviours.onUpdated();
-  },
-  mounted() {
-    this.behaviours.onMounted();
-  },
-  destroyed() {
-    this.behaviours.onDestroyed();
   }
 };
 </script>

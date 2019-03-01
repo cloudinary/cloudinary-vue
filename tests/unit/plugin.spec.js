@@ -1,4 +1,3 @@
-// import Vue from "vue";
 import { mount, createLocalVue } from "@vue/test-utils";
 import * as Cloudinary from "../../src/plugin";
 

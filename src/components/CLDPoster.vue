@@ -1,6 +1,6 @@
 <template>
   <span v-if="$slots.default" class="cld-poster">
-    <slot />
+    <slot/>
   </span>
 </template>
 
@@ -24,7 +24,7 @@ export default {
      * In case of it missing, publicId of parent CldVideo will be used
      * alongside other configuration options.
      */
-    publicId: { type: String, default: "" }
+    publicId: { type: String }
   },
   inject: {
     CldParentState: { from: "CldPosterState" }

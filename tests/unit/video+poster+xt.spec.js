@@ -22,7 +22,7 @@ describe("CldPoster", () => {
 
     expect(video.is("video")).toBe(true);
     expect(video.attributes("poster")).toBe(
-      "http://res.cloudinary.com/demo/video/upload/e_blur/small_dinosaur.jpeg"
+      "http://res.cloudinary.com/demo/image/upload/e_blur/small_dinosaur"
     );
   });
 });

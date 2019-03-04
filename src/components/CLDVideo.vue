@@ -65,7 +65,7 @@ export default {
     const posterCombinedState = new CombinedState(combineOptions);
     return {
       posterCombinedState,
-      postercldAttrs: null
+      posterCldAttrs: null
     };
   },
   computed: {
@@ -142,52 +142,51 @@ export default {
     },
 
     posterOptions() {
-      const ownPosterAttrs = merge(
+      const ownPosterAttrs = combineOptions(
         {
-          transformation: {
-            resource_type: "video",
-            format: "jpeg"
-          }
+          configuration: this.cldAttrs.configuration
         },
-        combineOptions(
-          {
-            configuration: this.cldAttrs.configuration
-          },
-          {
-            publicId:
-              typeof this.$attrs.poster === "object"
-                ? (this.$attrs.poster || {}).publicId
-                : null,
-            configuration: normalizeConfiguration(
-              typeof this.$attrs.poster === "object" && this.$attrs.poster
-                ? this.$attrs.poster
-                : {}
-            ),
-            transformation: normalizeTransformation(
-              typeof this.$attrs.poster === "object" && this.$attrs.poster
-                ? this.$attrs.poster
-                : {}
-            )
-          }
-        )
+        {
+          publicId:
+            typeof this.$attrs.poster === "object"
+              ? (this.$attrs.poster || {}).publicId
+              : null,
+          configuration: normalizeConfiguration(
+            typeof this.$attrs.poster === "object" && this.$attrs.poster
+              ? this.$attrs.poster
+              : {}
+          ),
+          transformation: normalizeTransformation(
+            typeof this.$attrs.poster === "object" && this.$attrs.poster
+              ? this.$attrs.poster
+              : {}
+          )
+        }
       );
+      ownPosterAttrs.transformation = ownPosterAttrs.transformation || {};
+      if ((this.$attrs.poster || {}).publicId) {
+        ownPosterAttrs.transformation.resource_type = "image";
+      } else {
+        ownPosterAttrs.transformation.resource_type = "video";
+        ownPosterAttrs.transformation.format = "jpeg";
+      }
 
-      const extPosterAttrs = this.postercldAttrs
-        ? merge(
+      const extPosterAttrs = this.posterCldAttrs
+        ? combineOptions(
             {
-              transformation: {
-                resource_type: "image"
-              }
+              publicId: this.publicId,
+              configuration: this.cldAttrs.configuration
             },
-            combineOptions(
-              {
-                publicId: this.publicId,
-                configuration: this.cldAttrs.configuration
-              },
-              this.postercldAttrs
-            )
+            this.posterCldAttrs
           )
         : {};
+      extPosterAttrs.transformation = extPosterAttrs.transformation || {};
+      if ((this.posterCldAttrs || {}).publicId) {
+        extPosterAttrs.transformation.resource_type = "image";
+      } else {
+        extPosterAttrs.transformation.resource_type = "video";
+        extPosterAttrs.transformation.format = "jpeg";
+      }
 
       const defaultPoster = merge(
         combineOptions({ publicId: this.publicId }, this.cldAttrs),
@@ -209,7 +208,7 @@ export default {
     this.posterCombinedStateSub = this.posterCombinedState.subscribe({
       next: v => {
         if (Object.keys(v).length) {
-          this.postercldAttrs = v;
+          this.posterCldAttrs = v;
         }
       }
     });

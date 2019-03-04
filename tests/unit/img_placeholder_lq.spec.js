@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { shallowMount, mount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import CldImage from "../../src/components/CldImage.vue";
 
 describe("CldImage", () => {

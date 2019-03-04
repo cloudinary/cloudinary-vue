@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "cloudinary-core": "^2.6.2",
-    "vue": "^2.6.7"
+    "vue": "^2.6.8"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.1",
@@ -27,13 +27,12 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
-    "eslint": "^5.14.1",
+    "eslint": "^5.15.0",
     "eslint-plugin-vue": "^5.2.2",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
-    "vue-docgen-api": "^2.6.12",
-    "vue-styleguidist": "^2.1.2",
-    "vue-template-compiler": "^2.6.7",
-    "webpack": "^4.29.5"
+    "vue-loader": "^15.7.0",
+    "vue-styleguidist": "^3.0.16",
+    "vue-template-compiler": "^2.6.8"
   }
 }

@@ -1,17 +1,13 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
-import { merge, find } from "../utils";
+import { merge } from "../utils";
 import { findInTransformations } from "../helpers/findInTransformations";
-import { CombinedState } from "../reactive/CombinedState";
 import {
   normalizeTransformation,
   normalizeConfiguration,
   normalizeRest
 } from "../helpers/attributes";
-import {
-  combineOptions,
-  combineTransformations
-} from "../helpers/combineOptions";
+import { combineTransformations } from "../helpers/combineOptions";
 
 import { ready } from "../mixins/ready";
 import { mounted } from "../mixins/mounted";

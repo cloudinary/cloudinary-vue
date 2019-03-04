@@ -1,14 +1,11 @@
 <template>
   <div class="cld-context" v-bind="htmlAttributes">
-    <slot/>
+    <slot />
   </div>
 </template>
 
-
 <script>
-import { CombinedState } from "../reactive/CombinedState";
-import { normalizeConfiguration, normalizeRest } from "../helpers/attributes";
-import { combineOptions } from "../helpers/combineOptions";
+import { normalizeRest } from "../helpers/attributes";
 import { mounted } from "../mixins/mounted";
 import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
 import { cldAttrsInherited } from "../mixins/cldAttrsInherited";

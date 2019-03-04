@@ -20,11 +20,10 @@ export class Channel {
    * @returns {undefined}
    */
   next(value) {
-    this.subs.forEach(
-      sub =>
-        sub && typeof sub === "object" && "next" in sub && sub.next
-          ? sub.next(value)
-          : null
+    this.subs.forEach(sub =>
+      sub && typeof sub === "object" && "next" in sub && sub.next
+        ? sub.next(value)
+        : null
     );
   }
 
@@ -36,11 +35,10 @@ export class Channel {
   error(error) {
     this.subs
       .splice(0)
-      .forEach(
-        sub =>
-          sub && typeof sub === "object" && "error" in sub && sub.error
-            ? sub.error(error)
-            : null
+      .forEach(sub =>
+        sub && typeof sub === "object" && "error" in sub && sub.error
+          ? sub.error(error)
+          : null
       );
   }
 
@@ -51,11 +49,10 @@ export class Channel {
   complete() {
     this.subs
       .splice(0)
-      .forEach(
-        sub =>
-          sub && typeof sub === "object" && "complete" in sub && sub.complete
-            ? sub.complete()
-            : null
+      .forEach(sub =>
+        sub && typeof sub === "object" && "complete" in sub && sub.complete
+          ? sub.complete()
+          : null
       );
   }
 

@@ -1,6 +1,6 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
-import { merge, kv, find, pick } from "../utils";
+import { merge, kv, find } from "../utils";
 import { findInTransformations } from "../helpers/findInTransformations";
 import { CombinedState } from "../reactive/CombinedState";
 import {

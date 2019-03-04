@@ -1,14 +1,10 @@
 <template>
   <span v-if="$slots.default" class="cld-transformation">
-    <slot/>
+    <slot />
   </span>
 </template>
 
 <script>
-import { equal, omit } from "../utils";
-import { normalizeTransformation } from "../helpers/attributes";
-import { combineOptions } from "../helpers/combineOptions";
-
 import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
 import { cldAttrsSubmitting } from "../mixins/cldAttrsSubmitting";
 

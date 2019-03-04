@@ -1,5 +1,5 @@
 <template>
-  <cld-transformation effect="sepia:20"/>
+  <cld-transformation effect="sepia:20" />
 </template>
 
 <script>

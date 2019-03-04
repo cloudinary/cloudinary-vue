@@ -1,13 +1,8 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
-import { merge, find, range } from "../utils";
+import { merge, range } from "../utils";
 import { findInTransformations } from "../helpers/findInTransformations";
-import { CombinedState } from "../reactive/CombinedState";
-import {
-  normalizeTransformation,
-  normalizeConfiguration,
-  normalizeRest
-} from "../helpers/attributes";
+import { normalizeRest } from "../helpers/attributes";
 import { evalBreakpoints } from "../helpers/evalBreakpoints";
 import { getResizeTransformation } from "../helpers/getResizeTransformation";
 import { getPlaceholderURL } from "../helpers/getPlaceholderURL";

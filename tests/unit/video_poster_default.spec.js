@@ -1,7 +1,6 @@
 import Vue from "vue";
 import { mount } from "@vue/test-utils";
 import CldVideo from "../../src/components/CldVideo.vue";
-import { sourcesOfVideo } from "./sourcesOfVideo";
 
 describe("CldVideo", () => {
   it("will contain default poster if no poster data is provided", async () => {

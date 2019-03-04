@@ -7,6 +7,7 @@ describe("CldImage", () => {
       {
         template: `
           <cld-image
+            class="x"
             cloudName="demo"
             publicId="face_top"
             aria-hidden="true"
@@ -21,6 +22,7 @@ describe("CldImage", () => {
     expect(image.attributes("src")).toBe(
       `http://res.cloudinary.com/demo/image/upload/face_top`
     );
+    expect(new Set(image.classes())).toEqual(new Set(["cld-image", "x"]));
     expect(image.attributes("aria-hidden")).toBe("true");
     expect(image.attributes("cloudName")).toBe(undefined);
   });

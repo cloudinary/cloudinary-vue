@@ -1,6 +1,6 @@
 <template>
   <span v-if="$slots.default" class="cld-poster">
-    <slot/>
+    <slot />
   </span>
 </template>
 

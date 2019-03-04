@@ -1,5 +1,9 @@
 import { ready } from "./ready";
 
+/**
+ * If necessary watches for root elements visibility
+ * and posts the result to components data
+ */
 export const lazy = {
   mixins: [ready],
 
@@ -20,7 +24,7 @@ export const lazy = {
   },
 
   created() {
-    this.markReady("lazy", true);
+    this.markReadyCheck("lazy");
     fix.call(this);
   },
 

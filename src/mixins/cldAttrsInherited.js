@@ -1,22 +1,26 @@
 import { cldAttrs } from "./cldAttrs";
 import { cldChild } from "./cldChild";
 
+/**
+ * Ties cloudinary parent element state
+ * with components own
+ */
 export const cldAttrsInherited = {
   mixins: [cldAttrs, cldChild],
 
   created() {
-    this.markReady("cldAttrsOwned", false);
+    this.addReadyCheck("cldAttrsOwned");
 
     if (this.CldParentState) {
       this.contextState = this.cldAttrsState.spawn();
       this.contextStateSub = this.CldParentState.subscribe({
         next: v => {
           this.contextState.next(v);
-          this.markReady("cldAttrsOwned", true);
+          this.markReadyCheck("cldAttrsOwned");
         }
       });
     } else {
-      this.markReady("cldAttrsOwned", true);
+      this.markReadyCheck("cldAttrsOwned");
     }
   },
 

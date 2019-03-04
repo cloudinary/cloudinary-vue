@@ -6,6 +6,13 @@ import {
 import { cldAttrs } from "./cldAttrs";
 import { combineOptions } from "../helpers/combineOptions";
 
+/**
+ * In order to maintain merging order
+ * of config+transformation sources (context+own+modifiers)
+ * create a sub-State
+ * of components main CombineState instance
+ * and submit components config+transformation
+ */
 export const cldAttrsOwned = {
   mixins: [cldAttrs],
 
@@ -25,7 +32,7 @@ export const cldAttrsOwned = {
   },
 
   created() {
-    this.markReady("cldAttrsOwned", true);
+    this.markReadyCheck("cldAttrsOwned");
 
     this.ownState = this.cldAttrsState.spawn();
     this.ownState.next(this.cldAttributes);

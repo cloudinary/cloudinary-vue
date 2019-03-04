@@ -1,6 +1,11 @@
 import { cldAttrs } from "./cldAttrs";
 import { cldChild } from "./cldChild";
 
+/**
+ * Modify cloudinary parent CombinedState
+ * with its own config+transformations
+ * through dedicated State instance
+ */
 export const cldAttrsSubmitting = {
   mixins: [cldAttrs, cldChild],
 
@@ -11,13 +16,13 @@ export const cldAttrsSubmitting = {
       );
     }
 
-    this.markReady("cldAttrsSubmitting", false);
+    this.addReadyCheck("cldAttrsSubmitting");
 
     this.submitter = this.CldParentState.spawn();
     this.submitterSub = this.cldAttrsState.subscribe({
       next: v => {
         this.submitter.next(v);
-        this.markReady("cldAttrsSubmitting", true);
+        this.markReadyCheck("cldAttrsSubmitting");
       }
     });
   },

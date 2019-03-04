@@ -2,6 +2,11 @@ import { CombinedState } from "../reactive/CombinedState";
 import { combineOptions } from "../helpers/combineOptions";
 import { ready } from "./ready";
 
+/**
+ * Creates a components own CombinedState
+ * and posts its changes
+ * into components data
+ */
 export const cldAttrs = {
   mixins: [ready],
 
@@ -20,13 +25,11 @@ export const cldAttrs = {
   },
 
   created() {
-    this.markReady("cldAttrs", false);
+    this.addReadyCheck("cldAttrs");
     this.cldAttrsStateSub = this.cldAttrsState.subscribe({
       next: v => {
-        // console.log(this.$options._componentTag, "cldAttrs", v);
         this.cldAttrs = v;
-        this.markReady("cldAttrs", true);
-        // this.$forceUpdate();
+        this.markReadyCheck("cldAttrs");
       }
     });
   },

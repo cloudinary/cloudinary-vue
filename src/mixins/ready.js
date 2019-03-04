@@ -1,5 +1,9 @@
 import { kv, merge } from "../utils";
 
+/**
+ * helper mixin for marking
+ * which of other mixins report "ready" state
+ */
 export const ready = {
   data() {
     return { ready: {} };
@@ -28,66 +32,21 @@ export const ready = {
     }
   },
   methods: {
-    markReady(name, value) {
-      if (this.ready[name] !== value) {
-        this.ready = merge(this.ready, kv(name, !!value));
+    /**
+     * Register a single mixin ready flag to true
+     * @param {string} name
+     */
+    addReadyCheck(name) {
+      this.ready = merge(this.ready, kv(name, false));
+    },
+    /**
+     * Switch on a single mixin ready flag to true
+     * @param {string} name
+     */
+    markReadyCheck(name) {
+      if (!this.ready[name]) {
+        this.ready = merge(this.ready, kv(name, true));
       }
     }
   }
-  // beforeCreate() {
-  //   console.log(this.$options._componentTag, "beforeCreate", {
-  //     parent: !!this.CldParentState,
-  //     attrs: this.$attrs,
-  //     combined: this.cldAttrs
-  //   });
-  // },
-  // created() {
-  //   console.log(this.$options._componentTag, "created", {
-  //     parent: !!this.CldParentState,
-  //     attrs: this.$attrs,
-  //     combined: this.cldAttrs
-  //   });
-  // },
-  // beforeMount() {
-  //   console.log(this.$options._componentTag, "beforeMount", {
-  //     parent: !!this.CldParentState,
-  //     attrs: this.$attrs,
-  //     combined: this.cldAttrs
-  //   });
-  // },
-  // mounted() {
-  //   console.log(this.$options._componentTag, "mounted", {
-  //     parent: !!this.CldParentState,
-  //     attrs: this.$attrs,
-  //     combined: this.cldAttrs
-  //   });
-  // },
-  // beforeUpdate() {
-  //   console.log(this.$options._componentTag, "beforeUpdate", {
-  //     parent: !!this.CldParentState,
-  //     attrs: this.$attrs,
-  //     combined: this.cldAttrs
-  //   });
-  // },
-  // update() {
-  //   console.log(this.$options._componentTag, "update", {
-  //     parent: !!this.CldParentState,
-  //     attrs: this.$attrs,
-  //     combined: this.cldAttrs
-  //   });
-  // },
-  // beforeDestroy() {
-  //   console.log(this.$options._componentTag, "beforeDestroy", {
-  //     parent: !!this.CldParentState,
-  //     attrs: this.$attrs,
-  //     combined: this.cldAttrs
-  //   });
-  // },
-  // destroyed() {
-  //   console.log(this.$options._componentTag, "destroyed", {
-  //     parent: !!this.CldParentState,
-  //     attrs: this.$attrs,
-  //     combined: this.cldAttrs
-  //   });
-  // }
 };

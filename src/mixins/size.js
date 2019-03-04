@@ -1,6 +1,11 @@
 import { ready } from "./ready";
 import { equal, pick, debounce } from "../utils";
 
+/**
+ * If necessary posts root element
+ * size information
+ * into components data
+ */
 export const size = {
   mixins: [ready],
 
@@ -18,7 +23,7 @@ export const size = {
   },
 
   created() {
-    this.markReady("size", false);
+    this.addReadyCheck("size");
     fix.call(this);
   },
 
@@ -45,12 +50,12 @@ function fix() {
         const nextSize = pick(size, ["width", "height"]);
         if (!equal(currentSize, nextSize)) {
           this.size = nextSize;
-          this.markReady("size", true);
+          this.markReadyCheck("size");
         }
       });
     }
   } else {
-    this.markReady("size", true);
+    this.markReadyCheck("size");
     if (this.cancelSizeListener) {
       this.cancelSizeListener();
     }

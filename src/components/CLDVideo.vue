@@ -142,50 +142,65 @@ export default {
     },
 
     posterOptions() {
-      const ownPosterAttrs = combineOptions(
-        { configuration: this.cldAttrs.configuration },
+      const ownPosterAttrs = merge(
         {
-          publicId:
-            typeof this.$attrs.poster === "object"
-              ? (this.$attrs.poster || {}).publicId
-              : null,
-          configuration: normalizeConfiguration(
-            typeof this.$attrs.poster === "object" && this.$attrs.poster
-              ? this.$attrs.poster
-              : {}
-          ),
-          transformation: normalizeTransformation(
-            typeof this.$attrs.poster === "object" && this.$attrs.poster
-              ? this.$attrs.poster
-              : {}
-          )
-        }
+          transformation: {
+            resource_type: "video",
+            format: "jpeg"
+          }
+        },
+        combineOptions(
+          {
+            configuration: this.cldAttrs.configuration
+          },
+          {
+            publicId:
+              typeof this.$attrs.poster === "object"
+                ? (this.$attrs.poster || {}).publicId
+                : null,
+            configuration: normalizeConfiguration(
+              typeof this.$attrs.poster === "object" && this.$attrs.poster
+                ? this.$attrs.poster
+                : {}
+            ),
+            transformation: normalizeTransformation(
+              typeof this.$attrs.poster === "object" && this.$attrs.poster
+                ? this.$attrs.poster
+                : {}
+            )
+          }
+        )
       );
 
       const extPosterAttrs = this.postercldAttrs
-        ? combineOptions(
+        ? merge(
             {
-              publicId: this.publicId,
-              configuration: this.cldAttrs.configuration
+              transformation: {
+                resource_type: "image"
+              }
             },
-            this.postercldAttrs
+            combineOptions(
+              {
+                publicId: this.publicId,
+                configuration: this.cldAttrs.configuration
+              },
+              this.postercldAttrs
+            )
           )
         : {};
 
-      const defaultPoster = combineOptions(
-        { publicId: this.publicId },
-        this.cldAttrs
+      const defaultPoster = merge(
+        combineOptions({ publicId: this.publicId }, this.cldAttrs),
+        {
+          transformation: {
+            resource_type: "video",
+            format: "jpeg"
+          }
+        }
       );
 
       return find(
-        [extPosterAttrs, ownPosterAttrs, defaultPoster].map(options =>
-          combineOptions(options, {
-            transformation: {
-              resource_type: "video",
-              format: "jpeg"
-            }
-          })
-        ),
+        [extPosterAttrs, ownPosterAttrs, defaultPoster],
         options => options.publicId
       );
     }

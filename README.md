@@ -14,15 +14,8 @@ Cloudinary provides URL and HTTP based APIs that can be easily integrated with a
 
 #### Install the library with npm
 
-```
-npm i cloudinary-vue
-```
-
-or refer to it using unpkg CDN
-
-```html
-<script src="//unpkg.com/cloudinary-vue/dist/Cloudinary.umd.min.js">
-```
+1. Download the whole package from https://drive.google.com/open?id=1T-zdNrruHfb1RqpQ0OjRp8oBoeoN52bo
+1. Run `npm run [path_to_download]/cloudinary-vue-0.9.0-rc.1.tgz`
 
 ##### Import and attach a plugin
 

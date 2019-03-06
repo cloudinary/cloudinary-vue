@@ -24,7 +24,7 @@ import Vue from "vue";
 import Cloudinary from "cloudinary-vue";
 
 Vue.use(Cloudinary);
-// ..or..
+// ..or provide some global cloudinary service configuration..
 Vue.use(Cloudinary, {
   configuration: { cloudName: "demo" }
   //             ^ cloudinary configuration options
@@ -43,6 +43,13 @@ Vue.use(Cloudinary, {
     //        ^ true just turns if on
     CldTransformation: "CldXf"
     //                 ^ a custom name
+  }
+});
+// ..or rename using new names as keys.
+Vue.use(Cloudinary, {
+  configuration: { cloudName: "demo" },
+  components: {
+    CldXf: "CldTransformation"
   }
 });
 ```

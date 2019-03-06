@@ -110,5 +110,26 @@ describe("CLD plugin", () => {
       );
       expect(wrapper2.is("img")).toBe(false);
     });
+
+    it("object with a string specifies under what name a component should be installed REVERSE", async () => {
+      const localVue = createLocalVue();
+      localVue.use(Cloudinary, { components: { CloudinaryImage: "CldImage" } });
+
+      const wrapper = mount(
+        {
+          template: `<cloudinary-image cloudName="demo" publicId="face_top" />`
+        },
+        { localVue }
+      );
+      expect(wrapper.is("img")).toBe(true);
+
+      const wrapper2 = mount(
+        {
+          template: `<cld-image cloudName="demo" publicId="face_top" />`
+        },
+        { localVue }
+      );
+      expect(wrapper2.is("img")).toBe(false);
+    });
   });
 });

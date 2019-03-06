@@ -16,42 +16,55 @@ export function install(Vue, options) {
 
   options = options || {};
 
-  const getComponentName = name =>
-    !options.components
-      ? name
-      : options.components instanceof Array &&
-        options.components.indexOf(name) >= 0
-      ? name
-      : typeof options.components === "object"
-      ? options.components[name] === true
-        ? name
-        : typeof options.components[name] === "string"
-        ? options.components[name]
-        : null
-      : null;
-
-  if (getComponentName("CldContext") != null) {
-    Vue.component(getComponentName("CldContext"), CldContext);
-  }
-  if (getComponentName("CldImage") != null) {
-    Vue.component(getComponentName("CldImage"), CldImage);
-  }
-  if (getComponentName("CldPoster") != null) {
-    Vue.component(getComponentName("CldPoster"), CldPoster);
-  }
-  if (getComponentName("CldTransformation") != null) {
-    Vue.component(getComponentName("CldTransformation"), CldTransformation);
-  }
-  if (getComponentName("CldVideo") != null) {
-    Vue.component(getComponentName("CldVideo"), CldVideo);
-  }
-  if (getComponentName("CldPicture") != null) {
-    Vue.component(getComponentName("CldPicture"), CldPicture);
-  }
+  [
+    CldContext,
+    CldImage,
+    CldPoster,
+    CldTransformation,
+    CldVideo,
+    CldPicture
+  ].forEach(component => {
+    const userComponentName = getUserComponentName(
+      options.components,
+      component.name
+    );
+    if (userComponentName != null) {
+      Vue.component(userComponentName, component);
+    }
+  });
 
   if (options.configuration) {
     Vue.prototype.CldGlobalContextState = new State({
       configuration: normalizeConfiguration(options.configuration)
     });
   }
+}
+
+function getUserComponentName(components, name) {
+  if (!components) {
+    return name;
+  }
+
+  if (typeof components === "object") {
+    // { components: ['CldImage'] }
+    if (Array.isArray(components)) {
+      return components.indexOf(name) >= 0 ? name : null;
+    }
+    // { components: { CldImage: true } }
+    if (typeof components[name] === "boolean") {
+      return components[name] === true ? name : null;
+    }
+    // { components: { CldImage: 'CloudinaryImage' } }
+    if (typeof components[name] === "string") {
+      return components[name];
+    }
+    // { components: { CloudinaryImage: 'CldImage' } }
+    const keys = Object.keys(components);
+    const values = keys.map(key => components[key]);
+    if (values.indexOf(name) >= 0) {
+      return keys[values.indexOf(name)];
+    }
+  }
+
+  return null;
 }

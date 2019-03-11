@@ -1,13 +1,20 @@
 const path = require("path");
 
 module.exports = {
-  components: "src/components/**/*.vue",
+  components: ["src/components/**/*.vue", "viewer/src/components/**/*.vue"],
   exampleMode: "expand",
   usageMode: "expand",
   getComponentPathLine(componentPath) {
+    const rel = path.relative(__dirname, componentPath);
     const name = path.basename(componentPath, ".vue");
+    const subfolder = rel
+      .replace(`src/components/${name}.vue`, "")
+      .replace(/^([^/]+)\/?$/, "$1");
     return `
-import { ${name} } from 'cloudinary-vue'; // ..or just import with a plugin`;
+      import { ${name} } from 'cloudinary-vue${
+      subfolder ? `/${subfolder}` : ""
+    }';
+    `;
   },
   title: "Cloudinary Vue SDK",
   template: {

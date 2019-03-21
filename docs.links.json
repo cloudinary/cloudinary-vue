@@ -1,0 +1,60 @@
+[
+  {
+    "href": "#/Get started",
+    "name": "Get started",
+    "children": [
+      {
+        "href": "#/Get started/CldContext",
+        "name": "CldContext"
+      },
+      {
+        "href": "#/Get started/CldImage",
+        "name": "CldImage"
+      },
+      {
+        "href": "#/Get started/CldPicture",
+        "name": "CldPicture"
+      },
+      {
+        "href": "#/Get started/CldPoster",
+        "name": "CldPoster"
+      },
+      {
+        "href": "#/Get started/CldTransformation",
+        "name": "CldTransformation"
+      },
+      {
+        "href": "#/Get started/CldVideo",
+        "name": "CldVideo"
+      }
+    ]
+  },
+  {
+    "href": "#/Video player component",
+    "name": "Video player component",
+    "children": [
+      {
+        "href": "#/Video player component/Installation",
+        "name": "Installation"
+      },
+      {
+        "href": "#/Video player component/CldVideoPlayer",
+        "name": "CldVideoPlayer"
+      }
+    ]
+  },
+  {
+    "href": "#/Uploader component",
+    "name": "Uploader component",
+    "children": [
+      {
+        "href": "#/Uploader component/Installation",
+        "name": "Installation"
+      },
+      {
+        "href": "#/Uploader component/CldUploader",
+        "name": "CldUploader"
+      }
+    ]
+  }
+]

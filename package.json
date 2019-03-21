@@ -2,14 +2,16 @@
   "name": "cloudinary-vue",
   "version": "0.9.0-rc.1",
   "private": true,
-  "main": "dist/Cloudinary.umd.js",
+  "browser": "src/index.js",
+  "main": "dist/Cloudinary.common.js",
+  "unpkg": "dist/Cloudinary.umd.min.js",
   "scripts": {
     "build": "npm run styleguide:build; npm run lib:build",
     "lib:build": "vue-cli-service build --target lib --name Cloudinary src/index.js",
     "lint": "vue-cli-service lint",
     "test": "vue-cli-service test:unit",
-    "styleguide": "NODE_ENV=styleguide vue-styleguidist server",
-    "styleguide:build": "NODE_ENV=styleguide vue-styleguidist build"
+    "styleguide": "node generateDocsLinks.js; STYLEGUIDE=1 vue-styleguidist server",
+    "styleguide:build": "node generateDocsLinks.js; STYLEGUIDE=1 vue-styleguidist build"
   },
   "dependencies": {
     "cloudinary-core": "^2.6.2",
@@ -17,21 +19,24 @@
     "vue": "^2.6.8"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.4.1",
-    "@vue/cli-plugin-eslint": "^3.4.1",
-    "@vue/cli-plugin-unit-jest": "^3.4.1",
-    "@vue/cli-service": "^3.4.1",
+    "@vue/cli-plugin-babel": "^3.5.1",
+    "@vue/cli-plugin-eslint": "^3.5.1",
+    "@vue/cli-plugin-unit-jest": "^3.5.1",
+    "@vue/cli-service": "^3.5.1",
     "@vue/eslint-config-prettier": "^4.0.1",
     "@vue/test-utils": "^1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
-    "eslint": "^5.15.0",
+    "eslint": "^5.15.1",
     "eslint-plugin-vue": "^5.2.2",
+    "glob": "^7.1.3",
+    "jstoxml": "^1.4.4",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
     "vue-loader": "^15.7.0",
+    "vue-styleguidist": "^3.8.3",
     "vue-template-compiler": "^2.6.8",
-    "vue-styleguidist": "^3.0.16"
+    "webpack-node-externals": "^1.7.2"
   }
 }

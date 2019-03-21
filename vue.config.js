@@ -1,8 +1,10 @@
+const nodeExternals = require("webpack-node-externals");
+
 module.exports = {
   configureWebpack: config => {
-    if (process.env.NODE_ENV === "styleguide") {
+    if (process.env.STYLEGUIDE) {
       return;
     }
-    config.externals = ["cloudinary-core"];
+    config.externals = [nodeExternals()];
   }
 };

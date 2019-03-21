@@ -1,9 +1,36 @@
 const path = require("path");
 
 module.exports = {
-  components: ["src/components/**/*.vue", "viewer/src/components/**/*.vue"],
+  sections: [
+    { name: "Cloudinary Vue SDK", content: "docs.links.md", tocHide: true },
+    {
+      name: "Get started",
+      content: "docs/installation.md",
+      components: ["src/components/**/*.vue"]
+    },
+    {
+      name: "Video player component",
+      content: "videoplayer/docs/description.md",
+      sections: [
+        { name: "Installation", content: "videoplayer/docs/installation.md" }
+      ],
+      components: ["videoplayer/src/components/**/*.vue"],
+      sectionDepth: 1
+    },
+    {
+      name: "Uploader component",
+      content: "uploader/docs/description.md",
+      sections: [
+        { name: "Installation", content: "uploader/docs/installation.md" }
+      ],
+      components: ["uploader/src/components/**/*.vue"],
+      sectionDepth: 1
+    }
+  ],
+  showSidebar: false,
   exampleMode: "expand",
   usageMode: "expand",
+  pagePerSection: true,
   getComponentPathLine(componentPath) {
     const rel = path.relative(__dirname, componentPath);
     const name = path.basename(componentPath, ".vue");
@@ -62,5 +89,9 @@ module.exports = {
       </style>
     `
     }
+  },
+  styleguideComponents: {
+    "slots/IsolateButton": path.join(__dirname, "docs/IsolateButton"),
+    StyleGuideRenderer: path.join(__dirname, "docs/StyleGuideRenderer")
   }
 };

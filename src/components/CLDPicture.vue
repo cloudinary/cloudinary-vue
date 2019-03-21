@@ -15,9 +15,9 @@ import { cldAttrsInherited } from "../mixins/cldAttrsInherited";
 import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
 
 /**
- * Generates a `picture` tag including the URL sources for the main formats 
- * supported by web browsers (jpeg and webp by default). 
- * Browsers can automatically select and play the image format that they best support, 
+ * Generates a `picture` tag including the URL sources for the main formats
+ * supported by web browsers (jpeg and webp by default).
+ * Browsers can automatically select and play the image format that they best support,
  * and the image files are created dynamically when first accessed by your users.
  */
 export default {
@@ -36,13 +36,13 @@ export default {
   },
   props: {
     /**
-     * The unique identifier of an uploaded image.  
+     * The unique identifier of an uploaded image.
      */
     publicId: { type: String, default: "", required: true },
-     /**
+    /**
      * An ordered array of the image source types to include in the tag, where the image type is mapped to the mime type.
      * You can also add a specific transformation for each specified video format by adding a transformation struct. Example:
-     * 
+     *
      * `<CldPicture :sourceTypes="{ jpeg: { quality: 50 } }" />`
      */
     sourceTypes: {

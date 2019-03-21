@@ -16,16 +16,16 @@ import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
 import { lazy } from "../mixins/lazy";
 
 /**
- * Deliver images and specify image transformations using the cld-image (CldImage) component, 
+ * Deliver images and specify image transformations using the cld-image (CldImage) component,
  * which automatically generates an `<img>` tag including the dynamic URL of the image source.
- * 
- * 
- * You can optionally include [cld-transformation](#cldtransformation) components to define transformations to apply to the delivered image. 
- * 
+ *
+ *
+ * You can optionally include [cld-transformation](#cldtransformation) components to define transformations to apply to the delivered image.
+ *
  * For more information see the
  * <a href="https://cloudinary.com/documentation/vue_image_manipulation#cldvideo_component" target="_blank">
- * cld-image component</a> and 
- * <a href="https://cloudinary.com/documentation/image_transformations#embedding_images_in_web_pages" 
+ * cld-image component</a> and
+ * <a href="https://cloudinary.com/documentation/image_transformations#embedding_images_in_web_pages"
  * target="_blank">embedding images in web pages</a> documentation.
  */
 export default {
@@ -36,12 +36,12 @@ export default {
     return h("img", this.imageAttrs, this.$slots.default);
   },
   props: {
-    /** 
-     * The unique identifier of an uploaded image.  
+    /**
+     * The unique identifier of an uploaded image.
      */
     publicId: { type: String, default: "", required: true },
     /**
-     * Whether to generate a JPEG using the [progressive (interlaced) JPEG 
+     * Whether to generate a JPEG using the [progressive (interlaced) JPEG
      * format](https://cloudinary.com/documentation/transformation_flags#delivery_and_image_format_flags).
      */
     progressive: {
@@ -50,7 +50,7 @@ export default {
     },
     /**
      * The placeholder image to use while the image is loading. Possible values:
-     * 
+     *
      * - `"lqip"` to use a low quality image
      * - `"color"` to use an average color image
      * - `"pixelate"` to use a pixelated image
@@ -69,7 +69,7 @@ export default {
     responsive: { type: String, default: "width" },
     /**
      * The set of possible breakpoint values to be used together with the responsive property. Either:
-     * 
+     *
      * - an array of numbers
      * - a comma separated list of numbers as a single string
      * - a function that returns an array of numbers

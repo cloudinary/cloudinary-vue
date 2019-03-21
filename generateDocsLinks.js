@@ -56,7 +56,6 @@ function getComponentLinks(filenames, route) {
         name
       };
     });
-  return [];
 }
 
 function convertToXMLRecipe(input) {

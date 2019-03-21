@@ -20,19 +20,19 @@ import { cldAttrsInherited } from "../mixins/cldAttrsInherited";
 import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
 
 /**
- * Deliver videos and specify video transformations using the `cld-video` (CldVideo) element, 
- * which automatically generates an HTML5 video tag including the URL sources for the main formats 
- * supported by web browsers (webm, mp4 and ogv by default), as well as a poster thumbnail image, 
- * which is automatically generated from a frame in the video. 
- * Browsers can automatically select and play the video format that they best support, 
+ * Deliver videos and specify video transformations using the `cld-video` (CldVideo) element,
+ * which automatically generates an HTML5 video tag including the URL sources for the main formats
+ * supported by web browsers (webm, mp4 and ogv by default), as well as a poster thumbnail image,
+ * which is automatically generated from a frame in the video.
+ * Browsers can automatically select and play the video format that they best support,
  * and the video files are created dynamically when first accessed by your users.
- * 
- * You can optionally include `cld-transformation` components to define transformations to apply to the delivered video. 
- * 
- * For more information see 
+ *
+ * You can optionally include `cld-transformation` components to define transformations to apply to the delivered video.
+ *
+ * For more information see
  * <a href="https://cloudinary.com/documentation/vue_video_manipulation#cldvideo_component" target="_blank">
- * cld-video component</a> and 
- * <a href="https://cloudinary.com/documentation/video_manipulation_and_delivery#embedding_videos_in_web_pages" 
+ * cld-video component</a> and
+ * <a href="https://cloudinary.com/documentation/video_manipulation_and_delivery#embedding_videos_in_web_pages"
  * target="_blank">embedding videos in web pages</a>
  */
 export default {
@@ -47,16 +47,16 @@ export default {
         .map(attrs => h("source", { key: attrs.mimeType, attrs }))
         .concat(this.$slots.default)
     );
-  }, 
+  },
   props: {
-    /** 
-     * The unique identifier of an uploaded video. 
+    /**
+     * The unique identifier of an uploaded video.
      */
     publicId: { type: String, default: "", required: true },
     /**
      * An ordered array of the video source types to include in the HTML5 tag, where the type is mapped to the mime type.
      * You can also add a specific transformation for each specified video format by adding a transformation struct. Example:
-     * 
+     *
      * `<CldVideo :sourceTypes="{ mp4: { quality: 10 } }" />`
      */
     sourceTypes: {

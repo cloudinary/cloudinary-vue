@@ -4,15 +4,19 @@ module.exports = {
   sections: [
     { name: "Cloudinary Vue SDK", content: "docs.links.md", tocHide: true },
     {
-      name: "Get started",
+      name: "Install core components",
       content: "docs/installation.md",
-      components: ["src/components/**/*.vue"]
+      components: ["src/components/**/*.vue"],
+      sectionDepth: 1
     },
     {
-      name: "Video player component",
+      name: "Video Player component",
       content: "videoplayer/docs/description.md",
       sections: [
-        { name: "Installation", content: "videoplayer/docs/installation.md" }
+        {
+          name: "Install Video Player",
+          content: "videoplayer/docs/installation.md"
+        }
       ],
       components: ["videoplayer/src/components/**/*.vue"],
       sectionDepth: 1
@@ -21,7 +25,10 @@ module.exports = {
       name: "Uploader component",
       content: "uploader/docs/description.md",
       sections: [
-        { name: "Installation", content: "uploader/docs/installation.md" }
+        {
+          name: "Install Uploader",
+          content: "uploader/docs/installation.md"
+        }
       ],
       components: ["uploader/src/components/**/*.vue"],
       sectionDepth: 1

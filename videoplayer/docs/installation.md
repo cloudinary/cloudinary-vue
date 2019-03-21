@@ -10,7 +10,7 @@ Vue.component("CldVideoPlayer", async () => {
       so initial bundle size
       is not affected by this component
     */
-  const CldVideoPlayerModule = await import("cloudinary-vue/viewer");
+  const CldVideoPlayerModule = await import("cloudinary-vue/videoplayer");
   return CldVideoPlayerModule.CldVideoPlayer;
 });
 ```
@@ -18,7 +18,7 @@ Vue.component("CldVideoPlayer", async () => {
 ...however there is nothing wrong with synchronous initialization.
 
 ```js static
-import { CldVideoPlayer } from "cloudinary-vue/viewer";
+import { CldVideoPlayer } from "cloudinary-vue/videoplayer";
 Vue.component("CldVideoPlayer", CldVideoPlayer);
 ```
 

@@ -1,44 +1,44 @@
 [
   {
-    "href": "#/Get started",
-    "name": "Get started",
+    "href": "#/Install core components",
+    "name": "Install core components",
     "children": [
       {
-        "href": "#/Get started/CldContext",
+        "href": "#/Install core components/CldContext",
         "name": "CldContext"
       },
       {
-        "href": "#/Get started/CldImage",
+        "href": "#/Install core components/CldImage",
         "name": "CldImage"
       },
       {
-        "href": "#/Get started/CldPicture",
+        "href": "#/Install core components/CldPicture",
         "name": "CldPicture"
       },
       {
-        "href": "#/Get started/CldPoster",
+        "href": "#/Install core components/CldPoster",
         "name": "CldPoster"
       },
       {
-        "href": "#/Get started/CldTransformation",
+        "href": "#/Install core components/CldTransformation",
         "name": "CldTransformation"
       },
       {
-        "href": "#/Get started/CldVideo",
+        "href": "#/Install core components/CldVideo",
         "name": "CldVideo"
       }
     ]
   },
   {
-    "href": "#/Video player component",
-    "name": "Video player component",
+    "href": "#/Video Player component",
+    "name": "Video Player component",
     "children": [
       {
-        "href": "#/Video player component/Installation",
-        "name": "Installation"
+        "href": "#/Video Player component/Install Video Player",
+        "name": "Install Video Player"
       },
       {
-        "href": "#/Video player component/CldVideoPlayer",
+        "href": "#/Video Player component/CldVideoPlayer",
         "name": "CldVideoPlayer"
       }
     ]
@@ -48,8 +48,8 @@
     "name": "Uploader component",
     "children": [
       {
-        "href": "#/Uploader component/Installation",
-        "name": "Installation"
+        "href": "#/Uploader component/Install Uploader",
+        "name": "Install Uploader"
       },
       {
         "href": "#/Uploader component/CldUploader",

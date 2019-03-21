@@ -9,9 +9,7 @@ export const lazy = {
 
   props: {
     /**
-     * If set to true activates a behaviour
-     * where the image is not loaded
-     * until the HTML element is visible on page
+     * Whether to only load the asset when it needs to be displayed instead of when the page first loads.
      */
     lazy: {
       type: Boolean,

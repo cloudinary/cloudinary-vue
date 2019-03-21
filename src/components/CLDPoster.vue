@@ -10,7 +10,10 @@ import { cldAttrsSubmitting } from "../mixins/cldAttrsSubmitting";
 import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
 
 /**
- * Cloudinary poster for video element
+ * The image to be shown while a video is downloading or until the user hits the play button. 
+ * This component must be added as a child of the [CldVideo](#cldvideo) component. 
+ *
+ * If this component is not given then the poster image defaults to the middle frame of the source video in jpg format.
  */
 export default {
   name: "CldPoster",
@@ -18,11 +21,7 @@ export default {
   mixins: [cldAttrsOwned, cldAttrsSubmitting],
   props: {
     /**
-     * ID of your media file.
-     * Notice that unlike CldVideo, CldImage and CldPicture
-     * this component does not require you to specify publicId.
-     * In case of it missing, publicId of parent CldVideo will be used
-     * alongside other configuration options.
+     * The unique identifier of an uploaded image.  
      */
     publicId: { type: String }
   },

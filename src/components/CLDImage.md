@@ -1,29 +1,26 @@
 ### Attributes
 
-Refer to base [Cloudinary JS SDK](https://github.com/cloudinary/cloudinary_js#configuration) for configuration options.
+Refer to the base [Cloudinary JS SDK](https://github.com/cloudinary/cloudinary_js#configuration) for configuration options.
 
-See [Image transformations documentation](http://cloudinary.com/documentation/image_transformations) for all the options accepted by `CldImage` and `CldTransformation`.
+See the [Image transformation reference](https://cloudinary.com/documentation/image_transformation_reference) documentation for all the options accepted by the `CldImage` and `CldTransformation` components.
 
-Options provided to the component instance are going to be transformed from lower camel case to snake case.
 
 ### Events
 
-Use `v-on:*.native` to listen to native DOM events. `CldImage` outputs an `img` element and does not have any events on it's own.
+Use `v-on:*.native` to listen to native DOM events. `CldImage` outputs an `img` element that does not have any events by default.
 
 ```vue
 <template>
   <cld-image
     cloudName="demo"
     publicId="small_dinosaur"
-    v-on:click.native="alert"
-  >
+    v-on:click.native="alert">
     <cld-transformation
       overlay="text:Arial_45:CLICK ME"
       background="red"
       radius="10"
       opacity="90"
-      color="white"
-    />
+      color="white" />
     <cld-transformation crop="scale" :height="100" />
   </cld-image>
 </template>
@@ -31,7 +28,7 @@ Use `v-on:*.native` to listen to native DOM events. `CldImage` outputs an `img` 
 export default {
   methods: {
     alert() {
-      alert("I've used native event listener to bind to a click");
+      alert("I've used a native event listener to bind to a click event");
     }
   }
 };
@@ -40,13 +37,11 @@ export default {
 
 ### Usage
 
-It is crucial for the `CldImage` to get both `cloudName` and `publicId`. All the other arguments are optional.
-
 ```jsx
 <cld-image cloudName="demo" publicId="small_dinosaur" />
 ```
 
-Of those two, only `publicId` is image-specific. Other configuration options may be passed through a `CldContext` like in:
+General configuration options may be passed with a [CldContext](#cldcontext) containing component instead:
 
 ```jsx
 <cld-context cloudName="demo">
@@ -54,61 +49,34 @@ Of those two, only `publicId` is image-specific. Other configuration options may
 </cld-context>
 ```
 
-`CldImage` can also get a image transformation data by directly setting manipulation attributes onto the component or through `CldTransformation` instances.
-
-Compare:
+`CldImage` can also be given transformation data by setting manipulation attributes on the component itself or with a [CldTransformation](#cldtransformation) child component.
 
 ```jsx
-<table width="100%">
-  <tbody>
-    <tr>
-      <th align="center">On element</th>
-      <th align="center">
-        On <code>CldTransformation</code> tags
-      </th>
-    </tr>
-    <tr>
-      <td align="center">
-        <cld-image
-          cloudName="demo"
-          publicId="small_dinosaur"
-          effect="blur:300"
-          crop="scale"
-          width="100"
-        />
-      </td>
-      <td align="center">
-        <cld-image cloudName="demo" publicId="small_dinosaur">
-          <cld-transformation crop="scale" width="100" />
-          <cld-transformation effect="blur:300" />
-        </cld-image>
-      </td>
-    </tr>
-  </tbody>
-</table>
-```
 
-You can specify `CldImage`'s transformations also by setting transformation for whole set of images with `CldContext`.
+// with the component itself:
 
-```jsx
-<cld-context cloudName="demo">
-  <cld-transformation effect="blur:999" />
+<cld-image
+    cloudName="demo"
+    publicId="small_dinosaur"
+    effect="blur:100"
+    crop="scale"
+    width="100"  />
 
-  <cld-image cloudName="demo" publicId="small_dinosaur">
-    <cld-transformation crop="scale" width="50" />
-  </cld-image>
+// with a child CldTransformation component:
 
-  <cld-image cloudName="demo" publicId="small_dinosaur">
+<cld-image 
+  cloudName="demo" 
+  publicId="small_dinosaur">
     <cld-transformation crop="scale" width="100" />
-  </cld-image>
+    <cld-transformation effect="blur:100" />
+</cld-image>
 
-  <cld-image cloudName="demo" publicId="small_dinosaur">
-    <cld-transformation crop="scale" width="150" />
-  </cld-image>
-</cld-context>
 ```
+
 
 ### Responsive mode
+
+Add the `responsive` property to have the image automatically adjust to the available width.
 
 ```jsx
 <cld-image cloudName="demo" publicId="small_dinosaur" responsive>
@@ -116,7 +84,7 @@ You can specify `CldImage`'s transformations also by setting transformation for 
 </cld-image>
 ```
 
-Responsive mode, but adjusting to height:
+Responsive mode, but adjusting to height instead:
 
 ```jsx
 <div class="explain" style="height: 75px; padding: 20px;">
@@ -128,9 +96,9 @@ Responsive mode, but adjusting to height:
 
 ### Lazy mode
 
-Setting `lazy` attribute will make the component to not load an actual image file until the produced `img` HTML element is actually visible on screen.
+Set the `lazy` property to only load the image when it needs to be displayed instead of when the page first loads.
 
-The feature is backed by `IntersectionObserver` and behaviour will be disabled if it is not available.
+Note: This feature is dependent on [IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver) and will be disabled if it is not available.
 
 ```vue
 <template>

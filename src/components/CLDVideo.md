@@ -1,14 +1,13 @@
 ### Attributes
 
-Refer to base [Cloudinary JS SDK](https://github.com/cloudinary/cloudinary_js#configuration) for configuration options.
+Refer to the base [Cloudinary JS SDK](https://github.com/cloudinary/cloudinary_js#configuration) for configuration options.
 
-See [Video transformations documentation](https://cloudinary.com/documentation/video_manipulation_and_delivery) for all the options accepted by `CldVideo` and `CldTransformation`.
+See the [Video transformation reference](https://cloudinary.com/documentation/video_transformation_reference) documentation for all the options accepted by the `CldVideo` and `CldTransformation` components.
 
-Options provided to the component instance are going to be transformed from lower camel case to snake case.
 
 ### Events
 
-Use `v-on:*.native` to listen to native DOM events. `CldVideo` outputs `video` element does not have any events on it's own.
+Use `v-on:*.native` to listen to native DOM events. `CldVideo` outputs a `video` tag that does not have any events by default.
 
 ### Usage
 
@@ -16,4 +15,34 @@ Use `v-on:*.native` to listen to native DOM events. `CldVideo` outputs `video` e
 <cld-video cloudName="demo" publicId="dog" lazy controls />
 ```
 
-Just like the [`CldImage`](#Cldimage), `CldVideo` will get its configuration from plugin provided options, parent `CldContext` component instance and `CldTransformation` component children instances.
+General configuration options may be passed with a [CldContext](#cldcontext) containing component instead:
+
+```jsx
+<cld-context cloudName="demo">
+  <cld-video publicId="dog" />
+</cld-context>
+```
+
+`CldVideo` can also be given [transformation](https://cloudinary.com/documentation/video_transformation_reference) data by setting attributes on the component itself or with a [CldTransformation](#cldtransformation) child component.
+
+```jsx
+
+// with the component itself:
+
+<cld-video
+    cloudName="demo"
+    publicId="dog"
+    effect="blur:100"
+    crop="scale"
+    width="100"  />
+
+// with a child CldTransformation component:
+
+<cld-video
+  cloudName="demo" 
+  publicId="dog">
+    <cld-transformation crop="scale" width="100" />
+    <cld-transformation effect="blur:100" />
+</cld-video>
+
+```

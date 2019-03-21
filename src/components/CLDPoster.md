@@ -1,16 +1,17 @@
-`CldPoster` is an optional `CldVideo` child that will specify image resource to be provided to `poster` attribute of the `video` element.
+
+
 
 ### Attributes
 
-Refer to base [Cloudinary JS SDK](https://github.com/cloudinary/cloudinary_js#configuration) for configuration options.
+Refer to the base [Cloudinary JS SDK](https://github.com/cloudinary/cloudinary_js#configuration) for configuration options.
 
-See [Image transformations documentation](http://cloudinary.com/documentation/image_transformations) for all the options accepted by `CldImage` and `CldTransformation`.
+See the [Image transformation reference](https://cloudinary.com/documentation/image_transformation_reference) documentation for all the options accepted by the `CldPoster` and `CldTransformation` components.
 
 Options provided to the component instance are going to be transformed from lower camel case to snake case.
 
 ### Events
 
-Component instance does not emit any events.
+This component does not have any events.
 
 ### Usage
 
@@ -20,7 +21,9 @@ Component instance does not emit any events.
 </cld-video>
 ```
 
-`CldPoster` can be additionally configured with `CldTransformation` (although it is capable of reading transformation attributes provided directly to it's instance).
+
+`CldPoster` can also be given [transformation](https://cloudinary.com/documentation/image_transformation_reference) data for the image by setting attributes on the component itself or with a [CldTransformation](#cldtransformation) child component.
+
 
 ```vue
 <template>

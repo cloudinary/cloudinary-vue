@@ -13,10 +13,9 @@ const components = {
   CldTransformation
 };
 
-export default plugin;
-
 export {
   plugin,
+  plugin as default,
   components,
   CldContext,
   CldImage,

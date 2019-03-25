@@ -71,7 +71,9 @@ export function StyleGuideRenderer({
 }) {
   return createElement(
     "div",
-    { className: cx(classes.root, hasSidebar && classes.hasSidebar) },
+    {
+      className: cx(classes.root, hasSidebar && classes.hasSidebar, "cld-doc")
+    },
     createElement("main", { className: classes.content }, children),
     hasSidebar &&
       createElement(

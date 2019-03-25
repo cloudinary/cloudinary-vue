@@ -1,7 +1,10 @@
 ## Install the library with npm
 
-1. Download the whole package from https://drive.google.com/open?id=1T-zdNrruHfb1RqpQ0OjRp8oBoeoN52bo
-1. Run `npm install [path_to_download]/cloudinary-vue-0.9.0-rc.1.tgz`
+Install the package in your project with
+
+```bash
+npm install cloudinary-vue
+```
 
 ### Import and attach a plugin
 
@@ -40,12 +43,10 @@ Vue.use(Cloudinary, {
 });
 ```
 
-Also, in application stylesheet, you should import `cloudinary-vue` styles:
+## Use the library with unpkg.com
 
-```css
-@import "cloudinary-vue/dist/Cloudinary.css";
+Add your HTML file:
+
+```html
+<script src="https://unpkg.com/cloudinary-vue"></script>
 ```
-
-## Install the library with unpkg.com
-
-> (not supported yet)

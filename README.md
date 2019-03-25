@@ -8,6 +8,10 @@ Cloudinary offers comprehensive APIs and administration capabilities and is easy
 
 Cloudinary provides URL and HTTP based APIs that can be easily integrated with any Web development framework.
 
+## BETA
+
+This is a BETA version. Things are still due to changes
+
 ## Usage
 
 ### Installation

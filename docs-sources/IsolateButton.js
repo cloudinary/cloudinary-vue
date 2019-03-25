@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 
 var IsolateButton = function IsolateButton() {
-  return "";
+  return null;
 };
 
 IsolateButton.propTypes = {

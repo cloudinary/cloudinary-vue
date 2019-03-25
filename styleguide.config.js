@@ -3,10 +3,10 @@ const path = require("path");
 module.exports = {
   sections: [
     { name: "Cloudinary Vue SDK", content: "docs.links.md", tocHide: true },
-    { name: "About Cloudinary", content: "docs/desc.md" },
+    { name: "About Cloudinary", content: "docs-sources/desc.md" },
     {
       name: "Install core components",
-      content: "docs/installation.md",
+      content: "docs-sources/installation.md",
       components: ["src/components/**/*.vue"],
       sectionDepth: 1
     }
@@ -217,8 +217,21 @@ module.exports = {
     `
     }
   },
+  styleguideDir: "docs",
   styleguideComponents: {
-    "slots/IsolateButton": path.join(__dirname, "docs/IsolateButton"),
-    StyleGuideRenderer: path.join(__dirname, "docs/StyleGuideRenderer")
+    "slots/IsolateButton": path.join(__dirname, "docs-sources/IsolateButton"),
+    "rsg-components/slots/UsageTabButton": path.join(
+      __dirname,
+      "docs-sources/UsageTabButton"
+    ),
+    "rsg-components/lib/slots/UsageTabButton": path.join(
+      __dirname,
+      "docs-sources/UsageTabButton"
+    ),
+    StyleGuideRenderer: path.join(__dirname, "docs-sources/StyleGuideRenderer"),
+    SectionHeadingRenderer: path.join(
+      __dirname,
+      "docs-sources/SectionHeadingRenderer"
+    )
   }
 };

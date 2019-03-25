@@ -52,11 +52,7 @@ export function combineTransformations(...transformations) {
     return merge(
       result,
       item,
-      transformation.length === 0
-        ? {}
-        : transformation.length === 1
-        ? transformation[0]
-        : { transformation }
+      transformation.length === 0 ? {} : { transformation }
     );
   }, {});
 }

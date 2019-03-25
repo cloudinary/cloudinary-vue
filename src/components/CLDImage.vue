@@ -66,7 +66,7 @@ export default {
      * - `height` uses the available image *height* and allows image *width* to be set dynamically
      * - `fill` uses the available image *width* and *height*
      */
-    responsive: { type: String, default: "width" },
+    responsive: { type: String, default: "none" },
     /**
      * The set of possible breakpoint values to be used together with the responsive property. Either:
      *
@@ -90,13 +90,13 @@ export default {
                 .concat("progressive")
             }
           : {},
-        this.responsiveMode !== "none" && this.size
+        this.responsive !== "none" && this.size
           ? {
               transformation: []
                 .concat(this.$attrs.transformation || [])
                 .concat(
                   getResizeTransformation(
-                    this.responsiveMode,
+                    this.responsive,
                     this.size,
                     evalBreakpoints(this.breakpoints)
                   )
@@ -105,25 +105,15 @@ export default {
           : {}
       );
     },
-    responsiveMode() {
-      return typeof this.responsive === "string"
-        ? {
-            fill: "fill",
-            width: "width",
-            height: "height",
-            "": "width"
-          }[this.responsive]
-        : "none";
-    },
     shouldMeasureSize() {
-      return this.responsiveMode !== "none";
+      return this.responsive !== "none";
     },
     imageAttrs() {
       const className = {
         "cld-image": true,
-        "cld-fill": this.responsiveMode === "fill",
-        "cld-fill-width": this.responsiveMode === "width",
-        "cld-fill-height": this.responsiveMode === "height"
+        "cld-fill": this.responsive === "fill",
+        "cld-fill-width": this.responsive === "width",
+        "cld-fill-height": this.responsive === "height"
       };
       if (
         !this.isReady ||

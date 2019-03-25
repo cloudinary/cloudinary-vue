@@ -3,7 +3,6 @@ import { mount } from "@vue/test-utils";
 import CldVideo from "../../src/components/CldVideo.vue";
 import CldPoster from "../../src/components/CldPoster.vue";
 import CldTransformation from "../../src/components/CldTransformation.vue";
-import { sourcesOfVideo } from "./sourcesOfVideo";
 
 describe("CldPoster", () => {
   it("doesn't mix up transformations", async () => {
@@ -22,14 +21,6 @@ describe("CldPoster", () => {
     await Vue.nextTick();
 
     expect(video.is("video")).toBe(true);
-    expect(sourcesOfVideo(video)).toEqual({
-      "video/webm":
-        "http://res.cloudinary.com/demo/video/upload/e_sepia/face_top.webm",
-      "video/mp4":
-        "http://res.cloudinary.com/demo/video/upload/e_sepia/face_top.mp4",
-      "video/ogg":
-        "http://res.cloudinary.com/demo/video/upload/e_sepia/face_top.ogv"
-    });
     expect(video.attributes("poster")).toBe(
       "http://res.cloudinary.com/demo/image/upload/e_blur/small_dinosaur"
     );

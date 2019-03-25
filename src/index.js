@@ -1,6 +1,7 @@
 import * as plugin from "./plugin";
 import CldContext from "./components/CldContext";
 import CldImage from "./components/CldImage";
+import CldPicture from "./components/CldPicture";
 import CldVideo from "./components/CldVideo";
 import CldPoster from "./components/CldPoster";
 import CldTransformation from "./components/CldTransformation";
@@ -10,7 +11,8 @@ const components = {
   CldImage,
   CldVideo,
   CldPoster,
-  CldTransformation
+  CldTransformation,
+  CldPicture
 };
 
 export {
@@ -21,5 +23,6 @@ export {
   CldImage,
   CldVideo,
   CldPoster,
-  CldTransformation
+  CldTransformation,
+  CldPicture
 };

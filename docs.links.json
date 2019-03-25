@@ -1,9 +1,5 @@
 [
   {
-    "href": "#/About Cloudinary",
-    "name": "About Cloudinary"
-  },
-  {
     "href": "#/Install core components",
     "name": "Install core components",
     "children": [
@@ -16,6 +12,10 @@
         "name": "CldImage"
       },
       {
+        "href": "#/Install core components/CldPicture",
+        "name": "CldPicture"
+      },
+      {
         "href": "#/Install core components/CldPoster",
         "name": "CldPoster"
       },
@@ -26,6 +26,34 @@
       {
         "href": "#/Install core components/CldVideo",
         "name": "CldVideo"
+      }
+    ]
+  },
+  {
+    "href": "#/Video Player component",
+    "name": "Video Player component",
+    "children": [
+      {
+        "href": "#/Video Player component/Install Video Player",
+        "name": "Install Video Player"
+      },
+      {
+        "href": "#/Video Player component/CldVideoPlayer",
+        "name": "CldVideoPlayer"
+      }
+    ]
+  },
+  {
+    "href": "#/Uploader component",
+    "name": "Uploader component",
+    "children": [
+      {
+        "href": "#/Uploader component/Install Uploader",
+        "name": "Install Uploader"
+      },
+      {
+        "href": "#/Uploader component/CldUploader",
+        "name": "CldUploader"
       }
     ]
   }

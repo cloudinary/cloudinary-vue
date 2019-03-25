@@ -6,6 +6,7 @@ import CldImage from "./components/CldImage";
 import CldPoster from "./components/CldPoster";
 import CldTransformation from "./components/CldTransformation";
 import CldVideo from "./components/CldVideo";
+import CldPicture from "./components/CldPicture";
 
 export function install(Vue, options) {
   if (Vue.CldInstalled) {
@@ -15,17 +16,22 @@ export function install(Vue, options) {
 
   options = options || {};
 
-  [CldContext, CldImage, CldPoster, CldTransformation, CldVideo].forEach(
-    component => {
-      const userComponentName = getUserComponentName(
-        options.components,
-        component.name
-      );
-      if (userComponentName != null) {
-        Vue.component(userComponentName, component);
-      }
+  [
+    CldContext,
+    CldImage,
+    CldPoster,
+    CldTransformation,
+    CldVideo,
+    CldPicture
+  ].forEach(component => {
+    const userComponentName = getUserComponentName(
+      options.components,
+      component.name
+    );
+    if (userComponentName != null) {
+      Vue.component(userComponentName, component);
     }
-  );
+  });
 
   if (options.configuration) {
     Vue.prototype.CldGlobalContextState = new State({

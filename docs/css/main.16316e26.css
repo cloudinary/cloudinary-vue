@@ -1,0 +1,29 @@
+
+.cld-context {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  display: contents;
+}
+
+.cld-image.cld-fill-height {
+  display: block;
+  height: 100%;
+  width: auto;
+}
+.cld-image.cld-fill-width {
+  display: block;
+  width: 100%;
+}
+.cld-image.cld-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+
+.cld-transformation {
+  display: none;
+}
+
+

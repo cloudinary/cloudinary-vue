@@ -144,6 +144,7 @@ Additional resources are available at:
 - [Documentation](http://cloudinary.com/documentation)
 - [Knowledge Base](http://support.cloudinary.com/forums)
 - [Image transformations documentation](http://cloudinary.com/documentation/image_transformations)
+- [Reference guide](https://cloudinary.github.io/cloudinary-vue/)
 
 ## Support
 

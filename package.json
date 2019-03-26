@@ -1,7 +1,6 @@
 {
   "name": "cloudinary-vue",
-  "version": "1.0.0-beta1",
-  "private": true,
+  "version": "1.0.0-beta2",
   "browser": "src/index.js",
   "main": "dist/Cloudinary.common.js",
   "unpkg": "dist/Cloudinary.umd.min.js",

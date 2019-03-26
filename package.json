@@ -5,10 +5,10 @@
   "main": "dist/Cloudinary.common.js",
   "unpkg": "dist/Cloudinary.umd.min.js",
   "scripts": {
-    "build": "npm run styleguide:build; npm run lib:build",
+    "build": "vue-cli-service lint --fix; npm run styleguide:build; npm run lib:build",
     "lib:build": "vue-cli-service build --target lib --name Cloudinary src/index.js",
     "lint": "vue-cli-service lint",
-    "test": "vue-cli-service test:unit",
+    "test": "vue-cli-service lint && vue-cli-service test:unit",
     "styleguide": "node docs-sources/generateDocsLinks.js; STYLEGUIDE=1 vue-styleguidist server",
     "styleguide:build": "rm -rf docs/*; node docs-sources/generateDocsLinks.js; STYLEGUIDE=1 vue-styleguidist build"
   },
@@ -41,8 +41,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test",
-      "pre-push": "npm test"
+      "_pre-commit": "npm test"
     }
   }
 }

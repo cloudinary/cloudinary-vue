@@ -19,7 +19,7 @@ describe("CldPoster", () => {
       components: { CldVideo, CldPoster, CldTransformation }
     });
 
-    await new Promise(r => setTimeout(r));
+    await Vue.nextTick();
 
     expect(video.is("video")).toBe(true);
     expect(sourcesOfVideo(video)).toEqual({

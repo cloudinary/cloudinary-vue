@@ -21,7 +21,7 @@ describe("CldImage", () => {
         `http://res.cloudinary.com/demo/image/upload/$nh_ih,$nw_iw,c_scale,q_1,w_1/c_scale,h_$nh,w_$nw/face_top`
       );
 
-      await new Promise(r => setTimeout(r));
+      await Vue.nextTick();
 
       expect(image.attributes("src")).toEqual(
         `http://res.cloudinary.com/demo/image/upload/face_top`

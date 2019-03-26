@@ -233,5 +233,17 @@ module.exports = {
       __dirname,
       "docs-sources/SectionHeadingRenderer"
     )
+  },
+  dangerouslyUpdateWebpackConfig(webpackConfig, env) {
+    webpackConfig.output.filename = "build/[name].bundle.js";
+    webpackConfig.output.chunkFilename = "build/[name].js";
+    webpackConfig.plugins.forEach(plugin => {
+      console.log("plugin", plugin.__proto__.constructor.name);
+      if (plugin.__proto__.constructor.name === "MiniCssExtractPlugin") {
+        plugin.options.filename = "css/[name].css";
+        plugin.options.chunkFilename = "css/[name].css";
+      }
+    });
+    return webpackConfig;
   }
 };

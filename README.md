@@ -183,13 +183,13 @@ npm run build
 #### Run local styleguidist server
 
 ```
-npm run styleguidist
+npm run styleguide
 ```
 
 #### Build styleguidist output
 
 ```
-npm run styleguidist:build
+npm run styleguide:build
 ```
 
 ### Lint files

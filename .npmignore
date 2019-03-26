@@ -1,0 +1,29 @@
+#garbage
+.DS_Store
+#other modules
+node_modules
+#docs
+docs
+docs-sources
+docs.link*
+favicon.png
+styleguide.config.js
+#tests
+jest.config.js
+tests
+.travis.yml
+# local env files
+.env.local
+.env.*.local
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*

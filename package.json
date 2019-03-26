@@ -5,6 +5,10 @@
   "browser": "src/index.js",
   "main": "dist/Cloudinary.common.js",
   "unpkg": "dist/Cloudinary.umd.min.js",
+  "files": [
+    "src",
+    "dist"
+  ],
   "scripts": {
     "build": "npm run styleguide:build; npm run lib:build",
     "lib:build": "vue-cli-service build --target lib --name Cloudinary src/index.js",

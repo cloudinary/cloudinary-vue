@@ -2,7 +2,11 @@ const path = require("path");
 
 module.exports = {
   sections: [
-    { name: "Cloudinary Vue SDK", content: "docs.links.md", tocHide: true },
+    {
+      name: "Cloudinary Vue SDK",
+      content: "docs-sources/links.md",
+      tocHide: true
+    },
     { name: "About Cloudinary", content: "docs-sources/desc.md" },
     {
       name: "Install core components",
@@ -238,7 +242,6 @@ module.exports = {
     webpackConfig.output.filename = "build/[name].bundle.js";
     webpackConfig.output.chunkFilename = "build/[name].js";
     webpackConfig.plugins.forEach(plugin => {
-      console.log("plugin", plugin.__proto__.constructor.name);
       if (plugin.__proto__.constructor.name === "MiniCssExtractPlugin") {
         plugin.options.filename = "css/[name].css";
         plugin.options.chunkFilename = "css/[name].css";

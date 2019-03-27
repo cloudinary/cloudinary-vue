@@ -3,23 +3,20 @@ const glob = require("glob");
 const vdg = require("vue-docgen-api");
 const fs = require("fs");
 const { toXML } = require("jstoxml");
-const config = require("./styleguide.config");
+const config = require("../styleguide.config");
 
 const links = flatten(
   config.sections.map(section => getSectionLinks(section, ["#"]))
 );
 fs.writeFileSync(
-  path.join(__dirname, "docs.links.json"),
+  path.join(__dirname, "./links.json"),
   JSON.stringify(links, null, "  ")
 );
 fs.writeFileSync(
-  path.join(__dirname, "docs.links.xml"),
+  path.join(__dirname, "./links.xml"),
   toXML({ nav: convertToXMLRecipe(links) })
 );
-fs.writeFileSync(
-  path.join(__dirname, "docs.links.md"),
-  convertToMarkdown(links)
-);
+fs.writeFileSync(path.join(__dirname, "./links.md"), convertToMarkdown(links));
 
 function getSectionLinks(section, route) {
   if (section.tocHide) {
@@ -46,7 +43,7 @@ function getSectionLinks(section, route) {
 function getComponentLinks(filenames, route) {
   return glob
     .sync(filenames, {
-      cwd: __dirname
+      cwd: process.cwd()
     })
     .map(filename => {
       const vueFile = vdg.parse(filename);

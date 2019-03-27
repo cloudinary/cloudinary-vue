@@ -9,8 +9,8 @@
     "lib:build": "vue-cli-service build --target lib --name Cloudinary src/index.js",
     "lint": "vue-cli-service lint",
     "test": "vue-cli-service test:unit",
-    "styleguide": "node generateDocsLinks.js; STYLEGUIDE=1 vue-styleguidist server",
-    "styleguide:build": "rm -rf docs/*; node generateDocsLinks.js; STYLEGUIDE=1 vue-styleguidist build"
+    "styleguide": "node docs-sources/generateDocsLinks.js; STYLEGUIDE=1 vue-styleguidist server",
+    "styleguide:build": "rm -rf docs/*; node docs-sources/generateDocsLinks.js; STYLEGUIDE=1 vue-styleguidist build"
   },
   "dependencies": {
     "cloudinary-core": "^2.6.2",

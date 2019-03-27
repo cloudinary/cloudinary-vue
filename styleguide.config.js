@@ -234,7 +234,7 @@ module.exports = {
       "docs-sources/SectionHeadingRenderer"
     )
   },
-  dangerouslyUpdateWebpackConfig(webpackConfig, env) {
+  dangerouslyUpdateWebpackConfig(webpackConfig) {
     webpackConfig.output.filename = "build/[name].bundle.js";
     webpackConfig.output.chunkFilename = "build/[name].js";
     webpackConfig.plugins.forEach(plugin => {

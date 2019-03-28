@@ -143,9 +143,9 @@ export default {
         };
       }
 
-      const htmlAttrs = Transformation.new({
-        transformation: this.cldAttrs.transformation
-      }).toHtmlAttributes();
+      const htmlAttrs = Transformation.new(
+        this.cldAttrs.transformation
+      ).toHtmlAttributes();
       const src = Cloudinary.new(this.cldAttrs.configuration).url(
         this.publicId,
         this.cldAttrs

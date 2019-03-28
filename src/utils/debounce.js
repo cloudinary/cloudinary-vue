@@ -1,7 +1,6 @@
 export function debounce(fn, timeout) {
   let forceUpdateTimeoutToken = null;
-  return function() {
-    const args = Array.prototype.slice.call(arguments, 0);
+  return function debounced(...args) {
     clearTimeout(forceUpdateTimeoutToken);
     forceUpdateTimeoutToken = setTimeout(() => {
       fn.apply(this, args);

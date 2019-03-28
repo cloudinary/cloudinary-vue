@@ -6,9 +6,12 @@
  * @param {number} value
  */
 export function findBreakpoint(stops, value) {
+  if (stops.length === 0) {
+    return value;
+  }
   return stops
     .concat([])
     .sort((a, b) => a - b)
     .filter(stop => stop >= value)
-    .concat(stop)[0];
+    .concat(stops[0])[0];
 }

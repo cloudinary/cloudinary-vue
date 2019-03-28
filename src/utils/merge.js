@@ -1,5 +1,4 @@
-export function merge() {
-  const args = Array.prototype.slice.call(arguments, 0).filter(x => x != null);
+export function merge(...args) {
   if (args.length === 0) {
     return {};
   }
@@ -24,5 +23,5 @@ export function merge() {
     }
     return result;
   }
-  return merge(args[0], merge.apply(null, args.slice(1)));
+  return merge(args[0], merge(...args.slice(1)));
 }

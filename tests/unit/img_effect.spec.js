@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import CldImage from "../../src/components/CldImage.vue";
+import CldImage from "../../src/components/CldImage";
 
 describe("CldImage", () => {
   it("allows transformation as props", () => {

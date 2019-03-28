@@ -6,7 +6,7 @@ import { merge, normalizeObject } from "../utils";
  * @param  {...{ publicId, configuration, transformation }} transformations
  */
 export function combineOptions(...options) {
-  const publicId = merge.apply(this, options).publicId;
+  const { publicId } = merge.apply(this, options);
 
   const configuration = normalizeObject(
     merge.apply(
@@ -29,7 +29,7 @@ export function combineOptions(...options) {
   );
 
   return normalizeObject({
-    publicId: publicId ? publicId : undefined,
+    publicId,
     configuration: isObjectWithKeys(configuration) ? configuration : undefined,
     transformation: isObjectWithKeys(transformation)
       ? transformation

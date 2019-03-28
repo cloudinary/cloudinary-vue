@@ -1,10 +1,3 @@
-<template>
-  <span v-if="$slots.default" class="cld-poster">
-    <slot />
-  </span>
-</template>
-
-<script>
 import { normalizeObject, merge } from "../utils";
 import { cldAttrsSubmitting } from "../mixins/cldAttrsSubmitting";
 import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
@@ -17,6 +10,12 @@ import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
  */
 export default {
   name: "CldPoster",
+  render(h) {
+    if (!this.$slots || !this.$slots.default) {
+      return null;
+    }
+    return h("span", { class: "cld-poster" }, this.$slots.default);
+  },
   inheritAttrs: false,
   mixins: [cldAttrsOwned, cldAttrsSubmitting],
   props: {
@@ -41,10 +40,3 @@ export default {
     }
   }
 };
-</script>
-
-<style lang="scss">
-.cld-poster {
-  display: none;
-}
-</style>

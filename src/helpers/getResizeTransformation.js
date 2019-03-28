@@ -10,47 +10,48 @@ import { findBreakpoint } from "./findBreakpoint";
  * @param {array} breakpoints
  */
 export function getResizeTransformation(mode, size, breakpoints) {
-  return {
-    fill: merge(
-      getDPRAttr(),
-      {
-        crop: "crop"
-      },
-      !size
-        ? { width: 0, height: 0 }
-        : breakpoints
-        ? {
-            width: Math.floor(findBreakpoint(breakpoints, size.width)),
-            height: Math.floor(
-              (size.height / size.width) *
-                findBreakpoint(breakpoints, size.width)
+  switch (mode) {
+    case "fill":
+      return merge(getDPRAttr(), {
+        crop: "crop",
+        width: size
+          ? Math.floor(
+              breakpoints ? findBreakpoint(breakpoints, size.width) : size.width
             )
-          }
-        : {
-            width: Math.floor(size.width),
-            height: Math.floor(size.height)
-          }
-    ),
-    width: merge(getDPRAttr(), {
-      crop: "scale",
-      width: Math.floor(
-        !size
-          ? 0
-          : breakpoints
-          ? findBreakpoint(breakpoints, size.width)
-          : size.width
-      )
-    }),
-    height: merge(getDPRAttr(), {
-      crop: "scale",
-      height: Math.floor(
-        !size
-          ? 0
-          : breakpoints
-          ? findBreakpoint(breakpoints, size.height)
-          : size.height
-      )
-    }),
-    none: null
-  }[mode];
+          : 0,
+        height: size
+          ? Math.floor(
+              breakpoints
+                ? findBreakpoint(breakpoints, size.height)
+                : size.height
+            )
+          : 0
+      });
+
+    case "width":
+      return merge(getDPRAttr(), {
+        crop: "scale",
+        width: size
+          ? Math.floor(
+              breakpoints ? findBreakpoint(breakpoints, size.width) : size.width
+            )
+          : 0
+      });
+
+    case "height":
+      return merge(getDPRAttr(), {
+        crop: "scale",
+        height: size
+          ? Math.floor(
+              breakpoints
+                ? findBreakpoint(breakpoints, size.height)
+                : size.height
+            )
+          : 0
+      });
+
+    case "none":
+    default:
+      return null;
+  }
 }

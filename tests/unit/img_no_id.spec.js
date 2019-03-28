@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import CldImage from "../../src/components/CldImage.vue";
+import CldImage from "../../src/components/CldImage";
 
 describe("CldImage", () => {
   it("should render a src property with an undefined value if a src is not defined", () => {

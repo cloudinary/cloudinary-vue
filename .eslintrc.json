@@ -1,0 +1,22 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": { "ecmaVersion": 10, "sourceType": "module" },
+  "extends": ["airbnb-base", "prettier"],
+  "rules": {
+    "import/prefer-default-export": false,
+    "no-use-before-define": ["error", { "functions": false }],
+    "eqeqeq": ["error", "smart"]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx"]
+      }
+    }
+  }
+}

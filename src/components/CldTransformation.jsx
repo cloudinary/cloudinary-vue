@@ -1,10 +1,3 @@
-<template>
-  <span v-if="$slots.default" class="cld-transformation">
-    <slot />
-  </span>
-</template>
-
-<script>
 import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
 import { cldAttrsSubmitting } from "../mixins/cldAttrsSubmitting";
 
@@ -14,6 +7,12 @@ import { cldAttrsSubmitting } from "../mixins/cldAttrsSubmitting";
  */
 export default {
   name: "CldTransformation",
+  render(h) {
+    if (!this.$slots || !this.$slots.default) {
+      return null;
+    }
+    return h("span", { class: "cld-transformation" }, this.$slots.default);
+  },
   inheritAttrs: false,
   mixins: [cldAttrsOwned, cldAttrsSubmitting],
   computed: {
@@ -22,10 +21,3 @@ export default {
     }
   }
 };
-</script>
-
-<style lang="scss">
-.cld-transformation {
-  display: none;
-}
-</style>

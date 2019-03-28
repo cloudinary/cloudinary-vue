@@ -45,9 +45,9 @@ export const size = {
 function fix() {
   if (this.shouldMeasureSize) {
     if (this.$el && !this.cancelSizeListener) {
-      this.cancelSizeListener = watchElementSize(this.$el, size => {
+      this.cancelSizeListener = watchElementSize(this.$el, measurement => {
         const currentSize = pick(this.size, ["width", "height"]);
-        const nextSize = pick(size, ["width", "height"]);
+        const nextSize = pick(measurement, ["width", "height"]);
         if (!equal(currentSize, nextSize)) {
           this.size = nextSize;
           this.markReadyCheck("size");
@@ -75,7 +75,7 @@ export function watchElementSize(element, cb) {
   if (typeof window === "object") {
     if ("ResizeObserver" in window) {
       const resizeObserver = new ResizeObserver(entries => {
-        for (const entry of entries) {
+        for (let i = 0, entry = entries[i]; i < entries.length; i += 1) {
           delayedCallback(pick(entry.contentRect, ["width", "height"]));
         }
       });
@@ -87,21 +87,21 @@ export function watchElementSize(element, cb) {
         cancelled = true;
         resizeObserver.disconnect();
       };
-    } else {
-      const handleWindowResize = () => {
-        delayedCallback(
-          pick(element.getBoundingClientRect(), ["width", "height"])
-        );
-      };
-      window.addEventListener("resize", handleWindowResize);
-      handleWindowResize();
-      return () => {
-        if (cancelled) {
-          return;
-        }
-        cancelled = true;
-        window.removeEventListener("resize", handleWindowResize);
-      };
     }
+    const handleWindowResize = () => {
+      delayedCallback(
+        pick(element.getBoundingClientRect(), ["width", "height"])
+      );
+    };
+    window.addEventListener("resize", handleWindowResize);
+    handleWindowResize();
+    return () => {
+      if (cancelled) {
+        return;
+      }
+      cancelled = true;
+      window.removeEventListener("resize", handleWindowResize);
+    };
   }
+  return () => {};
 }

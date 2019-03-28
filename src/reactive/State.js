@@ -30,7 +30,7 @@ export class State {
     const computedValue =
       typeof value === "function" ? value(this.lastValue) : value;
     this.lastValue = computedValue;
-    return this.channel.next(computedValue);
+    this.channel.next(computedValue);
   }
 
   /**

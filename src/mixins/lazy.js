@@ -77,10 +77,10 @@ function watchElementVisibility(element, listener) {
     return () => {
       observer.disconnect();
     };
-  } else {
-    listener(true);
-    return noop;
   }
+
+  listener(true);
+  return noop;
 }
 
 function noop() {}

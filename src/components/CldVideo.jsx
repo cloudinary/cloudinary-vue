@@ -1,4 +1,3 @@
-<script>
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, kv, find } from "../utils";
 import { findInTransformations } from "../helpers/findInTransformations";
@@ -230,9 +229,3 @@ export default {
     this.posterCombinedStateSub();
   }
 };
-</script>
-
-<style lang="scss">
-.cld-video {
-}
-</style>

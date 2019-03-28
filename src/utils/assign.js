@@ -1,6 +1,4 @@
-export function assign() {
-  const args = Array.prototype.slice.call(arguments, 0).filter(x => x != null);
-
+export function assign(...args) {
   if (args.length === 0) {
     return undefined;
   }

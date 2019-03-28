@@ -1,4 +1,3 @@
-<script>
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, range } from "../utils";
 import { findInTransformations } from "../helpers/findInTransformations";
@@ -33,7 +32,7 @@ export default {
   inheritAttrs: false,
   mixins: [ready, size, mounted, lazy, cldAttrsInherited, cldAttrsOwned],
   render(h) {
-    return h("img", this.imageAttrs, this.$slots.default);
+    return h("img", this.imageAttrs, this.$slots ? this.$slots.default : null);
   },
   props: {
     /**
@@ -83,7 +82,7 @@ export default {
     attributes() {
       return merge(
         this.$attrs,
-        this.progressive == true
+        this.progressive
           ? {
               flags: []
                 .concat(this.$attrs.flags ? this.$attrs.flags : [])
@@ -165,25 +164,31 @@ export default {
     }
   }
 };
-</script>
 
-<style lang="scss">
-.cld-image {
-  &.cld-fill-height {
-    display: block;
-    height: 100%;
-    width: auto;
-  }
-
-  &.cld-fill-width {
-    display: block;
-    width: 100%;
-  }
-
-  &.cld-fill {
-    display: block;
-    width: 100%;
-    height: 100%;
+if (typeof window !== "undefined") {
+  const style = document.createElement("style");
+  style.innerText = `
+    .cld-image.cld-fill-height {
+      display: block;
+      height: 100%;
+      width: auto;
+    }
+    
+    .cld-image.cld-fill-width {
+      display: block;
+      width: 100%;
+    }
+    
+    .cld-image.cld-fill {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    </style>
+    `;
+  if (document.head.firstChild) {
+    document.head.insertBefore(style, document.head.firstChild);
+  } else {
+    document.head.appendChild(style);
   }
 }
-</style>

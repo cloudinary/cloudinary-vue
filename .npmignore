@@ -2,7 +2,8 @@
 *
 
 # add source and bundles
-!**/src/**
+!**/cjs/**
+!**/esm/**
 !**/dist/**
 
 # exclude:

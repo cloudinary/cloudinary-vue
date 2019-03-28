@@ -15,15 +15,14 @@ export const ready = {
      * are marked "true"
      */
     isReady() {
-      const { ready } = this;
-      const flags = Object.keys(ready);
+      const flags = Object.keys(this.ready);
 
       if (flags.length === 0) {
         return false;
       }
 
-      for (let i = 0; i < flags.length; i++) {
-        if (!ready[flags[i]]) {
+      for (let i = 0; i < flags.length; i += 1) {
+        if (!this.ready[flags[i]]) {
           return false;
         }
       }

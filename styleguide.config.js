@@ -11,7 +11,7 @@ module.exports = {
     {
       name: "Install core components",
       content: "docs-sources/installation.md",
-      components: ["src/components/**/*.vue"],
+      components: ["src/components/**/*.js?", "src/components/**/*.vue"],
       sectionDepth: 1
     }
   ],
@@ -237,6 +237,10 @@ module.exports = {
       __dirname,
       "docs-sources/SectionHeadingRenderer"
     )
+  },
+  webpackConfig: {
+    module: require("./webpack.config").module,
+    plugins: require("./webpack.config").plugins
   },
   dangerouslyUpdateWebpackConfig(webpackConfig) {
     webpackConfig.output.filename = "build/[name].bundle.js";

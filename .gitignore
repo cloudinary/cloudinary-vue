@@ -1,8 +1,7 @@
 .DS_Store
 node_modules
-
-/tests/e2e/videos/
-/tests/e2e/screenshots/
+cjs
+esm
 
 # local env files
 .env.local

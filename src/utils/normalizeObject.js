@@ -7,7 +7,7 @@ export function normalizeObject(subject) {
   }
   return Object.keys(subject).reduce(
     (result, key) =>
-      subject[key] == undefined ? result : merge(result, kv(key, subject[key])),
+      subject[key] == null ? result : merge(result, kv(key, subject[key])),
     {}
   );
 }

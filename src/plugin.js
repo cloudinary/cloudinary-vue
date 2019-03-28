@@ -7,6 +7,8 @@ import CldPoster from "./components/CldPoster";
 import CldTransformation from "./components/CldTransformation";
 import CldVideo from "./components/CldVideo";
 
+/* eslint no-param-reassign: 0 */
+
 export function install(Vue, options) {
   if (Vue.CldInstalled) {
     throw new Error("Cloudinary plugin already installed");

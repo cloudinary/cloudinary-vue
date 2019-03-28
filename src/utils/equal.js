@@ -27,7 +27,7 @@ export function equal(subjectA, subjectB) {
     if (allKeys.length !== subjectAKeys.length) {
       return false;
     }
-    for (let i = 0; i < allKeys.length; i++) {
+    for (let i = 0; i < allKeys.length; i += 1) {
       const k = allKeys[i];
       if (!equal(subjectA[k], subjectB[k])) {
         return false;

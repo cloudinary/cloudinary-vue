@@ -1,8 +1,8 @@
 import Vue from "vue";
 import { mount } from "@vue/test-utils";
-import CldVideo from "../../src/components/CldVideo.vue";
-import CldPoster from "../../src/components/CldPoster.vue";
-import CldTransformation from "../../src/components/CldTransformation.vue";
+import CldVideo from "../../src/components/CldVideo";
+import CldPoster from "../../src/components/CldPoster";
+import CldTransformation from "../../src/components/CldTransformation";
 
 describe("CldPoster", () => {
   it("no publicId means video publicId is used", async () => {

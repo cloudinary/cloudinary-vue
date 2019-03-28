@@ -1,10 +1,62 @@
-<meta charset="utf-8">
-<title>Cloudinary demo</title>
-<script src="./Cloudinary.umd.js"></script>
-
-<link rel="stylesheet" href="./Cloudinary.css">
-
-
-<script>
-console.log(Cloudinary)
-</script>
+<html>
+  <head>
+    <script defer src="http://unpkg.com/vue"></script>
+    <script defer src="http://unpkg.com/lodash"></script>
+    <script defer src="http://unpkg.com/cloudinary-core"></script>
+    <script defer src="./cloudinary-vue.min.js"></script>
+    <script>
+      window.onload = function() {
+        const root = document.createElement("div");
+        document.body.appendChild(root);
+        new Vue({
+          el: root,
+          render(h) {
+            return h("div", [
+              h(cloudinaryVue.CldImage, {
+                class: {
+                  dino: true,
+                  loading: this.loading,
+                  loaded: !this.loading
+                },
+                props: { publicId: "small_dinosaur" },
+                attrs: { cloudName: "demo" },
+                nativeOn: {
+                  load: this.appear
+                }
+              })
+            ]);
+          },
+          data() {
+            return { loading: true };
+          },
+          methods: {
+            appear() {
+              this.loading = false;
+            }
+          }
+        });
+      };
+    </script>
+    <style>
+      body {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
+      .cld-image {
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+      }
+      .loading {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      .loaded {
+        transition: 200ms ease-in;
+        opacity: 1;
+        transform: translateY(0px);
+      }
+    </style>
+  </head>
+  <body></body>
+</html>

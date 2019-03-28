@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { mount } from "@vue/test-utils";
-import CldImage from "../../src/components/CldImage.vue";
-import Sepia from "./Sepia.vue";
+import CldImage from "../../src/components/CldImage";
+import Sepia from "./Sepia";
 
 describe("CldImage with CldTransformation ", () => {
   it("in another component", async () => {

@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <script src="http://unpkg.com/vue"></script>
+    <script src="http://unpkg.com/lodash"></script>
+    <script src="http://unpkg.com/cloudinary-core"></script>
+    <script src="http://unpkg.com/cloudinary-vue"></script>
+    <script>
+      window.onload = function() {
+        const root = document.createElement("div");
+        document.body.appendChild(root);
+        new Vue({
+          el: root,
+          render(h) {
+            return h("div", [
+              h(cloudinaryVue.CldImage, {
+                props: { publicId: "small_dinosaur" },
+                attrs: { cloudName: "demo" }
+              })
+            ]);
+          }
+        });
+      };
+    </script>
+  </head>
+  <body></body>
+</html>

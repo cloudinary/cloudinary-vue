@@ -4,7 +4,6 @@ Refer to the base [Cloudinary JS SDK](https://github.com/cloudinary/cloudinary_j
 
 See the [Image transformation reference](https://cloudinary.com/documentation/image_transformation_reference) documentation for all the options accepted by the `CldImage` and `CldTransformation` components.
 
-
 ### Events
 
 Use `v-on:*.native` to listen to native DOM events. `CldImage` outputs an `img` element that does not have any events by default.
@@ -14,13 +13,15 @@ Use `v-on:*.native` to listen to native DOM events. `CldImage` outputs an `img` 
   <cld-image
     cloudName="demo"
     publicId="small_dinosaur"
-    v-on:click.native="alert">
+    v-on:click.native="alert"
+  >
     <cld-transformation
       overlay="text:Arial_45:CLICK ME"
       background="red"
       radius="10"
       opacity="90"
-      color="white" />
+      color="white"
+    />
     <cld-transformation crop="scale" :height="100" />
   </cld-image>
 </template>
@@ -52,34 +53,32 @@ General configuration options may be passed with a [CldContext](#cldcontext) con
 `CldImage` can also be given transformation data by setting manipulation attributes on the component itself or with a [CldTransformation](#cldtransformation) child component.
 
 ```jsx
-
-// with the component itself:
+/* with the component itself... */
 
 <cld-image
-    cloudName="demo"
-    publicId="small_dinosaur"
-    effect="blur:100"
-    crop="scale"
-    width="100"  />
-
-// with a child CldTransformation component:
-
-<cld-image 
-  cloudName="demo" 
-  publicId="small_dinosaur">
-    <cld-transformation crop="scale" width="100" />
-    <cld-transformation effect="blur:100" />
-</cld-image>
-
+  cloudName="demo"
+  publicId="small_dinosaur"
+  effect="blur:100"
+  crop="scale"
+  width="100"
+/>
 ```
 
+```jsx
+/* ...and with a child CldTransformation component: */
+
+<cld-image cloudName="demo" publicId="small_dinosaur">
+  <cld-transformation crop="scale" width="100" />
+  <cld-transformation effect="blur:100" />
+</cld-image>
+```
 
 ### Responsive mode
 
 Add the `responsive` property to have the image automatically adjust to the available width.
 
 ```jsx
-<cld-image cloudName="demo" publicId="small_dinosaur" responsive>
+<cld-image cloudName="demo" publicId="small_dinosaur" responsive="width">
   <cld-transformation effect="sharpen:300" />
 </cld-image>
 ```

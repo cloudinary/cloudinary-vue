@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { mount } from "@vue/test-utils";
-import CldVideo from "../../src/components/CldVideo.vue";
+import CldVideo from "../../src/components/CldVideo";
 
 describe("CldVideo", () => {
   it("respects poster object-attribute", async () => {

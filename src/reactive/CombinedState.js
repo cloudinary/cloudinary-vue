@@ -33,7 +33,7 @@ export class CombinedState {
     this.solidState = new State({});
     this.chunkedState.subscribe({
       next: v => {
-        const nextSum = (composition || merge).apply(null, v ? v : []);
+        const nextSum = (composition || merge)(...(v || []));
         this.solidState.next(nextSum);
       },
       error: e => this.solidState.error(e),
@@ -58,9 +58,10 @@ export class CombinedState {
         }
         this.chunkedState.next(currentState =>
           currentState.indexOf(last) >= 0
-            ? currentState.map(chunk => (chunk === last ? (last = v) : chunk))
-            : currentState.concat([(last = v)])
+            ? currentState.map(chunk => (chunk === last ? v : chunk))
+            : currentState.concat([v])
         );
+        last = v;
       },
       error: () => {
         this.chunkedState.next(p => p.filter(chunk => chunk !== last));

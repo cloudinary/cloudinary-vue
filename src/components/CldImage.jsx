@@ -110,10 +110,29 @@ export default {
     imageAttrs() {
       const className = {
         "cld-image": true,
-        "cld-fill": this.responsive === "fill",
-        "cld-fill-width": this.responsive === "width",
-        "cld-fill-height": this.responsive === "height"
+        "cld-image--fill": this.responsive === "fill",
+        "cld-image--fill-width": this.responsive === "width",
+        "cld-image--fill-height": this.responsive === "height"
       };
+
+      const style =
+        {
+          height: {
+            display: "block",
+            height: "100%",
+            width: "auto"
+          },
+          width: {
+            display: "block",
+            width: "100%"
+          },
+          fill: {
+            display: "block",
+            width: "100%",
+            height: "100%"
+          }
+        }[this.responsive] || {};
+
       if (
         !this.isReady ||
         !this.publicId ||
@@ -123,13 +142,15 @@ export default {
         )
       ) {
         return {
-          class: className
+          class: className,
+          style
         };
       }
 
       if (this.lazy && !this.visible) {
         return {
           class: className,
+          style,
           attrs: this.placeholder
             ? {
                 src:
@@ -151,6 +172,7 @@ export default {
       );
       return {
         class: className,
+        style,
         attrs: merge(
           normalizeRest(this.$attrs),
           htmlAttrs,
@@ -164,31 +186,3 @@ export default {
     }
   }
 };
-
-if (typeof window !== "undefined") {
-  const style = document.createElement("style");
-  style.innerText = `
-    .cld-image.cld-fill-height {
-      display: block;
-      height: 100%;
-      width: auto;
-    }
-    
-    .cld-image.cld-fill-width {
-      display: block;
-      width: 100%;
-    }
-    
-    .cld-image.cld-fill {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-    </style>
-    `;
-  if (document.head.firstChild) {
-    document.head.insertBefore(style, document.head.firstChild);
-  } else {
-    document.head.appendChild(style);
-  }
-}

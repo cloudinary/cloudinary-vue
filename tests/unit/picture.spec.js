@@ -16,10 +16,9 @@ describe("CldPicture", () => {
 
     expect(picture.is("picture")).toBe(true);
     expect(picture.findAll("img").length).toBe(1);
-    expect(picture.findAll("source").length).toBe(2);
-    expect(sourcesOfPicture(picture)).toEqual({
-      "image/jpeg": "http://res.cloudinary.com/demo/image/upload/face_top.jpeg",
-      "image/webp": "http://res.cloudinary.com/demo/image/upload/face_top.webp"
-    });
+    expect(picture.find("img").attributes("src")).toBe(
+      "http://res.cloudinary.com/demo/image/upload/face_top"
+    );
+    expect(sourcesOfPicture(picture)).toEqual({});
   });
 });

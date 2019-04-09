@@ -16,7 +16,7 @@ describe("CldPicture", () => {
 
     expect(picture.is("picture")).toBe(true);
     expect(picture.findAll("img").length).toBe(1);
-    expect(picture.findAll("source").length).toBe(0);
+    expect(picture.find("img").attributes("src")).toBe(undefined);
     expect(sourcesOfPicture(picture)).toEqual({});
   });
 });

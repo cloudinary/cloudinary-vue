@@ -1,13 +1,9 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge } from "../utils";
-import { findInTransformations } from "../helpers/findInTransformations";
-import {
-  normalizeTransformation,
-  normalizeConfiguration,
-  normalizeRest
-} from "../helpers/attributes";
+import { normalizeTransformation, normalizeRest } from "../helpers/attributes";
 import { combineTransformations } from "../helpers/combineOptions";
+import { resolveMedia } from "../helpers/resolveMedia";
 
 import { ready } from "../mixins/ready";
 import { mounted } from "../mixins/mounted";
@@ -27,10 +23,10 @@ export default {
   render(h) {
     return h(
       "picture",
-      this.pictureAttrs,
-      this.sources
+      this.pictureOptions,
+      this.sourcesAttrs
         .map(attrs => h("source", { key: attrs.mimeType, attrs }))
-        .concat(h("img", { key: "img" }))
+        .concat(h("img", merge({ key: "img" }, this.imageOptions)))
         .concat(this.$slots.default)
     );
   },
@@ -40,35 +36,32 @@ export default {
      */
     publicId: { type: String, default: "", required: true },
     /**
-     * An ordered array of the image source types to include in the tag, where the image type is mapped to the mime type.
-     * You can also add a specific transformation for each specified video format by adding a transformation struct. Example:
-     *
-     * `<CldPicture :sourceTypes="{ jpeg: { quality: 50 } }" />`
+     * An array of the image sources to put into the tag.
+     * Each element can have `media` (`string` or an `object`), `configuration` (`object`), `transformation` (`object`) and `publicId` (`string`) fields - all are optional.
      */
-    sourceTypes: {
+    sources: {
+      type: Array,
+      default() {
+        return [];
+      }
+    },
+    /**
+     * Additional `<img>` tag attributes
+     */
+    img: {
       type: Object,
       default() {
-        return {
-          webp: {},
-          jpeg: {}
-        };
+        return {};
       }
     }
   },
   computed: {
-    pictureAttrs() {
+    pictureOptions() {
       const className = {
         "cld-picture": true
       };
 
-      if (
-        !this.isReady ||
-        !this.publicId ||
-        !!findInTransformations(
-          this.cldAttrs.transformation,
-          t => t.width === 0 || t.height === 0
-        )
-      ) {
+      if (!this.isReady) {
         return { class: className };
       }
 
@@ -81,38 +74,62 @@ export default {
         attrs: merge(normalizeRest(this.$attrs), htmlAttrs)
       };
     },
-    sources() {
-      if (!this.isReady || !this.publicId) {
+
+    imageOptions() {
+      const className = {
+        "cld-picture_image": true
+      };
+
+      if (!this.isReady) {
+        return { class: className };
+      }
+
+      const htmlAttrs = Transformation.new(
+        this.cldAttrs.transformation
+      ).toHtmlAttributes();
+
+      return {
+        class: className,
+        attrs: merge(
+          htmlAttrs.width ? { width: htmlAttrs.width } : null,
+          htmlAttrs.height ? { height: htmlAttrs.height } : null,
+          this.publicId
+            ? {
+                src: Cloudinary.new(this.cldAttrs.configuration).url(
+                  this.publicId,
+                  this.cldAttrs.transformation
+                )
+              }
+            : {},
+          this.img
+        )
+      };
+    },
+
+    sourcesAttrs() {
+      if (!this.isReady) {
         return [];
       }
 
-      return Object.keys(this.sourceTypes).map(srcType => {
-        const configuration = merge(
-          this.cldAttrs.configuration,
-          normalizeConfiguration(this.sourceTypes[srcType] || {})
-        );
-
+      return this.sources.map(sourceConfig => {
         const transformation = combineTransformations(
-          this.cldAttrs.transformation,
-          normalizeTransformation(this.sourceTypes[srcType] || {})
+          sourceConfig.transformation
+            ? normalizeTransformation(sourceConfig.transformation)
+            : this.cldAttrs.transformation
         );
 
-        const htmlAttrs = normalizeRest(this.sourceTypes[srcType] || {});
+        const htmlAttrs = normalizeRest(sourceConfig);
 
-        const src = Cloudinary.new(configuration).url(this.publicId, {
-          resource_type: "image",
-          format: srcType,
+        const srcset = Cloudinary.new(this.cldAttrs.configuration).url(
+          this.publicId,
           transformation
-        });
+        );
 
-        return merge(htmlAttrs, { type: `image/${srcType}`, srcset: src });
+        const media = resolveMedia(sourceConfig.media);
+
+        return merge(htmlAttrs, { srcset, media });
       });
     }
   }
 };
 </script>
-
-<style lang="scss">
-.cld-picture {
-}
-</style>

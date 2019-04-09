@@ -7,7 +7,7 @@ describe("CldPicture", () => {
   it("allows transformation as props", async () => {
     const picture = mount({
       template: `
-        <cld-picture cloudName="demo" publicId="face_top" effect="sepia" />
+        <cld-picture cloudName="demo" publicId="face_top" effect="sepia" :sources="[{ media: 'all'}]" />
       `,
       components: { CldPicture }
     });
@@ -16,12 +16,11 @@ describe("CldPicture", () => {
 
     expect(picture.is("picture")).toBe(true);
     expect(picture.findAll("img").length).toBe(1);
-    expect(picture.findAll("source").length).toBe(2);
+    expect(picture.find("img").attributes("src")).toBe(
+      "http://res.cloudinary.com/demo/image/upload/e_sepia/face_top"
+    );
     expect(sourcesOfPicture(picture)).toEqual({
-      "image/jpeg":
-        "http://res.cloudinary.com/demo/image/upload/e_sepia/face_top.jpeg",
-      "image/webp":
-        "http://res.cloudinary.com/demo/image/upload/e_sepia/face_top.webp"
+      all: "http://res.cloudinary.com/demo/image/upload/e_sepia/face_top"
     });
   });
 });

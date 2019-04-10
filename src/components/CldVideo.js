@@ -29,10 +29,9 @@ import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
  * You can optionally include `cld-transformation` components to define transformations to apply to the delivered video.
  *
  * For more information see
- * <a href="https://cloudinary.com/documentation/vue_video_manipulation#cldvideo_component" target="_blank">
- * cld-video component</a> and
- * <a href="https://cloudinary.com/documentation/video_manipulation_and_delivery#embedding_videos_in_web_pages"
- * target="_blank">embedding videos in web pages</a>
+ * [cld-video component](https://cloudinary.com/documentation/vue_video_manipulation#cldvideo_component)
+ * and
+ * [embedding videos in web pages](https://cloudinary.com/documentation/video_manipulation_and_delivery#embedding_videos_in_web_pages)
  */
 export default {
   name: "CldVideo",

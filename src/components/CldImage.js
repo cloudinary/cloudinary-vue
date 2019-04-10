@@ -22,10 +22,10 @@ import { lazy } from "../mixins/lazy";
  * You can optionally include [cld-transformation](#cldtransformation) components to define transformations to apply to the delivered image.
  *
  * For more information see the
- * <a href="https://cloudinary.com/documentation/vue_image_manipulation#cldvideo_component" target="_blank">
- * cld-image component</a> and
- * <a href="https://cloudinary.com/documentation/image_transformations#embedding_images_in_web_pages"
- * target="_blank">embedding images in web pages</a> documentation.
+ * [cld-image component](https://cloudinary.com/documentation/vue_image_manipulation#cldvideo_component)
+ * and
+ * [embedding images in web pages](https://cloudinary.com/documentation/image_transformations#embedding_images_in_web_pages)
+ * documentation.
  */
 export default {
   name: "CldImage",

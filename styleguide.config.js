@@ -7,10 +7,10 @@ module.exports = {
       content: "docs-sources/links.md",
       tocHide: true
     },
-    { name: "About Cloudinary", content: "docs-sources/desc.md" },
+    { name: "About Cloudinary", content: "src/desc.md" },
     {
       name: "Install core components",
-      content: "docs-sources/installation.md",
+      content: "src/plugin.md",
       components: [
         "src/components/**/*.jsx",
         "src/components/**/*.js",

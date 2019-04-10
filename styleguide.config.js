@@ -11,7 +11,11 @@ module.exports = {
     {
       name: "Install core components",
       content: "docs-sources/installation.md",
-      components: ["src/components/**/*.js?", "src/components/**/*.vue"],
+      components: [
+        "src/components/**/*.jsx",
+        "src/components/**/*.js",
+        "src/components/**/*.vue"
+      ],
       sectionDepth: 1
     }
   ],
@@ -21,9 +25,9 @@ module.exports = {
   pagePerSection: true,
   getComponentPathLine(componentPath) {
     const rel = path.relative(__dirname, componentPath);
-    const name = path.basename(componentPath, ".vue");
+    const name = path.basename(componentPath, ".js");
     const subfolder = rel
-      .replace(`src/components/${name}.vue`, "")
+      .replace(`src/components/${name}.js`, "")
       .replace(/^([^/]+)\/?$/, "$1");
     return `
       import { ${name} } from 'cloudinary-vue${

@@ -15,10 +15,13 @@ Use `v-on:*.native` to listen to native DOM events. `CldContext` outputs a `div`
 ```vue
 <template>
   <!-- Context that carries an account name -->
-  <cld-context cloudName="demo">
+  <cld-context
+    cloudName="demo"
+    :style="{ display: 'flex', flexDirection: 'row' }"
+  >
     <!--  -->
     <!-- A context that does not require secure connection -->
-    <cld-context secure="false">
+    <cld-context secure="false" :style="{ flex: 1 }">
       <cld-image publicId="face_top" v-on:load.native="confirmLoad">
         <cld-transformation
           overlay="text:Arial_45:HTTP"
@@ -33,7 +36,7 @@ Use `v-on:*.native` to listen to native DOM events. `CldContext` outputs a `div`
 
     <!--  -->
     <!-- A context that sets secure connection requirement for media inside it -->
-    <cld-context secure="true">
+    <cld-context secure="true" :style="{ flex: 1 }">
       <cld-image publicId="face_top">
         <cld-transformation
           overlay="text:Arial_45:HTTPS"

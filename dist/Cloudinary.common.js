@@ -193,6 +193,13 @@ module.exports = require("core-js/modules/es6.regexp.flags");
 
 /***/ }),
 
+/***/ "6619":
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/es6.regexp.to-string");
+
+/***/ }),
+
 /***/ "67bb":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -623,7 +630,7 @@ function kv(k, v) {
 
 
 function formatObject(subject, instructions) {
-  if (subject == null && keys_default()(instructions).length === 0) {
+  if (subject == null || keys_default()(instructions).length === 0) {
     return subject;
   }
 
@@ -848,7 +855,7 @@ function normalizeRest(cfg) {
   return normalizeObject(omit(cfg, attributes_transformation.concat(attributes_configuration)));
 }
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3201b759-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldContext.vue?vue&type=template&id=696dff07&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',_vm._b({staticClass:"cld-context"},'div',_vm.htmlAttributes,false),[_vm._t("default")],2)}
+var CldContextvue_type_template_id_696dff07_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',_vm._b({staticClass:"cld-context"},'div',_vm.htmlAttributes,false),[_vm._t("default")],2)}
 var staticRenderFns = []
 
 
@@ -1395,7 +1402,7 @@ function normalizeComponent (
 
 var component = normalizeComponent(
   components_CldContextvue_type_script_lang_js_,
-  render,
+  CldContextvue_type_template_id_696dff07_render,
   staticRenderFns,
   false,
   null,
@@ -2327,7 +2334,211 @@ var CldVideo_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldVideo = (CldVideo_component.exports);
+// EXTERNAL MODULE: external "core-js/modules/es6.regexp.to-string"
+var es6_regexp_to_string_ = __webpack_require__("6619");
+
+// CONCATENATED MODULE: ./src/helpers/resolveMedia.js
+
+
+function resolveMedia(media) {
+  if (typeof media === "string") {
+    return media;
+  }
+
+  if (typeof_typeof(media) === "object") {
+    return [].concat(media).map(resolveMediaObject).join(", ");
+  }
+
+  return undefined;
+}
+
+function resolveMediaObject(media) {
+  var queries = [media.all ? "all" : null, media.screen ? "screen" : null, media.print ? "print" : null, media.handheld ? "handheld" : null, media.orientation ? "orientation: ".concat(media.orientation) : null, media.not ? "not ".concat(resolveMedia(media.not) || "") : null, media.maxWidth ? "max-width: ".concat(resolveUnit(media.maxWidth)) : null, media.minWidth ? "min-width: ".concat(resolveUnit(media.minWidth)) : null, media.maxHeight ? "max-height: ".concat(resolveUnit(media.maxHeight)) : null, media.minHeight ? "min-height: ".concat(resolveUnit(media.minHeight)) : null, media.or ? "".concat(resolveMedia(media.or).join(", ")) : null].filter(function (q) {
+    return q != null;
+  });
+
+  if (queries.length === 0) {
+    return undefined;
+  }
+
+  if (queries.length === 1) {
+    return queries[0];
+  }
+
+  return queries.map(function (q) {
+    return q.indexOf(" ") >= 0 ? "(".concat(q, ")") : q;
+  }).join(" and ");
+}
+
+function resolveUnit(v) {
+  if (v == null) {
+    throw new Error("null is not a number");
+  }
+
+  if (typeof v === "number") {
+    return "".concat(v, "px");
+  }
+
+  if (typeof v === "string") {
+    return v;
+  }
+
+  var valueOfValue = v.valueOf();
+
+  if (valueOfValue !== v) {
+    return resolveUnit(valueOfValue);
+  }
+
+  return resolveUnit(v.toString());
+}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldPicture.vue?vue&type=script&lang=js&
+
+
+
+
+
+
+
+
+
+/**
+ * Generates a `picture` tag including the URL sources for the main formats
+ * supported by web browsers (jpeg and webp by default).
+ * Browsers can automatically select and play the image format that they best support,
+ * and the image files are created dynamically when first accessed by your users.
+ */
+
+/* harmony default export */ var CldPicturevue_type_script_lang_js_ = ({
+  name: "CldPicture",
+  inheritAttrs: false,
+  mixins: [ready_ready, mounted, cldAttrsInherited, cldAttrsOwned],
+  render: function render(h) {
+    return h("picture", this.pictureOptions, this.sourcesAttrs.map(function (attrs) {
+      return h("source", {
+        key: attrs.mimeType,
+        attrs: attrs
+      });
+    }).concat(h("img", merge({
+      key: "img"
+    }, this.imageOptions))).concat(this.$slots.default));
+  },
+  props: {
+    /**
+     * The unique identifier of an uploaded image.
+     */
+    publicId: {
+      type: String,
+      default: "",
+      required: true
+    },
+
+    /**
+     * An array of the image sources to put into the tag.
+     * Each element can have `media` (`string` or an `object`), `configuration` (`object`), `transformation` (`object`) and `publicId` (`string`) fields - all are optional.
+     * Media can be either string or an object with keys `all`, `screen`, `print`, `handheld`, `orientation`, `not`, `maxWidth`, `minWidth`, `maxHeight`, `minHeight` and `or` - all optional.
+     */
+    sources: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+
+    /**
+     * Additional `<img>` tag attributes
+     */
+    img: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
+    }
+  },
+  computed: {
+    pictureOptions: function pictureOptions() {
+      var className = {
+        "cld-picture": true
+      };
+
+      if (!this.isReady) {
+        return {
+          class: className
+        };
+      }
+
+      var htmlAttrs = external_cloudinary_core_["Transformation"].new(this.cldAttrs.transformation).toHtmlAttributes();
+      return {
+        class: className,
+        attrs: merge(normalizeRest(this.$attrs), htmlAttrs)
+      };
+    },
+    imageOptions: function imageOptions() {
+      var className = {
+        "cld-picture_image": true
+      };
+
+      if (!this.isReady) {
+        return {
+          class: className
+        };
+      }
+
+      var htmlAttrs = external_cloudinary_core_["Transformation"].new(this.cldAttrs.transformation).toHtmlAttributes();
+      return {
+        class: className,
+        attrs: merge(htmlAttrs.width ? {
+          width: htmlAttrs.width
+        } : null, htmlAttrs.height ? {
+          height: htmlAttrs.height
+        } : null, this.publicId ? {
+          src: external_cloudinary_core_["Cloudinary"].new(this.cldAttrs.configuration).url(this.publicId, this.cldAttrs.transformation)
+        } : {}, this.img)
+      };
+    },
+    sourcesAttrs: function sourcesAttrs() {
+      var _this = this;
+
+      if (!this.isReady) {
+        return [];
+      }
+
+      return this.sources.map(function (sourceConfig) {
+        var transformation = combineTransformations(sourceConfig.transformation ? normalizeTransformation(sourceConfig.transformation) : _this.cldAttrs.transformation);
+        var htmlAttrs = normalizeRest(sourceConfig);
+        var srcset = external_cloudinary_core_["Cloudinary"].new(_this.cldAttrs.configuration).url(_this.publicId, transformation);
+        var media = resolveMedia(sourceConfig.media);
+        return merge(htmlAttrs, {
+          srcset: srcset,
+          media: media
+        });
+      });
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/CldPicture.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_CldPicturevue_type_script_lang_js_ = (CldPicturevue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/CldPicture.vue
+var CldPicture_render, CldPicture_staticRenderFns
+
+
+
+
+/* normalize component */
+
+var CldPicture_component = normalizeComponent(
+  components_CldPicturevue_type_script_lang_js_,
+  CldPicture_render,
+  CldPicture_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var CldPicture = (CldPicture_component.exports);
 // CONCATENATED MODULE: ./src/plugin.js
+
 
 
 
@@ -2347,7 +2558,7 @@ function install(Vue, options) {
 
   Vue.CldInstalled = true;
   options = options || {};
-  [CldContext, CldImage, CldPoster, CldTransformation, CldVideo].forEach(function (component) {
+  [CldContext, CldImage, CldPoster, CldTransformation, CldVideo, CldPicture].forEach(function (component) {
     var userComponentName = getUserComponentName(options.components, component.name);
 
     if (userComponentName != null) {
@@ -2404,12 +2615,14 @@ function getUserComponentName(components, name) {
 
 
 
+
 var src_components = {
   CldContext: CldContext,
   CldImage: CldImage,
   CldVideo: CldVideo,
   CldPoster: CldPoster,
-  CldTransformation: CldTransformation
+  CldTransformation: CldTransformation,
+  CldPicture: CldPicture
 };
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
@@ -2420,6 +2633,7 @@ var src_components = {
 /* concated harmony reexport CldVideo */__webpack_require__.d(__webpack_exports__, "CldVideo", function() { return CldVideo; });
 /* concated harmony reexport CldPoster */__webpack_require__.d(__webpack_exports__, "CldPoster", function() { return CldPoster; });
 /* concated harmony reexport CldTransformation */__webpack_require__.d(__webpack_exports__, "CldTransformation", function() { return CldTransformation; });
+/* concated harmony reexport CldPicture */__webpack_require__.d(__webpack_exports__, "CldPicture", function() { return CldPicture; });
 
 
 /* harmony default export */ var entry_lib = __webpack_exports__["default"] = (plugin_namespaceObject);

@@ -38,6 +38,7 @@ export default {
     /**
      * An array of the image sources to put into the tag.
      * Each element can have `media` (`string` or an `object`), `configuration` (`object`), `transformation` (`object`) and `publicId` (`string`) fields - all are optional.
+     * Media can be either string or an object with keys `all`, `screen`, `print`, `handheld`, `orientation`, `not`, `maxWidth`, `minWidth`, `maxHeight`, `minHeight` and `or` - all optional.
      */
     sources: {
       type: Array,

@@ -2546,7 +2546,88 @@ var CldPicture_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldPicture = (CldPicture_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldSource.vue?vue&type=script&lang=js&
+
+
+
+
+
+
+
+/**
+ *
+ * One or more [transformation parameters](https://cloudinary.com/documentation/image_transformation_reference)
+ * in a single component, or a set of [chained transformations](https://cloudinary.com/documentation/image_transformations#chained_transformations) in multiple components.
+ */
+
+/* harmony default export */ var CldSourcevue_type_script_lang_js_ = ({
+  name: "CldSource",
+  inheritAttrs: false,
+  render: function render(h) {
+    return h("source", this.sourceOptions, this.$slots.default);
+  },
+  props: {
+    /**
+     * The unique identifier of an uploaded image.
+     */
+    publicId: {
+      type: String,
+      default: "",
+      required: true
+    },
+
+    /**
+     * Media can be either string or an object with keys `all`, `screen`, `print`, `handheld`, `orientation`, `not`, `maxWidth`, `minWidth`, `maxHeight`, `minHeight` and `or` - all optional.
+     */
+    media: {
+      type: [String, Object],
+      default: "all"
+    }
+  },
+  mixins: [ready_ready, cldAttrsInherited, cldAttrsOwned],
+  computed: {
+    sourceOptions: function sourceOptions() {
+      if (!this.isReady) {
+        return merge(normalizeRest(this.$attrs), {
+          media: resolveMedia(this.media)
+        });
+      }
+
+      var htmlAttrs = external_cloudinary_core_["Transformation"].new(this.cldAttrs.transformation).toHtmlAttributes();
+      return {
+        attrs: merge(normalizeRest(this.$attrs), omit(htmlAttrs, ["width", "height"]), {
+          media: resolveMedia(this.media)
+        }, this.publicId ? {
+          srcset: external_cloudinary_core_["Cloudinary"].new(this.cldAttrs.configuration).url(this.publicId, this.cldAttrs.transformation)
+        } : null)
+      };
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/CldSource.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_CldSourcevue_type_script_lang_js_ = (CldSourcevue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/CldSource.vue
+var CldSource_render, CldSource_staticRenderFns
+
+
+
+
+/* normalize component */
+
+var CldSource_component = normalizeComponent(
+  components_CldSourcevue_type_script_lang_js_,
+  CldSource_render,
+  CldSource_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var CldSource = (CldSource_component.exports);
 // CONCATENATED MODULE: ./src/plugin.js
+
 
 
 
@@ -2567,7 +2648,7 @@ function install(Vue, options) {
 
   Vue.CldInstalled = true;
   options = options || {};
-  [CldContext, CldImage, CldPoster, CldTransformation, CldVideo, CldPicture].forEach(function (component) {
+  [CldContext, CldImage, CldPoster, CldTransformation, CldVideo, CldPicture, CldSource].forEach(function (component) {
     var userComponentName = getUserComponentName(options.components, component.name);
 
     if (userComponentName != null) {

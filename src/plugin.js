@@ -7,6 +7,7 @@ import CldPoster from "./components/CldPoster";
 import CldTransformation from "./components/CldTransformation";
 import CldVideo from "./components/CldVideo";
 import CldPicture from "./components/CldPicture";
+import CldSource from "./components/CldSource";
 
 export function install(Vue, options) {
   if (Vue.CldInstalled) {
@@ -22,7 +23,8 @@ export function install(Vue, options) {
     CldPoster,
     CldTransformation,
     CldVideo,
-    CldPicture
+    CldPicture,
+    CldSource
   ].forEach(component => {
     const userComponentName = getUserComponentName(
       options.components,

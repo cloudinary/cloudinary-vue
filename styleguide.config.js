@@ -14,30 +14,6 @@ module.exports = {
       components: ["src/components/**/*.vue"],
       sectionDepth: 1
     }
-    // {
-    //   name: "Video Player component",
-    //   content: "videoplayer/docs/description.md",
-    //   sections: [
-    //     {
-    //       name: "Install Video Player",
-    //       content: "videoplayer/docs/installation.md"
-    //     }
-    //   ],
-    //   components: ["videoplayer/src/components/**/*.vue"],
-    //   sectionDepth: 1
-    // },
-    // {
-    //   name: "Uploader component",
-    //   content: "uploader/docs/description.md",
-    //   sections: [
-    //     {
-    //       name: "Install Uploader",
-    //       content: "uploader/docs/installation.md"
-    //     }
-    //   ],
-    //   components: ["uploader/src/components/**/*.vue"],
-    //   sectionDepth: 1
-    // }
   ],
   showSidebar: false,
   exampleMode: "expand",

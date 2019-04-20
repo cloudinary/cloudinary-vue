@@ -97,16 +97,16 @@ export default {
       }
 
       const htmlAttrs = merge(
-        typeof this.$attrs.poster === "string"
-          ? { poster: this.$attrs.poster }
-          : this.posterOptions
-          ? {
-              poster: Cloudinary.new(this.posterOptions.configuration).url(
-                this.posterOptions.publicId,
-                this.posterOptions.transformation
-              )
-            }
-          : {},
+        (typeof this.$attrs.poster === "string" && {
+          poster: this.$attrs.poster
+        }) ||
+          (this.posterOptions && {
+            poster: Cloudinary.new(this.posterOptions.configuration).url(
+              this.posterOptions.publicId,
+              this.posterOptions.transformation
+            )
+          }) ||
+          {},
         Transformation.new(this.cldAttrs.transformation).toHtmlAttributes()
       );
 
@@ -146,7 +146,7 @@ export default {
             transformation
           )
         );
-        const mimeType = "video/" + (srcType === "ogv" ? "ogg" : srcType);
+        const mimeType = `video/${srcType === "ogv" ? "ogg" : srcType}`;
 
         return merge(htmlAttrs, { mimeType, src });
       });

@@ -101,6 +101,13 @@ module.exports = require("core-js/library/fn/get-iterator");
 
 /***/ }),
 
+/***/ "2a3b":
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/library/fn/is-iterable");
+
+/***/ }),
+
 /***/ "3c59":
 /***/ (function(module, exports) {
 
@@ -143,17 +150,17 @@ module.exports = require("core-js/modules/es6.regexp.flags");
 
 /***/ }),
 
-/***/ "6619":
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/es6.regexp.to-string");
-
-/***/ }),
-
 /***/ "67bb":
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("bea1");
+
+/***/ }),
+
+/***/ "774e":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__("afb5");
 
 /***/ }),
 
@@ -199,10 +206,24 @@ module.exports = require("core-js/library/fn/object/keys");
 
 /***/ }),
 
+/***/ "afb5":
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/library/fn/array/from");
+
+/***/ }),
+
 /***/ "bea1":
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/library/fn/symbol");
+
+/***/ }),
+
+/***/ "c8bb":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__("2a3b");
 
 /***/ }),
 
@@ -243,6 +264,12 @@ var keys_default = /*#__PURE__*/__webpack_require__.n(object_keys);
 var is_array = __webpack_require__("a745");
 var is_array_default = /*#__PURE__*/__webpack_require__.n(is_array);
 
+// EXTERNAL MODULE: external "core-js/modules/es6.function.name"
+var es6_function_name_ = __webpack_require__("25fc");
+
+// EXTERNAL MODULE: external "core-js/modules/web.dom.iterable"
+var web_dom_iterable_ = __webpack_require__("80a8");
+
 // EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/symbol/iterator.js
 var iterator = __webpack_require__("5d58");
 var iterator_default = /*#__PURE__*/__webpack_require__.n(iterator);
@@ -270,12 +297,6 @@ function typeof_typeof(obj) {
 
   return typeof_typeof(obj);
 }
-// EXTERNAL MODULE: external "core-js/modules/es6.function.name"
-var es6_function_name_ = __webpack_require__("25fc");
-
-// EXTERNAL MODULE: external "core-js/modules/web.dom.iterable"
-var web_dom_iterable_ = __webpack_require__("80a8");
-
 // CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/classCallCheck.js
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -328,7 +349,7 @@ function () {
   function Channel() {
     _classCallCheck(this, Channel);
 
-    this.subs = [];
+    this.listeners = [];
   }
   /**
    * Push a message to all active listeners
@@ -340,12 +361,13 @@ function () {
   _createClass(Channel, [{
     key: "next",
     value: function next(value) {
-      this.subs.forEach(function (sub) {
-        return sub && typeof_typeof(sub) === "object" && "next" in sub && sub.next ? sub.next(value) : null;
+      this.listeners.forEach(function (sub) {
+        return "next" in sub && sub.next ? sub.next(value) : null;
       });
     }
     /**
-     * Push an error signal to all active listeners
+     * Push an error signal to all active listeners.
+     * Completes all subscriptions.
      * @param {Error} error
      * @returns {undefined}
      */
@@ -353,8 +375,8 @@ function () {
   }, {
     key: "error",
     value: function error(_error) {
-      this.subs.splice(0).forEach(function (sub) {
-        return sub && typeof_typeof(sub) === "object" && "error" in sub && sub.error ? sub.error(_error) : null;
+      this.listeners.splice(0).forEach(function (sub) {
+        return "error" in sub && sub.error ? sub.error(_error) : null;
       });
     }
     /**
@@ -365,8 +387,8 @@ function () {
   }, {
     key: "complete",
     value: function complete() {
-      this.subs.splice(0).forEach(function (sub) {
-        return sub && typeof_typeof(sub) === "object" && "complete" in sub && sub.complete ? sub.complete() : null;
+      this.listeners.splice(0).forEach(function (sub) {
+        return "complete" in sub && sub.complete ? sub.complete() : null;
       });
     }
     /**
@@ -380,11 +402,16 @@ function () {
     value: function subscribe(listener) {
       var _this = this;
 
-      this.subs.push(listener);
+      if (listener && typeof_typeof(listener) === "object") {
+        this.listeners.push(listener);
+      }
+
       return function () {
-        _this.subs = _this.subs.filter(function (sub) {
-          return sub !== listener;
-        });
+        var pos = _this.listeners.indexOf(listener);
+
+        if (pos >= 0) {
+          _this.listeners.splice(pos, 1);
+        }
       };
     }
   }]);
@@ -491,43 +518,12 @@ var external_cloudinary_core_ = __webpack_require__("3c59");
 
 // CONCATENATED MODULE: ./src/utils/merge.js
 
-
 function merge() {
-  var args = Array.prototype.slice.call(arguments, 0).filter(function (x) {
-    return x != null;
-  });
-
-  if (args.length === 0) {
-    return {};
+  for (var _len = arguments.length, parts = new Array(_len), _key = 0; _key < _len; _key++) {
+    parts[_key] = arguments[_key];
   }
 
-  if (args.length === 1) {
-    return args[0];
-  }
-
-  if (args.length === 2) {
-    var result = {};
-
-    if (args[0] != null) {
-      keys_default()(args[0]).forEach(function (k) {
-        if (args[0][k] !== undefined) {
-          result[k] = args[0][k];
-        }
-      });
-    }
-
-    if (args[1] != null) {
-      keys_default()(args[1]).forEach(function (k) {
-        if (args[1][k] !== undefined) {
-          result[k] = args[1][k];
-        }
-      });
-    }
-
-    return result;
-  }
-
-  return merge(args[0], merge.apply(null, args.slice(1)));
+  return external_cloudinary_core_["Util"].assign.apply(external_cloudinary_core_["Util"], [{}].concat(parts));
 }
 // CONCATENATED MODULE: ./src/utils/kv.js
 function kv(k, v) {
@@ -548,17 +544,29 @@ function formatObject(subject, instructions) {
     return key in instructions ? merge(result, kv(key, instructions[key](subject[key]))) : merge(result, kv(key, subject[key]));
   }, {});
 }
-// CONCATENATED MODULE: ./src/utils/normalizeObject.js
+// CONCATENATED MODULE: ./src/utils/compact.js
 
-
-
-function normalizeObject(subject) {
+function compact(subject) {
   if (subject == null) {
     return subject;
   }
 
+  if (subject instanceof Array) {
+    return subject.reduce(function (result, item) {
+      if (item != null) {
+        result.push(item);
+      }
+
+      return result;
+    }, []);
+  }
+
   return keys_default()(subject).reduce(function (result, key) {
-    return subject[key] == undefined ? result : merge(result, kv(key, subject[key]));
+    if (subject[key] != null) {
+      result[key] = subject[key];
+    }
+
+    return result;
   }, {});
 }
 // CONCATENATED MODULE: ./src/utils/omit.js
@@ -575,24 +583,39 @@ function omit(subject, disallowed) {
   }, {});
 }
 // CONCATENATED MODULE: ./src/utils/pick.js
-
-
 function pick(subject, allowed) {
   if (subject == null) {
     return subject;
   }
 
-  return (allowed || []).reduce(function (result, key) {
-    return key in subject ? merge(result, kv(key, subject[key])) : result;
-  }, {});
+  if (allowed == null || allowed.length === 0) {
+    return {};
+  }
+
+  var target = {};
+
+  for (var i = 0; i < allowed.length; i++) {
+    var key = allowed[i];
+
+    if (key in subject) {
+      target[key] = subject[key];
+    }
+  }
+
+  return target;
 }
 // CONCATENATED MODULE: ./src/utils/uniq.js
-function uniq(subjectA, subjectB) {
-  return (subjectA || []).concat(subjectB || []).reduce(function (r, i) {
+function uniq(subject) {
+  return (subject || []).reduce(function (r, i) {
     return r.indexOf(i) < 0 ? r.concat([i]) : r;
   }, []);
 }
+// CONCATENATED MODULE: ./src/utils/union.js
+function union(subjectA, subjectB) {
+  return (subjectA || []).concat(subjectB || []);
+}
 // CONCATENATED MODULE: ./src/utils/equal.js
+
 
 
 
@@ -601,7 +624,7 @@ function equal(subjectA, subjectB) {
     return true;
   }
 
-  if ((subjectA === null || subjectB === null) && (subjectA !== null || subjectB !== null) || (subjectA === undefined || subjectB === undefined) && (subjectA !== undefined || subjectB !== undefined)) {
+  if (subjectA == null && subjectB == null || subjectA == null || subjectB == null) {
     return false;
   }
 
@@ -614,7 +637,7 @@ function equal(subjectA, subjectB) {
       return false;
     }
 
-    var allKeys = uniq(subjectAKeys, subjectBKeys);
+    var allKeys = uniq(union(subjectAKeys, subjectBKeys));
 
     if (allKeys.length !== subjectAKeys.length) {
       return false;
@@ -681,35 +704,6 @@ function range(min, max, step) {
 
   return result;
 }
-// CONCATENATED MODULE: ./src/utils/assign.js
-
-
-function assign_assign() {
-  var args = Array.prototype.slice.call(arguments, 0).filter(function (x) {
-    return x != null;
-  });
-
-  if (args.length === 0) {
-    return undefined;
-  }
-
-  if (args.length === 1) {
-    return args[0];
-  }
-
-  if (args.length === 2) {
-    var subject = args[0];
-    var mod = args[1];
-
-    keys_default()(mod).forEach(function (k) {
-      subject[k] = mod[k];
-    });
-
-    return subject;
-  }
-
-  return assign_assign.apply(this, [assign_assign(args[0], args[1])].concat(args.slice(2)));
-}
 // CONCATENATED MODULE: ./src/utils/flatten.js
 function flatten(subject) {
   if (subject == null) {
@@ -721,7 +715,6 @@ function flatten(subject) {
   }, []);
 }
 // CONCATENATED MODULE: ./src/utils/index.js
-
 
 
 
@@ -748,7 +741,7 @@ var attributes_transformation = external_cloudinary_core_["Transformation"].PARA
 /** Extract configuration options for provided object */
 
 function normalizeConfiguration(cfg) {
-  return external_cloudinary_core_["Util"].withSnakeCaseKeys(formatObject(normalizeObject(pick(cfg, attributes_configuration)), {
+  return external_cloudinary_core_["Util"].withSnakeCaseKeys(formatObject(compact(pick(cfg, attributes_configuration)), {
     secure: function secure(v) {
       return typeof v === "boolean" ? v : v === "true";
     }
@@ -757,12 +750,12 @@ function normalizeConfiguration(cfg) {
 /** Extract transformation options for provided object */
 
 function normalizeTransformation(cfg) {
-  return external_cloudinary_core_["Util"].withSnakeCaseKeys(normalizeObject(pick(cfg, attributes_transformation)));
+  return external_cloudinary_core_["Util"].withSnakeCaseKeys(compact(pick(cfg, attributes_transformation)));
 }
 /** Extract fields that are not used for configuration nor transformation in provided object */
 
 function normalizeRest(cfg) {
-  return normalizeObject(omit(cfg, attributes_transformation.concat(attributes_configuration)));
+  return compact(omit(cfg, attributes_transformation.concat(attributes_configuration)));
 }
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3201b759-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldContext.vue?vue&type=template&id=2e44c574&
 var CldContextvue_type_template_id_2e44c574_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',_vm._b({staticClass:"cld-context"},'div',_vm.htmlAttributes,false),[_vm._t("default")],2)}
@@ -853,7 +846,7 @@ var mounted = {
      * or children of parent context
      */
 
-    if (!this.CldParentState && (!this.$slots || !this.$slots.default || !this.$slots.default.length)) {
+    if (!this.cldParentState && (!this.$slots || !this.$slots.default || !this.$slots.default.length)) {
       this.markReadyCheck("mounted");
     }
   },
@@ -902,19 +895,20 @@ function () {
 
     _classCallCheck(this, CombinedState);
 
-    this.chunkedState = new State_State([]);
-    this.solidState = new State_State({});
-    this.chunkedState.subscribe({
-      next: function next(v) {
-        var nextSum = (composition || merge).apply(null, v ? v : []);
+    this.partialComponentListState = new State_State([]);
+    this.mergedComponentsState = new State_State({}); // merging
 
-        _this.solidState.next(nextSum);
+    this.partialComponentListState.subscribe({
+      next: function next(partialComponentList) {
+        var nextSum = (composition || merge).apply(null, partialComponentList);
+
+        _this.mergedComponentsState.next(nextSum);
       },
       error: function error(e) {
-        return _this.solidState.error(e);
+        return _this.mergedComponentsState.error(e);
       },
       complete: function complete() {
-        return _this.solidState.complete();
+        return _this.mergedComponentsState.complete();
       }
     });
   }
@@ -930,38 +924,40 @@ function () {
     value: function spawn() {
       var _this2 = this;
 
-      var last = {};
-      var didStatePushedEmpty = false;
-      var newSpawn = new State_State(last);
-      newSpawn.subscribe({
-        next: function next(v) {
-          if (!didStatePushedEmpty) {
-            didStatePushedEmpty = true;
+      var first = {};
+      var last = first;
+      var partialComponentState = new State_State(last);
+      partialComponentState.subscribe({
+        next: function next(nextPartialComponent) {
+          if (nextPartialComponent === first) {
             return;
           }
 
-          _this2.chunkedState.next(function (currentState) {
-            return currentState.indexOf(last) >= 0 ? currentState.map(function (chunk) {
-              return chunk === last ? last = v : chunk;
-            }) : currentState.concat([last = v]);
+          var current = last;
+          last = nextPartialComponent;
+
+          _this2.partialComponentListState.next(function (partialComponentList) {
+            return partialComponentList.indexOf(current) >= 0 ? partialComponentList.map(function (partialComponent) {
+              return partialComponent === current ? nextPartialComponent : partialComponent;
+            }) : partialComponentList.concat([nextPartialComponent]);
           });
         },
         error: function error() {
-          _this2.chunkedState.next(function (p) {
-            return p.filter(function (chunk) {
-              return chunk !== last;
+          _this2.partialComponentListState.next(function (partialComponentList) {
+            return partialComponentList.filter(function (partialComponent) {
+              return partialComponent !== last;
             });
           });
         },
         complete: function complete() {
-          _this2.chunkedState.next(function (p) {
-            return p.filter(function (chunk) {
-              return chunk !== last;
+          _this2.partialComponentListState.next(function (partialComponentList) {
+            return partialComponentList.filter(function (partialComponent) {
+              return partialComponent !== last;
             });
           });
         }
       });
-      return newSpawn;
+      return partialComponentState;
     }
     /**
      * Returns a current combined state
@@ -970,7 +966,7 @@ function () {
   }, {
     key: "get",
     value: function get() {
-      return this.solidState.get();
+      return this.mergedComponentsState.get();
     }
     /**
      * Register a listener
@@ -981,14 +977,13 @@ function () {
   }, {
     key: "subscribe",
     value: function subscribe(listener) {
-      return this.solidState.subscribe(listener);
+      return this.mergedComponentsState.subscribe(listener);
     }
   }]);
 
   return CombinedState;
 }();
 // CONCATENATED MODULE: ./src/helpers/combineOptions.js
-
 
 
 /** Combines many objects
@@ -1003,40 +998,36 @@ function combineOptions() {
   }
 
   var publicId = merge.apply(this, options).publicId;
-  var configuration = normalizeObject(merge.apply(this, options.filter(isObjectWithKeys).map(function (_) {
-    return _.configuration;
-  }).filter(isObjectWithKeys)));
-  var transformation = normalizeObject(combineTransformations.apply(this, options.filter(isObjectWithKeys).map(function (_) {
-    return _.transformation;
-  }).filter(isObjectWithKeys)));
-  return normalizeObject({
-    publicId: publicId ? publicId : undefined,
-    configuration: isObjectWithKeys(configuration) ? configuration : undefined,
-    transformation: isObjectWithKeys(transformation) ? transformation : undefined
+  var configuration = compact(merge.apply(this, compact(compact(options).map(function (option) {
+    return option.configuration;
+  }))));
+  var transformation = compact(combineTransformationComponents.apply(this, compact(compact(options).map(function (option) {
+    return option.transformation;
+  }))));
+  return compact({
+    publicId: publicId,
+    configuration: keys_default()(configuration).length ? configuration : undefined,
+    transformation: keys_default()(transformation).length ? transformation : undefined
   });
 }
 /**
  * Combines many transformations
  * provided as arguments
  * into one
- * @param  {...object} transformations
+ * @param  {...object} transformationComponents
  */
 
-function combineTransformations() {
-  for (var _len2 = arguments.length, transformations = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-    transformations[_key2] = arguments[_key2];
+function combineTransformationComponents() {
+  for (var _len2 = arguments.length, transformationComponents = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+    transformationComponents[_key2] = arguments[_key2];
   }
 
-  return transformations.filter(isObjectWithKeys).reduce(function (result, item) {
-    var transformation = [].concat(result.transformation).concat(item.transformation).filter(isObjectWithKeys);
+  return compact(transformationComponents).reduce(function (result, item) {
+    var transformation = compact([].concat(result.transformation).concat(item.transformation));
     return merge(result, item, transformation.length === 0 ? {} : {
       transformation: transformation
     });
   }, {});
-}
-
-function isObjectWithKeys(subject) {
-  return typeof_typeof(subject) === "object" && subject && keys_default()(subject).length > 0;
 }
 // CONCATENATED MODULE: ./src/mixins/cldAttrs.js
 
@@ -1052,23 +1043,24 @@ var cldAttrs = {
   mixins: [ready_ready],
   provide: function provide() {
     return {
-      CldParentState: this.cldAttrsState
+      cldParentState: this.cldAttrsState
     };
   },
   data: function data() {
-    var cldAttrsState = new CombinedState_CombinedState(combineOptions);
     return {
-      cldAttrsState: cldAttrsState,
-      cldAttrs: cldAttrsState.get()
+      cldAttrs: {}
     };
+  },
+  beforeCreate: function beforeCreate() {
+    this.cldAttrsState = new CombinedState_CombinedState(combineOptions);
   },
   created: function created() {
     var _this = this;
 
     this.addReadyCheck("cldAttrs");
     this.cldAttrsStateSub = this.cldAttrsState.subscribe({
-      next: function next(v) {
-        _this.cldAttrs = v;
+      next: function next(cldAttrs) {
+        _this.cldAttrs = cldAttrs;
 
         _this.markReadyCheck("cldAttrs");
       }
@@ -1107,18 +1099,20 @@ var cldAttrsOwned = {
       });
     }
   },
+  watch: {
+    cldAttributes: function cldAttributes(_cldAttributes) {
+      var prev = this.ownState.get();
+      var current = _cldAttributes;
+
+      if (!equal(prev, current)) {
+        this.ownState.next(current);
+      }
+    }
+  },
   created: function created() {
     this.markReadyCheck("cldAttrsOwned");
     this.ownState = this.cldAttrsState.spawn();
     this.ownState.next(this.cldAttributes);
-  },
-  updated: function updated() {
-    var prev = this.ownState.get();
-    var current = this.cldAttributes;
-
-    if (!equal(prev, current)) {
-      this.ownState.next(current);
-    }
   },
   destroyed: function destroyed() {
     this.ownState.complete();
@@ -1130,9 +1124,9 @@ var cldAttrsOwned = {
  */
 var cldChild = {
   inject: {
-    CldParentState: {
+    cldParentState: {
       default: function _default() {
-        return this.CldGlobalContextState ? this.CldGlobalContextState : null;
+        return this.CldGlobalContextState;
       }
     }
   }
@@ -1152,9 +1146,9 @@ var cldAttrsInherited = {
 
     this.addReadyCheck("cldAttrsOwned");
 
-    if (this.CldParentState) {
+    if (this.cldParentState) {
       this.contextState = this.cldAttrsState.spawn();
-      this.contextStateSub = this.CldParentState.subscribe({
+      this.contextStateSub = this.cldParentState.subscribe({
         next: function next(v) {
           _this.contextState.next(v);
 
@@ -1389,7 +1383,7 @@ function findBreakpoint(stops, value) {
 function getResizeTransformation(mode, size, breakpoints) {
   return {
     fill: merge(getDPRAttr(), {
-      crop: "crop"
+      crop: "fill"
     }, !size ? {
       width: 0,
       height: 0
@@ -1492,15 +1486,41 @@ var size_size = {
       return false;
     }
   },
+  methods: {
+    updateSizeObservation: function updateSizeObservation() {
+      var _this = this;
+
+      if (this.shouldMeasureSize) {
+        if (this.$el && !this.cancelSizeListener) {
+          this.cancelSizeListener = watchElementSize(this.$el, function (size) {
+            var currentSize = pick(_this.size, ["width", "height"]);
+            var nextSize = pick(size, ["width", "height"]);
+
+            if (!equal(currentSize, nextSize)) {
+              _this.size = nextSize;
+
+              _this.markReadyCheck("size");
+            }
+          });
+        }
+      } else {
+        this.markReadyCheck("size");
+
+        if (this.cancelSizeListener) {
+          this.cancelSizeListener();
+        }
+      }
+    }
+  },
   created: function created() {
     this.addReadyCheck("size");
-    fix.call(this);
+    this.updateSizeObservation.call();
   },
   updated: function updated() {
-    fix.call(this);
+    this.updateSizeObservation.call();
   },
   mounted: function mounted() {
-    fix.call(this);
+    this.updateSizeObservation.call();
   },
   destroyed: function destroyed() {
     if (this.cancelSizeListener) {
@@ -1508,38 +1528,12 @@ var size_size = {
     }
   }
 };
-
-function fix() {
-  var _this = this;
-
-  if (this.shouldMeasureSize) {
-    if (this.$el && !this.cancelSizeListener) {
-      this.cancelSizeListener = watchElementSize(this.$el, function (size) {
-        var currentSize = pick(_this.size, ["width", "height"]);
-        var nextSize = pick(size, ["width", "height"]);
-
-        if (!equal(currentSize, nextSize)) {
-          _this.size = nextSize;
-
-          _this.markReadyCheck("size");
-        }
-      });
-    }
-  } else {
-    this.markReadyCheck("size");
-
-    if (this.cancelSizeListener) {
-      this.cancelSizeListener();
-    }
-  }
-}
 /**
  * Call back a provided function
  * whenever element changed it's size
  * @param {HTMLElement} element
  * @param {Function} cb
  */
-
 
 function watchElementSize(element, cb) {
   var delayedCallback = debounce(cb, 150);
@@ -1555,7 +1549,10 @@ function watchElementSize(element, cb) {
         try {
           for (var _iterator = get_iterator_default()(entries), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var entry = _step.value;
-            delayedCallback(pick(entry.contentRect, ["width", "height"]));
+
+            var _size = pick(entry.contentRect, ["width", "height"]);
+
+            delayedCallback(_size);
           }
         } catch (err) {
           _didIteratorError = true;
@@ -1583,7 +1580,8 @@ function watchElementSize(element, cb) {
       };
     } else {
       var handleWindowResize = function handleWindowResize() {
-        delayedCallback(pick(element.getBoundingClientRect(), ["width", "height"]));
+        var size = pick(element.getBoundingClientRect(), ["width", "height"]);
+        delayedCallback(size);
       };
 
       window.addEventListener("resize", handleWindowResize);
@@ -1624,15 +1622,36 @@ var lazy = {
       visible: false
     };
   },
+  methods: {
+    updateVisibilityObservation: function updateVisibilityObservation() {
+      var _this = this;
+
+      if (this.lazy) {
+        if (this.$el && !this.cancelVisibilityListener) {
+          this.cancelVisibilityListener = watchElementVisibility(this.$el, function (visible) {
+            _this.visible = _this.visible || visible;
+          });
+        }
+      } else {
+        this.visible = true;
+
+        if (this.cancelVisibilityListener) {
+          var cancelVisibilityListener = this.cancelVisibilityListener;
+          this.cancelVisibilityListener = null;
+          cancelVisibilityListener();
+        }
+      }
+    }
+  },
   created: function created() {
     this.markReadyCheck("lazy");
-    lazy_fix.call(this);
+    this.updateVisibilityObservation();
   },
   mounted: function mounted() {
-    lazy_fix.call(this);
+    this.updateVisibilityObservation();
   },
   updated: function updated() {
-    lazy_fix.call(this);
+    this.updateVisibilityObservation();
   },
   destroyed: function destroyed() {
     if (this.cancelVisibilityListener) {
@@ -1640,26 +1659,6 @@ var lazy = {
     }
   }
 };
-
-function lazy_fix() {
-  var _this = this;
-
-  if (this.lazy) {
-    if (this.$el && !this.cancelVisibilityListener) {
-      this.cancelVisibilityListener = watchElementVisibility(this.$el, function (visible) {
-        _this.visible = _this.visible || visible;
-      });
-    }
-  } else {
-    this.visible = true;
-
-    if (this.cancelVisibilityListener) {
-      var cancelVisibilityListener = this.cancelVisibilityListener;
-      this.cancelVisibilityListener = null;
-      cancelVisibilityListener();
-    }
-  }
-}
 
 function watchElementVisibility(element, listener) {
   if ((typeof window === "undefined" ? "undefined" : typeof_typeof(window)) === "object" && "IntersectionObserver" in window) {
@@ -1781,12 +1780,21 @@ function noop() {}
     attributes: function attributes() {
       return merge(this.$attrs, this.progressive == true ? {
         flags: [].concat(this.$attrs.flags ? this.$attrs.flags : []).concat("progressive")
-      } : {}, this.responsive !== "none" && this.size ? {
-        transformation: [].concat(this.$attrs.transformation || []).concat(getResizeTransformation(this.responsive, this.size, evalBreakpoints(this.breakpoints)))
+      } : {}, this.responsiveMode !== "none" && this.size ? {
+        transformation: [].concat(this.$attrs.transformation || []).concat(getResizeTransformation(this.responsiveMode, this.size, evalBreakpoints(this.breakpoints))).filter(function (i) {
+          return !!i;
+        })
       } : {});
     },
+    responsiveMode: function responsiveMode() {
+      if (this.responsive === "") {
+        return "width";
+      }
+
+      return this.responsive;
+    },
     shouldMeasureSize: function shouldMeasureSize() {
-      return this.responsive !== "none";
+      return this.responsiveMode !== "none";
     },
     imageAttrs: function imageAttrs() {
       var className = {
@@ -1865,12 +1873,12 @@ var CldImage_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldImage = (CldImage_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3201b759-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldPoster.vue?vue&type=template&id=5afee394&
-var CldPostervue_type_template_id_5afee394_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.$slots.default)?_c('span',{staticClass:"cld-poster"},[_vm._t("default")],2):_vm._e()}
-var CldPostervue_type_template_id_5afee394_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3201b759-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldPoster.vue?vue&type=template&id=52119a98&
+var CldPostervue_type_template_id_52119a98_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.$slots.default)?_c('span',{staticClass:"cld-poster"},[_vm._t("default")],2):_vm._e()}
+var CldPostervue_type_template_id_52119a98_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/CldPoster.vue?vue&type=template&id=5afee394&
+// CONCATENATED MODULE: ./src/components/CldPoster.vue?vue&type=template&id=52119a98&
 
 // CONCATENATED MODULE: ./src/mixins/cldAttrsSubmitting.js
 
@@ -1886,27 +1894,27 @@ var cldAttrsSubmitting = {
   created: function created() {
     var _this = this;
 
-    if (!this.CldParentState) {
+    if (!this.cldParentState) {
       throw new Error("This component has to have a Cloudinary parent that can receive it's attributes");
     }
 
     this.addReadyCheck("cldAttrsSubmitting");
-    this.submitter = this.CldParentState.spawn();
-    this.submitterSub = this.cldAttrsState.subscribe({
+    this.cldAttrsSubmittingSubmitter = this.cldParentState.spawn();
+    this.cldAttrsSubmittingSubmitterCancel = this.cldAttrsState.subscribe({
       next: function next(v) {
-        _this.submitter.next(v);
+        _this.cldAttrsSubmittingSubmitter.next(v);
 
         _this.markReadyCheck("cldAttrsSubmitting");
       }
     });
   },
   destroyed: function destroyed() {
-    if (this.submitterSub) {
-      this.submitterSub();
+    if (this.cldAttrsSubmittingSubmitterCancel) {
+      this.cldAttrsSubmittingSubmitterCancel();
     }
 
-    if (this.submitter) {
-      this.submitter.complete();
+    if (this.cldAttrsSubmittingSubmitter) {
+      this.cldAttrsSubmittingSubmitter.complete();
     }
   }
 };
@@ -1940,13 +1948,13 @@ var cldAttrsSubmitting = {
     }
   },
   inject: {
-    CldParentState: {
-      from: "CldPosterState"
+    cldParentState: {
+      from: "cldPosterState"
     }
   },
   computed: {
     attributes: function attributes() {
-      return normalizeObject(merge({
+      return compact(merge({
         publicId: this.publicId
       }, this.$attrs));
     }
@@ -1964,8 +1972,8 @@ var cldAttrsSubmitting = {
 
 var CldPoster_component = normalizeComponent(
   components_CldPostervue_type_script_lang_js_,
-  CldPostervue_type_template_id_5afee394_render,
-  CldPostervue_type_template_id_5afee394_staticRenderFns,
+  CldPostervue_type_template_id_52119a98_render,
+  CldPostervue_type_template_id_52119a98_staticRenderFns,
   false,
   null,
   null,
@@ -1974,20 +1982,8 @@ var CldPoster_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldPoster = (CldPoster_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3201b759-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldTransformation.vue?vue&type=template&id=6f22c24a&
-var CldTransformationvue_type_template_id_6f22c24a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.$slots.default)?_c('span',{staticClass:"cld-transformation"},[_vm._t("default")],2):_vm._e()}
-var CldTransformationvue_type_template_id_6f22c24a_staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./src/components/CldTransformation.vue?vue&type=template&id=6f22c24a&
-
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldTransformation.vue?vue&type=script&lang=js&
-//
-//
-//
-//
-//
-//
+
 
 
 /**
@@ -1998,19 +1994,39 @@ var CldTransformationvue_type_template_id_6f22c24a_staticRenderFns = []
 /* harmony default export */ var CldTransformationvue_type_script_lang_js_ = ({
   name: "CldTransformation",
   inheritAttrs: false,
-  mixins: [cldAttrsOwned, cldAttrsSubmitting],
+  mixins: [cldChild],
+  render: function render() {
+    return null;
+  },
   computed: {
-    attributes: function attributes() {
+    transformationComponent: function transformationComponent() {
       return {
-        transformation: this.$attrs
+        transformation: {
+          transformation: normalizeTransformation(this.$attrs)
+        }
       };
     }
+  },
+  created: function created() {
+    this.transformationComponentState = this.cldParentState.spawn();
+    this.transformationComponentState.next(this.transformationComponent);
+  },
+  updated: function updated() {
+    var prev = this.transformationComponentState.get();
+    var current = this.transformationComponent;
+
+    if (!equal(prev, current)) {
+      this.transformationComponentState.next(current);
+    }
+  },
+  destroyed: function destroyed() {
+    this.transformationComponentState.complete();
   }
 });
 // CONCATENATED MODULE: ./src/components/CldTransformation.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_CldTransformationvue_type_script_lang_js_ = (CldTransformationvue_type_script_lang_js_); 
 // CONCATENATED MODULE: ./src/components/CldTransformation.vue
-
+var CldTransformation_render, CldTransformation_staticRenderFns
 
 
 
@@ -2019,8 +2035,8 @@ var CldTransformationvue_type_template_id_6f22c24a_staticRenderFns = []
 
 var CldTransformation_component = normalizeComponent(
   components_CldTransformationvue_type_script_lang_js_,
-  CldTransformationvue_type_template_id_6f22c24a_render,
-  CldTransformationvue_type_template_id_6f22c24a_staticRenderFns,
+  CldTransformation_render,
+  CldTransformation_staticRenderFns,
   false,
   null,
   null,
@@ -2099,7 +2115,7 @@ var CldTransformation_component = normalizeComponent(
   },
   provide: function provide() {
     return {
-      CldPosterState: this.posterCombinedState
+      cldPosterState: this.posterCombinedState
     };
   },
   data: function data() {
@@ -2146,7 +2162,7 @@ var CldTransformation_component = normalizeComponent(
 
       return keys_default()(this.sourceTypes).map(function (srcType) {
         var configuration = merge(_this.cldAttrs.configuration, normalizeConfiguration(_this.sourceTypes[srcType] || {}));
-        var transformation = combineTransformations(_this.cldAttrs.transformation, normalizeTransformation(_this.sourceTypes[srcType] || {}));
+        var transformation = combineTransformationComponents(_this.cldAttrs.transformation, normalizeTransformation(_this.sourceTypes[srcType] || {}));
         var htmlAttrs = normalizeRest(_this.sourceTypes[srcType] || {});
         var src = external_cloudinary_core_["Cloudinary"].new(configuration).url(_this.publicId, merge({
           resource_type: "video",
@@ -2239,62 +2255,41 @@ var CldVideo_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldVideo = (CldVideo_component.exports);
-// EXTERNAL MODULE: external "core-js/modules/es6.regexp.to-string"
-var es6_regexp_to_string_ = __webpack_require__("6619");
+// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/arrayWithoutHoles.js
 
-// CONCATENATED MODULE: ./src/helpers/resolveMedia.js
+function _arrayWithoutHoles(arr) {
+  if (is_array_default()(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
 
-
-function resolveMedia(media) {
-  if (typeof media === "string") {
-    return media;
+    return arr2;
   }
-
-  if (typeof_typeof(media) === "object") {
-    return [].concat(media).map(resolveMediaObject).join(", ");
-  }
-
-  return undefined;
 }
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/from.js
+var from = __webpack_require__("774e");
+var from_default = /*#__PURE__*/__webpack_require__.n(from);
 
-function resolveMediaObject(media) {
-  var queries = [media.all ? "all" : null, media.screen ? "screen" : null, media.print ? "print" : null, media.handheld ? "handheld" : null, media.orientation ? "orientation: ".concat(media.orientation) : null, media.not ? "not ".concat(resolveMedia(media.not) || "") : null, media.maxWidth ? "max-width: ".concat(resolveUnit(media.maxWidth)) : null, media.minWidth ? "min-width: ".concat(resolveUnit(media.minWidth)) : null, media.maxHeight ? "max-height: ".concat(resolveUnit(media.maxHeight)) : null, media.minHeight ? "min-height: ".concat(resolveUnit(media.minHeight)) : null, media.or ? "".concat(resolveMedia(media.or).join(", ")) : null].filter(function (q) {
-    return q != null;
-  });
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/is-iterable.js
+var is_iterable = __webpack_require__("c8bb");
+var is_iterable_default = /*#__PURE__*/__webpack_require__.n(is_iterable);
 
-  if (queries.length === 0) {
-    return undefined;
-  }
+// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/iterableToArray.js
 
-  if (queries.length === 1) {
-    return queries[0];
-  }
 
-  return queries.map(function (q) {
-    return q.indexOf(" ") >= 0 ? "(".concat(q, ")") : q;
-  }).join(" and ");
+function _iterableToArray(iter) {
+  if (is_iterable_default()(Object(iter)) || Object.prototype.toString.call(iter) === "[object Arguments]") return from_default()(iter);
 }
+// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/nonIterableSpread.js
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/toConsumableArray.js
 
-function resolveUnit(v) {
-  if (v == null) {
-    throw new Error("null is not a number");
-  }
 
-  if (typeof v === "number") {
-    return "".concat(v, "px");
-  }
 
-  if (typeof v === "string") {
-    return v;
-  }
-
-  var valueOfValue = v.valueOf();
-
-  if (valueOfValue !== v) {
-    return resolveUnit(valueOfValue);
-  }
-
-  return resolveUnit(v.toString());
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
 }
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldPicture.vue?vue&type=script&lang=js&
 
@@ -2339,8 +2334,7 @@ function resolveUnit(v) {
 
     /**
      * An array of the image sources to put into the tag.
-     * Each element can have `media` (`string` or an `object`), `configuration` (`object`), `transformation` (`object`) and `publicId` (`string`) fields - all are optional.
-     * Media can be either string or an object with keys `all`, `screen`, `print`, `handheld`, `orientation`, `not`, `maxWidth`, `minWidth`, `maxHeight`, `minHeight` and `or` - all optional.
+     * Each element can have `min_width` , `max_with` and `transformation`.
      */
     sources: {
       type: Array,
@@ -2408,18 +2402,39 @@ function resolveUnit(v) {
       }
 
       return this.sources.map(function (sourceConfig) {
-        var transformation = combineTransformations(sourceConfig.transformation ? normalizeTransformation(sourceConfig.transformation) : _this.cldAttrs.transformation);
-        var htmlAttrs = normalizeRest(sourceConfig);
+        var transformation = combineTransformationComponents(sourceConfig.transformation ? normalizeTransformation(sourceConfig.transformation) : _this.cldAttrs.transformation);
+        var htmlAttrs = normalizeRest(omit(sourceConfig, ["max_width", "min_width"]));
         var srcset = external_cloudinary_core_["Cloudinary"].new(_this.cldAttrs.configuration).url(_this.publicId, transformation);
-        var media = resolveMedia(sourceConfig.media);
-        return merge(htmlAttrs, {
-          srcset: srcset,
+
+        var media = _toConsumableArray([sourceConfig.max_width ? ["max-width", num2px(sourceConfig.max_width)] : null, sourceConfig.min_width ? ["min-width", num2px(sourceConfig.min_width)] : null].filter(function (s) {
+          return !!s;
+        })).map(function (chunk) {
+          return chunk.length > 1 ? "(".concat(chunk.join(": "), ")") : chunk.join("");
+        }).join(" and ");
+
+        return merge({
+          media: "all"
+        }, htmlAttrs, {
+          srcset: srcset
+        }, media ? {
           media: media
-        });
+        } : {});
       });
     }
   }
 });
+
+function num2px(n) {
+  if (typeof n === "number") {
+    return "".concat(n, "px");
+  }
+
+  if (typeof n === "string") {
+    return n;
+  }
+
+  return 0;
+}
 // CONCATENATED MODULE: ./src/components/CldPicture.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_CldPicturevue_type_script_lang_js_ = (CldPicturevue_type_script_lang_js_); 
 // CONCATENATED MODULE: ./src/components/CldPicture.vue
@@ -2449,7 +2464,6 @@ var CldPicture_component = normalizeComponent(
 
 
 
-
 /**
  *
  * One or more [transformation parameters](https://cloudinary.com/documentation/image_transformation_reference)
@@ -2469,31 +2483,25 @@ var CldPicture_component = normalizeComponent(
     publicId: {
       type: String,
       default: "",
-      required: true
-    },
+      required: true // /**
+      //  * Media query for the source
+      //  */
+      // media: { type: String, default: "all" }
 
-    /**
-     * Media can be either string or an object with keys `all`, `screen`, `print`, `handheld`, `orientation`, `not`, `maxWidth`, `minWidth`, `maxHeight`, `minHeight` and `or` - all optional.
-     */
-    media: {
-      type: [String, Object],
-      default: "all"
     }
   },
   mixins: [ready_ready, cldAttrsInherited, cldAttrsOwned],
   computed: {
     sourceOptions: function sourceOptions() {
       if (!this.isReady) {
-        return merge(normalizeRest(this.$attrs), {
-          media: resolveMedia(this.media)
-        });
+        return normalizeRest(this.$attrs);
       }
 
       var htmlAttrs = external_cloudinary_core_["Transformation"].new(this.cldAttrs.transformation).toHtmlAttributes();
       return {
-        attrs: merge(normalizeRest(this.$attrs), omit(htmlAttrs, ["width", "height"]), {
-          media: resolveMedia(this.media)
-        }, this.publicId ? {
+        attrs: merge({
+          media: "all"
+        }, normalizeRest(this.$attrs), omit(htmlAttrs, ["width", "height"]), this.publicId ? {
           srcset: external_cloudinary_core_["Cloudinary"].new(this.cldAttrs.configuration).url(this.publicId, this.cldAttrs.transformation)
         } : null)
       };
@@ -2536,7 +2544,6 @@ var CldSource_component = normalizeComponent(
 
 
 
-
 function install(Vue, options) {
   if (Vue.CldInstalled) {
     throw new Error("Cloudinary plugin already installed");
@@ -2562,34 +2569,32 @@ function install(Vue, options) {
 function getUserComponentName(components, name) {
   if (!components) {
     return name;
-  }
-
-  if (typeof_typeof(components) === "object") {
-    // { components: ['CldImage'] }
-    if (is_array_default()(components)) {
-      return components.indexOf(name) >= 0 ? name : null;
-    } // { components: { CldImage: true } }
+  } // { components: ['CldImage'] }
 
 
-    if (typeof components[name] === "boolean") {
-      return components[name] === true ? name : null;
-    } // { components: { CldImage: 'CloudinaryImage' } }
+  if (is_array_default()(components)) {
+    return components.indexOf(name) >= 0 ? name : null;
+  } // { components: { CldImage: true } }
 
 
-    if (typeof components[name] === "string") {
-      return components[name];
-    } // { components: { CloudinaryImage: 'CldImage' } }
+  if (typeof components[name] === "boolean") {
+    return components[name] === true ? name : null;
+  } // { components: { CldImage: 'CloudinaryImage' } }
 
 
-    var keys = keys_default()(components);
+  if (typeof components[name] === "string") {
+    return components[name];
+  } // { components: { CloudinaryImage: 'CldImage' } }
 
-    var values = keys.map(function (key) {
-      return components[key];
-    });
 
-    if (values.indexOf(name) >= 0) {
-      return keys[values.indexOf(name)];
-    }
+  var keys = keys_default()(components);
+
+  var values = keys.map(function (key) {
+    return components[key];
+  });
+
+  if (values.indexOf(name) >= 0) {
+    return keys[values.indexOf(name)];
   }
 
   return null;

@@ -10,7 +10,9 @@ Cloudinary provides URL and HTTP based APIs that can be easily integrated with a
 
 ## BETA
 
-This is a BETA version. Things are still due to changes
+This is a BETA version. Things are still due to changes.
+
+⚠️ SSR is not supported.
 
 ## Usage
 

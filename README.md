@@ -61,12 +61,6 @@ Vue.use(Cloudinary, {
 });
 ```
 
-Also, in application stylesheet, you should import `cloudinary-vue` styles:
-
-```css
-@import "cloudinary-vue/dist/Cloudinary.css";
-```
-
 ### General usage
 
 In order to properly use this library you have to provide it with a few configuration parameters. All configuration parameters can be applied directly to the element, using a CldContext component or while installing a plugin (second argument of `Vue.use`).

@@ -110,11 +110,27 @@ export default {
     },
     imageAttrs() {
       const className = {
-        "cld-image": true,
-        "cld-fill": this.responsive === "fill",
-        "cld-fill-width": this.responsive === "width",
-        "cld-fill-height": this.responsive === "height"
+        "cld-image": true
       };
+      const responsiveMode = this.responsive === "" ? "width" : this.responsive;
+      const responsiveStyle =
+        {
+          height: {
+            display: "block",
+            height: "100%",
+            width: "auto"
+          },
+          width: {
+            display: "block",
+            width: "100%"
+          },
+          fill: {
+            display: "block",
+            width: "100%",
+            height: "100%"
+          }
+        }[responsiveMode] || {};
+
       if (
         !this.isReady ||
         !this.publicId ||
@@ -124,13 +140,15 @@ export default {
         )
       ) {
         return {
-          class: className
+          class: className,
+          style: responsiveStyle
         };
       }
 
       if (this.lazy && !this.visible) {
         return {
           class: className,
+          style: responsiveStyle,
           attrs: this.placeholder
             ? {
                 src:
@@ -150,8 +168,10 @@ export default {
         this.publicId,
         this.cldAttrs
       );
+
       return {
         class: className,
+        style: responsiveStyle,
         attrs: merge(
           normalizeRest(this.$attrs),
           htmlAttrs,
@@ -166,24 +186,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-.cld-image {
-  &.cld-fill-height {
-    display: block;
-    height: 100%;
-    width: auto;
-  }
-
-  &.cld-fill-width {
-    display: block;
-    width: 100%;
-  }
-
-  &.cld-fill {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-}
-</style>

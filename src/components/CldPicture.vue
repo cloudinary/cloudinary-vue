@@ -1,9 +1,8 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
-import { merge } from "../utils";
+import { merge, omit } from "../utils";
 import { normalizeTransformation, normalizeRest } from "../helpers/attributes";
 import { combineTransformations } from "../helpers/combineOptions";
-import { resolveMedia } from "../helpers/resolveMedia";
 
 import { ready } from "../mixins/ready";
 import { mounted } from "../mixins/mounted";
@@ -37,8 +36,7 @@ export default {
     publicId: { type: String, default: "", required: true },
     /**
      * An array of the image sources to put into the tag.
-     * Each element can have `media` (`string` or an `object`), `configuration` (`object`), `transformation` (`object`) and `publicId` (`string`) fields - all are optional.
-     * Media can be either string or an object with keys `all`, `screen`, `print`, `handheld`, `orientation`, `not`, `maxWidth`, `minWidth`, `maxHeight`, `minHeight` and `or` - all optional.
+     * Each element can have `min_width` , `max_with` and `transformation`.
      */
     sources: {
       type: Array,
@@ -119,18 +117,48 @@ export default {
             : this.cldAttrs.transformation
         );
 
-        const htmlAttrs = normalizeRest(sourceConfig);
+        const htmlAttrs = normalizeRest(
+          omit(sourceConfig, ["max_width", "min_width"])
+        );
 
         const srcset = Cloudinary.new(this.cldAttrs.configuration).url(
           this.publicId,
           transformation
         );
 
-        const media = resolveMedia(sourceConfig.media);
+        const media = [
+          ...[
+            sourceConfig.max_width
+              ? ["max-width", num2px(sourceConfig.max_width)]
+              : null,
+            sourceConfig.min_width
+              ? ["min-width", num2px(sourceConfig.min_width)]
+              : null
+          ].filter(s => !!s)
+        ]
+          .map(chunk =>
+            chunk.length > 1 ? `(${chunk.join(": ")})` : chunk.join("")
+          )
+          .join(" and ");
 
-        return merge(htmlAttrs, { srcset, media });
+        return merge(
+          { media: "all" },
+          htmlAttrs,
+          { srcset },
+          media ? { media } : {}
+        );
       });
     }
   }
 };
+
+function num2px(n) {
+  if (typeof n === "number") {
+    return `${n}px`;
+  }
+  if (typeof n === "string") {
+    return n;
+  }
+  return 0;
+}
 </script>

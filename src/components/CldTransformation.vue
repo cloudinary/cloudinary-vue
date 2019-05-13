@@ -23,9 +23,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-.cld-transformation {
-  display: none;
-}
-</style>

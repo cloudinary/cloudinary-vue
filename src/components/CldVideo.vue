@@ -231,8 +231,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-.cld-video {
-}
-</style>

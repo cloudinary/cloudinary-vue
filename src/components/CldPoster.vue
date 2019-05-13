@@ -42,9 +42,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-.cld-poster {
-  display: none;
-}
-</style>

@@ -25,9 +25,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.cld-context {
-  display: contents;
-}
-</style>

@@ -5,7 +5,6 @@ import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
 import { cldAttrsInherited } from "../mixins/cldAttrsInherited";
 import { omit, merge } from "../utils";
 import { normalizeRest } from "../helpers/attributes";
-import { resolveMedia } from "../helpers/resolveMedia";
 
 /**
  *
@@ -22,19 +21,17 @@ export default {
     /**
      * The unique identifier of an uploaded image.
      */
-    publicId: { type: String, default: "", required: true },
-    /**
-     * Media can be either string or an object with keys `all`, `screen`, `print`, `handheld`, `orientation`, `not`, `maxWidth`, `minWidth`, `maxHeight`, `minHeight` and `or` - all optional.
-     */
-    media: { type: [String, Object], default: "all" }
+    publicId: { type: String, default: "", required: true }
+    // /**
+    //  * Media query for the source
+    //  */
+    // media: { type: String, default: "all" }
   },
   mixins: [ready, cldAttrsInherited, cldAttrsOwned],
   computed: {
     sourceOptions() {
       if (!this.isReady) {
-        return merge(normalizeRest(this.$attrs), {
-          media: resolveMedia(this.media)
-        });
+        return normalizeRest(this.$attrs);
       }
 
       const htmlAttrs = Transformation.new(
@@ -43,11 +40,9 @@ export default {
 
       return {
         attrs: merge(
+          { media: "all" },
           normalizeRest(this.$attrs),
           omit(htmlAttrs, ["width", "height"]),
-          {
-            media: resolveMedia(this.media)
-          },
           this.publicId
             ? {
                 srcset: Cloudinary.new(this.cldAttrs.configuration).url(

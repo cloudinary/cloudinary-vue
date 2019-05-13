@@ -8,10 +8,10 @@ describe("CldSource", () => {
     const picture = mount({
       template: `
         <picture>
-            <cld-source cloudName="demo" publicId="face_top" />
-            <cld-source media="print" cloudName="demo" publicId="face_top2" effect="sepia" />
-            <cld-source :media="{ screen: true, maxWidth: 600 }" cloudName="demo" publicId="face_top3" />
-            <img />
+          <cld-source media="print" cloudName="demo" publicId="face_top2" effect="sepia" />
+          <cld-source :media="'screen and (max-width: 600px)'" cloudName="demo" :publicId="'face_top3'" />
+          <cld-source cloudName="demo" publicId="face_top" />
+          <img />
         </picture>
       `,
       components: { CldSource }

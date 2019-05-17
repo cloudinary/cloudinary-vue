@@ -12,23 +12,25 @@ export const cldAttrs = {
 
   provide() {
     return {
-      CldParentState: this.cldAttrsState
+      cldParentState: this.cldAttrsState
     };
   },
 
   data() {
-    const cldAttrsState = new CombinedState(combineOptions);
     return {
-      cldAttrsState,
-      cldAttrs: cldAttrsState.get()
+      cldAttrs: {}
     };
+  },
+
+  beforeCreate() {
+    this.cldAttrsState = new CombinedState(combineOptions);
   },
 
   created() {
     this.addReadyCheck("cldAttrs");
     this.cldAttrsStateSub = this.cldAttrsState.subscribe({
-      next: v => {
-        this.cldAttrs = v;
+      next: cldAttrs => {
+        this.cldAttrs = cldAttrs;
         this.markReadyCheck("cldAttrs");
       }
     });

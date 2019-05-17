@@ -22,7 +22,7 @@ export const mounted = {
      * or children of parent context
      */
     if (
-      !this.CldParentState &&
+      !this.cldParentState &&
       (!this.$slots || !this.$slots.default || !this.$slots.default.length)
     ) {
       this.markReadyCheck("mounted");

@@ -1,12 +1,7 @@
-<template>
-  <span v-if="$slots.default" class="cld-transformation">
-    <slot />
-  </span>
-</template>
-
 <script>
-import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
-import { cldAttrsSubmitting } from "../mixins/cldAttrsSubmitting";
+import { cldChild } from "../mixins/cldChild";
+import { normalizeTransformation } from "../helpers/attributes";
+import { equal } from "../utils";
 
 /**
  * One or more [transformation parameters](https://cloudinary.com/documentation/image_transformation_reference)
@@ -15,11 +10,35 @@ import { cldAttrsSubmitting } from "../mixins/cldAttrsSubmitting";
 export default {
   name: "CldTransformation",
   inheritAttrs: false,
-  mixins: [cldAttrsOwned, cldAttrsSubmitting],
+  mixins: [cldChild],
+
+  render() {
+    return null;
+  },
+
   computed: {
-    attributes() {
-      return { transformation: this.$attrs };
+    transformationComponent() {
+      return {
+        transformation: { transformation: normalizeTransformation(this.$attrs) }
+      };
     }
+  },
+
+  created() {
+    this.transformationComponentState = this.cldParentState.spawn();
+    this.transformationComponentState.next(this.transformationComponent);
+  },
+
+  updated() {
+    const prev = this.transformationComponentState.get();
+    const current = this.transformationComponent;
+    if (!equal(prev, current)) {
+      this.transformationComponentState.next(current);
+    }
+  },
+
+  destroyed() {
+    this.transformationComponentState.complete();
   }
 };
 </script>

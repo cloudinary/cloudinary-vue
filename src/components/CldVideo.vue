@@ -10,7 +10,7 @@ import {
 } from "../helpers/attributes";
 import {
   combineOptions,
-  combineTransformations
+  combineTransformationComponents
 } from "../helpers/combineOptions";
 
 import { ready } from "../mixins/ready";
@@ -71,7 +71,7 @@ export default {
   },
   provide() {
     return {
-      CldPosterState: this.posterCombinedState
+      cldPosterState: this.posterCombinedState
     };
   },
   data() {
@@ -132,7 +132,7 @@ export default {
           this.cldAttrs.configuration,
           normalizeConfiguration(this.sourceTypes[srcType] || {})
         );
-        const transformation = combineTransformations(
+        const transformation = combineTransformationComponents(
           this.cldAttrs.transformation,
           normalizeTransformation(this.sourceTypes[srcType] || {})
         );

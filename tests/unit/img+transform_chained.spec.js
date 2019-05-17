@@ -9,9 +9,8 @@ describe("CldImage with CldTransformation ", () => {
       template: `
         <cld-image publicId="sample" cloudName="demo">
           <cld-transformation width="100" crop="scale" />
-          <cld-transformation width="200" crop="pad">
-            <cld-transformation angle="30" />
-          </cld-transformation>
+          <cld-transformation width="200" crop="pad" />
+          <cld-transformation angle="30" />
         </cld-image>
       `,
       components: { CldTransformation, CldImage }

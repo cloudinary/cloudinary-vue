@@ -1,4 +1,5 @@
 import { uniq } from "./uniq";
+import { union } from "./union";
 
 export function equal(subjectA, subjectB) {
   if (
@@ -9,10 +10,9 @@ export function equal(subjectA, subjectB) {
   }
 
   if (
-    ((subjectA === null || subjectB === null) &&
-      (subjectA !== null || subjectB !== null)) ||
-    ((subjectA === undefined || subjectB === undefined) &&
-      (subjectA !== undefined || subjectB !== undefined))
+    (subjectA == null && subjectB == null) ||
+    subjectA == null ||
+    subjectB == null
   ) {
     return false;
   }
@@ -23,7 +23,7 @@ export function equal(subjectA, subjectB) {
     if (subjectAKeys.length !== subjectBKeys.length) {
       return false;
     }
-    const allKeys = uniq(subjectAKeys, subjectBKeys);
+    const allKeys = uniq(union(subjectAKeys, subjectBKeys));
     if (allKeys.length !== subjectAKeys.length) {
       return false;
     }

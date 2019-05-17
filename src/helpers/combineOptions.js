@@ -1,4 +1,4 @@
-import { merge, normalizeObject } from "../utils";
+import { merge, compact } from "../utils";
 
 /** Combines many objects
  * { publicId, configuration, transformation }
@@ -8,30 +8,26 @@ import { merge, normalizeObject } from "../utils";
 export function combineOptions(...options) {
   const publicId = merge.apply(this, options).publicId;
 
-  const configuration = normalizeObject(
+  const configuration = compact(
     merge.apply(
       this,
-      options
-        .filter(isObjectWithKeys)
-        .map(_ => _.configuration)
-        .filter(isObjectWithKeys)
+      compact(compact(options).map(option => option.configuration))
     )
   );
 
-  const transformation = normalizeObject(
-    combineTransformations.apply(
+  const transformation = compact(
+    combineTransformationComponents.apply(
       this,
-      options
-        .filter(isObjectWithKeys)
-        .map(_ => _.transformation)
-        .filter(isObjectWithKeys)
+      compact(compact(options).map(option => option.transformation))
     )
   );
 
-  return normalizeObject({
-    publicId: publicId ? publicId : undefined,
-    configuration: isObjectWithKeys(configuration) ? configuration : undefined,
-    transformation: isObjectWithKeys(transformation)
+  return compact({
+    publicId,
+    configuration: Object.keys(configuration).length
+      ? configuration
+      : undefined,
+    transformation: Object.keys(transformation).length
       ? transformation
       : undefined
   });
@@ -41,24 +37,17 @@ export function combineOptions(...options) {
  * Combines many transformations
  * provided as arguments
  * into one
- * @param  {...object} transformations
+ * @param  {...object} transformationComponents
  */
-export function combineTransformations(...transformations) {
-  return transformations.filter(isObjectWithKeys).reduce((result, item) => {
-    const transformation = []
-      .concat(result.transformation)
-      .concat(item.transformation)
-      .filter(isObjectWithKeys);
+export function combineTransformationComponents(...transformationComponents) {
+  return compact(transformationComponents).reduce((result, item) => {
+    const transformation = compact(
+      [].concat(result.transformation).concat(item.transformation)
+    );
     return merge(
       result,
       item,
       transformation.length === 0 ? {} : { transformation }
     );
   }, {});
-}
-
-function isObjectWithKeys(subject) {
-  return (
-    typeof subject === "object" && subject && Object.keys(subject).length > 0
-  );
 }

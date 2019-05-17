@@ -112,7 +112,7 @@ export default {
       const className = {
         "cld-image": true,
         "cld-fill": this.responsive === "fill",
-        "cld-fill-width": this.responsive === "width",
+        "cld-fill-width": this.responsive === "width" || this.responsive === "",
         "cld-fill-height": this.responsive === "height"
       };
       if (

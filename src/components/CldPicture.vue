@@ -2,7 +2,7 @@
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, omit } from "../utils";
 import { normalizeTransformation, normalizeRest } from "../helpers/attributes";
-import { combineTransformations } from "../helpers/combineOptions";
+import { combineTransformationComponents } from "../helpers/combineOptions";
 
 import { ready } from "../mixins/ready";
 import { mounted } from "../mixins/mounted";
@@ -111,7 +111,7 @@ export default {
       }
 
       return this.sources.map(sourceConfig => {
-        const transformation = combineTransformations(
+        const transformation = combineTransformationComponents(
           sourceConfig.transformation
             ? normalizeTransformation(sourceConfig.transformation)
             : this.cldAttrs.transformation

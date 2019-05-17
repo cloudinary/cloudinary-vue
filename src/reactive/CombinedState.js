@@ -29,15 +29,20 @@ export class CombinedState {
    * @param {Function} composition
    */
   constructor(composition) {
-    this.chunkedState = new State([]);
-    this.solidState = new State({});
-    this.chunkedState.subscribe({
-      next: v => {
-        const nextSum = (composition || merge).apply(null, v ? v : []);
-        this.solidState.next(nextSum);
+    this.partialComponentListState = new State([]);
+    this.mergedComponentsState = new State({});
+
+    // merging
+    this.partialComponentListState.subscribe({
+      next: partialComponentList => {
+        const nextSum = (composition || merge).apply(
+          null,
+          partialComponentList
+        );
+        this.mergedComponentsState.next(nextSum);
       },
-      error: e => this.solidState.error(e),
-      complete: () => this.solidState.complete()
+      error: e => this.mergedComponentsState.error(e),
+      complete: () => this.mergedComponentsState.complete()
     });
   }
 
@@ -47,36 +52,49 @@ export class CombinedState {
    * and to allow that state part modification
    */
   spawn() {
-    let last = {};
-    let didStatePushedEmpty = false;
-    const newSpawn = new State(last);
-    newSpawn.subscribe({
-      next: v => {
-        if (!didStatePushedEmpty) {
-          didStatePushedEmpty = true;
+    const first = {};
+    let last = first;
+    const partialComponentState = new State(last);
+    partialComponentState.subscribe({
+      next: nextPartialComponent => {
+        if (nextPartialComponent === first) {
           return;
         }
-        this.chunkedState.next(currentState =>
-          currentState.indexOf(last) >= 0
-            ? currentState.map(chunk => (chunk === last ? (last = v) : chunk))
-            : currentState.concat([(last = v)])
+        const current = last;
+        last = nextPartialComponent;
+        this.partialComponentListState.next(partialComponentList =>
+          partialComponentList.indexOf(current) >= 0
+            ? partialComponentList.map(partialComponent =>
+                partialComponent === current
+                  ? nextPartialComponent
+                  : partialComponent
+              )
+            : partialComponentList.concat([nextPartialComponent])
         );
       },
       error: () => {
-        this.chunkedState.next(p => p.filter(chunk => chunk !== last));
+        this.partialComponentListState.next(partialComponentList =>
+          partialComponentList.filter(
+            partialComponent => partialComponent !== last
+          )
+        );
       },
       complete: () => {
-        this.chunkedState.next(p => p.filter(chunk => chunk !== last));
+        this.partialComponentListState.next(partialComponentList =>
+          partialComponentList.filter(
+            partialComponent => partialComponent !== last
+          )
+        );
       }
     });
-    return newSpawn;
+    return partialComponentState;
   }
 
   /**
    * Returns a current combined state
    */
   get() {
-    return this.solidState.get();
+    return this.mergedComponentsState.get();
   }
 
   /**
@@ -85,6 +103,6 @@ export class CombinedState {
    * @returns {Function}
    */
   subscribe(listener) {
-    return this.solidState.subscribe(listener);
+    return this.mergedComponentsState.subscribe(listener);
   }
 }

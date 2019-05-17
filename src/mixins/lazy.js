@@ -21,17 +21,39 @@ export const lazy = {
     return { visible: false };
   },
 
+  methods: {
+    updateVisibilityObservation() {
+      if (this.lazy) {
+        if (this.$el && !this.cancelVisibilityListener) {
+          this.cancelVisibilityListener = watchElementVisibility(
+            this.$el,
+            visible => {
+              this.visible = this.visible || visible;
+            }
+          );
+        }
+      } else {
+        this.visible = true;
+        if (this.cancelVisibilityListener) {
+          const { cancelVisibilityListener } = this;
+          this.cancelVisibilityListener = null;
+          cancelVisibilityListener();
+        }
+      }
+    }
+  },
+
   created() {
     this.markReadyCheck("lazy");
-    fix.call(this);
+    this.updateVisibilityObservation();
   },
 
   mounted() {
-    fix.call(this);
+    this.updateVisibilityObservation();
   },
 
   updated() {
-    fix.call(this);
+    this.updateVisibilityObservation();
   },
 
   destroyed() {
@@ -40,26 +62,6 @@ export const lazy = {
     }
   }
 };
-
-function fix() {
-  if (this.lazy) {
-    if (this.$el && !this.cancelVisibilityListener) {
-      this.cancelVisibilityListener = watchElementVisibility(
-        this.$el,
-        visible => {
-          this.visible = this.visible || visible;
-        }
-      );
-    }
-  } else {
-    this.visible = true;
-    if (this.cancelVisibilityListener) {
-      const { cancelVisibilityListener } = this;
-      this.cancelVisibilityListener = null;
-      cancelVisibilityListener();
-    }
-  }
-}
 
 function watchElementVisibility(element, listener) {
   if (typeof window === "object" && "IntersectionObserver" in window) {

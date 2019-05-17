@@ -3,9 +3,9 @@
  */
 export const cldChild = {
   inject: {
-    CldParentState: {
+    cldParentState: {
       default() {
-        return this.CldGlobalContextState ? this.CldGlobalContextState : null;
+        return this.CldGlobalContextState;
       }
     }
   }

@@ -1,5 +1,5 @@
 import { Transformation, Util, Configuration } from "cloudinary-core";
-import { formatObject, normalizeObject, pick, omit } from "../utils";
+import { formatObject, compact, pick, omit } from "../utils";
 
 /** List of all configuration fields as they are needed in components attributes */
 export const configuration = Configuration.CONFIG_PARAMS.map(Util.camelCase);
@@ -12,7 +12,7 @@ export const transformation = Transformation.PARAM_NAMES.map(
 /** Extract configuration options for provided object */
 export function normalizeConfiguration(cfg) {
   return Util.withSnakeCaseKeys(
-    formatObject(normalizeObject(pick(cfg, configuration)), {
+    formatObject(compact(pick(cfg, configuration)), {
       secure: v => (typeof v === "boolean" ? v : v === "true")
     })
   );
@@ -20,10 +20,10 @@ export function normalizeConfiguration(cfg) {
 
 /** Extract transformation options for provided object */
 export function normalizeTransformation(cfg) {
-  return Util.withSnakeCaseKeys(normalizeObject(pick(cfg, transformation)));
+  return Util.withSnakeCaseKeys(compact(pick(cfg, transformation)));
 }
 
 /** Extract fields that are not used for configuration nor transformation in provided object */
 export function normalizeRest(cfg) {
-  return normalizeObject(omit(cfg, transformation.concat(configuration)));
+  return compact(omit(cfg, transformation.concat(configuration)));
 }

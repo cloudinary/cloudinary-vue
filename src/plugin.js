@@ -47,25 +47,23 @@ function getUserComponentName(components, name) {
     return name;
   }
 
-  if (typeof components === "object") {
-    // { components: ['CldImage'] }
-    if (Array.isArray(components)) {
-      return components.indexOf(name) >= 0 ? name : null;
-    }
-    // { components: { CldImage: true } }
-    if (typeof components[name] === "boolean") {
-      return components[name] === true ? name : null;
-    }
-    // { components: { CldImage: 'CloudinaryImage' } }
-    if (typeof components[name] === "string") {
-      return components[name];
-    }
-    // { components: { CloudinaryImage: 'CldImage' } }
-    const keys = Object.keys(components);
-    const values = keys.map(key => components[key]);
-    if (values.indexOf(name) >= 0) {
-      return keys[values.indexOf(name)];
-    }
+  // { components: ['CldImage'] }
+  if (Array.isArray(components)) {
+    return components.indexOf(name) >= 0 ? name : null;
+  }
+  // { components: { CldImage: true } }
+  if (typeof components[name] === "boolean") {
+    return components[name] === true ? name : null;
+  }
+  // { components: { CldImage: 'CloudinaryImage' } }
+  if (typeof components[name] === "string") {
+    return components[name];
+  }
+  // { components: { CloudinaryImage: 'CldImage' } }
+  const keys = Object.keys(components);
+  const values = keys.map(key => components[key]);
+  if (values.indexOf(name) >= 0) {
+    return keys[values.indexOf(name)];
   }
 
   return null;

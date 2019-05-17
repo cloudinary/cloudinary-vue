@@ -10,7 +10,7 @@ export const cldAttrsSubmitting = {
   mixins: [cldAttrs, cldChild],
 
   created() {
-    if (!this.CldParentState) {
+    if (!this.cldParentState) {
       throw new Error(
         "This component has to have a Cloudinary parent that can receive it's attributes"
       );
@@ -18,21 +18,21 @@ export const cldAttrsSubmitting = {
 
     this.addReadyCheck("cldAttrsSubmitting");
 
-    this.submitter = this.CldParentState.spawn();
-    this.submitterSub = this.cldAttrsState.subscribe({
+    this.cldAttrsSubmittingSubmitter = this.cldParentState.spawn();
+    this.cldAttrsSubmittingSubmitterCancel = this.cldAttrsState.subscribe({
       next: v => {
-        this.submitter.next(v);
+        this.cldAttrsSubmittingSubmitter.next(v);
         this.markReadyCheck("cldAttrsSubmitting");
       }
     });
   },
 
   destroyed() {
-    if (this.submitterSub) {
-      this.submitterSub();
+    if (this.cldAttrsSubmittingSubmitterCancel) {
+      this.cldAttrsSubmittingSubmitterCancel();
     }
-    if (this.submitter) {
-      this.submitter.complete();
+    if (this.cldAttrsSubmittingSubmitter) {
+      this.cldAttrsSubmittingSubmitter.complete();
     }
   }
 };

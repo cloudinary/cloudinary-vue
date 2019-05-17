@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { normalizeObject, merge } from "../utils";
+import { compact, merge } from "../utils";
 import { cldAttrsSubmitting } from "../mixins/cldAttrsSubmitting";
 import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
 
@@ -26,11 +26,11 @@ export default {
     publicId: { type: String }
   },
   inject: {
-    CldParentState: { from: "CldPosterState" }
+    cldParentState: { from: "cldPosterState" }
   },
   computed: {
     attributes() {
-      return normalizeObject(
+      return compact(
         merge(
           {
             publicId: this.publicId

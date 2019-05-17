@@ -11,9 +11,8 @@ describe("CldImage", () => {
         template: `
           <cld-context cloudName="demo">
             <cld-image publicId="face_top">
-              <cld-transformation effect="sepia" >
-                <cld-transformation effect="blur" />
-              </cld-transformation>
+              <cld-transformation effect="sepia" />
+              <cld-transformation effect="blur" />
             </cld-image>
             <cld-transformation crop="scale" width="100" height="100" />
           </cld-context>          

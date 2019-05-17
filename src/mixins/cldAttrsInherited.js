@@ -11,9 +11,9 @@ export const cldAttrsInherited = {
   created() {
     this.addReadyCheck("cldAttrsOwned");
 
-    if (this.CldParentState) {
+    if (this.cldParentState) {
       this.contextState = this.cldAttrsState.spawn();
-      this.contextStateSub = this.CldParentState.subscribe({
+      this.contextStateSub = this.cldParentState.subscribe({
         next: v => {
           this.contextState.next(v);
           this.markReadyCheck("cldAttrsOwned");

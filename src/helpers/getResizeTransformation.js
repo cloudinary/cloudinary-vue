@@ -14,7 +14,7 @@ export function getResizeTransformation(mode, size, breakpoints) {
     fill: merge(
       getDPRAttr(),
       {
-        crop: "crop"
+        crop: "fill"
       },
       !size
         ? { width: 0, height: 0 }

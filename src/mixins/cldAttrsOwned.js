@@ -31,19 +31,21 @@ export const cldAttrsOwned = {
     }
   },
 
+  watch: {
+    cldAttributes(cldAttributes) {
+      const prev = this.ownState.get();
+      const current = cldAttributes;
+      if (!equal(prev, current)) {
+        this.ownState.next(current);
+      }
+    }
+  },
+
   created() {
     this.markReadyCheck("cldAttrsOwned");
 
     this.ownState = this.cldAttrsState.spawn();
     this.ownState.next(this.cldAttributes);
-  },
-
-  updated() {
-    const prev = this.ownState.get();
-    const current = this.cldAttributes;
-    if (!equal(prev, current)) {
-      this.ownState.next(current);
-    }
   },
 
   destroyed() {

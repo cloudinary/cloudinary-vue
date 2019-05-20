@@ -90,30 +90,37 @@ export default {
                 .concat("progressive")
             }
           : {},
-        this.responsive !== "none" && this.size
+        this.responsiveMode !== "none" && this.size
           ? {
               transformation: []
                 .concat(this.$attrs.transformation || [])
                 .concat(
                   getResizeTransformation(
-                    this.responsive,
+                    this.responsiveMode,
                     this.size,
                     evalBreakpoints(this.breakpoints)
                   )
                 )
+                .filter(i => !!i)
             }
           : {}
       );
     },
+    responsiveMode() {
+      if (this.responsive === "") {
+        return "width";
+      }
+      return this.responsive;
+    },
     shouldMeasureSize() {
-      return this.responsive !== "none";
+      return this.responsiveMode !== "none";
     },
     imageAttrs() {
       const className = {
         "cld-image": true,
-        "cld-fill": this.responsive === "fill",
-        "cld-fill-width": this.responsive === "width" || this.responsive === "",
-        "cld-fill-height": this.responsive === "height"
+        "cld-fill": this.responsiveMode === "fill",
+        "cld-fill-width": this.responsiveMode === "width",
+        "cld-fill-height": this.responsiveMode === "height"
       };
       if (
         !this.isReady ||

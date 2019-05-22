@@ -12,8 +12,6 @@ Cloudinary provides URL and HTTP based APIs that can be easily integrated with a
 
 This is a BETA version. Things are still due to changes.
 
-⚠️ SSR is not supported.
-
 ## Usage
 
 ### Installation
@@ -137,6 +135,11 @@ For example:
 #### CldPoster
 
 an optional `CldVideo` child element that will specify image resource to be provided to `poster` attribute of the `video` element.
+
+## ⚠️ Known Issues
+
+- SSR (Server-side rendering) is not currently supported.
+- If you want to work with the SDK in CodeSandbox, start with this Vue.js SDK CodeSandbox template.
 
 ## Additional resources
 

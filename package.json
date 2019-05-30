@@ -4,13 +4,17 @@
   "browser": "src/index.js",
   "main": "dist/Cloudinary.common.js",
   "unpkg": "dist/Cloudinary.umd.min.js",
+  "repository": {
+    "github": "https://github.com/cloudinary/cloudinary-vue"
+  },
+  "license": "MIT",
   "scripts": {
-    "build": "vue-cli-service lint --fix; npm run styleguide:build; npm run lib:build",
-    "lib:build": "vue-cli-service build --target lib --name Cloudinary src/index.js",
+    "build": "vue-cli-service lint --fix; npm run build:styleguide; npm run build:lib",
+    "build:lib": "vue-cli-service build --target lib --name Cloudinary src/index.js",
+    "build:styleguide": "rm -rf docs/*; node docs-sources/generateDocsLinks.js; vue-cli-service lint --fix; STYLEGUIDE=1 vue-styleguidist build",
     "lint": "vue-cli-service lint",
     "test": "vue-cli-service test:unit",
-    "styleguide": "node docs-sources/generateDocsLinks.js; vue-cli-service lint --fix; STYLEGUIDE=1 vue-styleguidist server",
-    "styleguide:build": "rm -rf docs/*; node docs-sources/generateDocsLinks.js; vue-cli-service lint --fix; STYLEGUIDE=1 vue-styleguidist build"
+    "styleguide": "node docs-sources/generateDocsLinks.js; vue-cli-service lint --fix; STYLEGUIDE=1 vue-styleguidist server"
   },
   "dependencies": {
     "cloudinary-core": "^2.6.3",

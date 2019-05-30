@@ -20,7 +20,7 @@ describe("CldImage::responsive=fill", () => {
 
     expect(wrapper.is("img")).toBe(true);
     expect(wrapper.attributes("src")).toEqual(
-      `http://res.cloudinary.com/demo/image/upload/c_crop,dpr_1.0,h_100,w_100/face_top`
+      `http://res.cloudinary.com/demo/image/upload/c_fill,dpr_1.0,h_100,w_100/face_top`
     );
   });
 });

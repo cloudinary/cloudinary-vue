@@ -266,18 +266,8 @@ if (typeof window !== 'undefined') {
 /* harmony default export */ var setPublicPath = (null);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/keys.js
-var object_keys = __webpack_require__("a4bb");
-var keys_default = /*#__PURE__*/__webpack_require__.n(object_keys);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js
-var is_array = __webpack_require__("a745");
-var is_array_default = /*#__PURE__*/__webpack_require__.n(is_array);
-
-// EXTERNAL MODULE: external "core-js/modules/es6.function.name"
-var es6_function_name_ = __webpack_require__("25fc");
-
-// EXTERNAL MODULE: external "core-js/modules/web.dom.iterable"
-var web_dom_iterable_ = __webpack_require__("80a8");
+var keys = __webpack_require__("a4bb");
+var keys_default = /*#__PURE__*/__webpack_require__.n(keys);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/symbol/iterator.js
 var iterator = __webpack_require__("5d58");
@@ -306,6 +296,16 @@ function typeof_typeof(obj) {
 
   return typeof_typeof(obj);
 }
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js
+var is_array = __webpack_require__("a745");
+var is_array_default = /*#__PURE__*/__webpack_require__.n(is_array);
+
+// EXTERNAL MODULE: external "core-js/modules/es6.function.name"
+var es6_function_name_ = __webpack_require__("25fc");
+
+// EXTERNAL MODULE: external "core-js/modules/web.dom.iterable"
+var web_dom_iterable_ = __webpack_require__("80a8");
+
 // CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/classCallCheck.js
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -680,22 +680,16 @@ function debounce(fn, timeout) {
 }
 // CONCATENATED MODULE: ./src/utils/find.js
 
-
 function find(subject, predicate) {
-  var result = null;
-
   if (!(subject instanceof Array)) {
     throw new Error("find 1st arg must be Array, is: ".concat(typeof_typeof(subject)));
   }
 
-  subject.forEach(function (i) {
-    if (!result && predicate(i)) {
-      result = {
-        value: i
-      };
+  for (var i = 0, l = subject.length; i < l; i++) {
+    if (predicate(subject[i])) {
+      return subject[i];
     }
-  });
-  return result ? result.value : undefined;
+  }
 }
 // CONCATENATED MODULE: ./src/utils/range.js
 /**
@@ -1309,7 +1303,7 @@ function normalizeComponent (
 
 /* normalize component */
 
-var component = normalizeComponent(
+var CldContext_component = normalizeComponent(
   components_CldContextvue_type_script_lang_js_,
   CldContextvue_type_template_id_2e44c574_render,
   staticRenderFns,
@@ -1320,7 +1314,7 @@ var component = normalizeComponent(
   
 )
 
-/* harmony default export */ var CldContext = (component.exports);
+/* harmony default export */ var CldContext = (CldContext_component.exports);
 // EXTERNAL MODULE: external "core-js/modules/es6.regexp.flags"
 var es6_regexp_flags_ = __webpack_require__("61d3");
 
@@ -2553,6 +2547,9 @@ var CldSource_component = normalizeComponent(
 
 
 
+
+
+var allComponents = [CldContext, CldImage, CldPoster, CldTransformation, CldVideo, CldPicture, CldSource];
 function install(Vue, options) {
   if (Vue.CldInstalled) {
     throw new Error("Cloudinary plugin already installed");
@@ -2560,7 +2557,7 @@ function install(Vue, options) {
 
   Vue.CldInstalled = true;
   options = options || {};
-  [CldContext, CldImage, CldPoster, CldTransformation, CldVideo, CldPicture, CldSource].forEach(function (component) {
+  allComponents.forEach(function (component) {
     var userComponentName = getUserComponentName(options.components, component.name);
 
     if (userComponentName != null) {
@@ -2579,34 +2576,42 @@ function getUserComponentName(components, name) {
   if (!components) {
     return name;
   } // { components: ['CldImage'] }
+  // and
+  // { components: [CldImage] }
 
 
   if (is_array_default()(components)) {
-    return components.indexOf(name) >= 0 ? name : null;
+    var entry = find(components, function (component) {
+      return typeof component === "string" && component === name || typeof_typeof(component) === "object" && component != null && component.name === name;
+    });
+
+    if (entry == null) {
+      return undefined;
+    }
+
+    if (typeof entry === "string") {
+      return entry;
+    }
+
+    return entry.name;
   } // { components: { CldImage: true } }
 
 
   if (typeof components[name] === "boolean") {
-    return components[name] === true ? name : null;
+    return components[name] === true ? name : undefined;
   } // { components: { CldImage: 'CloudinaryImage' } }
 
 
   if (typeof components[name] === "string") {
     return components[name];
   } // { components: { CloudinaryImage: 'CldImage' } }
+  // and
+  // { components: { CloudinaryImage: CldImage } }
 
 
-  var keys = keys_default()(components);
-
-  var values = keys.map(function (key) {
-    return components[key];
+  return find(keys_default()(components), function (k) {
+    return typeof components[k] === "string" && components[k] === name || typeof_typeof(components[k]) === "object" && components[k] != null && components[k].name === name;
   });
-
-  if (values.indexOf(name) >= 0) {
-    return keys[values.indexOf(name)];
-  }
-
-  return null;
 }
 // CONCATENATED MODULE: ./src/index.js
 

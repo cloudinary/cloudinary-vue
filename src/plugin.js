@@ -63,7 +63,7 @@ function getUserComponentName(components, name) {
           component.name === name)
     );
     if (entry == null) {
-      return undefined;
+      return null;
     }
     if (typeof entry === "string") {
       return entry;
@@ -72,7 +72,7 @@ function getUserComponentName(components, name) {
   }
   // { components: { CldImage: true } }
   if (typeof components[name] === "boolean") {
-    return components[name] === true ? name : undefined;
+    return components[name] === true ? name : null;
   }
   // { components: { CldImage: 'CloudinaryImage' } }
   if (typeof components[name] === "string") {
@@ -81,7 +81,7 @@ function getUserComponentName(components, name) {
   // { components: { CloudinaryImage: 'CldImage' } }
   // and
   // { components: { CloudinaryImage: CldImage } }
-  return find(
+  const found = find(
     Object.keys(components),
     k =>
       (typeof components[k] === "string" && components[k] === name) ||
@@ -89,4 +89,5 @@ function getUserComponentName(components, name) {
         components[k] != null &&
         components[k].name === name)
   );
+  return found === undefined ? null : found;
 }

@@ -1,4 +1,3 @@
-import Vue from "vue";
 import { mount } from "@vue/test-utils";
 import CldImage from "../../src/components/CldImage.vue";
 
@@ -15,8 +14,6 @@ describe("CldImage::responsive=height", () => {
     expect(wrapper.attributes("src")).toEqual(undefined);
 
     wrapper.vm.$children[0].size = { width: 100, height: 200 };
-    wrapper.vm.$children[0].markReadyCheck("size");
-    await Vue.nextTick();
 
     expect(wrapper.is("img")).toBe(true);
     expect(wrapper.attributes("src")).toEqual(

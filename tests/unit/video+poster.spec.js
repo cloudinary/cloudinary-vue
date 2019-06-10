@@ -1,4 +1,3 @@
-import Vue from "vue";
 import { mount } from "@vue/test-utils";
 import CldVideo from "../../src/components/CldVideo.vue";
 import CldPoster from "../../src/components/CldPoster.vue";
@@ -13,9 +12,6 @@ describe("CldPoster", () => {
       `,
       components: { CldVideo, CldPoster }
     });
-
-    await Vue.nextTick();
-
     expect(video.is("video")).toBe(true);
     expect(video.attributes("poster")).toBe(
       "http://res.cloudinary.com/demo/image/upload/small_dinosaur"

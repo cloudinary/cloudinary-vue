@@ -1,4 +1,3 @@
-import { ready } from "./ready";
 import { equal, pick, debounce } from "../utils";
 
 /**
@@ -7,8 +6,6 @@ import { equal, pick, debounce } from "../utils";
  * into components data
  */
 export const size = {
-  mixins: [ready],
-
   props: {},
 
   data() {
@@ -31,12 +28,10 @@ export const size = {
             const nextSize = pick(size, ["width", "height"]);
             if (!equal(currentSize, nextSize)) {
               this.size = nextSize;
-              this.markReadyCheck("size");
             }
           });
         }
       } else {
-        this.markReadyCheck("size");
         if (this.cancelSizeListener) {
           this.cancelSizeListener();
         }
@@ -45,7 +40,6 @@ export const size = {
   },
 
   created() {
-    this.addReadyCheck("size");
     this.updateSizeObservation.call();
   },
 

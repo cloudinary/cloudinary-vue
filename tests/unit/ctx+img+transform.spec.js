@@ -1,4 +1,3 @@
-import Vue from "vue";
 import { mount } from "@vue/test-utils";
 import CldTransformation from "../../src/components/CldTransformation.vue";
 import CldImage from "../../src/components/CldImage.vue";
@@ -22,11 +21,6 @@ describe("CldImage", () => {
         components: { CldTransformation, CldImage, CldContext }
       }
     );
-
-    expect(wrapper.contains("img")).toBe(true);
-    expect(wrapper.find("img").attributes("src")).toBe(undefined);
-
-    await Vue.nextTick();
 
     expect(wrapper.contains("img")).toBe(true);
     expect(wrapper.find("img").attributes("src")).toBe(

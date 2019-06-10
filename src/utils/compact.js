@@ -11,7 +11,7 @@ export function compact(subject) {
     }, []);
   }
   return Object.keys(subject).reduce((result, key) => {
-    if (subject[key] != null) {
+    if (subject[key] !== undefined) {
       result[key] = subject[key];
     }
     return result;

@@ -2,18 +2,17 @@
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, range } from "../utils";
 import { findInTransformations } from "../helpers/findInTransformations";
-import { normalizeRest } from "../helpers/attributes";
+import { normalizeRest, normalizeTransformation } from "../helpers/attributes";
 import { evalBreakpoints } from "../helpers/evalBreakpoints";
 import { getResizeTransformation } from "../helpers/getResizeTransformation";
 import { getPlaceholderURL } from "../helpers/getPlaceholderURL";
 import { combineOptions } from "../helpers/combineOptions";
 
-import { ready } from "../mixins/ready";
 import { size } from "../mixins/size";
-import { mounted } from "../mixins/mounted";
-import { cldAttrsInherited } from "../mixins/cldAttrsInherited";
-import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
 import { lazy } from "../mixins/lazy";
+import { rejectTransformations } from "../helpers/rejectTransformations";
+import { extractOptions } from "../helpers/extractOptions";
+import { inContext } from "../mixins/inContext";
 
 /**
  * Deliver images and specify image transformations using the cld-image (CldImage) component,
@@ -30,11 +29,19 @@ import { lazy } from "../mixins/lazy";
  */
 export default {
   name: "CldImage",
+
   inheritAttrs: false,
-  mixins: [ready, size, mounted, lazy, cldAttrsInherited, cldAttrsOwned],
+
+  mixins: [size, lazy, inContext],
+
   render(h) {
-    return h("img", this.imageAttrs, this.$slots.default);
+    return h(
+      "img",
+      this.imageAttrs,
+      rejectTransformations(this.$slots.default)
+    );
   },
+
   props: {
     /**
      * The unique identifier of an uploaded image.
@@ -79,42 +86,8 @@ export default {
       default: () => range(100, 4000, 100)
     }
   },
+
   computed: {
-    attributes() {
-      return merge(
-        this.$attrs,
-        this.progressive == true
-          ? {
-              flags: []
-                .concat(this.$attrs.flags ? this.$attrs.flags : [])
-                .concat("progressive")
-            }
-          : {},
-        this.responsiveMode !== "none" && this.size
-          ? {
-              transformation: []
-                .concat(this.$attrs.transformation || [])
-                .concat(
-                  getResizeTransformation(
-                    this.responsiveMode,
-                    this.size,
-                    evalBreakpoints(this.breakpoints)
-                  )
-                )
-                .filter(i => !!i)
-            }
-          : {}
-      );
-    },
-    responsiveMode() {
-      if (this.responsive === "") {
-        return "width";
-      }
-      return this.responsive;
-    },
-    shouldMeasureSize() {
-      return this.responsiveMode !== "none";
-    },
     imageAttrs() {
       const className = {
         "cld-image": true
@@ -139,12 +112,12 @@ export default {
         }[responsiveMode] || {};
 
       if (
-        !this.isReady ||
         !this.publicId ||
         !!findInTransformations(
-          this.cldAttrs.transformation,
+          this.options.transformation,
           t => t.width === 0 || t.height === 0
-        )
+        ) ||
+        (this.responsiveMode !== "none" && !this.size)
       ) {
         return {
           class: className,
@@ -161,7 +134,7 @@ export default {
                 src:
                   getPlaceholderURL(
                     this.placeholder,
-                    combineOptions({ publicId: this.publicId }, this.cldAttrs)
+                    combineOptions({ publicId: this.publicId }, this.options)
                   ) || this.placeholder
               }
             : {}
@@ -169,11 +142,27 @@ export default {
       }
 
       const htmlAttrs = Transformation.new(
-        this.cldAttrs.transformation
+        this.options.transformation
       ).toHtmlAttributes();
-      const src = Cloudinary.new(this.cldAttrs.configuration).url(
+      const src = Cloudinary.new(this.options.configuration).url(
         this.publicId,
-        this.cldAttrs
+        combineOptions(
+          this.options,
+          this.progressive
+            ? { transformation: { flags: ["progressive"] } }
+            : {},
+          this.responsiveMode !== "none" && this.size
+            ? {
+                transformation: normalizeTransformation(
+                  getResizeTransformation(
+                    this.responsiveMode,
+                    this.size,
+                    evalBreakpoints(this.breakpoints)
+                  )
+                )
+              }
+            : {}
+        )
       );
 
       return {
@@ -189,6 +178,23 @@ export default {
             : {}
         )
       };
+    },
+
+    shouldMeasureSize() {
+      return this.responsiveMode !== "none";
+    },
+
+    responsiveMode() {
+      if (this.responsive === "") {
+        return "width";
+      }
+      return this.responsive;
+    },
+
+    options() {
+      const ownOptions = extractOptions(this.$attrs, this.$slots.default);
+      const { parentOptions } = this;
+      return combineOptions(parentOptions, ownOptions);
     }
   }
 };

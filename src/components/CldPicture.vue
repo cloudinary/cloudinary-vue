@@ -2,12 +2,13 @@
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, omit } from "../utils";
 import { normalizeTransformation, normalizeRest } from "../helpers/attributes";
-import { combineTransformationComponents } from "../helpers/combineOptions";
+import {
+  combineTransformationComponents,
+  combineOptions
+} from "../helpers/combineOptions";
 
-import { ready } from "../mixins/ready";
-import { mounted } from "../mixins/mounted";
-import { cldAttrsInherited } from "../mixins/cldAttrsInherited";
-import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
+import { rejectTransformations } from "../helpers/rejectTransformations";
+import { extractOptions } from "../helpers/extractOptions";
 
 /**
  * Generates a `picture` tag including the URL sources for the main formats
@@ -17,8 +18,9 @@ import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
  */
 export default {
   name: "CldPicture",
+
   inheritAttrs: false,
-  mixins: [ready, mounted, cldAttrsInherited, cldAttrsOwned],
+
   render(h) {
     return h(
       "picture",
@@ -26,9 +28,10 @@ export default {
       this.sourcesAttrs
         .map(attrs => h("source", { key: attrs.mimeType, attrs }))
         .concat(h("img", merge({ key: "img" }, this.imageOptions)))
-        .concat(this.$slots.default)
+        .concat(rejectTransformations(this.$slots.default))
     );
   },
+
   props: {
     /**
      * The unique identifier of an uploaded image.
@@ -54,18 +57,15 @@ export default {
       }
     }
   },
+
   computed: {
     pictureOptions() {
       const className = {
         "cld-picture": true
       };
 
-      if (!this.isReady) {
-        return { class: className };
-      }
-
       const htmlAttrs = Transformation.new(
-        this.cldAttrs.transformation
+        this.options.transformation
       ).toHtmlAttributes();
 
       return {
@@ -79,12 +79,8 @@ export default {
         "cld-picture_image": true
       };
 
-      if (!this.isReady) {
-        return { class: className };
-      }
-
       const htmlAttrs = Transformation.new(
-        this.cldAttrs.transformation
+        this.options.transformation
       ).toHtmlAttributes();
 
       return {
@@ -94,9 +90,9 @@ export default {
           htmlAttrs.height ? { height: htmlAttrs.height } : null,
           this.publicId
             ? {
-                src: Cloudinary.new(this.cldAttrs.configuration).url(
+                src: Cloudinary.new(this.options.configuration).url(
                   this.publicId,
-                  this.cldAttrs.transformation
+                  this.options.transformation
                 )
               }
             : {},
@@ -106,22 +102,18 @@ export default {
     },
 
     sourcesAttrs() {
-      if (!this.isReady) {
-        return [];
-      }
-
       return this.sources.map(sourceConfig => {
         const transformation = combineTransformationComponents(
           sourceConfig.transformation
             ? normalizeTransformation(sourceConfig.transformation)
-            : this.cldAttrs.transformation
+            : this.options.transformation
         );
 
         const htmlAttrs = normalizeRest(
           omit(sourceConfig, ["max_width", "min_width"])
         );
 
-        const srcset = Cloudinary.new(this.cldAttrs.configuration).url(
+        const srcset = Cloudinary.new(this.options.configuration).url(
           this.publicId,
           transformation
         );
@@ -148,6 +140,12 @@ export default {
           media ? { media } : {}
         );
       });
+    },
+
+    options() {
+      const ownOptions = extractOptions(this.$attrs, this.$slots.default);
+      const { parentOptions } = this;
+      return combineOptions(parentOptions, ownOptions);
     }
   }
 };

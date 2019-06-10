@@ -2,7 +2,6 @@
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, kv, find } from "../utils";
 import { findInTransformations } from "../helpers/findInTransformations";
-import { CombinedState } from "../reactive/CombinedState";
 import {
   normalizeTransformation,
   normalizeConfiguration,
@@ -12,12 +11,11 @@ import {
   combineOptions,
   combineTransformationComponents
 } from "../helpers/combineOptions";
-
-import { ready } from "../mixins/ready";
-import { mounted } from "../mixins/mounted";
 import { lazy } from "../mixins/lazy";
-import { cldAttrsInherited } from "../mixins/cldAttrsInherited";
-import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
+import { inContext } from "../mixins/inContext";
+import { rejectTransformations } from "../helpers/rejectTransformations";
+import { extractOptions } from "../helpers/extractOptions";
+import CldPoster from "./CldPoster";
 
 /**
  * Deliver videos and specify video transformations using the `cld-video` (CldVideo) element,
@@ -37,17 +35,21 @@ import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
  */
 export default {
   name: "CldVideo",
+
   inheritAttrs: false,
-  mixins: [ready, mounted, lazy, cldAttrsInherited, cldAttrsOwned],
+
+  mixins: [inContext, lazy],
+
   render(h) {
     return h(
       "video",
       this.videoAttrs,
       this.sources
         .map(attrs => h("source", { key: attrs.mimeType, attrs }))
-        .concat(this.$slots.default)
+        .concat(rejectTransformations(this.$slots.default))
     );
   },
+
   props: {
     /**
      * The unique identifier of an uploaded video.
@@ -69,18 +71,7 @@ export default {
       }
     }
   },
-  provide() {
-    return {
-      cldPosterState: this.posterCombinedState
-    };
-  },
-  data() {
-    const posterCombinedState = new CombinedState(combineOptions);
-    return {
-      posterCombinedState,
-      posterCldAttrs: null
-    };
-  },
+
   computed: {
     videoAttrs() {
       const className = {
@@ -88,10 +79,9 @@ export default {
       };
 
       if (
-        !this.isReady ||
         !this.publicId ||
         !!findInTransformations(
-          this.cldAttrs.transformation,
+          this.options.transformation,
           t => t.width === 0 || t.height === 0
         )
       ) {
@@ -109,7 +99,7 @@ export default {
               )
             }
           : {},
-        Transformation.new(this.cldAttrs.transformation).toHtmlAttributes()
+        Transformation.new(this.options.transformation).toHtmlAttributes()
       );
 
       return {
@@ -119,7 +109,7 @@ export default {
     },
 
     sources() {
-      if (!this.isReady || !this.publicId) {
+      if (!this.publicId) {
         return [];
       }
 
@@ -129,11 +119,11 @@ export default {
 
       return Object.keys(this.sourceTypes).map(srcType => {
         const configuration = merge(
-          this.cldAttrs.configuration,
+          this.options.configuration,
           normalizeConfiguration(this.sourceTypes[srcType] || {})
         );
         const transformation = combineTransformationComponents(
-          this.cldAttrs.transformation,
+          this.options.transformation,
           normalizeTransformation(this.sourceTypes[srcType] || {})
         );
         const htmlAttrs = normalizeRest(this.sourceTypes[srcType] || {});
@@ -157,7 +147,7 @@ export default {
     posterOptions() {
       const ownPosterAttrs = combineOptions(
         {
-          configuration: this.cldAttrs.configuration
+          configuration: this.options.configuration
         },
         {
           publicId:
@@ -184,25 +174,36 @@ export default {
         ownPosterAttrs.transformation.format = "jpeg";
       }
 
-      const extPosterAttrs = this.posterCldAttrs
+      const posterChild = find(
+        this.$slots.default || [],
+        child =>
+          child.componentOptions &&
+          child.componentOptions.Ctor.options.render === CldPoster.render
+      );
+      const extPosterAttrs = posterChild
         ? combineOptions(
+            { configuration: this.parentOptions.configuration },
             {
-              publicId: this.publicId,
-              configuration: this.cldAttrs.configuration
+              configuration: this.options.configuration,
+              publicId: this.publicId
             },
-            this.posterCldAttrs
+            extractOptions(
+              merge(posterChild.data.props, posterChild.data.attrs),
+              posterChild.componentOptions.children
+            ),
+            {
+              transformation: (posterChild.data.attrs || {}).publicId
+                ? { resource_type: "image" }
+                : {
+                    resource_type: "video",
+                    format: "jpeg"
+                  }
+            }
           )
         : {};
-      extPosterAttrs.transformation = extPosterAttrs.transformation || {};
-      if ((this.posterCldAttrs || {}).publicId) {
-        extPosterAttrs.transformation.resource_type = "image";
-      } else {
-        extPosterAttrs.transformation.resource_type = "video";
-        extPosterAttrs.transformation.format = "jpeg";
-      }
 
       const defaultPoster = merge(
-        combineOptions({ publicId: this.publicId }, this.cldAttrs),
+        combineOptions({ publicId: this.publicId }, this.options),
         {
           transformation: {
             resource_type: "video",
@@ -215,19 +216,13 @@ export default {
         [extPosterAttrs, ownPosterAttrs, defaultPoster],
         options => options.publicId
       );
+    },
+
+    options() {
+      const ownOptions = extractOptions(this.$attrs, this.$slots.default);
+      const { parentOptions } = this;
+      return combineOptions(parentOptions, ownOptions);
     }
-  },
-  created() {
-    this.posterCombinedStateSub = this.posterCombinedState.subscribe({
-      next: v => {
-        if (Object.keys(v).length) {
-          this.posterCldAttrs = v;
-        }
-      }
-    });
-  },
-  destroyed() {
-    this.posterCombinedStateSub();
   }
 };
 </script>

@@ -1,12 +1,8 @@
-import { ready } from "./ready";
-
 /**
  * If necessary watches for root elements visibility
  * and posts the result to components data
  */
 export const lazy = {
-  mixins: [ready],
-
   props: {
     /**
      * Whether to only load the asset when it needs to be displayed instead of when the page first loads.
@@ -44,7 +40,6 @@ export const lazy = {
   },
 
   created() {
-    this.markReadyCheck("lazy");
     this.updateVisibilityObservation();
   },
 

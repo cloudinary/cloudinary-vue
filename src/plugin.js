@@ -39,7 +39,7 @@ export function install(Vue, options) {
   });
 
   if (options.configuration) {
-    Vue.prototype.CldGlobalContextState = new State({
+    Vue.prototype.cldGlobalContextState = new State({
       configuration: normalizeConfiguration(options.configuration)
     });
   }

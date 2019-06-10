@@ -1,10 +1,10 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
-import { ready } from "../mixins/ready";
-import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
-import { cldAttrsInherited } from "../mixins/cldAttrsInherited";
 import { omit, merge } from "../utils";
 import { normalizeRest } from "../helpers/attributes";
+import { extractOptions } from "../helpers/extractOptions";
+import { rejectTransformations } from "../helpers/rejectTransformations";
+import { combineOptions } from "../helpers/combineOptions";
 
 /**
  *
@@ -13,10 +13,17 @@ import { normalizeRest } from "../helpers/attributes";
  */
 export default {
   name: "CldSource",
+
   inheritAttrs: false,
+
   render(h) {
-    return h("source", this.sourceOptions, this.$slots.default);
+    return h(
+      "source",
+      this.sourceOptions,
+      rejectTransformations(this.$slots.default)
+    );
   },
+
   props: {
     /**
      * The unique identifier of an uploaded image.
@@ -27,15 +34,11 @@ export default {
     //  */
     // media: { type: String, default: "all" }
   },
-  mixins: [ready, cldAttrsInherited, cldAttrsOwned],
+
   computed: {
     sourceOptions() {
-      if (!this.isReady) {
-        return normalizeRest(this.$attrs);
-      }
-
       const htmlAttrs = Transformation.new(
-        this.cldAttrs.transformation
+        this.options.transformation
       ).toHtmlAttributes();
 
       return {
@@ -45,14 +48,20 @@ export default {
           omit(htmlAttrs, ["width", "height"]),
           this.publicId
             ? {
-                srcset: Cloudinary.new(this.cldAttrs.configuration).url(
+                srcset: Cloudinary.new(this.options.configuration).url(
                   this.publicId,
-                  this.cldAttrs.transformation
+                  this.options.transformation
                 )
               }
             : null
         )
       };
+    },
+
+    options() {
+      const ownOptions = extractOptions(this.$attrs, this.$slots.default);
+      const { parentOptions } = this;
+      return combineOptions(parentOptions, ownOptions);
     }
   }
 };

@@ -2,17 +2,32 @@
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, range } from "../utils";
 import { findInTransformations } from "../helpers/findInTransformations";
-import { normalizeRest, normalizeTransformation } from "../helpers/attributes";
+import { normalizeRest } from "../helpers/attributes";
 import { evalBreakpoints } from "../helpers/evalBreakpoints";
 import { getResizeTransformation } from "../helpers/getResizeTransformation";
 import { getPlaceholderURL } from "../helpers/getPlaceholderURL";
-import { combineOptions } from "../helpers/combineOptions";
 
 import { size } from "../mixins/size";
 import { lazy } from "../mixins/lazy";
 import { rejectTransformations } from "../helpers/rejectTransformations";
-import { extractOptions } from "../helpers/extractOptions";
-import { inContext } from "../mixins/inContext";
+import { withOptions } from "../mixins/withOptions";
+
+const responsiveStylesByMode = {
+  height: {
+    display: "block",
+    height: "100%",
+    width: "auto"
+  },
+  width: {
+    display: "block",
+    width: "100%"
+  },
+  fill: {
+    display: "block",
+    width: "100%",
+    height: "100%"
+  }
+};
 
 /**
  * Deliver images and specify image transformations using the cld-image (CldImage) component,
@@ -32,7 +47,7 @@ export default {
 
   inheritAttrs: false,
 
-  mixins: [size, lazy, inContext],
+  mixins: [size, lazy, withOptions],
 
   render(h) {
     return h(
@@ -92,77 +107,58 @@ export default {
       const className = {
         "cld-image": true
       };
-      const responsiveMode = this.responsive === "" ? "width" : this.responsive;
-      const responsiveStyle =
-        {
-          height: {
-            display: "block",
-            height: "100%",
-            width: "auto"
-          },
-          width: {
-            display: "block",
-            width: "100%"
-          },
-          fill: {
-            display: "block",
-            width: "100%",
-            height: "100%"
-          }
-        }[responsiveMode] || {};
+      const responsiveStyle = responsiveStylesByMode[this.responsiveMode] || {};
 
       if (
         !this.publicId ||
         !!findInTransformations(
-          this.options.transformation,
+          this.transformation,
           t => t.width === 0 || t.height === 0
         ) ||
         (this.responsiveMode !== "none" && !this.size)
       ) {
         return {
           class: className,
-          style: responsiveStyle
+          style: responsiveStyle,
+          attrs: normalizeRest(this.$attrs)
         };
       }
 
       if (this.lazy && !this.visible) {
+        const src = getPlaceholderURL(
+          this.placeholder,
+          this.publicId,
+          this.configuration,
+          this.transformation
+        );
         return {
           class: className,
           style: responsiveStyle,
-          attrs: this.placeholder
-            ? {
-                src:
-                  getPlaceholderURL(
-                    this.placeholder,
-                    combineOptions({ publicId: this.publicId }, this.options)
-                  ) || this.placeholder
-              }
-            : {}
+          attrs: merge(normalizeRest(this.$attrs), src ? { src } : {})
         };
       }
 
       const htmlAttrs = Transformation.new(
-        this.options.transformation
+        this.transformation
       ).toHtmlAttributes();
-      const src = Cloudinary.new(this.options.configuration).url(
+
+      const src = Cloudinary.new(this.configuration).url(
         this.publicId,
-        combineOptions(
-          this.options,
-          this.progressive
-            ? { transformation: { flags: ["progressive"] } }
-            : {},
-          this.responsiveMode !== "none" && this.size
-            ? {
-                transformation: normalizeTransformation(
+        merge(this.transformation, {
+          transformation: [
+            ...(this.transformation.transformation || []),
+            ...(this.responsiveMode !== "none" && this.size
+              ? [
                   getResizeTransformation(
                     this.responsiveMode,
                     this.size,
                     evalBreakpoints(this.breakpoints)
                   )
-                )
-              }
-            : {}
-        )
+                ]
+              : []),
+            ...(this.progressive ? [{ flags: ["progressive"] }] : [])
+          ]
+        })
       );
 
       return {
@@ -189,12 +185,6 @@ export default {
         return "width";
       }
       return this.responsive;
-    },
-
-    options() {
-      const ownOptions = extractOptions(this.$attrs, this.$slots.default);
-      const { parentOptions } = this;
-      return combineOptions(parentOptions, ownOptions);
     }
   }
 };

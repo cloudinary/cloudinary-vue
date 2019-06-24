@@ -1,10 +1,8 @@
 <script>
 import { normalizeRest } from "../helpers/attributes";
-import { extractOptions } from "../helpers/extractOptions";
 import { rejectTransformations } from "../helpers/rejectTransformations";
-import { combineOptions } from "../helpers/combineOptions";
 import { State } from "../reactive/State";
-import { inContext } from "../mixins/inContext";
+import { withOptions } from "../mixins/withOptions";
 
 /**
  * Cloudinary context providing element
@@ -14,54 +12,45 @@ export default {
 
   inheritAttrs: false,
 
-  mixins: [inContext],
+  mixins: [withOptions],
 
   provide() {
     return {
-      cldParentState: this.cldAttrsState
+      cldOptionsState: this.nextCldOptionsState
     };
   },
 
   render(h) {
     return h(
       "div",
-      { class: { "cld-context": true }, attrs: this.htmlAttributes },
+      { class: { "cld-context": true }, attrs: normalizeRest(this.$attrs) },
       rejectTransformations(this.$slots.default)
     );
   },
 
-  props: {},
-
   data() {
-    return { cldAttrsState: new State({}) };
+    return { nextCldOptionsState: new State({}) };
   },
 
-  computed: {
-    htmlAttributes() {
-      return normalizeRest(this.$attrs);
+  methods: {
+    postOptions() {
+      this.nextCldOptionsState.next({
+        configuration: this.configuration,
+        transformations: this.childTransformations
+      });
     }
   },
 
   created() {
-    this.cldAttrsState.next(
-      combineOptions(
-        this.parentOptions,
-        extractOptions(this.$attrs, this.$slots.default)
-      )
-    );
+    this.postOptions();
   },
 
   updated() {
-    this.cldAttrsState.next(
-      combineOptions(
-        this.parentOptions,
-        extractOptions(this.$attrs, this.$slots.default)
-      )
-    );
+    this.postOptions();
   },
 
   destroyed() {
-    this.cldAttrsState.complete();
+    this.nextCldOptionsState.complete();
   }
 };
 </script>

@@ -3,7 +3,7 @@ import CldPoster from "../components/CldPoster";
 
 export function rejectTransformations(slot) {
   return slot == null
-    ? null
+    ? []
     : slot.filter(
         child =>
           !(

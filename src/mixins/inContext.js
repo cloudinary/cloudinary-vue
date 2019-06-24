@@ -1,6 +1,11 @@
+/**
+ * This ensures injection of inherited configuration
+ * and application of updates of those
+ * either from parent CldContext or plugin options
+ */
 export const inContext = {
   inject: {
-    cldParentState: {
+    cldOptionsState: {
       default() {
         return this.cldGlobalContextState;
       }
@@ -8,22 +13,22 @@ export const inContext = {
   },
 
   data() {
-    return { parentOptions: {} };
+    return { cldOptions: {} };
   },
 
   created() {
-    if (this.cldParentState) {
-      this.cldParentStateSubCancel = this.cldParentState.subscribe({
+    if (this.cldOptionsState) {
+      this.cldOptionsStateSubCancel = this.cldOptionsState.subscribe({
         next: options => {
-          this.parentOptions = options;
+          this.cldOptions = options;
         }
       });
     }
   },
 
   destroyed() {
-    if (this.cldParentStateSubCancel) {
-      this.cldParentStateSubCancel();
+    if (this.cldOptionsStateSubCancel) {
+      this.cldOptionsStateSubCancel();
     }
   }
 };

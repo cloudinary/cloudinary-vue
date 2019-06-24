@@ -5,9 +5,7 @@ import { formatObject, compact, pick, omit } from "../utils";
 export const configuration = Configuration.CONFIG_PARAMS.map(Util.camelCase);
 
 /** List of all transformation fields as they are needed in components attributes */
-export const transformation = Transformation.PARAM_NAMES.map(
-  Util.camelCase
-).filter(name => configuration.indexOf(name) < 0);
+export const transformation = Transformation.methods;
 
 /** Extract configuration options for provided object */
 export function normalizeConfiguration(cfg) {

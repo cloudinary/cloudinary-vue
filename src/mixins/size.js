@@ -40,15 +40,15 @@ export const size = {
   },
 
   created() {
-    this.updateSizeObservation.call();
+    this.updateSizeObservation();
   },
 
   updated() {
-    this.updateSizeObservation.call();
+    this.updateSizeObservation();
   },
 
   mounted() {
-    this.updateSizeObservation.call();
+    this.updateSizeObservation();
   },
 
   destroyed() {

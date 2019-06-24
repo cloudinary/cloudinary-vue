@@ -11,7 +11,7 @@ describe("CldPicture", () => {
             cloudName="demo" publicId="face_top"
             :sources="[
                 { max_width: 600, transformation: { effect: 'e1' } },
-                { min_width: '60vw', transformation: { effect: 'e2' } },
+                { min_width: '60vw', max_width: 600, transformation: { effect: 'e2' } },
                 { transformation: { effect: 'e3' } },
             ]"
         />
@@ -29,9 +29,9 @@ describe("CldPicture", () => {
     expect(sourcesOfPicture(picture)).toEqual({
       "(max-width: 600px)":
         "http://res.cloudinary.com/demo/image/upload/e_e1/face_top",
-      "(min-width: 60vw)":
+      "(min-width: 60vw) and (max-width: 600px)":
         "http://res.cloudinary.com/demo/image/upload/e_e2/face_top",
-      all: "http://res.cloudinary.com/demo/image/upload/e_e3/face_top"
+      "": "http://res.cloudinary.com/demo/image/upload/e_e3/face_top"
     });
   });
 });

@@ -7,15 +7,11 @@ import {
   normalizeConfiguration,
   normalizeRest
 } from "../helpers/attributes";
-import {
-  combineOptions,
-  combineTransformationComponents
-} from "../helpers/combineOptions";
 import { lazy } from "../mixins/lazy";
-import { inContext } from "../mixins/inContext";
+import { withOptions } from "../mixins/withOptions";
 import { rejectTransformations } from "../helpers/rejectTransformations";
-import { extractOptions } from "../helpers/extractOptions";
 import CldPoster from "./CldPoster";
+import CldTransformation from "./CldTransformation";
 
 /**
  * Deliver videos and specify video transformations using the `cld-video` (CldVideo) element,
@@ -38,7 +34,7 @@ export default {
 
   inheritAttrs: false,
 
-  mixins: [inContext, lazy],
+  mixins: [lazy, withOptions],
 
   render(h) {
     return h(
@@ -64,9 +60,10 @@ export default {
     sourceTypes: {
       type: Object,
       default() {
-        return merge.apply(
-          this,
-          Cloudinary.DEFAULT_VIDEO_PARAMS.source_types.map(type => kv(type, {}))
+        return merge(
+          ...Cloudinary.DEFAULT_VIDEO_PARAMS.source_types.map(type =>
+            kv(type, {})
+          )
         );
       }
     }
@@ -81,7 +78,7 @@ export default {
       if (
         !this.publicId ||
         !!findInTransformations(
-          this.options.transformation,
+          this.transformation,
           t => t.width === 0 || t.height === 0
         )
       ) {
@@ -89,17 +86,8 @@ export default {
       }
 
       const htmlAttrs = merge(
-        typeof this.$attrs.poster === "string"
-          ? { poster: this.$attrs.poster }
-          : this.posterOptions
-          ? {
-              poster: Cloudinary.new(this.posterOptions.configuration).url(
-                this.posterOptions.publicId,
-                this.posterOptions.transformation
-              )
-            }
-          : {},
-        Transformation.new(this.options.transformation).toHtmlAttributes()
+        { poster: this.poster },
+        Transformation.new(this.transformation).toHtmlAttributes()
       );
 
       return {
@@ -109,24 +97,28 @@ export default {
     },
 
     sources() {
-      if (!this.publicId) {
-        return [];
-      }
-
-      if (this.lazy && !this.visible) {
+      if (!this.publicId || (this.lazy && !this.visible)) {
         return [];
       }
 
       return Object.keys(this.sourceTypes).map(srcType => {
         const configuration = merge(
-          this.options.configuration,
+          this.configuration,
           normalizeConfiguration(this.sourceTypes[srcType] || {})
         );
-        const transformation = combineTransformationComponents(
-          this.options.transformation,
-          normalizeTransformation(this.sourceTypes[srcType] || {})
-        );
-        const htmlAttrs = normalizeRest(this.sourceTypes[srcType] || {});
+        const videoChainedTransformation =
+          this.transformation.transformation || [];
+        const sourceTypeChainedTransformation = Array.isArray(
+          this.sourceTypes[srcType]
+        )
+          ? this.sourceTypes[srcType].map(normalizeTransformation)
+          : [normalizeTransformation(this.sourceTypes[srcType] || {})];
+        const transformation = merge(this.transformation, {
+          transformation: [
+            ...videoChainedTransformation,
+            ...sourceTypeChainedTransformation
+          ]
+        });
 
         const src = Cloudinary.new(configuration).url(
           this.publicId,
@@ -140,88 +132,114 @@ export default {
         );
         const mimeType = "video/" + (srcType === "ogv" ? "ogg" : srcType);
 
+        const htmlAttrs = normalizeRest(this.sourceTypes[srcType] || {});
+
         return merge(htmlAttrs, { mimeType, src });
       });
     },
 
-    posterOptions() {
-      const ownPosterAttrs = combineOptions(
-        {
-          configuration: this.options.configuration
-        },
-        {
-          publicId:
-            typeof this.$attrs.poster === "object"
-              ? (this.$attrs.poster || {}).publicId
-              : null,
-          configuration: normalizeConfiguration(
-            typeof this.$attrs.poster === "object" && this.$attrs.poster
-              ? this.$attrs.poster
-              : {}
-          ),
-          transformation: normalizeTransformation(
-            typeof this.$attrs.poster === "object" && this.$attrs.poster
-              ? this.$attrs.poster
-              : {}
-          )
-        }
-      );
-      ownPosterAttrs.transformation = ownPosterAttrs.transformation || {};
-      if ((this.$attrs.poster || {}).publicId) {
-        ownPosterAttrs.transformation.resource_type = "image";
-      } else {
-        ownPosterAttrs.transformation.resource_type = "video";
-        ownPosterAttrs.transformation.format = "jpeg";
+    poster() {
+      // <cld-video poster="url" />
+      if (this.$attrs.poster && typeof this.$attrs.poster === "string") {
+        return this.$attrs.poster;
       }
 
-      const posterChild = find(
-        this.$slots.default || [],
-        child =>
-          child.componentOptions &&
-          child.componentOptions.Ctor.options.render === CldPoster.render
-      );
-      const extPosterAttrs = posterChild
-        ? combineOptions(
-            { configuration: this.parentOptions.configuration },
+      // <cld-video :poster="{publicId:'x'}" />
+      if (this.$attrs.poster && typeof this.$attrs.poster === "object") {
+        return Cloudinary.new(
+          merge(this.configuration, normalizeConfiguration(this.$attrs.poster))
+        ).url(
+          this.$attrs.poster.publicId || this.publicId,
+          merge(
+            this.$attrs.poster.publicId
+              ? {
+                  resource_type: "image"
+                }
+              : {
+                  resource_type: "video",
+                  format: "jpeg"
+                },
+            this.transformation,
             {
-              configuration: this.options.configuration,
-              publicId: this.publicId
-            },
-            extractOptions(
-              merge(posterChild.data.props, posterChild.data.attrs),
-              posterChild.componentOptions.children
-            ),
-            {
-              transformation: (posterChild.data.attrs || {}).publicId
-                ? { resource_type: "image" }
-                : {
-                    resource_type: "video",
-                    format: "jpeg"
-                  }
+              transformation: [
+                ...(this.transformation.transformation
+                  ? this.transformation.transformation
+                  : []),
+                ...(Array.isArray(this.$attrs.poster)
+                  ? this.$attrs.poster
+                  : [this.$attrs.poster]
+                ).map(normalizeTransformation)
+              ]
             }
           )
-        : {};
+        );
+      }
 
-      const defaultPoster = merge(
-        combineOptions({ publicId: this.publicId }, this.options),
-        {
-          transformation: {
+      // <cld-video> <cld-poster publicId="x" /> </cld-video>
+      const posterChild = this.$slots.default
+        ? find(
+            this.$slots.default,
+            child =>
+              child.componentOptions &&
+              child.componentOptions.Ctor.options.render === CldPoster.render
+          )
+        : null;
+      if (posterChild) {
+        const posterAttrs = normalizeTransformation(
+          (posterChild.data && posterChild.data.attrs) || {}
+        );
+        const posterId = ((posterChild.data && posterChild.data.attrs) || {})
+          .publicId;
+
+        const posterTransformations = (
+          posterChild.componentOptions.children || []
+        ).filter(
+          child =>
+            child.componentOptions &&
+            child.componentOptions.Ctor.options.render ===
+              CldTransformation.render
+        );
+        return Cloudinary.new(
+          merge(this.configuration, normalizeConfiguration(posterAttrs))
+        ).url(
+          posterId || this.publicId,
+          merge(
+            posterId
+              ? {
+                  resource_type: "image"
+                }
+              : {
+                  resource_type: "video",
+                  format: "jpeg"
+                },
+            posterAttrs,
+            {
+              transformation: [
+                ...(posterAttrs.transformation || []),
+                ...posterTransformations.map(posterTransformation =>
+                  normalizeTransformation(
+                    (posterTransformation.data &&
+                      posterTransformation.data.attrs) ||
+                      {}
+                  )
+                )
+              ]
+            }
+          )
+        );
+      }
+
+      // default poster
+      return Cloudinary.new(this.configuration).url(
+        this.publicId,
+        merge(
+          {
             resource_type: "video",
             format: "jpeg"
-          }
-        }
+          },
+          this.transformation
+        )
       );
-
-      return find(
-        [extPosterAttrs, ownPosterAttrs, defaultPoster],
-        options => options.publicId
-      );
-    },
-
-    options() {
-      const ownOptions = extractOptions(this.$attrs, this.$slots.default);
-      const { parentOptions } = this;
-      return combineOptions(parentOptions, ownOptions);
     }
   }
 };

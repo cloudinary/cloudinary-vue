@@ -20,7 +20,7 @@ describe("CldPicture", () => {
       "http://res.cloudinary.com/demo/image/upload/e_sepia/face_top"
     );
     expect(sourcesOfPicture(picture)).toEqual({
-      all: "http://res.cloudinary.com/demo/image/upload/e_sepia/face_top"
+      "": "http://res.cloudinary.com/demo/image/upload/e_sepia/face_top"
     });
   });
 });

@@ -2,9 +2,8 @@
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { omit, merge } from "../utils";
 import { normalizeRest } from "../helpers/attributes";
-import { extractOptions } from "../helpers/extractOptions";
 import { rejectTransformations } from "../helpers/rejectTransformations";
-import { combineOptions } from "../helpers/combineOptions";
+import { withOptions } from "../mixins/withOptions";
 
 /**
  *
@@ -15,6 +14,8 @@ export default {
   name: "CldSource",
 
   inheritAttrs: false,
+
+  mixins: [withOptions],
 
   render(h) {
     return h(
@@ -38,7 +39,7 @@ export default {
   computed: {
     sourceOptions() {
       const htmlAttrs = Transformation.new(
-        this.options.transformation
+        this.transformation
       ).toHtmlAttributes();
 
       return {
@@ -48,20 +49,14 @@ export default {
           omit(htmlAttrs, ["width", "height"]),
           this.publicId
             ? {
-                srcset: Cloudinary.new(this.options.configuration).url(
+                srcset: Cloudinary.new(this.configuration).url(
                   this.publicId,
-                  this.options.transformation
+                  this.transformation
                 )
               }
             : null
         )
       };
-    },
-
-    options() {
-      const ownOptions = extractOptions(this.$attrs, this.$slots.default);
-      const { parentOptions } = this;
-      return combineOptions(parentOptions, ownOptions);
     }
   }
 };

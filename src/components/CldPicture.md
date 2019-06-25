@@ -12,15 +12,15 @@ Use `v-on:*.native` to listen to native DOM events. `CldPicture` outputs an `pic
 <CldPicture publicId="face_top" cloudName="demo"
     :sources="[
         {
+          max_width: 1199,
+          transformation: { crop: 'thumb', aspectRatio: '1', gravity: 'body'  }
+        },
+        {
           min_width: 1200,
           transformation: { crop: 'thumb', aspectRatio: '1.5', gravity: 'body'  }
         },
         {
-          min_width: 700,
-          transformation: { crop: 'thumb', aspectRatio: '1', gravity: 'body'  }
-        },
-        {
-          media: 'screen',
+          min_width: 2400,
           transformation: { crop: 'thumb', aspectRatio: '0.66', gravity: 'body'  }
         },
     ]"

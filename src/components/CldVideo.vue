@@ -5,7 +5,7 @@ import { findInTransformations } from "../helpers/findInTransformations";
 import {
   normalizeTransformation,
   normalizeConfiguration,
-  normalizeRest
+  normalizeNonCloudinary
 } from "../helpers/attributes";
 import { lazy } from "../mixins/lazy";
 import { withOptions } from "../mixins/withOptions";
@@ -92,7 +92,7 @@ export default {
 
       return {
         class: className,
-        attrs: merge(normalizeRest(this.$attrs), htmlAttrs)
+        attrs: merge(normalizeNonCloudinary(this.$attrs), htmlAttrs)
       };
     },
 
@@ -132,7 +132,9 @@ export default {
         );
         const mimeType = "video/" + (srcType === "ogv" ? "ogg" : srcType);
 
-        const htmlAttrs = normalizeRest(this.sourceTypes[srcType] || {});
+        const htmlAttrs = normalizeNonCloudinary(
+          this.sourceTypes[srcType] || {}
+        );
 
         return merge(htmlAttrs, { mimeType, src });
       });

@@ -1,7 +1,7 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { omit, merge } from "../utils";
-import { normalizeRest } from "../helpers/attributes";
+import { normalizeNonCloudinary } from "../helpers/attributes";
 import { rejectTransformations } from "../helpers/rejectTransformations";
 import { withOptions } from "../mixins/withOptions";
 
@@ -45,7 +45,7 @@ export default {
       return {
         attrs: merge(
           { media: "all" },
-          normalizeRest(this.$attrs),
+          normalizeNonCloudinary(this.$attrs),
           omit(htmlAttrs, ["width", "height"]),
           this.publicId
             ? {

@@ -2,7 +2,7 @@
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, range } from "../utils";
 import { findInTransformations } from "../helpers/findInTransformations";
-import { normalizeRest } from "../helpers/attributes";
+import { normalizeNonCloudinary } from "../helpers/attributes";
 import { evalBreakpoints } from "../helpers/evalBreakpoints";
 import { getResizeTransformation } from "../helpers/getResizeTransformation";
 import { getPlaceholderURL } from "../helpers/getPlaceholderURL";
@@ -120,7 +120,7 @@ export default {
         return {
           class: className,
           style: responsiveStyle,
-          attrs: normalizeRest(this.$attrs)
+          attrs: normalizeNonCloudinary(this.$attrs)
         };
       }
 
@@ -134,7 +134,7 @@ export default {
         return {
           class: className,
           style: responsiveStyle,
-          attrs: merge(normalizeRest(this.$attrs), src ? { src } : {})
+          attrs: merge(normalizeNonCloudinary(this.$attrs), src ? { src } : {})
         };
       }
 
@@ -165,7 +165,7 @@ export default {
         class: className,
         style: responsiveStyle,
         attrs: merge(
-          normalizeRest(this.$attrs),
+          normalizeNonCloudinary(this.$attrs),
           htmlAttrs,
           src
             ? {

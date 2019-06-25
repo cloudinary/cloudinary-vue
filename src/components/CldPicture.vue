@@ -1,7 +1,10 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge } from "../utils";
-import { normalizeTransformation, normalizeRest } from "../helpers/attributes";
+import {
+  normalizeTransformation,
+  normalizeNonCloudinary
+} from "../helpers/attributes";
 
 import { rejectTransformations } from "../helpers/rejectTransformations";
 import { withOptions } from "../mixins/withOptions";
@@ -67,7 +70,7 @@ export default {
 
       return {
         class: className,
-        attrs: merge(normalizeRest(this.$attrs), htmlAttrs)
+        attrs: merge(normalizeNonCloudinary(this.$attrs), htmlAttrs)
       };
     },
 
@@ -110,7 +113,6 @@ export default {
           {},
           {
             transformation: [
-              // ...(this.transformation.transformation || []),
               this.transformation,
               ...sourceTransformationRawList.map(normalizeTransformation)
             ]

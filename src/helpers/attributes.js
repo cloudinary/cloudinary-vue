@@ -22,6 +22,6 @@ export function normalizeTransformation(cfg) {
 }
 
 /** Extract fields that are not used for configuration nor transformation in provided object */
-export function normalizeRest(cfg) {
+export function normalizeNonCloudinary(cfg) {
   return compact(omit(cfg, transformation.concat(configuration)));
 }

@@ -1,5 +1,5 @@
 <script>
-import { normalizeRest } from "../helpers/attributes";
+import { normalizeNonCloudinary } from "../helpers/attributes";
 import { rejectTransformations } from "../helpers/rejectTransformations";
 import { State } from "../reactive/State";
 import { withOptions } from "../mixins/withOptions";
@@ -23,7 +23,7 @@ export default {
   render(h) {
     return h(
       "div",
-      { class: { "cld-context": true }, attrs: normalizeRest(this.$attrs) },
+      { class: { "cld-context": true }, attrs: normalizeNonCloudinary(this.$attrs) },
       rejectTransformations(this.$slots.default)
     );
   },

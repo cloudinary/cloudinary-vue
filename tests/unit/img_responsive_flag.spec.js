@@ -2,7 +2,7 @@ import { mount } from "@vue/test-utils";
 import CldImage from "../../src/components/CldImage.vue";
 
 describe("CldImage::responsive", () => {
-  it("renders", async () => {
+  it("as flag", async () => {
     const wrapper = mount({
       template: `
         <cld-image cloudName="demo" publicId="face_top" responsive />

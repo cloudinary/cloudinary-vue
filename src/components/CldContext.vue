@@ -23,7 +23,10 @@ export default {
   render(h) {
     return h(
       "div",
-      { class: { "cld-context": true }, attrs: normalizeNonCloudinary(this.$attrs) },
+      {
+        class: { "cld-context": true },
+        attrs: normalizeNonCloudinary(this.$attrs)
+      },
       rejectTransformations(this.$slots.default)
     );
   },

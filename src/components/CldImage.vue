@@ -4,30 +4,16 @@ import { merge, range } from "../utils";
 import { findInTransformations } from "../helpers/findInTransformations";
 import { normalizeNonCloudinary } from "../helpers/attributes";
 import { evalBreakpoints } from "../helpers/evalBreakpoints";
-import { getResizeTransformation } from "../helpers/getResizeTransformation";
+import {
+  getResizeTransformation,
+  getResponsiveStyle
+} from "../helpers/responsiveness";
 import { getPlaceholderURL } from "../helpers/getPlaceholderURL";
 
 import { size } from "../mixins/size";
 import { lazy } from "../mixins/lazy";
 import { rejectTransformations } from "../helpers/rejectTransformations";
 import { withOptions } from "../mixins/withOptions";
-
-const responsiveStylesByMode = {
-  height: {
-    display: "block",
-    height: "100%",
-    width: "auto"
-  },
-  width: {
-    display: "block",
-    width: "100%"
-  },
-  fill: {
-    display: "block",
-    width: "100%",
-    height: "100%"
-  }
-};
 
 /**
  * Deliver images and specify image transformations using the cld-image (CldImage) component,
@@ -84,11 +70,12 @@ export default {
     /**
      * How to make the image responsive to the available size based on layout. Possible values:
      *
-     * - `width` uses the available image *width* and allows image *height* to be set dynamically
-     * - `height` uses the available image *height* and allows image *width* to be set dynamically
-     * - `fill` uses the available image *width* and *height*
+     * - `false` turns the feature off
+     * - `"width"` and `true` uses the available image *width* and allows image *height* to be set dynamically
+     * - `"height"` uses the available image *height* and allows image *width* to be set dynamically
+     * - `"fill"` uses the available image *width* and *height*
      */
-    responsive: { type: String, default: "none" },
+    responsive: { type: [Boolean, String], default: false },
     /**
      * The set of possible breakpoint values to be used together with the responsive property. Either:
      *
@@ -107,7 +94,6 @@ export default {
       const className = {
         "cld-image": true
       };
-      const responsiveStyle = responsiveStylesByMode[this.responsiveMode] || {};
 
       if (
         !this.publicId ||
@@ -115,11 +101,11 @@ export default {
           this.transformation,
           t => t.width === 0 || t.height === 0
         ) ||
-        (this.responsiveMode !== "none" && !this.size)
+        (this.responsive && !this.size)
       ) {
         return {
           class: className,
-          style: responsiveStyle,
+          style: getResponsiveStyle(this.responsive),
           attrs: normalizeNonCloudinary(this.$attrs)
         };
       }
@@ -133,7 +119,7 @@ export default {
         );
         return {
           class: className,
-          style: responsiveStyle,
+          style: getResponsiveStyle(this.responsive),
           attrs: merge(normalizeNonCloudinary(this.$attrs), src ? { src } : {})
         };
       }
@@ -147,15 +133,11 @@ export default {
         merge(this.transformation, {
           transformation: [
             ...(this.transformation.transformation || []),
-            ...(this.responsiveMode !== "none" && this.size
-              ? [
-                  getResizeTransformation(
-                    this.responsiveMode,
-                    this.size,
-                    evalBreakpoints(this.breakpoints)
-                  )
-                ]
-              : []),
+            getResizeTransformation(
+              this.responsive,
+              this.size,
+              evalBreakpoints(this.breakpoints)
+            ),
             ...(this.progressive ? [{ flags: ["progressive"] }] : [])
           ]
         })
@@ -163,7 +145,7 @@ export default {
 
       return {
         class: className,
-        style: responsiveStyle,
+        style: getResponsiveStyle(this.responsive),
         attrs: merge(
           normalizeNonCloudinary(this.$attrs),
           htmlAttrs,
@@ -177,14 +159,7 @@ export default {
     },
 
     shouldMeasureSize() {
-      return this.responsiveMode !== "none";
-    },
-
-    responsiveMode() {
-      if (this.responsive === "") {
-        return "width";
-      }
-      return this.responsive;
+      return !this.responsive;
     }
   }
 };

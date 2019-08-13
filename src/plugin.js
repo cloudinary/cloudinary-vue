@@ -6,6 +6,8 @@ import CldImage from "./components/CldImage";
 import CldPoster from "./components/CldPoster";
 import CldTransformation from "./components/CldTransformation";
 import CldVideo from "./components/CldVideo";
+import CldPicture from "./components/CldPicture";
+import CldSource from "./components/CldSource";
 import { find } from "./utils";
 
 const allComponents = [
@@ -13,7 +15,9 @@ const allComponents = [
   CldImage,
   CldPoster,
   CldTransformation,
-  CldVideo
+  CldVideo,
+  CldPicture,
+  CldSource
 ];
 
 export function install(Vue, options) {

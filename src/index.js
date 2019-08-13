@@ -4,13 +4,17 @@ import CldImage from "./components/CldImage";
 import CldVideo from "./components/CldVideo";
 import CldPoster from "./components/CldPoster";
 import CldTransformation from "./components/CldTransformation";
+import CldPicture from "./components/CldPicture";
+import CldSource from "./components/CldSource";
 
 const components = {
   CldContext,
   CldImage,
   CldVideo,
   CldPoster,
-  CldTransformation
+  CldTransformation,
+  CldPicture,
+  CldSource
 };
 
 export {
@@ -21,5 +25,7 @@ export {
   CldImage,
   CldVideo,
   CldPoster,
-  CldTransformation
+  CldTransformation,
+  CldPicture,
+  CldSource
 };

@@ -2,7 +2,7 @@ export function pick(subject, allowed) {
   if (subject == null) {
     return subject;
   }
-  if (allowed == null || allowed.length === 0) {
+  if (!allowed || !allowed.length) {
     return {};
   }
   const target = {};

@@ -3,18 +3,10 @@ import { normalizeConfiguration } from "./helpers/attributes";
 
 import CldContext from "./components/CldContext";
 import CldImage from "./components/CldImage";
-import CldPoster from "./components/CldPoster";
-import CldTransformation from "./components/CldTransformation";
 import CldVideo from "./components/CldVideo";
 import { find } from "./utils";
 
-const allComponents = [
-  CldContext,
-  CldImage,
-  CldPoster,
-  CldTransformation,
-  CldVideo
-];
+const allComponents = [CldContext, CldImage, CldVideo];
 
 export function install(Vue, options) {
   if (Vue.CldInstalled) {

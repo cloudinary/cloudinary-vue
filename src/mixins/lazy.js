@@ -1,12 +1,8 @@
-import { ready } from "./ready";
-
 /**
  * If necessary watches for root elements visibility
  * and posts the result to components data
  */
 export const lazy = {
-  mixins: [ready],
-
   props: {
     /**
      * Whether to only load the asset when it needs to be displayed instead of when the page first loads.
@@ -21,17 +17,38 @@ export const lazy = {
     return { visible: false };
   },
 
+  methods: {
+    updateVisibilityObservation() {
+      if (this.lazy) {
+        if (this.$el && !this.cancelVisibilityListener) {
+          this.cancelVisibilityListener = watchElementVisibility(
+            this.$el,
+            visible => {
+              this.visible = this.visible || visible;
+            }
+          );
+        }
+      } else {
+        this.visible = true;
+        if (this.cancelVisibilityListener) {
+          const { cancelVisibilityListener } = this;
+          this.cancelVisibilityListener = null;
+          cancelVisibilityListener();
+        }
+      }
+    }
+  },
+
   created() {
-    this.markReadyCheck("lazy");
-    fix.call(this);
+    this.updateVisibilityObservation();
   },
 
   mounted() {
-    fix.call(this);
+    this.updateVisibilityObservation();
   },
 
   updated() {
-    fix.call(this);
+    this.updateVisibilityObservation();
   },
 
   destroyed() {
@@ -40,26 +57,6 @@ export const lazy = {
     }
   }
 };
-
-function fix() {
-  if (this.lazy) {
-    if (this.$el && !this.cancelVisibilityListener) {
-      this.cancelVisibilityListener = watchElementVisibility(
-        this.$el,
-        visible => {
-          this.visible = this.visible || visible;
-        }
-      );
-    }
-  } else {
-    this.visible = true;
-    if (this.cancelVisibilityListener) {
-      const { cancelVisibilityListener } = this;
-      this.cancelVisibilityListener = null;
-      cancelVisibilityListener();
-    }
-  }
-}
 
 function watchElementVisibility(element, listener) {
   if (typeof window === "object" && "IntersectionObserver" in window) {

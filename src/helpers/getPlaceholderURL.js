@@ -1,5 +1,27 @@
 import { Cloudinary } from "cloudinary-core";
-import { combineOptions } from "./combineOptions";
+import { merge } from "../utils";
+
+const placeholderTransformations = {
+  lqip: [
+    {
+      variables: [["$nh", "ih"], ["$nw", "iw"]],
+      crop: "scale",
+      width: "20",
+      quality: "auto"
+    },
+    { crop: "scale", width: "$nw", height: "$nh" }
+  ],
+  color: [
+    {
+      variables: [["$nh", "ih"], ["$nw", "iw"]],
+      crop: "scale",
+      width: "1",
+      quality: "1"
+    },
+    { crop: "scale", width: "$nw", height: "$nh" }
+  ],
+  pixelate: [{ effect: "pixelate:100" }]
+};
 
 /** Get media URL with some transformations
  * that will make the image lighter
@@ -9,46 +31,25 @@ import { combineOptions } from "./combineOptions";
  * @param {'lqip'|'color'|'pixelate'} mode How savings should be made
  * @param {Object} options All currently gathered options of the resource request
  */
-export function getPlaceholderURL(mode, options) {
-  const placeholderOptions = combineOptions(
-    {
-      lqip: {
-        transformation: {
+export function getPlaceholderURL(
+  mode,
+  publicId,
+  configuration,
+  transformation
+) {
+  if (typeof mode === "string") {
+    if (mode in placeholderTransformations) {
+      return Cloudinary.new(configuration).url(
+        publicId,
+        merge(transformation, {
           transformation: [
-            {
-              variables: [["$nh", "ih"], ["$nw", "iw"]],
-              crop: "scale",
-              width: "20",
-              quality: "auto"
-            },
-            { crop: "scale", width: "$nw", height: "$nh" }
+            ...(transformation.transformation || []),
+            ...placeholderTransformations[mode]
           ]
-        }
-      },
-      color: {
-        transformation: {
-          transformation: [
-            {
-              variables: [["$nh", "ih"], ["$nw", "iw"]],
-              crop: "scale",
-              width: "1",
-              quality: "1"
-            },
-            { crop: "scale", width: "$nw", height: "$nh" }
-          ]
-        }
-      },
-      pixelate: {
-        transformation: {
-          transformation: [{ effect: "pixelate:100" }]
-        }
-      }
-    }[mode],
-    options
-  );
-
-  return Cloudinary.new(placeholderOptions.configuration).url(
-    placeholderOptions.publicId,
-    placeholderOptions.transformation
-  );
+        })
+      );
+    }
+    return mode;
+  }
+  return "";
 }

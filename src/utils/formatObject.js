@@ -2,7 +2,7 @@ import { merge } from "./merge";
 import { kv } from "./kv";
 
 export function formatObject(subject, instructions) {
-  if (subject == null && Object.keys(instructions).length === 0) {
+  if (subject == null || Object.keys(instructions).length === 0) {
     return subject;
   }
 

@@ -2,18 +2,32 @@
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, range } from "../utils";
 import { findInTransformations } from "../helpers/findInTransformations";
-import { normalizeRest } from "../helpers/attributes";
+import { normalizeNonCloudinary } from "../helpers/attributes";
 import { evalBreakpoints } from "../helpers/evalBreakpoints";
 import { getResizeTransformation } from "../helpers/getResizeTransformation";
 import { getPlaceholderURL } from "../helpers/getPlaceholderURL";
-import { combineOptions } from "../helpers/combineOptions";
 
-import { ready } from "../mixins/ready";
 import { size } from "../mixins/size";
-import { mounted } from "../mixins/mounted";
-import { cldAttrsInherited } from "../mixins/cldAttrsInherited";
-import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
 import { lazy } from "../mixins/lazy";
+import { rejectTransformations } from "../helpers/rejectTransformations";
+import { withOptions } from "../mixins/withOptions";
+
+const responsiveStylesByMode = {
+  height: {
+    display: "block",
+    height: "100%",
+    width: "auto"
+  },
+  width: {
+    display: "block",
+    width: "100%"
+  },
+  fill: {
+    display: "block",
+    width: "100%",
+    height: "100%"
+  }
+};
 
 /**
  * Deliver images and specify image transformations using the cld-image (CldImage) component,
@@ -30,11 +44,19 @@ import { lazy } from "../mixins/lazy";
  */
 export default {
   name: "CldImage",
+
   inheritAttrs: false,
-  mixins: [ready, size, mounted, lazy, cldAttrsInherited, cldAttrsOwned],
+
+  mixins: [size, lazy, withOptions],
+
   render(h) {
-    return h("img", this.imageAttrs, this.$slots.default);
+    return h(
+      "img",
+      this.imageAttrs,
+      rejectTransformations(this.$slots.default)
+    );
   },
+
   props: {
     /**
      * The unique identifier of an uploaded image.
@@ -79,101 +101,71 @@ export default {
       default: () => range(100, 4000, 100)
     }
   },
+
   computed: {
-    attributes() {
-      return merge(
-        this.$attrs,
-        this.progressive == true
-          ? {
-              flags: []
-                .concat(this.$attrs.flags ? this.$attrs.flags : [])
-                .concat("progressive")
-            }
-          : {},
-        this.responsive !== "none" && this.size
-          ? {
-              transformation: []
-                .concat(this.$attrs.transformation || [])
-                .concat(
-                  getResizeTransformation(
-                    this.responsive,
-                    this.size,
-                    evalBreakpoints(this.breakpoints)
-                  )
-                )
-            }
-          : {}
-      );
-    },
-    shouldMeasureSize() {
-      return this.responsive !== "none";
-    },
     imageAttrs() {
       const className = {
         "cld-image": true
       };
-      const responsiveMode = this.responsive === "" ? "width" : this.responsive;
-      const responsiveStyle =
-        {
-          height: {
-            display: "block",
-            height: "100%",
-            width: "auto"
-          },
-          width: {
-            display: "block",
-            width: "100%"
-          },
-          fill: {
-            display: "block",
-            width: "100%",
-            height: "100%"
-          }
-        }[responsiveMode] || {};
+      const responsiveStyle = responsiveStylesByMode[this.responsiveMode] || {};
 
       if (
-        !this.isReady ||
         !this.publicId ||
         !!findInTransformations(
-          this.cldAttrs.transformation,
+          this.transformation,
           t => t.width === 0 || t.height === 0
-        )
+        ) ||
+        (this.responsiveMode !== "none" && !this.size)
       ) {
         return {
           class: className,
-          style: responsiveStyle
+          style: responsiveStyle,
+          attrs: normalizeNonCloudinary(this.$attrs)
         };
       }
 
       if (this.lazy && !this.visible) {
+        const src = getPlaceholderURL(
+          this.placeholder,
+          this.publicId,
+          this.configuration,
+          this.transformation
+        );
         return {
           class: className,
           style: responsiveStyle,
-          attrs: this.placeholder
-            ? {
-                src:
-                  getPlaceholderURL(
-                    this.placeholder,
-                    combineOptions({ publicId: this.publicId }, this.cldAttrs)
-                  ) || this.placeholder
-              }
-            : {}
+          attrs: merge(normalizeNonCloudinary(this.$attrs), src ? { src } : {})
         };
       }
 
       const htmlAttrs = Transformation.new(
-        this.cldAttrs.transformation
+        this.transformation
       ).toHtmlAttributes();
-      const src = Cloudinary.new(this.cldAttrs.configuration).url(
+
+      const src = Cloudinary.new(this.configuration).url(
         this.publicId,
-        this.cldAttrs
+        merge(this.transformation, {
+          transformation: [
+            ...(this.transformation.transformation || []),
+            ...(this.responsiveMode !== "none" && this.size
+              ? [
+                  getResizeTransformation(
+                    this.responsiveMode,
+                    this.size,
+                    evalBreakpoints(this.breakpoints)
+                  )
+                ]
+              : []),
+            ...(this.progressive ? [{ flags: ["progressive"] }] : [])
+          ]
+        })
       );
 
       return {
         class: className,
         style: responsiveStyle,
         attrs: merge(
-          normalizeRest(this.$attrs),
+          normalizeNonCloudinary(this.$attrs),
           htmlAttrs,
           src
             ? {
@@ -182,6 +174,17 @@ export default {
             : {}
         )
       };
+    },
+
+    shouldMeasureSize() {
+      return this.responsiveMode !== "none";
+    },
+
+    responsiveMode() {
+      if (this.responsive === "") {
+        return "width";
+      }
+      return this.responsive;
     }
   }
 };

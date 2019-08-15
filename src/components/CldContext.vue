@@ -1,27 +1,56 @@
-<template>
-  <div class="cld-context" v-bind="htmlAttributes">
-    <slot />
-  </div>
-</template>
-
 <script>
-import { normalizeRest } from "../helpers/attributes";
-import { mounted } from "../mixins/mounted";
-import { cldAttrsOwned } from "../mixins/cldAttrsOwned";
-import { cldAttrsInherited } from "../mixins/cldAttrsInherited";
+import { normalizeNonCloudinary } from "../helpers/attributes";
+import { rejectTransformations } from "../helpers/rejectTransformations";
+import { State } from "../reactive/State";
+import { withOptions } from "../mixins/withOptions";
 
 /**
  * Cloudinary context providing element
  */
 export default {
   name: "CldContext",
+
   inheritAttrs: false,
-  mixins: [mounted, cldAttrsInherited, cldAttrsOwned],
-  props: {},
-  computed: {
-    htmlAttributes() {
-      return normalizeRest(this.$attrs);
+
+  mixins: [withOptions],
+
+  provide() {
+    return {
+      cldOptionsState: this.nextCldOptionsState
+    };
+  },
+
+  render(h) {
+    return h(
+      "div",
+      { class: { "cld-context": true }, attrs: normalizeNonCloudinary(this.$attrs) },
+      rejectTransformations(this.$slots.default)
+    );
+  },
+
+  data() {
+    return { nextCldOptionsState: new State({}) };
+  },
+
+  methods: {
+    postOptions() {
+      this.nextCldOptionsState.next({
+        configuration: this.configuration,
+        transformations: this.childTransformations
+      });
     }
+  },
+
+  created() {
+    this.postOptions();
+  },
+
+  updated() {
+    this.postOptions();
+  },
+
+  destroyed() {
+    this.nextCldOptionsState.complete();
   }
 };
 </script>

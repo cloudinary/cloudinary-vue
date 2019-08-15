@@ -3,9 +3,10 @@ import { normalizeConfiguration } from "./helpers/attributes";
 
 import CldContext from "./components/CldContext";
 import CldImage from "./components/CldImage";
-import CldPoster from "./components/CldPoster";
-import CldTransformation from "./components/CldTransformation";
 import CldVideo from "./components/CldVideo";
+import { find } from "./utils";
+
+const allComponents = [CldContext, CldImage, CldVideo];
 
 export function install(Vue, options) {
   if (Vue.CldInstalled) {
@@ -15,20 +16,18 @@ export function install(Vue, options) {
 
   options = options || {};
 
-  [CldContext, CldImage, CldPoster, CldTransformation, CldVideo].forEach(
-    component => {
-      const userComponentName = getUserComponentName(
-        options.components,
-        component.name
-      );
-      if (userComponentName != null) {
-        Vue.component(userComponentName, component);
-      }
+  allComponents.forEach(component => {
+    const userComponentName = getUserComponentName(
+      options.components,
+      component.name
+    );
+    if (userComponentName != null) {
+      Vue.component(userComponentName, component);
     }
-  );
+  });
 
   if (options.configuration) {
-    Vue.prototype.CldGlobalContextState = new State({
+    Vue.prototype.cldGlobalContextState = new State({
       configuration: normalizeConfiguration(options.configuration)
     });
   }
@@ -39,26 +38,44 @@ function getUserComponentName(components, name) {
     return name;
   }
 
-  if (typeof components === "object") {
-    // { components: ['CldImage'] }
-    if (Array.isArray(components)) {
-      return components.indexOf(name) >= 0 ? name : null;
+  // { components: ['CldImage'] }
+  // and
+  // { components: [CldImage] }
+  if (Array.isArray(components)) {
+    const entry = find(
+      components,
+      component =>
+        (typeof component === "string" && component === name) ||
+        (typeof component === "object" &&
+          component != null &&
+          component.name === name)
+    );
+    if (entry == null) {
+      return null;
     }
-    // { components: { CldImage: true } }
-    if (typeof components[name] === "boolean") {
-      return components[name] === true ? name : null;
+    if (typeof entry === "string") {
+      return entry;
     }
-    // { components: { CldImage: 'CloudinaryImage' } }
-    if (typeof components[name] === "string") {
-      return components[name];
-    }
-    // { components: { CloudinaryImage: 'CldImage' } }
-    const keys = Object.keys(components);
-    const values = keys.map(key => components[key]);
-    if (values.indexOf(name) >= 0) {
-      return keys[values.indexOf(name)];
-    }
+    return entry.name;
   }
-
-  return null;
+  // { components: { CldImage: true } }
+  if (typeof components[name] === "boolean") {
+    return components[name] === true ? name : null;
+  }
+  // { components: { CldImage: 'CloudinaryImage' } }
+  if (typeof components[name] === "string") {
+    return components[name];
+  }
+  // { components: { CloudinaryImage: 'CldImage' } }
+  // and
+  // { components: { CloudinaryImage: CldImage } }
+  const found = find(
+    Object.keys(components),
+    k =>
+      (typeof components[k] === "string" && components[k] === name) ||
+      (typeof components[k] === "object" &&
+        components[k] != null &&
+        components[k].name === name)
+  );
+  return found === undefined ? null : found;
 }

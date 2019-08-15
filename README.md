@@ -188,7 +188,7 @@ npm run styleguide
 #### Build styleguidist output
 
 ```
-npm run styleguide:build
+npm run build:styleguide
 ```
 
 ### Lint files

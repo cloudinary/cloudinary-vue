@@ -11,7 +11,7 @@
  */
 export class Channel {
   constructor() {
-    this.subs = [];
+    this.listeners = [];
   }
 
   /**
@@ -20,26 +20,21 @@ export class Channel {
    * @returns {undefined}
    */
   next(value) {
-    this.subs.forEach(sub =>
-      sub && typeof sub === "object" && "next" in sub && sub.next
-        ? sub.next(value)
-        : null
+    this.listeners.forEach(sub =>
+      "next" in sub && sub.next ? sub.next(value) : null
     );
   }
 
   /**
-   * Push an error signal to all active listeners
+   * Push an error signal to all active listeners.
+   * Completes all subscriptions.
    * @param {Error} error
    * @returns {undefined}
    */
   error(error) {
-    this.subs
+    this.listeners
       .splice(0)
-      .forEach(sub =>
-        sub && typeof sub === "object" && "error" in sub && sub.error
-          ? sub.error(error)
-          : null
-      );
+      .forEach(sub => ("error" in sub && sub.error ? sub.error(error) : null));
   }
 
   /**
@@ -47,12 +42,10 @@ export class Channel {
    * @returns {undefined}
    */
   complete() {
-    this.subs
+    this.listeners
       .splice(0)
       .forEach(sub =>
-        sub && typeof sub === "object" && "complete" in sub && sub.complete
-          ? sub.complete()
-          : null
+        "complete" in sub && sub.complete ? sub.complete() : null
       );
   }
 
@@ -62,9 +55,14 @@ export class Channel {
    * @returns {Function}
    */
   subscribe(listener) {
-    this.subs.push(listener);
+    if (listener && typeof listener === "object") {
+      this.listeners.push(listener);
+    }
     return () => {
-      this.subs = this.subs.filter(sub => sub !== listener);
+      const pos = this.listeners.indexOf(listener);
+      if (pos >= 0) {
+        this.listeners.splice(pos, 1);
+      }
     };
   }
 }

@@ -16,22 +16,6 @@
         "name": "CldImage"
       },
       {
-        "href": "#/Install core components/CldPicture",
-        "name": "CldPicture"
-      },
-      {
-        "href": "#/Install core components/CldPoster",
-        "name": "CldPoster"
-      },
-      {
-        "href": "#/Install core components/CldSource",
-        "name": "CldSource"
-      },
-      {
-        "href": "#/Install core components/CldTransformation",
-        "name": "CldTransformation"
-      },
-      {
         "href": "#/Install core components/CldVideo",
         "name": "CldVideo"
       }

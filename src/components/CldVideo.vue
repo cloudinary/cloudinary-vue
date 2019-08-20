@@ -87,7 +87,7 @@ export default {
 
       const htmlAttrs = merge(
         { poster: this.poster },
-        Transformation.new(this.transformation).toHtmlAttributes()
+        Transformation.new(this.ownTransformation).toHtmlAttributes()
       );
 
       return {
@@ -113,23 +113,17 @@ export default {
         )
           ? this.sourceTypes[srcType].map(normalizeTransformation)
           : [normalizeTransformation(this.sourceTypes[srcType] || {})];
-        const transformation = merge(this.transformation, {
-          transformation: [
-            ...videoChainedTransformation,
-            ...sourceTypeChainedTransformation
-          ]
-        });
+        const transformation = [
+          ...this.transformation,
+          ...videoChainedTransformation,
+          ...sourceTypeChainedTransformation
+        ];
 
-        const src = Cloudinary.new(configuration).url(
-          this.publicId,
-          merge(
-            {
-              resource_type: "video",
-              format: srcType
-            },
-            transformation
-          )
-        );
+        const src = Cloudinary.new(configuration).url(this.publicId, {
+          resource_type: "video",
+          format: srcType,
+          transformation
+        });
         const mimeType = "video/" + (srcType === "ogv" ? "ogg" : srcType);
 
         const htmlAttrs = normalizeNonCloudinary(

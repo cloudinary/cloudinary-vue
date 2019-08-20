@@ -1,7 +1,7 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 import Cloudinary, { CldImage } from "../../src";
 
-describe("CLD plugin", () => {
+describe("Plugin", () => {
   it("allows specifying Cloudinary configuration", async () => {
     const localVue = createLocalVue();
     localVue.use(Cloudinary, { configuration: { cloudName: "demo2" } });

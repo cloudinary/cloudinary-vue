@@ -103,6 +103,7 @@ export default {
         ) ||
         (this.responsive && !this.size)
       ) {
+        process.stdout.write("NOT READY\n");
         return {
           class: className,
           style: getResponsiveStyle(this.responsive),
@@ -117,6 +118,7 @@ export default {
           this.configuration,
           this.transformation
         );
+        process.stdout.write("LAZY\n");
         return {
           class: className,
           style: getResponsiveStyle(this.responsive),
@@ -124,24 +126,25 @@ export default {
         };
       }
 
-      const htmlAttrs = Transformation.new(
-        this.transformation
-      ).toHtmlAttributes();
+      process.stdout.write("READY\n");
+      process.stdout.write(JSON.stringify(this.transformation));
+      process.stdout.write("\n");
 
-      const src = Cloudinary.new(this.configuration).url(
-        this.publicId,
-        merge(this.transformation, {
-          transformation: [
-            ...(this.transformation.transformation || []),
-            getResizeTransformation(
-              this.responsive,
-              this.size,
-              evalBreakpoints(this.breakpoints)
-            ),
-            ...(this.progressive ? [{ flags: ["progressive"] }] : [])
-          ]
-        })
-      );
+      const src = Cloudinary.new(this.configuration).url(this.publicId, {
+        transformation: [
+          ...this.transformation,
+          getResizeTransformation(
+            this.responsive,
+            this.size,
+            evalBreakpoints(this.breakpoints)
+          ),
+          ...(this.progressive ? [{ flags: ["progressive"] }] : [])
+        ]
+      });
+
+      const htmlAttrs = Transformation.new(
+        this.ownTransformation
+      ).toHtmlAttributes();
 
       return {
         class: className,

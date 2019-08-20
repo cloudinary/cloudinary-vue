@@ -86,7 +86,9 @@ function watchElementSize(element, cb) {
       };
     } else {
       const handleWindowResize = () => {
-        const size = pick(element.getBoundingClientRect(), ["width", "height"]);
+        const size = element.getBoundingClientRect
+          ? pick(element.getBoundingClientRect(), ["width", "height"])
+          : { width: 0, height: 0 };
         delayedCallback(size);
       };
       window.addEventListener("resize", handleWindowResize);

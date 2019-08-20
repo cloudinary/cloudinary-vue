@@ -3,7 +3,7 @@ import {
   normalizeConfiguration
 } from "../helpers/attributes";
 import { inContext } from "./inContext";
-import { merge, compact } from "../utils";
+import { merge, compact, omit } from "../utils";
 import CldTransformation from "../components/CldTransformation";
 
 /**
@@ -21,12 +21,16 @@ export const withOptions = {
       );
     },
 
+    contextTransformation() {
+      return this.cldOptions.transformation || [];
+    },
+
     ownTransformation() {
       return normalizeTransformation(this.$attrs);
     },
 
     ownChildTransformations() {
-      return this.$slots && this.$slots.default
+      return this.$slots && this.$slots.default && this.$slots.default.length
         ? compact(
             this.$slots.default.map(child =>
               child.componentOptions &&
@@ -39,24 +43,17 @@ export const withOptions = {
         : [];
     },
 
-    inheritedChildTransformations() {
-      return this.cldOptions.transformations || [];
-    },
-
-    childTransformations() {
-      return [
-        ...(this.inheritedChildTransformations || []),
-        ...(this.ownChildTransformations || [])
-      ];
-    },
-
     transformation() {
-      return merge(this.ownTransformation, {
-        transformation: [
-          ...(this.ownTransformation.transformation || []),
-          ...this.childTransformations
-        ]
-      });
+      return [
+        ...this.contextTransformation,
+        this.ownTransformation,
+        ...this.ownChildTransformations
+      ].filter(
+        transformation =>
+          typeof transformation === "object" &&
+          transformation &&
+          Object.keys(transformation).length
+      );
     }
   }
 };

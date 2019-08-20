@@ -5,7 +5,7 @@ export function findInTransformations(transformations, predicate) {
     return undefined;
   }
   return find(
-    [].concat(transformations).concat(transformations.transformation || []),
+    [transformations, ...(transformations.transformation || [])],
     predicate
   );
 }

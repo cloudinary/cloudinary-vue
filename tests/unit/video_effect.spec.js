@@ -1,4 +1,3 @@
-import Vue from "vue";
 import { mount } from "@vue/test-utils";
 import CldVideo from "../../src/components/CldVideo.vue";
 import { sourcesOfVideo } from "./sourcesOfVideo";
@@ -11,8 +10,6 @@ describe("CldVideo", () => {
       `,
       components: { CldVideo }
     });
-
-    await Vue.nextTick();
 
     expect(video.is("video")).toBe(true);
     expect(sourcesOfVideo(video)).toEqual({

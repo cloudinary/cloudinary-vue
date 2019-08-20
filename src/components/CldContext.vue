@@ -39,7 +39,7 @@ export default {
     postOptions() {
       this.nextCldOptionsState.next({
         configuration: this.configuration,
-        transformations: this.childTransformations
+        transformation: this.transformation
       });
     }
   },

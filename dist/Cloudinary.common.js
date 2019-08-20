@@ -707,15 +707,64 @@ function range(min, max, step) {
 
   return result;
 }
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js
+var is_array = __webpack_require__("a745");
+var is_array_default = /*#__PURE__*/__webpack_require__.n(is_array);
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/arrayWithoutHoles.js
+
+function _arrayWithoutHoles(arr) {
+  if (is_array_default()(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  }
+}
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/from.js
+var from = __webpack_require__("774e");
+var from_default = /*#__PURE__*/__webpack_require__.n(from);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/is-iterable.js
+var is_iterable = __webpack_require__("c8bb");
+var is_iterable_default = /*#__PURE__*/__webpack_require__.n(is_iterable);
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/iterableToArray.js
+
+
+function _iterableToArray(iter) {
+  if (is_iterable_default()(Object(iter)) || Object.prototype.toString.call(iter) === "[object Arguments]") return from_default()(iter);
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/nonIterableSpread.js
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/toConsumableArray.js
+
+
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+}
 // CONCATENATED MODULE: ./src/utils/flatten.js
+
 function flatten(subject) {
   if (subject == null) {
     return subject;
   }
 
-  return [].concat(subject).reduce(function (result, item) {
-    return result.concat(item);
-  }, []);
+  var result = [];
+
+  for (var i = 0; i < subject.length; i++) {
+    if (Array.isArray(subject[i])) {
+      result.push.apply(result, _toConsumableArray(subject[i]));
+    } else {
+      result.push(subject[i]);
+    }
+  }
+
+  return result;
 }
 // CONCATENATED MODULE: ./src/utils/index.js
 
@@ -933,46 +982,6 @@ function rejectTransformations(slot) {
     return !(child.componentOptions && (child.componentOptions.Ctor.options.render === CldTransformation.render || child.componentOptions.Ctor.options.render === CldPoster.render));
   });
 }
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js
-var is_array = __webpack_require__("a745");
-var is_array_default = /*#__PURE__*/__webpack_require__.n(is_array);
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/arrayWithoutHoles.js
-
-function _arrayWithoutHoles(arr) {
-  if (is_array_default()(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
-    }
-
-    return arr2;
-  }
-}
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/from.js
-var from = __webpack_require__("774e");
-var from_default = /*#__PURE__*/__webpack_require__.n(from);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/is-iterable.js
-var is_iterable = __webpack_require__("c8bb");
-var is_iterable_default = /*#__PURE__*/__webpack_require__.n(is_iterable);
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/iterableToArray.js
-
-
-function _iterableToArray(iter) {
-  if (is_iterable_default()(Object(iter)) || Object.prototype.toString.call(iter) === "[object Arguments]") return from_default()(iter);
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/nonIterableSpread.js
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/toConsumableArray.js
-
-
-
-function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
-}
 // CONCATENATED MODULE: ./src/mixins/inContext.js
 /**
  * This ensures injection of inherited configuration
@@ -1015,6 +1024,10 @@ var inContext = {
 
 
 
+
+
+
+
 /**
  * This extracts configuration and transformation options
  * from the element's own and inherited attributes
@@ -1026,23 +1039,20 @@ var withOptions = {
     configuration: function configuration() {
       return merge(this.cldOptions.configuration, normalizeConfiguration(this.$attrs));
     },
+    contextTransformation: function contextTransformation() {
+      return this.cldOptions.transformation || [];
+    },
     ownTransformation: function ownTransformation() {
       return normalizeTransformation(this.$attrs);
     },
     ownChildTransformations: function ownChildTransformations() {
-      return this.$slots && this.$slots.default ? compact(this.$slots.default.map(function (child) {
+      return this.$slots && this.$slots.default && this.$slots.default.length ? compact(this.$slots.default.map(function (child) {
         return child.componentOptions && child.componentOptions.Ctor.options.render === CldTransformation.render ? normalizeTransformation(child.data.attrs) : null;
       })) : [];
     },
-    inheritedChildTransformations: function inheritedChildTransformations() {
-      return this.cldOptions.transformations || [];
-    },
-    childTransformations: function childTransformations() {
-      return [].concat(_toConsumableArray(this.inheritedChildTransformations || []), _toConsumableArray(this.ownChildTransformations || []));
-    },
     transformation: function transformation() {
-      return merge(this.ownTransformation, {
-        transformation: [].concat(_toConsumableArray(this.ownTransformation.transformation || []), _toConsumableArray(this.childTransformations))
+      return [].concat(_toConsumableArray(this.contextTransformation), [this.ownTransformation], _toConsumableArray(this.ownChildTransformations)).filter(function (transformation) {
+        return typeof_typeof(transformation) === "object" && transformation && Object.keys(transformation).length;
       });
     }
   }
@@ -1082,7 +1092,7 @@ var withOptions = {
     postOptions: function postOptions() {
       this.nextCldOptionsState.next({
         configuration: this.configuration,
-        transformations: this.childTransformations
+        transformation: this.transformation
       });
     }
   },
@@ -1120,12 +1130,13 @@ var CldContext_component = normalizeComponent(
 /* harmony default export */ var CldContext = (CldContext_component.exports);
 // CONCATENATED MODULE: ./src/helpers/findInTransformations.js
 
+
 function findInTransformations(transformations, predicate) {
   if (!transformations) {
     return undefined;
   }
 
-  return find([].concat(transformations).concat(transformations.transformation || []), predicate);
+  return find([transformations].concat(_toConsumableArray(transformations.transformation || [])), predicate);
 }
 // CONCATENATED MODULE: ./src/helpers/evalBreakpoints.js
 /**
@@ -1423,7 +1434,10 @@ function watchElementSize(element, cb) {
       };
     } else {
       var handleWindowResize = function handleWindowResize() {
-        var size = pick(element.getBoundingClientRect(), ["width", "height"]);
+        var size = element.getBoundingClientRect ? pick(element.getBoundingClientRect(), ["width", "height"]) : {
+          width: 0,
+          height: 0
+        };
         delayedCallback(size);
       };
 
@@ -1642,12 +1656,12 @@ function noop() {}
         };
       }
 
-      var htmlAttrs = external_cloudinary_core_["Transformation"].new(this.transformation).toHtmlAttributes();
-      var src = external_cloudinary_core_["Cloudinary"].new(this.configuration).url(this.publicId, merge(this.transformation, {
-        transformation: [].concat(_toConsumableArray(this.transformation.transformation || []), [getResizeTransformation(this.responsive, this.size, evalBreakpoints(this.breakpoints))], _toConsumableArray(this.progressive ? [{
+      var src = external_cloudinary_core_["Cloudinary"].new(this.configuration).url(this.publicId, {
+        transformation: [].concat(_toConsumableArray(this.transformation), [getResizeTransformation(this.responsive, this.size, evalBreakpoints(this.breakpoints))], _toConsumableArray(this.progressive ? [{
           flags: ["progressive"]
         }] : []))
-      }));
+      });
+      var htmlAttrs = external_cloudinary_core_["Transformation"].new(this.ownTransformation).toHtmlAttributes();
       return {
         class: className,
         style: getResponsiveStyle(this.responsive),
@@ -1768,7 +1782,7 @@ var CldImage_component = normalizeComponent(
 
       var htmlAttrs = merge({
         poster: this.poster
-      }, external_cloudinary_core_["Transformation"].new(this.transformation).toHtmlAttributes());
+      }, external_cloudinary_core_["Transformation"].new(this.ownTransformation).toHtmlAttributes());
       return {
         class: className,
         attrs: merge(normalizeNonCloudinary(this.$attrs), htmlAttrs)
@@ -1785,13 +1799,12 @@ var CldImage_component = normalizeComponent(
         var configuration = merge(_this.configuration, normalizeConfiguration(_this.sourceTypes[srcType] || {}));
         var videoChainedTransformation = _this.transformation.transformation || [];
         var sourceTypeChainedTransformation = Array.isArray(_this.sourceTypes[srcType]) ? _this.sourceTypes[srcType].map(normalizeTransformation) : [normalizeTransformation(_this.sourceTypes[srcType] || {})];
-        var transformation = merge(_this.transformation, {
-          transformation: [].concat(_toConsumableArray(videoChainedTransformation), _toConsumableArray(sourceTypeChainedTransformation))
-        });
-        var src = external_cloudinary_core_["Cloudinary"].new(configuration).url(_this.publicId, merge({
+        var transformation = [].concat(_toConsumableArray(_this.transformation), _toConsumableArray(videoChainedTransformation), _toConsumableArray(sourceTypeChainedTransformation));
+        var src = external_cloudinary_core_["Cloudinary"].new(configuration).url(_this.publicId, {
           resource_type: "video",
-          format: srcType
-        }, transformation));
+          format: srcType,
+          transformation: transformation
+        });
         var mimeType = "video/" + (srcType === "ogv" ? "ogg" : srcType);
         var htmlAttrs = normalizeNonCloudinary(_this.sourceTypes[srcType] || {});
         return merge(htmlAttrs, {

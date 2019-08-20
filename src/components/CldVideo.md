@@ -2,8 +2,7 @@
 
 Refer to the base [Cloudinary JS SDK](https://github.com/cloudinary/cloudinary_js#configuration) for configuration options.
 
-See the [Video transformation reference](https://cloudinary.com/documentation/video_transformation_reference) documentation for all the options accepted by the `CldVideo` and `CldTransformation` components.
-
+See the [Video transformation reference](https://cloudinary.com/documentation/video_transformation_reference) documentation for all the options accepted by the `CldVideo` component.
 
 ### Events
 
@@ -23,26 +22,14 @@ General configuration options may be passed with a [CldContext](#cldcontext) con
 </cld-context>
 ```
 
-`CldVideo` can also be given [transformation](https://cloudinary.com/documentation/video_transformation_reference) data by setting attributes on the component itself or with a [CldTransformation](#cldtransformation) child component.
+`CldVideo` can also be given [transformation](https://cloudinary.com/documentation/video_transformation_reference) data by setting attributes.
 
 ```jsx
-
-// with the component itself:
-
 <cld-video
-    cloudName="demo"
-    publicId="dog"
-    effect="blur:100"
-    crop="scale"
-    width="100"  />
-
-// with a child CldTransformation component:
-
-<cld-video
-  cloudName="demo" 
-  publicId="dog">
-    <cld-transformation crop="scale" width="100" />
-    <cld-transformation effect="blur:100" />
-</cld-video>
-
+  cloudName="demo"
+  publicId="dog"
+  effect="blur:100"
+  crop="scale"
+  width="100"
+/>
 ```

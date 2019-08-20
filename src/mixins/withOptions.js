@@ -3,7 +3,7 @@ import {
   normalizeConfiguration
 } from "../helpers/attributes";
 import { inContext } from "./inContext";
-import { merge, compact, omit } from "../utils";
+import { merge, compact } from "../utils";
 import CldTransformation from "../components/CldTransformation";
 
 /**

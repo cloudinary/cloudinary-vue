@@ -103,7 +103,6 @@ export default {
         ) ||
         (this.responsive && !this.size)
       ) {
-        process.stdout.write("NOT READY\n");
         return {
           class: className,
           style: getResponsiveStyle(this.responsive),
@@ -118,17 +117,12 @@ export default {
           this.configuration,
           this.transformation
         );
-        process.stdout.write("LAZY\n");
         return {
           class: className,
           style: getResponsiveStyle(this.responsive),
           attrs: merge(normalizeNonCloudinary(this.$attrs), src ? { src } : {})
         };
       }
-
-      process.stdout.write("READY\n");
-      process.stdout.write(JSON.stringify(this.transformation));
-      process.stdout.write("\n");
 
       const src = Cloudinary.new(this.configuration).url(this.publicId, {
         transformation: [

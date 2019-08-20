@@ -1,9 +1,1 @@
-<nav>
-  <a href="#/About Cloudinary">About Cloudinary</a>
-  <a href="#/Install core components">Install core components</a>
-  <nav>
-    <a href="#/Install core components/CldContext">CldContext</a>
-    <a href="#/Install core components/CldImage">CldImage</a>
-    <a href="#/Install core components/CldVideo">CldVideo</a>
-  </nav>
-</nav>
+<nav><a href="#/About Cloudinary">About Cloudinary</a><a href="#/Install core components">Install core components</a><nav><a href="#/Install core components/CldContext">CldContext</a><a href="#/Install core components/CldImage">CldImage</a><a href="#/Install core components/CldVideo">CldVideo</a></nav></nav>

@@ -17,18 +17,18 @@ Use `v-on:*.native` to listen to native DOM events. `CldContext` outputs a `div`
 ```vue
 <template>
   <!-- Context that carries an account name -->
-  <cld-context cloudName="demo">
+  <cld-context cloudName="demo" style="display: flex">
     <!--  -->
     <!-- A context that does not require secure connection -->
     <cld-context
       secure="false"
-      :transformations="[
+      :transformation="[
         {
           overlay: 'text:Arial_45:HTTP',
           background: 'red',
           radius: '5',
           opacity: '50',
-          color: 'white',
+          color: 'white'
         },
         { crop: 'scale', height: 200 }
       ]"
@@ -40,19 +40,20 @@ Use `v-on:*.native` to listen to native DOM events. `CldContext` outputs a `div`
     <!-- A context that sets secure connection requirement for media inside it -->
     <cld-context
       secure="true"
-      :transformations="[
+      :transformation="[
         {
           overlay: 'text:Arial_45:HTTPS',
           background: 'green',
           radius: '5',
           opacity: '50',
-          color: 'white',
+          color: 'white'
         },
         { crop: 'scale', height: 200 }
       ]"
     >
       <cld-image publicId="face_top" v-on:load.native="confirmLoad" />
     </cld-context>
+  </cld-context>
 </template>
 
 <script>
@@ -60,6 +61,7 @@ export default {
   methods: {
     confirmLoad(event) {
       console.log(event.target.src, "loaded");
+      // see the console!
     }
   }
 };

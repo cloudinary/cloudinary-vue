@@ -1,5 +1,5 @@
 - [About Cloudinary](#/About%20Cloudinary)
 - [Install core components](#/Install%20core%20components)
-  - [CldContext](#/Install%20core%20components/CldContext)
-  - [CldImage](#/Install%20core%20components/CldImage)
-  - [CldVideo](#/Install%20core%20components/CldVideo)
+    - [CldContext](#/Install%20core%20components/CldContext)
+    - [CldImage](#/Install%20core%20components/CldImage)
+    - [CldVideo](#/Install%20core%20components/CldVideo)

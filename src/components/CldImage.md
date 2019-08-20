@@ -2,8 +2,7 @@
 
 Refer to the base [Cloudinary JS SDK](https://github.com/cloudinary/cloudinary_js#configuration) for configuration options.
 
-See the [Image transformation reference](https://cloudinary.com/documentation/image_transformation_reference) documentation for all the options accepted by the `CldImage` and `CldTransformation` components.
-
+See the [Image transformation reference](https://cloudinary.com/documentation/image_transformation_reference) documentation for all the options accepted by the `CldImage` component.
 
 ### Events
 
@@ -14,15 +13,21 @@ Use `v-on:*.native` to listen to native DOM events. `CldImage` outputs an `img` 
   <cld-image
     cloudName="demo"
     publicId="small_dinosaur"
-    v-on:click.native="alert">
-    <cld-transformation
-      overlay="text:Arial_45:CLICK ME"
-      background="red"
-      radius="10"
-      opacity="90"
-      color="white" />
-    <cld-transformation crop="scale" :height="100" />
-  </cld-image>
+    v-on:click.native="alert"
+    :transformation="[
+      {
+        overlay: 'text:Arial_45:CLICK ME',
+        background: 'red',
+        radius: '10',
+        opacity: '90',
+        color: 'white'
+      },
+      {
+        crop: 'scale',
+        height: 100
+      }
+    ]"
+  />
 </template>
 <script>
 export default {
@@ -49,48 +54,41 @@ General configuration options may be passed with a [CldContext](#cldcontext) con
 </cld-context>
 ```
 
-`CldImage` can also be given transformation data by setting manipulation attributes on the component itself or with a [CldTransformation](#cldtransformation) child component.
+`CldImage` can also be given transformation data by setting manipulation attributes.
 
 ```jsx
-
-// with the component itself:
-
 <cld-image
-    cloudName="demo"
-    publicId="small_dinosaur"
-    effect="blur:100"
-    crop="scale"
-    width="100"  />
-
-// with a child CldTransformation component:
-
-<cld-image 
-  cloudName="demo" 
-  publicId="small_dinosaur">
-    <cld-transformation crop="scale" width="100" />
-    <cld-transformation effect="blur:100" />
-</cld-image>
-
+  cloudName="demo"
+  publicId="small_dinosaur"
+  effect="blur:100"
+  crop="scale"
+  width="100"
+/>
 ```
-
 
 ### Responsive mode
 
 Add the `responsive` property to have the image automatically adjust to the available width.
 
 ```jsx
-<cld-image cloudName="demo" publicId="small_dinosaur" responsive>
-  <cld-transformation effect="sharpen:300" />
-</cld-image>
+<cld-image
+  cloudName="demo"
+  publicId="small_dinosaur"
+  effect="sharpen:300"
+  responsive
+/>
 ```
 
 Responsive mode, but adjusting to height instead:
 
 ```jsx
 <div class="explain" style="height: 75px; padding: 20px;">
-  <cld-image cloudName="demo" publicId="small_dinosaur" responsive="height">
-    <cld-transformation effect="sepia:95" />
-  </cld-image>
+  <cld-image
+    cloudName="demo"
+    publicId="small_dinosaur"
+    effect="sepia:95"
+    responsive="height"
+  />
 </div>
 ```
 
@@ -105,12 +103,12 @@ Note: This feature is dependent on [IntersectionObserver](https://developer.mozi
   <cld-image
     cloudName="demo"
     publicId="small_dinosaur"
+    crop="scale"
+    :height="300"
     lazy
     placeholder="color"
     @load.native="alert"
-  >
-    <cld-transformation crop="scale" :height="300" />
-  </cld-image>
+  />
 </template>
 
 <script>

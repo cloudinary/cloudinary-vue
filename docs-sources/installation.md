@@ -30,7 +30,7 @@ Vue.use(Cloudinary, {
     CldImage: true,
     // component name
     //        ^ true just turns if on
-    CldTransformation: "CldXf"
+    CldVideo: "CldVid"
     //                 ^ a custom name
   }
 });
@@ -38,7 +38,7 @@ Vue.use(Cloudinary, {
 Vue.use(Cloudinary, {
   configuration: { cloudName: "demo" },
   components: {
-    CldXf: "CldTransformation"
+    CldVid: "CldVideo"
   }
 });
 ```

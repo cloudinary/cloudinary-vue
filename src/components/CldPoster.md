@@ -1,11 +1,8 @@
-
-
-
 ### Attributes
 
 Refer to the base [Cloudinary JS SDK](https://github.com/cloudinary/cloudinary_js#configuration) for configuration options.
 
-See the [Image transformation reference](https://cloudinary.com/documentation/image_transformation_reference) documentation for all the options accepted by the `CldPoster` and `CldTransformation` components.
+See the [Image transformation reference](https://cloudinary.com/documentation/image_transformation_reference) documentation for all the options accepted by the `CldPoster` component.
 
 Options provided to the component instance are going to be transformed from lower camel case to snake case.
 
@@ -21,9 +18,7 @@ This component does not have any events.
 </cld-video>
 ```
 
-
 `CldPoster` can also be given [transformation](https://cloudinary.com/documentation/image_transformation_reference) data for the image by setting attributes on the component itself or with a [CldTransformation](#cldtransformation) child component.
-
 
 ```vue
 <template>

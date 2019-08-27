@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import CldImage from "../../src/components/CldImage.vue";
+import CldImage from "../../src/components/CldImage/CldImage.vue";
 
 describe("CldImage::responsive=height", () => {
   it("renders", async () => {
@@ -9,14 +9,15 @@ describe("CldImage::responsive=height", () => {
       `,
       components: { CldImage }
     });
+    const image = wrapper.find('img');
 
-    expect(wrapper.is("img")).toBe(true);
-    expect(wrapper.attributes("src")).toEqual(undefined);
+    expect(image.is("img")).toBe(true);
+    expect(image.attributes("src")).toEqual(undefined);
 
     wrapper.vm.$children[0].size = { width: 100, height: 200 };
 
-    expect(wrapper.is("img")).toBe(true);
-    expect(wrapper.attributes("src")).toEqual(
+    expect(image.is("img")).toBe(true);
+    expect(image.attributes("src")).toEqual(
       `http://res.cloudinary.com/demo/image/upload/c_scale,dpr_1.0,h_200/face_top`
     );
   });

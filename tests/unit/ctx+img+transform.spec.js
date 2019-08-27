@@ -1,7 +1,8 @@
+import Vue from "vue";
 import { mount } from "@vue/test-utils";
-import CldTransformation from "../../src/components/CldTransformation.vue";
-import CldImage from "../../src/components/CldImage.vue";
-import CldContext from "../../src/components/CldContext.vue";
+import CldTransformation from "../../src/components/CldTransformation/CldTransformation.vue";
+import CldImage from "../../src/components/CldImage/CldImage.vue";
+import CldContext from "../../src/components/CldContext/CldContext.vue";
 
 describe("CldImage", () => {
   it("with CldTransformation and CldContext", async () => {
@@ -10,10 +11,10 @@ describe("CldImage", () => {
         template: `
           <cld-context cloudName="demo">
             <cld-image publicId="face_top">
+              <cld-transformation crop="scale" width="100" height="100" />
               <cld-transformation effect="sepia" />
               <cld-transformation effect="blur" />
             </cld-image>
-            <cld-transformation crop="scale" width="100" height="100" />
           </cld-context>          
         `
       },
@@ -21,6 +22,8 @@ describe("CldImage", () => {
         components: { CldTransformation, CldImage, CldContext }
       }
     );
+
+    await Vue.nextTick();
 
     expect(wrapper.contains("img")).toBe(true);
     expect(wrapper.find("img").attributes("src")).toBe(

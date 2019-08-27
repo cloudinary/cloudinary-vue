@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { mount } from "@vue/test-utils";
-import CldContext from "../../src/components/CldContext.vue";
-import CldImage from "../../src/components/CldImage.vue";
+import CldContext from "../../src/components/CldContext/CldContext.vue";
+import CldImage from "../../src/components/CldImage/CldImage.vue";
 
 describe("CldContext", () => {
   it("works single-layered", async () => {
@@ -17,7 +17,7 @@ describe("CldContext", () => {
     await Vue.nextTick();
 
     expect(wrapper.contains("img")).toBe(true);
-    expect(wrapper.find("img").element.getAttribute("src")).toEqual(
+    expect(wrapper.find("img").attributes("src")).toEqual(
       `http://res.cloudinary.com/demo/image/upload/face_top`
     );
   });

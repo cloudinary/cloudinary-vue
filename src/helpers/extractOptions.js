@@ -1,6 +1,6 @@
-import CldTransformation from "../components/CldTransformation";
+import CldTransformation from "../components/CldTransformation/CldTransformation";
 import { normalizeTransformation, normalizeConfiguration } from "./attributes";
-import { merge, compact } from "../utils";
+import { compact } from "../utils";
 
 export function extractOptions(props, children) {
   const configuration = normalizeConfiguration(props);
@@ -15,13 +15,14 @@ export function extractOptions(props, children) {
   );
   return {
     configuration,
-    transformation: merge(firstLayerTransformation, {
+    transformation: {
+      ...firstLayerTransformation,
       transformation: [
         ...(firstLayerTransformation.transformation
           ? firstLayerTransformation.transformation
           : []),
         ...furtherTransformations
       ]
-    })
+    }
   };
 }

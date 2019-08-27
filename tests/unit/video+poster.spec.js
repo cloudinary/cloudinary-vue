@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import CldVideo from "../../src/components/CldVideo.vue";
+import CldVideo from "../../src/components/CldVideo/CldVideo.vue";
 import CldPoster from "../../src/components/CldPoster.vue";
 
 describe("CldPoster", () => {

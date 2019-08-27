@@ -774,7 +774,17 @@ function normalizeNonCloudinary(cfg) {
  */
 /* harmony default export */ var CldTransformationvue_type_script_lang_js_ = ({
   name: "CldTransformation",
-  inheritAttrs: false,
+  inject: ["registerTransformation", "removeTransformation"],
+  created: function created() {
+    if (this.registerTransformation) {
+      this.registerTransformation(this.$props);
+    }
+  },
+  beforeDestroy: function beforeDestroy() {
+    if (this.removeTransformation) {
+      this.removeTransformation(this.$props);
+    }
+  },
   render: function render() {
     console.error("<cld-transformation /> should be a immediate descendant of cld-(image|video|poster)");
     return null;
@@ -1560,7 +1570,12 @@ function noop() {}
 
 /* harmony default export */ var CldImagevue_type_script_lang_js_ = ({
   name: "CldImage",
-  inheritAttrs: false,
+  provide: function provide() {
+    return {
+      registerTransformation: this.registerTransformation,
+      removeTransformation: this.removeTransformation
+    };
+  },
   mixins: [size_size, lazy, withOptions],
   render: function render(h) {
     return h("img", this.imageAttrs, rejectTransformations(this.$slots.default));
@@ -1623,13 +1638,25 @@ function noop() {}
       }
     }
   },
+  data: function data() {
+    return {
+      transformations: []
+    };
+  },
+  methods: {
+    registerTransformation: function registerTransformation(transformation) {
+      if (this.transformation) {
+        this.transformations = [].concat(_toConsumableArray(transformation), [transformation]);
+      }
+    }
+  },
   computed: {
     imageAttrs: function imageAttrs() {
       var className = {
         "cld-image": true
       };
 
-      if (!this.publicId || !!findInTransformations(this.transformation, function (t) {
+      if (!this.publicId || !!findInTransformations(this.transformations, function (t) {
         return t.width === 0 || t.height === 0;
       }) || this.responsive && !this.size) {
         return {
@@ -1640,7 +1667,7 @@ function noop() {}
       }
 
       if (this.lazy && !this.visible) {
-        var _src = getPlaceholderURL(this.placeholder, this.publicId, this.configuration, this.transformation);
+        var _src = getPlaceholderURL(this.placeholder, this.publicId, this.configuration, this.transformations);
 
         return {
           class: className,
@@ -1651,7 +1678,7 @@ function noop() {}
         };
       }
 
-      var htmlAttrs = external_cloudinary_core_["Transformation"].new(this.transformation).toHtmlAttributes();
+      var htmlAttrs = external_cloudinary_core_["Transformation"].new(this.transformations).toHtmlAttributes();
       var src = external_cloudinary_core_["Cloudinary"].new(this.configuration).url(this.publicId, merge(this.transformation, {
         transformation: [].concat(_toConsumableArray(this.transformation.transformation || []), [getResizeTransformation(this.responsive, this.size, evalBreakpoints(this.breakpoints))], _toConsumableArray(this.progressive ? [{
           flags: ["progressive"]

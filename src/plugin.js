@@ -1,20 +1,37 @@
-import { State } from "./reactive/State";
-import { normalizeConfiguration } from "./helpers/attributes";
-
-import CldContext from "./components/CldContext";
-import CldImage from "./components/CldImage";
-import CldVideo from "./components/CldVideo";
+import CldContext from "./components/CldContext/CldContext";
+import CldImage from "./components/CldImage/CldImage";
+import CldVideo from "./components/CldVideo/CldVideo";
+import CldTransformation from './components/CldTransformation/CldTransformation';
 import { find } from "./utils";
 
-const allComponents = [CldContext, CldImage, CldVideo];
+const allComponents = [CldContext, CldImage, CldVideo, CldTransformation];
 
-export function install(Vue, options) {
+/**
+ * Returns object of props whose default value are mapped to the `configurations`' properties
+ * @param {Object} configurations 
+ */
+const computeDefaultProps = (configurations = {}) => {
+  const computedProps = {};
+  for (var key in configurations) {
+    const value = configurations[key];
+
+    computedProps[key] = {
+      default: value,
+    }
+  }
+
+  console.log(computedProps)
+
+  return computedProps;
+}
+
+export function install(Vue, options = {}) {
   if (Vue.CldInstalled) {
     throw new Error("Cloudinary plugin already installed");
   }
   Vue.CldInstalled = true;
 
-  options = options || {};
+  // const configurations = normalizeConfiguration(options.configuration || {});  
 
   allComponents.forEach(component => {
     const userComponentName = getUserComponentName(
@@ -22,15 +39,17 @@ export function install(Vue, options) {
       component.name
     );
     if (userComponentName != null) {
-      Vue.component(userComponentName, component);
+      Vue.component(userComponentName, {
+        ...component,
+        data() {
+          return {
+            ...(component.data ? component.data() : {}),
+            defaultConfigurations: options.configuration || {}
+          }
+        }
+      });
     }
   });
-
-  if (options.configuration) {
-    Vue.prototype.cldGlobalContextState = new State({
-      configuration: normalizeConfiguration(options.configuration)
-    });
-  }
 }
 
 function getUserComponentName(components, name) {

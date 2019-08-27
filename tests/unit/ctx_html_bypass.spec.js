@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import CldContext from "../../src/components/CldContext.vue";
+import CldContext from "../../src/components/CldContext/CldContext.vue";
 
 describe("CldContext", () => {
   it("bypasses non-cloudinary attributes", () => {

@@ -1,7 +1,7 @@
 import * as plugin from "./plugin";
-import CldContext from "./components/CldContext";
-import CldImage from "./components/CldImage";
-import CldVideo from "./components/CldVideo";
+import CldContext from "./components/CldContext/CldContext";
+import CldImage from "./components/CldImage/CldImage";
+import CldVideo from "./components/CldVideo/CldVideo";
 
 const components = {
   CldContext,

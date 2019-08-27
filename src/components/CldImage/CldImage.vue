@@ -7,8 +7,7 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, range } from "../../utils";
-import { hasZeroSizeTransformation } from "../../helpers/transformations.helpers";
-import { normalizeNonCloudinary, normalizeTransformation, normalizeConfiguration, getHTMLAttributes } from "../../helpers/attributes";
+import { normalizeNonCloudinary, normalizeTransformation, normalizeConfiguration, getHTMLAttributes, hasZeroSizeTransformation } from "../../helpers/attributes";
 import { evalBreakpoints } from "../../helpers/evalBreakpoints";
 import {
   getResizeTransformation,

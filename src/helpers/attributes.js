@@ -1,5 +1,8 @@
 import { Transformation, Util, Configuration } from "cloudinary-core";
 import { pick } from "../utils";
+import { find } from '../utils';
+
+export const hasZeroSizeTransformation = (transformations) => find(transformations, t => t.width === 0 || t.height === 0);
 
 /** List of all configuration fields as they are needed in components attributes */
 export const configuration = Configuration.CONFIG_PARAMS.map(Util.camelCase);

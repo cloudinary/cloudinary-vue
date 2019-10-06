@@ -346,24 +346,15 @@ var debounce = function debounce(fn, timeout) {
     }, timeout);
   };
 };
-// CONCATENATED MODULE: ./src/utils/index.js
+// CONCATENATED MODULE: ./src/utils/find.js
 
 
-/**
- * Returns free-of-falsy-element array from input `arr`
- * @param {Array} arr 
- */
-
-var compact = function compact(arr) {
-  return arr.filter(Boolean);
-};
 /**
  * Returns the first found element of `arr` that satisfies `predicate` check
  * @param {Array} arr 
  * @param {Function} predicate 
  */
-
-var utils_find = function find(arr, predicate) {
+var find_find = function find(arr, predicate) {
   if (!(arr instanceof Array)) {
     throw new Error("find 1st arg must be Array, is: ".concat(typeof subject === "undefined" ? "undefined" : typeof_typeof(subject)));
   }
@@ -378,13 +369,21 @@ var utils_find = function find(arr, predicate) {
 
   return null;
 };
+// CONCATENATED MODULE: ./src/utils/compact.js
+/**
+ * Returns free-of-falsy-element array from input `arr`
+ * @param {Array} arr 
+ */
+var compact = function compact(arr) {
+  return arr.filter(Boolean);
+};
+// CONCATENATED MODULE: ./src/utils/range.js
 /**
  * Returns an array containing all numbers between and including `min` and `max` in a distance of `step` from each other
  * @param {Number} min
  * @param {Number} max
  * @param {Number} step
  */
-
 var range = function range(min, max, step) {
   var result = [];
 
@@ -394,12 +393,12 @@ var range = function range(min, max, step) {
 
   return result;
 };
+// CONCATENATED MODULE: ./src/utils/pick.js
 /**
  * Returns new object contains only `originalObj`'s properities that exist in `keysToPick` 
  * @param {Object} originalObj 
  * @param {Array} keysToPick 
  */
-
 var pick = function pick() {
   var originalObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var keysToPick = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
@@ -415,6 +414,12 @@ var pick = function pick() {
 
   return target;
 };
+// CONCATENATED MODULE: ./src/utils/index.js
+
+
+
+
+
 // CONCATENATED MODULE: ./src/helpers/attributes.js
 
 
@@ -423,7 +428,7 @@ var pick = function pick() {
 
 
 var attributes_hasZeroSizeTransformation = function hasZeroSizeTransformation(transformations) {
-  return utils_find(transformations, function (t) {
+  return find_find(transformations, function (t) {
     return t.width === 0 || t.height === 0;
   });
 };
@@ -642,7 +647,7 @@ var CldContext_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldContext = (CldContext_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27eeddf6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldImage/CldImage.vue?vue&type=template&id=053448cc&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ee099d80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldImage/CldImage.vue?vue&type=template&id=053448cc&
 var CldImagevue_type_template_id_053448cc_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cld-image"},[_c('img',_vm._b({style:(_vm.style)},'img',_vm.imageAttrs,false)),_vm._t("default")],2)}
 var CldImagevue_type_template_id_053448cc_staticRenderFns = []
 
@@ -1308,7 +1313,7 @@ function findInTransformations(transformations, predicate) {
     return undefined;
   }
 
-  return utils_find([].concat(transformations).concat(transformations.transformation || []), predicate);
+  return find_find([].concat(transformations).concat(transformations.transformation || []), predicate);
 }
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldPoster.vue?vue&type=script&lang=js&
 /**
@@ -1536,7 +1541,7 @@ var className = {
       } // <cld-video> <cld-poster publicId="x" /> </cld-video>
 
 
-      var posterChild = this.$slots.default ? utils_find(this.$slots.default, function (child) {
+      var posterChild = this.$slots.default ? find_find(this.$slots.default, function (child) {
         return child.componentOptions && child.componentOptions.Ctor.options.render === CldPoster.render;
       }) : null;
 
@@ -1658,7 +1663,7 @@ function getUserComponentName(components, name) {
 
 
   if (Array.isArray(components)) {
-    var entry = utils_find(components, function (component) {
+    var entry = find_find(components, function (component) {
       return typeof component === "string" && component === name || typeof_typeof(component) === "object" && component != null && component.name === name;
     });
 
@@ -1686,7 +1691,7 @@ function getUserComponentName(components, name) {
   // { components: { CloudinaryImage: CldImage } }
 
 
-  var found = utils_find(Object.keys(components), function (k) {
+  var found = find_find(Object.keys(components), function (k) {
     return typeof components[k] === "string" && components[k] === name || typeof_typeof(components[k]) === "object" && components[k] != null && components[k].name === name;
   });
   return found === undefined ? null : found;

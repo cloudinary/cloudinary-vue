@@ -11,9 +11,9 @@ export default {
   inheritAttrs: false,
 
   render() {
-    console.error(
-      `<cld-poster /> should be a immediate descendant of cld-video`
-    );
+    // console.error(
+    //   `<cld-poster /> should be a immediate descendant of cld-video`
+    // );
     return null;
   }
 };

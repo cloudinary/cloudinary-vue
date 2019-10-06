@@ -1,4 +1,6 @@
-# Cloudinary Vue SDK
+# Cloudinary Vue SDK 
+
+[![Build Status](https://travis-ci.org/cloudinary/cloudinary-vue.svg?branch=master)](https://travis-ci.org/cloudinary/cloudinary-vue)
 
 Cloudinary is a cloud service that offers a solution to a web application's entire image management pipeline.
 

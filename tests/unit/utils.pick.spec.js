@@ -1,4 +1,4 @@
-import { pick } from "../../src/utils/pick";
+import { pick } from "../../src/utils";
 
 describe("pick", () => {
   it("picks empty", () => {

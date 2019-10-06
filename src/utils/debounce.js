@@ -1,10 +1,7 @@
-export function debounce(fn, timeout) {
+export const debounce = (fn, timeout) => {
   let forceUpdateTimeoutToken = null;
-  return function() {
-    const args = Array.prototype.slice.call(arguments, 0);
+  return (...args) => {
     clearTimeout(forceUpdateTimeoutToken);
-    forceUpdateTimeoutToken = setTimeout(() => {
-      fn.apply(this, args);
-    }, timeout);
-  };
+    forceUpdateTimeoutToken = setTimeout(() => fn(...args), timeout)
+  }
 }

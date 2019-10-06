@@ -1,4 +1,5 @@
-import { equal, pick, debounce } from "../utils";
+import { pick, debounce } from "../utils";
+
 
 /**
  * If necessary posts root element
@@ -6,8 +7,6 @@ import { equal, pick, debounce } from "../utils";
  * into components data
  */
 export const size = {
-  props: {},
-
   data() {
     return { size: null };
   },
@@ -24,10 +23,10 @@ export const size = {
       if (this.shouldMeasureSize) {
         if (this.$el && !this.cancelSizeListener) {
           this.cancelSizeListener = watchElementSize(this.$el, size => {
-            const currentSize = pick(this.size, ["width", "height"]);
-            const nextSize = pick(size, ["width", "height"]);
-            if (!equal(currentSize, nextSize)) {
-              this.size = nextSize;
+            if (!size) return;
+
+            if (!this.size || this.size.width !== size.width || this.size.height !== size.height) {
+              this.size = { ...size };
             }
           });
         }
@@ -36,7 +35,7 @@ export const size = {
           this.cancelSizeListener();
         }
       }
-    }
+    },
   },
 
   created() {
@@ -68,7 +67,7 @@ function watchElementSize(element, cb) {
   const delayedCallback = debounce(cb, 150);
   let cancelled = false;
 
-  if (typeof window === "object") {
+  if (window && typeof window === "object") {
     if ("ResizeObserver" in window) {
       const resizeObserver = new ResizeObserver(entries => {
         for (const entry of entries) {

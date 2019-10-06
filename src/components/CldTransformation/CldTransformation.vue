@@ -5,13 +5,17 @@
  */
 export default {
   name: "CldTransformation",
-
-  inheritAttrs: false,
-
+  inject: {
+    registerTransformation: {
+      default: null
+    }
+  },
+  created() {
+    if (this.registerTransformation) {
+      this.registerTransformation(this.$attrs);
+    }
+  },
   render() {
-    console.error(
-      `<cld-transformation /> should be a immediate descendant of cld-(image|video|poster)`
-    );
     return null;
   }
 };

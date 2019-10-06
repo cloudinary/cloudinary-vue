@@ -15,8 +15,8 @@ describe("CLD plugin", () => {
 
     await new Promise(r => localVue.nextTick(() => r()));
 
-    expect(wrapper.is("img")).toBe(true);
-    expect(wrapper.attributes("src")).toEqual(
+    expect(wrapper.contains("img")).toBe(true);
+    expect(wrapper.find('img').attributes("src")).toEqual(
       `http://res.cloudinary.com/demo2/image/upload/face_top`
     );
   });
@@ -58,7 +58,7 @@ describe("CLD plugin", () => {
         },
         { localVue }
       );
-      expect(wrapper.is("img")).toBe(true);
+      expect(wrapper.contains("img")).toBe(true);
 
       const wrapper2 = mount(
         {
@@ -66,7 +66,7 @@ describe("CLD plugin", () => {
         },
         { localVue }
       );
-      expect(wrapper2.is("video")).toBe(false);
+      expect(wrapper2.contains("video")).toBe(false);
     });
 
     it("array should contain cld component(s)", async () => {
@@ -79,7 +79,7 @@ describe("CLD plugin", () => {
         },
         { localVue }
       );
-      expect(wrapper.is("img")).toBe(true);
+      expect(wrapper.contains("img")).toBe(true);
 
       const wrapper2 = mount(
         {
@@ -100,7 +100,7 @@ describe("CLD plugin", () => {
         },
         { localVue }
       );
-      expect(wrapper.is("img")).toBe(true);
+      expect(wrapper.contains("img")).toBe(true);
 
       const wrapper2 = mount(
         {
@@ -121,7 +121,7 @@ describe("CLD plugin", () => {
         },
         { localVue }
       );
-      expect(wrapper.is("img")).toBe(true);
+      expect(wrapper.contains("img")).toBe(true);
 
       const wrapper2 = mount(
         {
@@ -142,7 +142,7 @@ describe("CLD plugin", () => {
         },
         { localVue }
       );
-      expect(wrapper.is("img")).toBe(true);
+      expect(wrapper.contains("img")).toBe(true);
 
       const wrapper2 = mount(
         {
@@ -163,7 +163,7 @@ describe("CLD plugin", () => {
         },
         { localVue }
       );
-      expect(wrapper.is("img")).toBe(true);
+      expect(wrapper.contains("img")).toBe(true);
 
       const wrapper2 = mount(
         {
@@ -171,7 +171,7 @@ describe("CLD plugin", () => {
         },
         { localVue }
       );
-      expect(wrapper2.is("img")).toBe(false);
+      expect(wrapper2.contains("img")).toBe(false);
     });
   });
 });

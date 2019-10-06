@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { mount } from "@vue/test-utils";
-import CldImage from "../../src/components/CldImage.vue";
+import CldImage from "../../src/components/CldImage/CldImage.vue";
 
 describe("CldImage", () => {
   describe("handles placeholder attribute", () => {
@@ -15,7 +15,7 @@ describe("CldImage", () => {
           />
         `,
         components: { CldImage }
-      });
+      }).find('img');
       expect(image.is("img")).toBe(true);
       expect(image.attributes("src")).toEqual(
         `http://res.cloudinary.com/demo/image/upload/$nh_ih,$nw_iw,c_scale,q_1,w_1/c_scale,h_$nh,w_$nw/face_top`

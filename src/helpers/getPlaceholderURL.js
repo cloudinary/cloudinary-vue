@@ -40,13 +40,13 @@ export function getPlaceholderURL(
   if (typeof mode === "string") {
     if (mode in placeholderTransformations) {
       return Cloudinary.new(configuration).url(
-        publicId,
-        merge(transformation, {
+        publicId, {
+          ...transformation,
           transformation: [
             ...(transformation.transformation || []),
             ...placeholderTransformations[mode]
           ]
-        })
+        }
       );
     }
     return mode;

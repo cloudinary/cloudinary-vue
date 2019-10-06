@@ -16,6 +16,14 @@
         "name": "CldImage"
       },
       {
+        "href": "#/Install core components/CldPoster",
+        "name": "CldPoster"
+      },
+      {
+        "href": "#/Install core components/CldTransformation",
+        "name": "CldTransformation"
+      },
+      {
         "href": "#/Install core components/CldVideo",
         "name": "CldVideo"
       }

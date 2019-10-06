@@ -1,12 +1,9 @@
-export { formatObject } from "./formatObject";
-export { kv } from "./kv";
-export { merge } from "./merge";
-export { compact } from "./compact";
-export { omit } from "./omit";
-export { pick } from "./pick";
-export { equal } from "./equal";
-export { uniq } from "./uniq";
 export { debounce } from "./debounce";
+
 export { find } from "./find";
+
+export { compact } from "./compact";
+
 export { range } from "./range";
-export { flatten } from "./flatten";
+
+export { pick } from "./pick";

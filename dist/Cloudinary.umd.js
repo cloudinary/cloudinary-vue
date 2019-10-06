@@ -96,6 +96,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
+/***/ "12d2":
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/es7.object.get-own-property-descriptors");
+
+/***/ }),
+
 /***/ "1750":
 /***/ (function(module, exports) {
 
@@ -269,6 +276,9 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
+// EXTERNAL MODULE: external "core-js/modules/es7.object.get-own-property-descriptors"
+var es7_object_get_own_property_descriptors_ = __webpack_require__("12d2");
+
 // EXTERNAL MODULE: external "core-js/modules/es6.array.iterator"
 var es6_array_iterator_ = __webpack_require__("2c92");
 
@@ -302,412 +312,89 @@ function typeof_typeof(obj) {
 
   return typeof_typeof(obj);
 }
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/define-property.js
+var define_property = __webpack_require__("85f2");
+var define_property_default = /*#__PURE__*/__webpack_require__.n(define_property);
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/defineProperty.js
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    define_property_default()(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
 // EXTERNAL MODULE: external "core-js/modules/es6.function.name"
 var es6_function_name_ = __webpack_require__("25fc");
 
 // EXTERNAL MODULE: external "core-js/modules/web.dom.iterable"
 var web_dom_iterable_ = __webpack_require__("80a8");
 
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/classCallCheck.js
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/define-property.js
-var define_property = __webpack_require__("85f2");
-var define_property_default = /*#__PURE__*/__webpack_require__.n(define_property);
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/createClass.js
-
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-
-    define_property_default()(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-// CONCATENATED MODULE: ./src/reactive/Channel.js
-
-
-
-
-
-/**
- * @typedef {Object} IListener
- * @property {Function} next
- * @property {Function} error
- * @property {Function} complete
- */
-
-/**
- * Message passing entity.
- * Allows registering listeners that are then triggered with a message, error or end signal.
- */
-var Channel_Channel =
-/*#__PURE__*/
-function () {
-  function Channel() {
-    _classCallCheck(this, Channel);
-
-    this.listeners = [];
-  }
-  /**
-   * Push a message to all active listeners
-   * @param {*} message
-   * @returns {undefined}
-   */
-
-
-  _createClass(Channel, [{
-    key: "next",
-    value: function next(value) {
-      this.listeners.forEach(function (sub) {
-        return "next" in sub && sub.next ? sub.next(value) : null;
-      });
-    }
-    /**
-     * Push an error signal to all active listeners.
-     * Completes all subscriptions.
-     * @param {Error} error
-     * @returns {undefined}
-     */
-
-  }, {
-    key: "error",
-    value: function error(_error) {
-      this.listeners.splice(0).forEach(function (sub) {
-        return "error" in sub && sub.error ? sub.error(_error) : null;
-      });
-    }
-    /**
-     * Push an end signal to all active listeners
-     * @returns {undefined}
-     */
-
-  }, {
-    key: "complete",
-    value: function complete() {
-      this.listeners.splice(0).forEach(function (sub) {
-        return "complete" in sub && sub.complete ? sub.complete() : null;
-      });
-    }
-    /**
-     * Register a listener
-     * @param {IListener} listener
-     * @returns {Function}
-     */
-
-  }, {
-    key: "subscribe",
-    value: function subscribe(listener) {
-      var _this = this;
-
-      if (listener && typeof_typeof(listener) === "object") {
-        this.listeners.push(listener);
-      }
-
-      return function () {
-        var pos = _this.listeners.indexOf(listener);
-
-        if (pos >= 0) {
-          _this.listeners.splice(pos, 1);
-        }
-      };
-    }
-  }]);
-
-  return Channel;
-}();
-// CONCATENATED MODULE: ./src/reactive/State.js
-
-
-
-
-/**
- * @typedef {Object} IListener
- * @property {Function} next
- * @property {Function} error
- * @property {Function} complete
- */
-
-/**
- * State broadcasting entity.
- * Like Channel, allows registering for updates,
- * but subscription is also notified immediately
- * of a last message passed through the entity
- */
-
-var State_State =
-/*#__PURE__*/
-function () {
-  function State(value) {
-    _classCallCheck(this, State);
-
-    this.lastValue = value;
-    this.channel = new Channel_Channel();
-  }
-  /**
-   * Push a new state to all active listeners
-   * @param {Function|*} state
-   * @returns {undefined}
-   */
-
-
-  _createClass(State, [{
-    key: "next",
-    value: function next(value) {
-      if (this.lastValue === value) {
-        return;
-      }
-
-      var computedValue = typeof value === "function" ? value(this.lastValue) : value;
-      this.lastValue = computedValue;
-      return this.channel.next(computedValue);
-    }
-    /**
-     * Push an error signal to all active listeners
-     * @param {Error} error
-     * @returns {undefined}
-     */
-
-  }, {
-    key: "error",
-    value: function error(_error) {
-      return this.channel.error(_error);
-    }
-    /**
-     * Push an end signal to all active listeners
-     * @returns {undefined}
-     */
-
-  }, {
-    key: "complete",
-    value: function complete() {
-      return this.channel.complete();
-    }
-    /**
-     * Register a listener
-     * @param {IListener} listener
-     * @returns {Function}
-     */
-
-  }, {
-    key: "subscribe",
-    value: function subscribe(listener) {
-      if (listener && typeof_typeof(listener) === "object" && listener.next) {
-        listener.next(this.lastValue);
-      }
-
-      return this.channel.subscribe(listener);
-    }
-    /**
-     * Returns a last pushed state
-     */
-
-  }, {
-    key: "get",
-    value: function get() {
-      return this.lastValue;
-    }
-  }]);
-
-  return State;
-}();
 // EXTERNAL MODULE: external "cloudinary-core"
 var external_cloudinary_core_ = __webpack_require__("3c59");
 
-// CONCATENATED MODULE: ./src/utils/merge.js
-
-function merge() {
-  for (var _len = arguments.length, parts = new Array(_len), _key = 0; _key < _len; _key++) {
-    parts[_key] = arguments[_key];
-  }
-
-  return external_cloudinary_core_["Util"].assign.apply(external_cloudinary_core_["Util"], [{}].concat(parts));
-}
-// CONCATENATED MODULE: ./src/utils/kv.js
-function kv(k, v) {
-  var result = {};
-  result[k] = v;
-  return result;
-}
-// CONCATENATED MODULE: ./src/utils/formatObject.js
-
-
-
-
-
-function formatObject(subject, instructions) {
-  if (subject == null || Object.keys(instructions).length === 0) {
-    return subject;
-  }
-
-  return Object.keys(subject).reduce(function (result, key) {
-    return key in instructions ? merge(result, kv(key, instructions[key](subject[key]))) : merge(result, kv(key, subject[key]));
-  }, {});
-}
-// CONCATENATED MODULE: ./src/utils/compact.js
-
-
-
-function compact(subject) {
-  if (subject == null) {
-    return subject;
-  }
-
-  if (subject instanceof Array) {
-    return subject.reduce(function (result, item) {
-      if (item != null) {
-        result.push(item);
-      }
-
-      return result;
-    }, []);
-  }
-
-  return Object.keys(subject).reduce(function (result, key) {
-    if (subject[key] !== undefined) {
-      result[key] = subject[key];
-    }
-
-    return result;
-  }, {});
-}
-// CONCATENATED MODULE: ./src/utils/omit.js
-
-
-
-
-
-function omit(subject, disallowed) {
-  if (subject == null) {
-    return subject;
-  }
-
-  return Object.keys(subject).reduce(function (result, key) {
-    return (disallowed || []).indexOf(key) < 0 ? merge(result, kv(key, subject[key])) : result;
-  }, {});
-}
-// CONCATENATED MODULE: ./src/utils/pick.js
-function pick(subject, allowed) {
-  if (subject == null) {
-    return subject;
-  }
-
-  if (!allowed || !allowed.length) {
-    return {};
-  }
-
-  var target = {};
-
-  for (var i = 0; i < allowed.length; i++) {
-    var key = allowed[i];
-
-    if (key in subject) {
-      target[key] = subject[key];
-    }
-  }
-
-  return target;
-}
-// CONCATENATED MODULE: ./src/utils/uniq.js
-function uniq(subject) {
-  return (subject || []).reduce(function (r, i) {
-    return r.indexOf(i) < 0 ? r.concat([i]) : r;
-  }, []);
-}
-// CONCATENATED MODULE: ./src/utils/union.js
-function union(subjectA, subjectB) {
-  return (subjectA || []).concat(subjectB || []);
-}
-// CONCATENATED MODULE: ./src/utils/equal.js
-
-
-
-
-
-
-function equal(subjectA, subjectB) {
-  if (subjectA === null && subjectB === null || subjectA === undefined && subjectB === undefined) {
-    return true;
-  }
-
-  if (subjectA == null && subjectB == null || subjectA == null || subjectB == null) {
-    return false;
-  }
-
-  if (typeof_typeof(subjectA) === "object" && typeof_typeof(subjectB) === "object") {
-    var subjectAKeys = Object.keys(subjectA);
-    var subjectBKeys = Object.keys(subjectB);
-
-    if (subjectAKeys.length !== subjectBKeys.length) {
-      return false;
-    }
-
-    var allKeys = uniq(union(subjectAKeys, subjectBKeys));
-
-    if (allKeys.length !== subjectAKeys.length) {
-      return false;
-    }
-
-    for (var i = 0; i < allKeys.length; i++) {
-      var k = allKeys[i];
-
-      if (!equal(subjectA[k], subjectB[k])) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  return subjectA === subjectB;
-}
 // CONCATENATED MODULE: ./src/utils/debounce.js
-function debounce(fn, timeout) {
+var debounce = function debounce(fn, timeout) {
   var forceUpdateTimeoutToken = null;
   return function () {
-    var _this = this;
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-    var args = Array.prototype.slice.call(arguments, 0);
     clearTimeout(forceUpdateTimeoutToken);
     forceUpdateTimeoutToken = setTimeout(function () {
-      fn.apply(_this, args);
+      return fn.apply(void 0, args);
     }, timeout);
   };
-}
-// CONCATENATED MODULE: ./src/utils/find.js
+};
+// CONCATENATED MODULE: ./src/utils/index.js
 
-function find(subject, predicate) {
-  if (!(subject instanceof Array)) {
-    throw new Error("find 1st arg must be Array, is: ".concat(typeof_typeof(subject)));
+
+/**
+ * Returns free-of-falsy-element array from input `arr`
+ * @param {Array} arr 
+ */
+
+var compact = function compact(arr) {
+  return arr.filter(Boolean);
+};
+/**
+ * Returns the first found element of `arr` that satisfies `predicate` check
+ * @param {Array} arr 
+ * @param {Function} predicate 
+ */
+
+var utils_find = function find(arr, predicate) {
+  if (!(arr instanceof Array)) {
+    throw new Error("find 1st arg must be Array, is: ".concat(typeof subject === "undefined" ? "undefined" : typeof_typeof(subject)));
   }
 
-  for (var i = 0, l = subject.length; i < l; i++) {
-    if (predicate(subject[i])) {
-      return subject[i];
+  for (var i = 0; i < arr.length; i++) {
+    var element = arr[i];
+
+    if (predicate(element)) {
+      return element;
     }
   }
-}
-// CONCATENATED MODULE: ./src/utils/range.js
+
+  return null;
+};
 /**
  * Returns an array containing all numbers between and including `min` and `max` in a distance of `step` from each other
  * @param {Number} min
  * @param {Number} max
  * @param {Number} step
  */
-function range(min, max, step) {
+
+var range = function range(min, max, step) {
   var result = [];
 
   for (var i = min; i <= max; i += step) {
@@ -715,73 +402,140 @@ function range(min, max, step) {
   }
 
   return result;
-}
-// CONCATENATED MODULE: ./src/utils/flatten.js
-function flatten(subject) {
-  if (subject == null) {
-    return subject;
+};
+/**
+ * Returns new object contains only `originalObj`'s properities that exist in `keysToPick` 
+ * @param {Object} originalObj 
+ * @param {Array} keysToPick 
+ */
+
+var pick = function pick() {
+  var originalObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var keysToPick = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var target = {};
+
+  for (var i = 0; i < keysToPick.length; i++) {
+    var key = keysToPick[i];
+
+    if (originalObj.hasOwnProperty(key)) {
+      target[key] = originalObj[key];
+    }
   }
 
-  return [].concat(subject).reduce(function (result, item) {
-    return result.concat(item);
-  }, []);
-}
-// CONCATENATED MODULE: ./src/utils/index.js
-
-
-
-
-
-
-
-
-
-
-
-
+  return target;
+};
 // CONCATENATED MODULE: ./src/helpers/attributes.js
 
 
+
+
+
+
+var attributes_hasZeroSizeTransformation = function hasZeroSizeTransformation(transformations) {
+  return utils_find(transformations, function (t) {
+    return t.width === 0 || t.height === 0;
+  });
+};
 /** List of all configuration fields as they are needed in components attributes */
 
 var attributes_configuration = external_cloudinary_core_["Configuration"].CONFIG_PARAMS.map(external_cloudinary_core_["Util"].camelCase);
 /** List of all transformation fields as they are needed in components attributes */
 
 var attributes_transformation = external_cloudinary_core_["Transformation"].methods;
+var mappedCfgMethods = attributes_transformation.concat(attributes_configuration);
 /** Extract configuration options for provided object */
 
-function normalizeConfiguration(cfg) {
-  return external_cloudinary_core_["Util"].withSnakeCaseKeys(formatObject(compact(pick(cfg, attributes_configuration)), {
-    secure: function secure(v) {
-      return typeof v === "boolean" ? v : v === "true";
-    }
-  }));
+function normalizeConfiguration() {
+  var cfg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var formattedConfigs = external_cloudinary_core_["Util"].withSnakeCaseKeys(cfg);
+
+  if (formattedConfigs.secure) {
+    formattedConfigs.secure = formattedConfigs.secure === true || formattedConfigs.secure === 'true';
+  }
+
+  return pick(formattedConfigs, external_cloudinary_core_["Configuration"].CONFIG_PARAMS);
 }
 /** Extract transformation options for provided object */
 
-function normalizeTransformation(cfg) {
-  return external_cloudinary_core_["Util"].withSnakeCaseKeys(compact(pick(cfg, attributes_transformation)));
+function normalizeTransformation() {
+  var cfg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  return external_cloudinary_core_["Util"].withSnakeCaseKeys(pick(cfg, attributes_transformation));
 }
 /** Extract fields that are not used for configuration nor transformation in provided object */
 
-function normalizeNonCloudinary(cfg) {
-  return compact(omit(cfg, attributes_transformation.concat(attributes_configuration)));
-}
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldTransformation.vue?vue&type=script&lang=js&
+var normalizeNonCloudinary = function normalizeNonCloudinary() {
+  var currConfig = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var cleanCfgs = {};
+  Object.keys(currConfig).forEach(function (key) {
+    if (mappedCfgMethods.indexOf(key) === -1) {
+      cleanCfgs[key] = currConfig[key];
+    }
+  });
+  return cleanCfgs;
+};
+var attributes_getHTMLAttributes = function getHTMLAttributes(options) {
+  return external_cloudinary_core_["Transformation"].new(options).toHtmlAttributes();
+};
+// CONCATENATED MODULE: ./src/mixins/withOptions.js
+
+
+
+
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
 /**
- * One or more [transformation parameters](https://cloudinary.com/documentation/image_transformation_reference)
- * in a single component, or a set of [chained transformations](https://cloudinary.com/documentation/image_transformations#chained_transformations) in multiple components.
+ * This extracts configuration and transformation options
+ * from the element's own and inherited attributes
  */
-/* harmony default export */ var CldTransformationvue_type_script_lang_js_ = ({
-  name: "CldTransformation",
+
+var withOptions = {
+  computed: {
+    configuration: function configuration() {
+      return normalizeConfiguration(_objectSpread({}, this.defaultConfigurations || [], {}, this.$props || [], {}, this.contextConfiguration, {}, this.$attrs));
+    },
+    options: function options() {
+      return normalizeTransformation(this.$attrs);
+    }
+  }
+};
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldContext/CldContext.vue?vue&type=script&lang=js&
+//
+
+
+/**
+ * Cloudinary context providing element
+ */
+
+/* harmony default export */ var CldContextvue_type_script_lang_js_ = ({
+  name: "CldContext",
   inheritAttrs: false,
-  render: function render() {
-    console.error("<cld-transformation /> should be a immediate descendant of cld-(image|video|poster)");
-    return null;
+  mixins: [withOptions],
+  provide: function provide() {
+    return {
+      contextConfiguration: this.configuration
+    };
+  },
+  computed: {
+    attributes: function attributes() {
+      return normalizeNonCloudinary(this.$attrs);
+    }
+  },
+  render: function render(h) {
+    return h("div", {
+      class: {
+        "cld-context": true
+      },
+      attrs: this.attributes
+    }, this.$slots.default);
   }
 });
-// CONCATENATED MODULE: ./src/components/CldTransformation.vue?vue&type=script&lang=js&
- /* harmony default export */ var components_CldTransformationvue_type_script_lang_js_ = (CldTransformationvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/CldContext/CldContext.vue?vue&type=script&lang=js&
+ /* harmony default export */ var CldContext_CldContextvue_type_script_lang_js_ = (CldContextvue_type_script_lang_js_); 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 /* globals __VUE_SSR_CONTEXT__ */
 
@@ -877,17 +631,17 @@ function normalizeComponent (
   }
 }
 
-// CONCATENATED MODULE: ./src/components/CldTransformation.vue
-var CldTransformation_render, staticRenderFns
+// CONCATENATED MODULE: ./src/components/CldContext/CldContext.vue
+var render, staticRenderFns
 
 
 
 
 /* normalize component */
 
-var CldTransformation_component = normalizeComponent(
-  components_CldTransformationvue_type_script_lang_js_,
-  CldTransformation_render,
+var CldContext_component = normalizeComponent(
+  CldContext_CldContextvue_type_script_lang_js_,
+  render,
   staticRenderFns,
   false,
   null,
@@ -896,52 +650,14 @@ var CldTransformation_component = normalizeComponent(
   
 )
 
-/* harmony default export */ var CldTransformation = (CldTransformation_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldPoster.vue?vue&type=script&lang=js&
-/**
- * The image to be shown while a video is downloading or until the user hits the play button.
- * This component must be added as a child of the [CldVideo](#cldvideo) component.
- *
- * If this component is not given then the poster image defaults to the middle frame of the source video in jpg format.
- */
-/* harmony default export */ var CldPostervue_type_script_lang_js_ = ({
-  name: "CldPoster",
-  inheritAttrs: false,
-  render: function render() {
-    console.error("<cld-poster /> should be a immediate descendant of cld-video");
-    return null;
-  }
-});
-// CONCATENATED MODULE: ./src/components/CldPoster.vue?vue&type=script&lang=js&
- /* harmony default export */ var components_CldPostervue_type_script_lang_js_ = (CldPostervue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./src/components/CldPoster.vue
-var CldPoster_render, CldPoster_staticRenderFns
+/* harmony default export */ var CldContext = (CldContext_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27eeddf6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldImage/CldImage.vue?vue&type=template&id=053448cc&
+var CldImagevue_type_template_id_053448cc_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cld-image"},[_c('img',_vm._b({style:(_vm.style)},'img',_vm.imageAttrs,false)),_vm._t("default")],2)}
+var CldImagevue_type_template_id_053448cc_staticRenderFns = []
 
 
+// CONCATENATED MODULE: ./src/components/CldImage/CldImage.vue?vue&type=template&id=053448cc&
 
-
-/* normalize component */
-
-var CldPoster_component = normalizeComponent(
-  components_CldPostervue_type_script_lang_js_,
-  CldPoster_render,
-  CldPoster_staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* harmony default export */ var CldPoster = (CldPoster_component.exports);
-// CONCATENATED MODULE: ./src/helpers/rejectTransformations.js
-
-
-function rejectTransformations(slot) {
-  return slot == null ? [] : slot.filter(function (child) {
-    return !(child.componentOptions && (child.componentOptions.Ctor.options.render === CldTransformation.render || child.componentOptions.Ctor.options.render === CldPoster.render));
-  });
-}
 // EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js
 var is_array = __webpack_require__("a745");
 var is_array_default = /*#__PURE__*/__webpack_require__.n(is_array);
@@ -982,160 +698,6 @@ function _nonIterableSpread() {
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
 }
-// CONCATENATED MODULE: ./src/mixins/inContext.js
-/**
- * This ensures injection of inherited configuration
- * and application of updates of those
- * either from parent CldContext or plugin options
- */
-var inContext = {
-  inject: {
-    cldOptionsState: {
-      default: function _default() {
-        return this.cldGlobalContextState;
-      }
-    }
-  },
-  data: function data() {
-    return {
-      cldOptions: {}
-    };
-  },
-  created: function created() {
-    var _this = this;
-
-    if (this.cldOptionsState) {
-      this.cldOptionsStateSubCancel = this.cldOptionsState.subscribe({
-        next: function next(options) {
-          _this.cldOptions = options;
-        }
-      });
-    }
-  },
-  destroyed: function destroyed() {
-    if (this.cldOptionsStateSubCancel) {
-      this.cldOptionsStateSubCancel();
-    }
-  }
-};
-// CONCATENATED MODULE: ./src/mixins/withOptions.js
-
-
-
-
-
-/**
- * This extracts configuration and transformation options
- * from the element's own and inherited attributes
- */
-
-var withOptions = {
-  mixins: [inContext],
-  computed: {
-    configuration: function configuration() {
-      return merge(this.cldOptions.configuration, normalizeConfiguration(this.$attrs));
-    },
-    ownTransformation: function ownTransformation() {
-      return normalizeTransformation(this.$attrs);
-    },
-    ownChildTransformations: function ownChildTransformations() {
-      return this.$slots && this.$slots.default ? compact(this.$slots.default.map(function (child) {
-        return child.componentOptions && child.componentOptions.Ctor.options.render === CldTransformation.render ? normalizeTransformation(child.data.attrs) : null;
-      })) : [];
-    },
-    inheritedChildTransformations: function inheritedChildTransformations() {
-      return this.cldOptions.transformations || [];
-    },
-    childTransformations: function childTransformations() {
-      return [].concat(_toConsumableArray(this.inheritedChildTransformations || []), _toConsumableArray(this.ownChildTransformations || []));
-    },
-    transformation: function transformation() {
-      return merge(this.ownTransformation, {
-        transformation: [].concat(_toConsumableArray(this.ownTransformation.transformation || []), _toConsumableArray(this.childTransformations))
-      });
-    }
-  }
-};
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldContext.vue?vue&type=script&lang=js&
-
-
-
-
-/**
- * Cloudinary context providing element
- */
-
-/* harmony default export */ var CldContextvue_type_script_lang_js_ = ({
-  name: "CldContext",
-  inheritAttrs: false,
-  mixins: [withOptions],
-  provide: function provide() {
-    return {
-      cldOptionsState: this.nextCldOptionsState
-    };
-  },
-  render: function render(h) {
-    return h("div", {
-      class: {
-        "cld-context": true
-      },
-      attrs: normalizeNonCloudinary(this.$attrs)
-    }, rejectTransformations(this.$slots.default));
-  },
-  data: function data() {
-    return {
-      nextCldOptionsState: new State_State({})
-    };
-  },
-  methods: {
-    postOptions: function postOptions() {
-      this.nextCldOptionsState.next({
-        configuration: this.configuration,
-        transformations: this.childTransformations
-      });
-    }
-  },
-  created: function created() {
-    this.postOptions();
-  },
-  updated: function updated() {
-    this.postOptions();
-  },
-  destroyed: function destroyed() {
-    this.nextCldOptionsState.complete();
-  }
-});
-// CONCATENATED MODULE: ./src/components/CldContext.vue?vue&type=script&lang=js&
- /* harmony default export */ var components_CldContextvue_type_script_lang_js_ = (CldContextvue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./src/components/CldContext.vue
-var CldContext_render, CldContext_staticRenderFns
-
-
-
-
-/* normalize component */
-
-var CldContext_component = normalizeComponent(
-  components_CldContextvue_type_script_lang_js_,
-  CldContext_render,
-  CldContext_staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* harmony default export */ var CldContext = (CldContext_component.exports);
-// CONCATENATED MODULE: ./src/helpers/findInTransformations.js
-
-function findInTransformations(transformations, predicate) {
-  if (!transformations) {
-    return undefined;
-  }
-
-  return find([].concat(transformations).concat(transformations.transformation || []), predicate);
-}
 // CONCATENATED MODULE: ./src/helpers/evalBreakpoints.js
 /**
  * Normalizes `breakpoint` component attribute to an array of numbers
@@ -1173,6 +735,15 @@ function findBreakpoint(stops, value) {
   }).concat(stop)[0];
 }
 // CONCATENATED MODULE: ./src/helpers/responsiveness.js
+
+
+
+
+
+
+function responsiveness_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function responsiveness_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { responsiveness_ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { responsiveness_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
 
@@ -1224,30 +795,28 @@ function getResizeTransformation(mode, size, breakpoints) {
 
   switch (mode) {
     case "fill":
-      return normalizeTransformation(merge(getDPRAttr(), {
-        crop: "fill"
-      }, !size ? {
-        width: 0,
-        height: 0
-      } : breakpoints ? {
+      var computedSize = breakpoints ? {
         width: Math.floor(findBreakpoint(breakpoints, size.width)),
         height: Math.floor(size.height / size.width * findBreakpoint(breakpoints, size.width))
       } : {
         width: Math.floor(size.width),
         height: Math.floor(size.height)
-      }));
+      };
+      return normalizeTransformation(responsiveness_objectSpread({}, getDPRAttr(), {
+        crop: "fill"
+      }, computedSize));
 
     case true:
     case "width":
-      return normalizeTransformation(merge(getDPRAttr(), {
+      return normalizeTransformation(responsiveness_objectSpread({}, getDPRAttr(), {
         crop: "scale",
-        width: Math.floor(!size ? 0 : breakpoints ? findBreakpoint(breakpoints, size.width) : size.width)
+        width: Math.floor(breakpoints ? findBreakpoint(breakpoints, size.width) : size.width)
       }));
 
     case "height":
-      return normalizeTransformation(merge(getDPRAttr(), {
+      return normalizeTransformation(responsiveness_objectSpread({}, getDPRAttr(), {
         crop: "scale",
-        height: Math.floor(!size ? 0 : breakpoints ? findBreakpoint(breakpoints, size.height) : size.height)
+        height: Math.floor(breakpoints ? findBreakpoint(breakpoints, size.height) : size.height)
       }));
 
     default:
@@ -1262,6 +831,16 @@ function getDPRAttr() {
   } : {};
 }
 // CONCATENATED MODULE: ./src/helpers/getPlaceholderURL.js
+
+
+
+
+
+
+
+function getPlaceholderURL_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function getPlaceholderURL_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { getPlaceholderURL_ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { getPlaceholderURL_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
 
@@ -1302,7 +881,7 @@ var placeholderTransformations = {
 function getPlaceholderURL(mode, publicId, configuration, transformation) {
   if (typeof mode === "string") {
     if (mode in placeholderTransformations) {
-      return external_cloudinary_core_["Cloudinary"].new(configuration).url(publicId, merge(transformation, {
+      return external_cloudinary_core_["Cloudinary"].new(configuration).url(publicId, getPlaceholderURL_objectSpread({}, transformation, {
         transformation: [].concat(_toConsumableArray(transformation.transformation || []), _toConsumableArray(placeholderTransformations[mode]))
       }));
     }
@@ -1324,6 +903,15 @@ var es6_symbol_ = __webpack_require__("1750");
 
 
 
+
+
+
+
+function size_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function size_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { size_ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { size_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
 /**
  * If necessary posts root element
  * size information
@@ -1331,7 +919,6 @@ var es6_symbol_ = __webpack_require__("1750");
  */
 
 var size_size = {
-  props: {},
   data: function data() {
     return {
       size: null
@@ -1350,11 +937,10 @@ var size_size = {
       if (this.shouldMeasureSize) {
         if (this.$el && !this.cancelSizeListener) {
           this.cancelSizeListener = watchElementSize(this.$el, function (size) {
-            var currentSize = pick(_this.size, ["width", "height"]);
-            var nextSize = pick(size, ["width", "height"]);
+            if (!size) return;
 
-            if (!equal(currentSize, nextSize)) {
-              _this.size = nextSize;
+            if (!_this.size || _this.size.width !== size.width || _this.size.height !== size.height) {
+              _this.size = size_objectSpread({}, size);
             }
           });
         }
@@ -1391,7 +977,7 @@ function watchElementSize(element, cb) {
   var delayedCallback = debounce(cb, 150);
   var cancelled = false;
 
-  if ((typeof window === "undefined" ? "undefined" : typeof_typeof(window)) === "object") {
+  if (window && (typeof window === "undefined" ? "undefined" : typeof_typeof(window)) === "object") {
     if ("ResizeObserver" in window) {
       var resizeObserver = new ResizeObserver(function (entries) {
         var _iteratorNormalCompletion = true;
@@ -1531,10 +1117,24 @@ function watchElementVisibility(element, listener) {
 }
 
 function noop() {}
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldImage.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldImage/CldImage.vue?vue&type=script&lang=js&
 
 
 
+
+
+
+
+function CldImagevue_type_script_lang_js_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function CldImagevue_type_script_lang_js_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { CldImagevue_type_script_lang_js_ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { CldImagevue_type_script_lang_js_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1560,11 +1160,18 @@ function noop() {}
 
 /* harmony default export */ var CldImagevue_type_script_lang_js_ = ({
   name: "CldImage",
-  inheritAttrs: false,
-  mixins: [size_size, lazy, withOptions],
-  render: function render(h) {
-    return h("img", this.imageAttrs, rejectTransformations(this.$slots.default));
+  provide: function provide() {
+    return {
+      registerTransformation: this.registerTransformation
+    };
   },
+  inject: {
+    contextConfiguration: {
+      default: {}
+    }
+  },
+  // mixins: [size, lazy, withOptions],
+  mixins: [lazy, size_size, withOptions],
   props: {
     /**
      * The unique identifier of an uploaded image.
@@ -1623,57 +1230,68 @@ function noop() {}
       }
     }
   },
+  data: function data() {
+    return {
+      transformations: []
+    };
+  },
+  methods: {
+    registerTransformation: function registerTransformation(transformation) {
+      this.transformations = [].concat(_toConsumableArray(this.transformations), [normalizeTransformation(transformation)]);
+    },
+    computeLazyLoadSrc: function computeLazyLoadSrc() {
+      var src = getPlaceholderURL(this.placeholder, this.publicId, this.configuration, this.transformOptions);
+      return CldImagevue_type_script_lang_js_objectSpread({}, this.nonCldAttrs, {
+        src: src
+      });
+    }
+  },
   computed: {
+    isWithoutTransformation: function isWithoutTransformation() {
+      return !this.publicId || attributes_hasZeroSizeTransformation(this.transformations) || this.responsive && !this.size;
+    },
+    style: function style() {
+      return getResponsiveStyle(this.responsive);
+    },
+    nonCldAttrs: function nonCldAttrs() {
+      return normalizeNonCloudinary(this.$attrs);
+    },
+    transformOptions: function transformOptions() {
+      return CldImagevue_type_script_lang_js_objectSpread({}, this.options, {
+        transformation: [].concat(_toConsumableArray(this.options.transformation || []), _toConsumableArray(this.transformations))
+      });
+    },
+    isLazyLoadInvisible: function isLazyLoadInvisible() {
+      return this.lazy && !this.visible;
+    },
     imageAttrs: function imageAttrs() {
-      var className = {
-        "cld-image": true
-      };
-
-      if (!this.publicId || !!findInTransformations(this.transformation, function (t) {
-        return t.width === 0 || t.height === 0;
-      }) || this.responsive && !this.size) {
-        return {
-          class: className,
-          style: getResponsiveStyle(this.responsive),
-          attrs: normalizeNonCloudinary(this.$attrs)
-        };
+      if (this.isWithoutTransformation) {
+        return this.nonCldAttrs;
       }
 
-      if (this.lazy && !this.visible) {
-        var _src = getPlaceholderURL(this.placeholder, this.publicId, this.configuration, this.transformation);
-
-        return {
-          class: className,
-          style: getResponsiveStyle(this.responsive),
-          attrs: merge(normalizeNonCloudinary(this.$attrs), _src ? {
-            src: _src
-          } : {})
-        };
+      if (this.isLazyLoadInvisible) {
+        return this.computeLazyLoadSrc();
       }
 
-      var htmlAttrs = external_cloudinary_core_["Transformation"].new(this.transformation).toHtmlAttributes();
-      var src = external_cloudinary_core_["Cloudinary"].new(this.configuration).url(this.publicId, merge(this.transformation, {
-        transformation: [].concat(_toConsumableArray(this.transformation.transformation || []), [getResizeTransformation(this.responsive, this.size, evalBreakpoints(this.breakpoints))], _toConsumableArray(this.progressive ? [{
+      var htmlAttrs = attributes_getHTMLAttributes(this.options);
+      var src = external_cloudinary_core_["Cloudinary"].new(this.configuration).url(this.publicId, CldImagevue_type_script_lang_js_objectSpread({}, this.options, {
+        transformation: [].concat(_toConsumableArray(this.transformOptions.transformation), [getResizeTransformation(this.responsive, this.size, evalBreakpoints(this.breakpoints))], _toConsumableArray(this.progressive ? [{
           flags: ["progressive"]
         }] : []))
       }));
-      return {
-        class: className,
-        style: getResponsiveStyle(this.responsive),
-        attrs: merge(normalizeNonCloudinary(this.$attrs), htmlAttrs, src ? {
-          src: src
-        } : {})
-      };
+      return CldImagevue_type_script_lang_js_objectSpread({}, this.nonCldAttrs, {}, htmlAttrs, {
+        src: src
+      });
     },
     shouldMeasureSize: function shouldMeasureSize() {
       return !this.responsive;
     }
   }
 });
-// CONCATENATED MODULE: ./src/components/CldImage.vue?vue&type=script&lang=js&
- /* harmony default export */ var components_CldImagevue_type_script_lang_js_ = (CldImagevue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./src/components/CldImage.vue
-var CldImage_render, CldImage_staticRenderFns
+// CONCATENATED MODULE: ./src/components/CldImage/CldImage.vue?vue&type=script&lang=js&
+ /* harmony default export */ var CldImage_CldImagevue_type_script_lang_js_ = (CldImagevue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/CldImage/CldImage.vue
+
 
 
 
@@ -1681,9 +1299,9 @@ var CldImage_render, CldImage_staticRenderFns
 /* normalize component */
 
 var CldImage_component = normalizeComponent(
-  components_CldImagevue_type_script_lang_js_,
-  CldImage_render,
-  CldImage_staticRenderFns,
+  CldImage_CldImagevue_type_script_lang_js_,
+  CldImagevue_type_template_id_053448cc_render,
+  CldImagevue_type_template_id_053448cc_staticRenderFns,
   false,
   null,
   null,
@@ -1692,7 +1310,107 @@ var CldImage_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldImage = (CldImage_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldVideo.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./src/helpers/findInTransformations.js
+
+function findInTransformations(transformations, predicate) {
+  if (!transformations) {
+    return undefined;
+  }
+
+  return utils_find([].concat(transformations).concat(transformations.transformation || []), predicate);
+}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldPoster.vue?vue&type=script&lang=js&
+/**
+ * The image to be shown while a video is downloading or until the user hits the play button.
+ * This component must be added as a child of the [CldVideo](#cldvideo) component.
+ *
+ * If this component is not given then the poster image defaults to the middle frame of the source video in jpg format.
+ */
+/* harmony default export */ var CldPostervue_type_script_lang_js_ = ({
+  name: "CldPoster",
+  inheritAttrs: false,
+  render: function render() {
+    console.error("<cld-poster /> should be a immediate descendant of cld-video");
+    return null;
+  }
+});
+// CONCATENATED MODULE: ./src/components/CldPoster.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_CldPostervue_type_script_lang_js_ = (CldPostervue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/CldPoster.vue
+var CldPoster_render, CldPoster_staticRenderFns
+
+
+
+
+/* normalize component */
+
+var CldPoster_component = normalizeComponent(
+  components_CldPostervue_type_script_lang_js_,
+  CldPoster_render,
+  CldPoster_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var CldPoster = (CldPoster_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldTransformation/CldTransformation.vue?vue&type=script&lang=js&
+/**
+ * One or more [transformation parameters](https://cloudinary.com/documentation/image_transformation_reference)
+ * in a single component, or a set of [chained transformations](https://cloudinary.com/documentation/image_transformations#chained_transformations) in multiple components.
+ */
+/* harmony default export */ var CldTransformationvue_type_script_lang_js_ = ({
+  name: "CldTransformation",
+  inject: {
+    registerTransformation: {
+      default: null
+    }
+  },
+  created: function created() {
+    if (this.registerTransformation) {
+      this.registerTransformation(this.$attrs);
+    }
+  },
+  render: function render() {
+    return null;
+  }
+});
+// CONCATENATED MODULE: ./src/components/CldTransformation/CldTransformation.vue?vue&type=script&lang=js&
+ /* harmony default export */ var CldTransformation_CldTransformationvue_type_script_lang_js_ = (CldTransformationvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/CldTransformation/CldTransformation.vue
+var CldTransformation_render, CldTransformation_staticRenderFns
+
+
+
+
+/* normalize component */
+
+var CldTransformation_component = normalizeComponent(
+  CldTransformation_CldTransformationvue_type_script_lang_js_,
+  CldTransformation_render,
+  CldTransformation_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var CldTransformation = (CldTransformation_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldVideo/CldVideo.vue?vue&type=script&lang=js&
+
+
+
+
+
+
+
+
+function CldVideovue_type_script_lang_js_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function CldVideovue_type_script_lang_js_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { CldVideovue_type_script_lang_js_ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { CldVideovue_type_script_lang_js_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
 
@@ -1702,11 +1420,9 @@ var CldImage_component = normalizeComponent(
 
 
 
-
-
-
-
-
+var className = {
+  "cld-video": true
+};
 /**
  * Deliver videos and specify video transformations using the `cld-video` (CldVideo) element,
  * which automatically generates an HTML5 video tag including the URL sources for the main formats
@@ -1727,6 +1443,11 @@ var CldImage_component = normalizeComponent(
 /* harmony default export */ var CldVideovue_type_script_lang_js_ = ({
   name: "CldVideo",
   inheritAttrs: false,
+  provide: function provide() {
+    return {
+      registerPoster: this.registerPoster
+    };
+  },
   mixins: [lazy, withOptions],
   render: function render(h) {
     return h("video", this.videoAttrs, this.sources.map(function (attrs) {
@@ -1734,7 +1455,7 @@ var CldImage_component = normalizeComponent(
         key: attrs.mimeType,
         attrs: attrs
       });
-    }).concat(rejectTransformations(this.$slots.default)));
+    }).concat(this.$slots.default));
   },
   props: {
     /**
@@ -1755,19 +1476,19 @@ var CldImage_component = normalizeComponent(
     sourceTypes: {
       type: Object,
       default: function _default() {
-        return merge.apply(void 0, _toConsumableArray(external_cloudinary_core_["Cloudinary"].DEFAULT_VIDEO_PARAMS.source_types.map(function (type) {
-          return kv(type, {});
-        })));
+        return external_cloudinary_core_["Cloudinary"].DEFAULT_VIDEO_PARAMS.source_types.reduce(function (currSrc, type) {
+          return CldVideovue_type_script_lang_js_objectSpread({}, currSrc, _defineProperty({}, type, {}));
+        }, {});
       }
+    }
+  },
+  methods: {
+    registerPoster: function registerPoster(posterOptions) {//TODO: need to implement
     }
   },
   computed: {
     videoAttrs: function videoAttrs() {
-      var className = {
-        "cld-video": true
-      };
-
-      if (!this.publicId || !!findInTransformations(this.transformation, function (t) {
+      if (!this.publicId || !!findInTransformations(this.options, function (t) {
         return t.width === 0 || t.height === 0;
       })) {
         return {
@@ -1775,12 +1496,13 @@ var CldImage_component = normalizeComponent(
         };
       }
 
-      var htmlAttrs = merge({
+      var htmlAttrs = CldVideovue_type_script_lang_js_objectSpread({
         poster: this.poster
-      }, external_cloudinary_core_["Transformation"].new(this.transformation).toHtmlAttributes());
+      }, attributes_getHTMLAttributes(this.options));
+
       return {
         class: className,
-        attrs: merge(normalizeNonCloudinary(this.$attrs), htmlAttrs)
+        attrs: CldVideovue_type_script_lang_js_objectSpread({}, normalizeNonCloudinary(this.$attrs), {}, htmlAttrs)
       };
     },
     sources: function sources() {
@@ -1791,20 +1513,17 @@ var CldImage_component = normalizeComponent(
       }
 
       return Object.keys(this.sourceTypes).map(function (srcType) {
-        var configuration = merge(_this.configuration, normalizeConfiguration(_this.sourceTypes[srcType] || {}));
-        var videoChainedTransformation = _this.transformation.transformation || [];
-        var sourceTypeChainedTransformation = Array.isArray(_this.sourceTypes[srcType]) ? _this.sourceTypes[srcType].map(normalizeTransformation) : [normalizeTransformation(_this.sourceTypes[srcType] || {})];
-        var transformation = merge(_this.transformation, {
-          transformation: [].concat(_toConsumableArray(videoChainedTransformation), _toConsumableArray(sourceTypeChainedTransformation))
-        });
-        var src = external_cloudinary_core_["Cloudinary"].new(configuration).url(_this.publicId, merge({
+        var videoChainedTransformation = _this.options.transformation || [];
+        var sourceTypeChainedTransformation = Array.isArray(_this.sourceTypes[srcType]) ? _this.sourceTypes[srcType].map(normalizeTransformation) : [normalizeTransformation(_this.sourceTypes[srcType])];
+        var src = external_cloudinary_core_["Cloudinary"].new(CldVideovue_type_script_lang_js_objectSpread({}, _this.configuration, {}, normalizeConfiguration(_this.sourceTypes[srcType]))).url(_this.publicId, CldVideovue_type_script_lang_js_objectSpread({
           resource_type: "video",
           format: srcType
-        }, transformation));
-        var mimeType = "video/" + (srcType === "ogv" ? "ogg" : srcType);
+        }, _this.options, {
+          transformation: [].concat(_toConsumableArray(videoChainedTransformation), _toConsumableArray(sourceTypeChainedTransformation))
+        }));
         var htmlAttrs = normalizeNonCloudinary(_this.sourceTypes[srcType] || {});
-        return merge(htmlAttrs, {
-          mimeType: mimeType,
+        return CldVideovue_type_script_lang_js_objectSpread({}, htmlAttrs, {
+          mimeType: "video/".concat(srcType === "ogv" ? "ogg" : srcType),
           src: src
         });
       });
@@ -1817,18 +1536,16 @@ var CldImage_component = normalizeComponent(
 
 
       if (this.$attrs.poster && typeof_typeof(this.$attrs.poster) === "object") {
-        return external_cloudinary_core_["Cloudinary"].new(merge(this.configuration, normalizeConfiguration(this.$attrs.poster))).url(this.$attrs.poster.publicId || this.publicId, merge(this.$attrs.poster.publicId ? {
-          resource_type: "image"
-        } : {
-          resource_type: "video",
-          format: "jpeg"
-        }, this.transformation, {
-          transformation: [].concat(_toConsumableArray(this.transformation.transformation ? this.transformation.transformation : []), _toConsumableArray((Array.isArray(this.$attrs.poster) ? this.$attrs.poster : [this.$attrs.poster]).map(normalizeTransformation)))
+        return external_cloudinary_core_["Cloudinary"].new(CldVideovue_type_script_lang_js_objectSpread({}, this.configuration, {}, normalizeConfiguration(this.$attrs.poster))).url(this.$attrs.poster.publicId || this.publicId, CldVideovue_type_script_lang_js_objectSpread({
+          resource_type: this.$attrs.poster.publicId ? "image" : "video",
+          format: this.$attrs.poster.publicId ? null : 'jpeg'
+        }, this.options, {
+          transformation: [].concat(_toConsumableArray(this.options.transformation ? this.options.transformation : []), _toConsumableArray((Array.isArray(this.$attrs.poster) ? this.$attrs.poster : [this.$attrs.poster]).map(normalizeTransformation)))
         }));
       } // <cld-video> <cld-poster publicId="x" /> </cld-video>
 
 
-      var posterChild = this.$slots.default ? find(this.$slots.default, function (child) {
+      var posterChild = this.$slots.default ? utils_find(this.$slots.default, function (child) {
         return child.componentOptions && child.componentOptions.Ctor.options.render === CldPoster.render;
       }) : null;
 
@@ -1838,11 +1555,9 @@ var CldImage_component = normalizeComponent(
         var posterTransformations = (posterChild.componentOptions.children || []).filter(function (child) {
           return child.componentOptions && child.componentOptions.Ctor.options.render === CldTransformation.render;
         });
-        return external_cloudinary_core_["Cloudinary"].new(merge(this.configuration, normalizeConfiguration(posterAttrs))).url(posterId || this.publicId, merge(posterId ? {
-          resource_type: "image"
-        } : {
-          resource_type: "video",
-          format: "jpeg"
+        return external_cloudinary_core_["Cloudinary"].new(CldVideovue_type_script_lang_js_objectSpread({}, this.configuration, {}, normalizeConfiguration(posterAttrs))).url(posterId || this.publicId, CldVideovue_type_script_lang_js_objectSpread({
+          resource_type: posterId ? "image" : "video",
+          format: posterId ? null : 'jpeg'
         }, posterAttrs, {
           transformation: [].concat(_toConsumableArray(posterAttrs.transformation || []), _toConsumableArray(posterTransformations.map(function (posterTransformation) {
             return normalizeTransformation(posterTransformation.data && posterTransformation.data.attrs || {});
@@ -1851,16 +1566,16 @@ var CldImage_component = normalizeComponent(
       } // default poster
 
 
-      return external_cloudinary_core_["Cloudinary"].new(this.configuration).url(this.publicId, merge({
+      return external_cloudinary_core_["Cloudinary"].new(this.configuration).url(this.publicId, CldVideovue_type_script_lang_js_objectSpread({
         resource_type: "video",
         format: "jpeg"
-      }, this.transformation));
+      }, this.options));
     }
   }
 });
-// CONCATENATED MODULE: ./src/components/CldVideo.vue?vue&type=script&lang=js&
- /* harmony default export */ var components_CldVideovue_type_script_lang_js_ = (CldVideovue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./src/components/CldVideo.vue
+// CONCATENATED MODULE: ./src/components/CldVideo/CldVideo.vue?vue&type=script&lang=js&
+ /* harmony default export */ var CldVideo_CldVideovue_type_script_lang_js_ = (CldVideovue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/CldVideo/CldVideo.vue
 var CldVideo_render, CldVideo_staticRenderFns
 
 
@@ -1869,7 +1584,7 @@ var CldVideo_render, CldVideo_staticRenderFns
 /* normalize component */
 
 var CldVideo_component = normalizeComponent(
-  components_CldVideovue_type_script_lang_js_,
+  CldVideo_CldVideovue_type_script_lang_js_,
   CldVideo_render,
   CldVideo_staticRenderFns,
   false,
@@ -1889,30 +1604,58 @@ var CldVideo_component = normalizeComponent(
 
 
 
+function plugin_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function plugin_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { plugin_ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { plugin_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
 
-var allComponents = [CldContext, CldImage, CldVideo];
-function install(Vue, options) {
+
+
+
+var allComponents = [CldContext, CldImage, CldVideo, CldTransformation];
+/**
+ * Returns object of props whose default value are mapped to the `configurations`' properties
+ * @param {Object} configurations 
+ */
+
+var computeDefaultProps = function computeDefaultProps() {
+  var configurations = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var computedProps = {};
+
+  for (var key in configurations) {
+    var value = configurations[key];
+    computedProps[key] = {
+      default: value
+    };
+  }
+
+  console.log(computedProps);
+  return computedProps;
+};
+
+function install(Vue) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
   if (Vue.CldInstalled) {
     throw new Error("Cloudinary plugin already installed");
   }
 
-  Vue.CldInstalled = true;
-  options = options || {};
+  Vue.CldInstalled = true; // const configurations = normalizeConfiguration(options.configuration || {});  
+
   allComponents.forEach(function (component) {
     var userComponentName = getUserComponentName(options.components, component.name);
 
     if (userComponentName != null) {
-      Vue.component(userComponentName, component);
+      Vue.component(userComponentName, plugin_objectSpread({}, component, {
+        data: function data() {
+          return plugin_objectSpread({}, component.data ? component.data() : {}, {
+            defaultConfigurations: options.configuration || {}
+          });
+        }
+      }));
     }
   });
-
-  if (options.configuration) {
-    Vue.prototype.cldGlobalContextState = new State_State({
-      configuration: normalizeConfiguration(options.configuration)
-    });
-  }
 }
 
 function getUserComponentName(components, name) {
@@ -1924,7 +1667,7 @@ function getUserComponentName(components, name) {
 
 
   if (Array.isArray(components)) {
-    var entry = find(components, function (component) {
+    var entry = utils_find(components, function (component) {
       return typeof component === "string" && component === name || typeof_typeof(component) === "object" && component != null && component.name === name;
     });
 
@@ -1952,7 +1695,7 @@ function getUserComponentName(components, name) {
   // { components: { CloudinaryImage: CldImage } }
 
 
-  var found = find(Object.keys(components), function (k) {
+  var found = utils_find(Object.keys(components), function (k) {
     return typeof components[k] === "string" && components[k] === name || typeof_typeof(components[k]) === "object" && components[k] != null && components[k].name === name;
   });
   return found === undefined ? null : found;

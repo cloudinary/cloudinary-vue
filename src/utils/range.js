@@ -4,10 +4,12 @@
  * @param {Number} max
  * @param {Number} step
  */
-export function range(min, max, step) {
-  const result = [];
-  for (let i = min; i <= max; i += step) {
-    result.push(i);
+export const range = (min, max, step) => {
+    const result = [];
+    for (let i = min; i <= max; i += step) {
+      result.push(i);
+    }
+  
+    return result;
   }
-  return result;
-}
+  

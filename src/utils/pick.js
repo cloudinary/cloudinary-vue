@@ -1,16 +1,16 @@
-export function pick(subject, allowed) {
-  if (subject == null) {
-    return subject;
-  }
-  if (!allowed || !allowed.length) {
-    return {};
-  }
-  const target = {};
-  for (let i = 0; i < allowed.length; i++) {
-    const key = allowed[i];
-    if (key in subject) {
-      target[key] = subject[key];
+/**
+ * Returns new object contains only `originalObj`'s properities that exist in `keysToPick` 
+ * @param {Object} originalObj 
+ * @param {Array} keysToPick 
+ */
+export const pick = (originalObj = {}, keysToPick = []) => {  
+    const target = {};
+    for (let i = 0; i < keysToPick.length; i++) {
+      const key = keysToPick[i];
+  
+      if (originalObj.hasOwnProperty(key)) {
+        target[key] = originalObj[key];
+      }
     }
+    return target;
   }
-  return target;
-}

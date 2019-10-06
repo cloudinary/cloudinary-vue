@@ -1,19 +1,6 @@
-export function compact(subject) {
-  if (subject == null) {
-    return subject;
-  }
-  if (subject instanceof Array) {
-    return subject.reduce((result, item) => {
-      if (item != null) {
-        result.push(item);
-      }
-      return result;
-    }, []);
-  }
-  return Object.keys(subject).reduce((result, key) => {
-    if (subject[key] !== undefined) {
-      result[key] = subject[key];
-    }
-    return result;
-  }, {});
-}
+
+/**
+ * Returns free-of-falsy-element array from input `arr`
+ * @param {Array} arr 
+ */
+export const compact = (arr) => arr.filter(Boolean)

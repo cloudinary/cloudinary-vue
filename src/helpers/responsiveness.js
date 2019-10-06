@@ -1,4 +1,3 @@
-import { merge } from "../utils";
 import { findBreakpoint } from "./findBreakpoint";
 import { normalizeTransformation } from "./attributes";
 
@@ -49,58 +48,45 @@ export function getResizeTransformation(mode, size, breakpoints) {
 
   switch (mode) {
     case "fill":
-      return normalizeTransformation(
-        merge(
-          getDPRAttr(),
-          {
-            crop: "fill"
-          },
-          !size
-            ? { width: 0, height: 0 }
-            : breakpoints
-            ? {
-                width: Math.floor(findBreakpoint(breakpoints, size.width)),
-                height: Math.floor(
-                  (size.height / size.width) *
-                    findBreakpoint(breakpoints, size.width)
-                )
-              }
-            : {
-                width: Math.floor(size.width),
-                height: Math.floor(size.height)
-              }
-        )
-      );
+      const computedSize = breakpoints
+        ? {
+            width: Math.floor(findBreakpoint(breakpoints, size.width)),
+            height: Math.floor(
+              (size.height / size.width) *
+                findBreakpoint(breakpoints, size.width)
+            )
+          }
+        : {
+            width: Math.floor(size.width),
+            height: Math.floor(size.height)
+          }
+      return normalizeTransformation({
+        ...getDPRAttr(),
+        crop: "fill",
+        ...computedSize
+      });
 
     case true:
     case "width":
-      return normalizeTransformation(
-        merge(getDPRAttr(), {
-          crop: "scale",
-          width: Math.floor(
-            !size
-              ? 0
-              : breakpoints
-              ? findBreakpoint(breakpoints, size.width)
-              : size.width
-          )
-        })
-      );
+      return normalizeTransformation({
+        ...getDPRAttr(),
+        crop: "scale",
+        width: Math.floor(
+          breakpoints
+            ? findBreakpoint(breakpoints, size.width)
+            : size.width
+        )
+      });
 
     case "height":
-      return normalizeTransformation(
-        merge(getDPRAttr(), {
+        return normalizeTransformation({
+          ...getDPRAttr(),
           crop: "scale",
-          height: Math.floor(
-            !size
-              ? 0
-              : breakpoints
+          height: Math.floor(breakpoints
               ? findBreakpoint(breakpoints, size.height)
               : size.height
           )
-        })
-      );
-
+        });
     default:
       return {};
   }

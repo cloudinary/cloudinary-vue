@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { createRenderer } from "vue-server-renderer";
-import CldImage from "../../src/components/CldImage.vue";
-import CldContext from "../../src/components/CldContext.vue";
+import CldImage from "../../src/components/CldImage/CldImage.vue";
+import CldContext from "../../src/components/CldContext/CldContext.vue";
 
 it("SSR", async () => {
   const output = await createRenderer({
@@ -18,7 +18,9 @@ it("SSR", async () => {
   );
   expect(output).toBe(
     '<div data-server-rendered="true" class="cld-context">' +
-      '<img src="http://res.cloudinary.com/demo/image/upload/small_dinosaur" class="cld-image">' +
-      "</div>"
+      '<div class="cld-image">' +
+        '<img src="http://res.cloudinary.com/demo/image/upload/small_dinosaur"> ' +
+      '</div>' +
+    '</div>'
   );
 });

@@ -11,8 +11,6 @@ describe("CldVideo", () => {
       components: { CldVideo }
     });
 
-    await Vue.nextTick();
-
     expect(video.is("video")).toBe(true);
     expect(video.attributes("aria-hidden")).toBe("true");
     expect(video.attributes("cloudName")).toBe(undefined);

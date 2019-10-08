@@ -13,10 +13,10 @@ describe("CLD plugin", () => {
       { localVue }
     );
 
-    await new Promise(r => localVue.nextTick(() => r()));
+    await localVue.nextTick();
 
     expect(wrapper.contains("img")).toBe(true);
-    expect(wrapper.find('img').attributes("src")).toEqual(
+    expect(wrapper.find("img").attributes("src")).toEqual(
       `http://res.cloudinary.com/demo2/image/upload/face_top`
     );
   });

@@ -14,9 +14,7 @@ describe("CldImage with CldTransformation ", () => {
         </cld-image>
       `,
       components: { CldTransformation, CldImage }
-    }).find('img');
-
-    await Vue.nextTick();
+    }).find("img");
 
     expect(wrapper.is("img")).toBe(true);
     expect(wrapper.attributes("src")).toEqual(

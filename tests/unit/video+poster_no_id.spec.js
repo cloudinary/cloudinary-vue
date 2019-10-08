@@ -18,8 +18,6 @@ describe("CldPoster", () => {
       components: { CldVideo, CldPoster, CldTransformation }
     });
 
-    await Vue.nextTick();
-
     expect(video.is("video")).toBe(true);
     expect(video.attributes("poster")).toBe(
       "http://res.cloudinary.com/demo/video/upload/e_blur/face_top.jpeg"

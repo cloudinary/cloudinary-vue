@@ -14,8 +14,6 @@ describe("CldContext", () => {
       components: { CldContext, CldImage }
     });
 
-    await Vue.nextTick();
-
     expect(wrapper.contains("img")).toBe(true);
     expect(wrapper.find("img").attributes("src")).toEqual(
       `http://res.cloudinary.com/demo/image/upload/face_top`

@@ -15,14 +15,13 @@ describe("CldImage", () => {
           />
         `,
         components: { CldImage }
-      }).find('img');
+      }).find("img");
       expect(image.is("img")).toBe(true);
       expect(image.attributes("src")).toEqual(
         `http://res.cloudinary.com/demo/image/upload/$nh_ih,$nw_iw,c_scale,q_1,w_1/c_scale,h_$nh,w_$nw/face_top`
       );
 
       await Vue.nextTick();
-
       expect(image.attributes("src")).toEqual(
         `http://res.cloudinary.com/demo/image/upload/face_top`
       );

@@ -12,8 +12,6 @@ describe("CldVideo", () => {
       components: { CldVideo }
     });
 
-    await Vue.nextTick();
-
     expect(video.is("video")).toBe(true);
     expect(sourcesOfVideo(video)).toEqual({
       "video/webm":

@@ -12,8 +12,6 @@ describe("CldVideo", () => {
       components: { CldVideo }
     });
 
-    await Vue.nextTick();
-
     expect(video.is("video")).toBe(true);
     expect(sourcesOfVideo(video)).toEqual({
       "video/webm": "http://res.cloudinary.com/demo/video/upload/face_top.webm",

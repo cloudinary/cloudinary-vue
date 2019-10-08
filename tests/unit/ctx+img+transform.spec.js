@@ -23,8 +23,6 @@ describe("CldImage", () => {
       }
     );
 
-    await Vue.nextTick();
-
     expect(wrapper.contains("img")).toBe(true);
     expect(wrapper.find("img").attributes("src")).toBe(
       `http://res.cloudinary.com/demo/image/upload/c_scale,h_100,w_100/e_sepia/e_blur/face_top`

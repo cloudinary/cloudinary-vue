@@ -647,12 +647,12 @@ var CldContext_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldContext = (CldContext_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ee099d80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldImage/CldImage.vue?vue&type=template&id=053448cc&
-var CldImagevue_type_template_id_053448cc_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cld-image"},[_c('img',_vm._b({style:(_vm.style)},'img',_vm.imageAttrs,false)),_vm._t("default")],2)}
-var CldImagevue_type_template_id_053448cc_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ee099d80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldImage/CldImage.vue?vue&type=template&id=d42551ee&
+var CldImagevue_type_template_id_d42551ee_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cld-image"},[_c('img',_vm._b({style:(_vm.style)},'img',_vm.imageAttrs,false)),_vm._t("default")],2)}
+var CldImagevue_type_template_id_d42551ee_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/CldImage/CldImage.vue?vue&type=template&id=053448cc&
+// CONCATENATED MODULE: ./src/components/CldImage/CldImage.vue?vue&type=template&id=d42551ee&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js
 var is_array = __webpack_require__("a745");
@@ -1113,6 +1113,14 @@ function watchElementVisibility(element, listener) {
 }
 
 function noop() {}
+// CONCATENATED MODULE: ./src/helpers/URLGenerator.js
+
+var URLGenerator_generateUrl = function generateUrl(_ref) {
+  var publicId = _ref.publicId,
+      configuration = _ref.configuration,
+      transformation = _ref.transformation;
+  return external_cloudinary_core_["Cloudinary"].new(configuration).url(publicId, transformation);
+};
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldImage/CldImage.vue?vue&type=script&lang=js&
 
 
@@ -1131,6 +1139,7 @@ function CldImagevue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
 //
 //
 //
+
 
 
 
@@ -1270,11 +1279,15 @@ function CldImagevue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
       }
 
       var htmlAttrs = attributes_getHTMLAttributes(this.options);
-      var src = external_cloudinary_core_["Cloudinary"].new(this.configuration).url(this.publicId, CldImagevue_type_script_lang_js_objectSpread({}, this.options, {
-        transformation: [].concat(_toConsumableArray(this.transformOptions.transformation), [getResizeTransformation(this.responsive, this.size, evalBreakpoints(this.breakpoints))], _toConsumableArray(this.progressive ? [{
-          flags: ["progressive"]
-        }] : []))
-      }));
+      var src = URLGenerator_generateUrl({
+        publicId: this.publicId,
+        configuration: this.configuration,
+        transformation: CldImagevue_type_script_lang_js_objectSpread({}, this.options, {
+          transformation: [].concat(_toConsumableArray(this.transformOptions.transformation), [getResizeTransformation(this.responsive, this.size, evalBreakpoints(this.breakpoints))], _toConsumableArray(this.progressive ? [{
+            flags: ["progressive"]
+          }] : []))
+        })
+      });
       return CldImagevue_type_script_lang_js_objectSpread({}, this.nonCldAttrs, {}, htmlAttrs, {
         src: src
       });
@@ -1296,8 +1309,8 @@ function CldImagevue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
 
 var CldImage_component = normalizeComponent(
   CldImage_CldImagevue_type_script_lang_js_,
-  CldImagevue_type_template_id_053448cc_render,
-  CldImagevue_type_template_id_053448cc_staticRenderFns,
+  CldImagevue_type_template_id_d42551ee_render,
+  CldImagevue_type_template_id_d42551ee_staticRenderFns,
   false,
   null,
   null,
@@ -1306,6 +1319,13 @@ var CldImage_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldImage = (CldImage_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ee099d80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldVideo/CldVideo.vue?vue&type=template&id=cf33497c&
+var CldVideovue_type_template_id_cf33497c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cld-video"},[_c('video',_vm._b({},'video',_vm.videoAttrs,false),_vm._l((_vm.sources),function(source,index){return _c('source',_vm._b({key:index},'source',source,false))}),0),_vm._t("default")],2)}
+var CldVideovue_type_template_id_cf33497c_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/CldVideo/CldVideo.vue?vue&type=template&id=cf33497c&
+
 // CONCATENATED MODULE: ./src/helpers/findInTransformations.js
 
 function findInTransformations(transformations, predicate) {
@@ -1315,24 +1335,246 @@ function findInTransformations(transformations, predicate) {
 
   return find_find([].concat(transformations).concat(transformations.transformation || []), predicate);
 }
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldPoster.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldVideo/CldVideo.vue?vue&type=script&lang=js&
+
+
+
+
+
+
+
+function CldVideovue_type_script_lang_js_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function CldVideovue_type_script_lang_js_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { CldVideovue_type_script_lang_js_ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { CldVideovue_type_script_lang_js_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+/**
+ * Deliver videos and specify video transformations using the `cld-video` (CldVideo) element,
+ * which automatically generates an HTML5 video tag including the URL sources for the main formats
+ * supported by web browsers (webm, mp4 and ogv by default), as well as a poster thumbnail image,
+ * which is automatically generated from a frame in the video.
+ * Browsers can automatically select and play the video format that they best support,
+ * and the video files are created dynamically when first accessed by your users.
+ *
+ * You can optionally include `cld-transformation` components to define transformations to apply to the delivered video.
+ *
+ * For more information see
+ * <a href="https://cloudinary.com/documentation/vue_video_manipulation#cldvideo_component" target="_blank">
+ * cld-video component</a> and
+ * <a href="https://cloudinary.com/documentation/video_manipulation_and_delivery#embedding_videos_in_web_pages"
+ * target="_blank">embedding videos in web pages</a>
+ */
+
+/* harmony default export */ var CldVideovue_type_script_lang_js_ = ({
+  name: "CldVideo",
+  inheritAttrs: false,
+  provide: function provide() {
+    return {
+      registerTransformation: this.registerTransformation,
+      registerPoster: this.registerPoster
+    };
+  },
+  mixins: [lazy, withOptions],
+  props: {
+    /**
+     * The unique identifier of an uploaded video.
+     */
+    publicId: {
+      type: String,
+      default: "",
+      required: true
+    },
+
+    /**
+     * An ordered array of the video source types to include in the HTML5 tag, where the type is mapped to the mime type.
+     * You can also add a specific transformation for each specified video format by adding a transformation struct. Example:
+     *
+     * `<CldVideo :sourceTypes="{ mp4: { quality: 10 } }" />`
+     */
+    sourceTypes: {
+      type: Object,
+      default: function _default() {
+        return external_cloudinary_core_["Cloudinary"].DEFAULT_VIDEO_PARAMS.source_types.reduce(function (currSrc, type) {
+          return CldVideovue_type_script_lang_js_objectSpread({}, currSrc, _defineProperty({}, type, {}));
+        }, {});
+      }
+    }
+  },
+  data: function data() {
+    return {
+      transformations: [],
+      posterAttrs: {}
+    };
+  },
+  methods: {
+    registerPoster: function registerPoster(posterOptions) {
+      this.posterAttrs = CldVideovue_type_script_lang_js_objectSpread({}, this.posterAttrs, {}, posterOptions);
+    },
+    registerTransformation: function registerTransformation(transformation) {
+      this.transformations = [].concat(_toConsumableArray(this.transformations), [normalizeTransformation(transformation)]);
+    }
+  },
+  computed: {
+    videoAttrs: function videoAttrs() {
+      if (!this.publicId || !!findInTransformations(this.options, function (t) {
+        return t.width === 0 || t.height === 0;
+      })) {
+        return {};
+      }
+
+      var htmlAttrs = CldVideovue_type_script_lang_js_objectSpread({
+        poster: this.posterUrl
+      }, attributes_getHTMLAttributes(this.options));
+
+      var normalizedNonCloudinaryAttrs = normalizeNonCloudinary(this.$attrs);
+      return CldVideovue_type_script_lang_js_objectSpread({}, normalizedNonCloudinaryAttrs, {}, htmlAttrs);
+    },
+    sources: function sources() {
+      var _this = this;
+
+      if (!this.publicId || this.lazy && !this.visible) {
+        return [];
+      }
+
+      var sources = Object.keys(this.sourceTypes).map(function (srcType) {
+        var srcTypeOptions = _this.sourceTypes[srcType];
+        var srcTypeChainedTransformation = Array.isArray(srcTypeOptions) ? srcTypeOptions.map(normalizeTransformation) : [normalizeTransformation(srcTypeOptions)];
+        var src = URLGenerator_generateUrl({
+          configuration: CldVideovue_type_script_lang_js_objectSpread({}, _this.configuration, {}, normalizeConfiguration(_this.sourceTypes[srcType])),
+          publicId: _this.publicId,
+          transformation: CldVideovue_type_script_lang_js_objectSpread({
+            resource_type: "video",
+            format: srcType
+          }, _this.options, {
+            transformation: [].concat(_toConsumableArray(_this.options.transformation || []), _toConsumableArray(srcTypeChainedTransformation), _toConsumableArray(_this.transformations))
+          })
+        });
+        var htmlAttrs = normalizeNonCloudinary(_this.sourceTypes[srcType] || {});
+        return CldVideovue_type_script_lang_js_objectSpread({}, htmlAttrs, {
+          mimeType: "video/".concat(srcType === "ogv" ? "ogg" : srcType),
+          type: "video/".concat(srcType === "ogv" ? "ogg" : srcType),
+          src: src
+        });
+      });
+      return sources;
+    },
+    posterUrl: function posterUrl() {
+      // <cld-video poster="url" />
+      if (this.$attrs.poster && typeof this.$attrs.poster === "string") {
+        return this.$attrs.poster;
+      }
+
+      var attrPosterOptions = this.$attrs.poster || {};
+      var posterOptions = this.posterAttrs || {};
+      var injectedOptions = this.options || {};
+      var normalizedAttrsTransformation = normalizeTransformation(attrPosterOptions);
+
+      var configuration = CldVideovue_type_script_lang_js_objectSpread({}, this.configuration, {}, normalizeConfiguration(attrPosterOptions), {}, posterOptions.configuration);
+
+      var transformation = [].concat(_toConsumableArray(injectedOptions.transformation || []), [normalizedAttrsTransformation], _toConsumableArray(posterOptions.transformation || [])); // <cld-video :poster="{publicId:'x'}" />
+      // <cld-video> <cld-poster publicId="x" /> </cld-video>
+
+      var poster = {
+        configuration: configuration,
+        publicId: posterOptions.publicId || attrPosterOptions.publicId || this.publicId,
+        transformation: CldVideovue_type_script_lang_js_objectSpread({
+          resource_type: posterOptions.publicId || attrPosterOptions.publicId ? "image" : "video",
+          format: posterOptions.publicId || attrPosterOptions.publicId ? null : 'jpeg'
+        }, posterOptions || injectedOptions, {
+          transformation: transformation
+        })
+      };
+      return URLGenerator_generateUrl(poster);
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/CldVideo/CldVideo.vue?vue&type=script&lang=js&
+ /* harmony default export */ var CldVideo_CldVideovue_type_script_lang_js_ = (CldVideovue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/CldVideo/CldVideo.vue
+
+
+
+
+
+/* normalize component */
+
+var CldVideo_component = normalizeComponent(
+  CldVideo_CldVideovue_type_script_lang_js_,
+  CldVideovue_type_template_id_cf33497c_render,
+  CldVideovue_type_template_id_cf33497c_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var CldVideo = (CldVideo_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldVideo/CldPoster.vue?vue&type=script&lang=js&
+
+
 /**
  * The image to be shown while a video is downloading or until the user hits the play button.
  * This component must be added as a child of the [CldVideo](#cldvideo) component.
  *
  * If this component is not given then the poster image defaults to the middle frame of the source video in jpg format.
  */
+
 /* harmony default export */ var CldPostervue_type_script_lang_js_ = ({
   name: "CldPoster",
-  inheritAttrs: false,
-  render: function render() {
-    console.error("<cld-poster /> should be a immediate descendant of cld-video");
-    return null;
+  inject: {
+    registerPoster: {
+      default: null
+    }
+  },
+  provide: function provide() {
+    return {
+      registerTransformation: this.registerTransformation
+    };
+  },
+  data: function data() {
+    return {
+      transformations: []
+    };
+  },
+  mounted: function mounted() {
+    if (this.registerPoster) {
+      var posterAttrs = this.$attrs || {};
+      var configuration = normalizeConfiguration(posterAttrs);
+      var transformation = [normalizeTransformation(posterAttrs)].concat(_toConsumableArray(this.transformations));
+      this.registerPoster({
+        configuration: configuration,
+        publicId: posterAttrs.publicId,
+        transformation: transformation
+      }); // this.registerPoster({...(this.$attrs || {}), transformation: this.transformations });
+    }
+  },
+  methods: {
+    registerTransformation: function registerTransformation(transformation) {
+      this.transformations = [].concat(_toConsumableArray(this.transformations), [normalizeTransformation(transformation)]);
+    }
+  },
+  render: function render(h) {
+    return h("div", {}, this.$slots.default);
   }
 });
-// CONCATENATED MODULE: ./src/components/CldPoster.vue?vue&type=script&lang=js&
- /* harmony default export */ var components_CldPostervue_type_script_lang_js_ = (CldPostervue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./src/components/CldPoster.vue
+// CONCATENATED MODULE: ./src/components/CldVideo/CldPoster.vue?vue&type=script&lang=js&
+ /* harmony default export */ var CldVideo_CldPostervue_type_script_lang_js_ = (CldPostervue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/CldVideo/CldPoster.vue
 var CldPoster_render, CldPoster_staticRenderFns
 
 
@@ -1341,7 +1583,7 @@ var CldPoster_render, CldPoster_staticRenderFns
 /* normalize component */
 
 var CldPoster_component = normalizeComponent(
-  components_CldPostervue_type_script_lang_js_,
+  CldVideo_CldPostervue_type_script_lang_js_,
   CldPoster_render,
   CldPoster_staticRenderFns,
   false,
@@ -1366,7 +1608,7 @@ var CldPoster_component = normalizeComponent(
   },
   created: function created() {
     if (this.registerTransformation) {
-      this.registerTransformation(this.$attrs);
+      this.registerTransformation(this.$attrs || {});
     }
   },
   render: function render() {
@@ -1395,202 +1637,6 @@ var CldTransformation_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldTransformation = (CldTransformation_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldVideo/CldVideo.vue?vue&type=script&lang=js&
-
-
-
-
-
-
-
-
-function CldVideovue_type_script_lang_js_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function CldVideovue_type_script_lang_js_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { CldVideovue_type_script_lang_js_ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { CldVideovue_type_script_lang_js_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-
-
-
-
-
-
-
-
-var className = {
-  "cld-video": true
-};
-/**
- * Deliver videos and specify video transformations using the `cld-video` (CldVideo) element,
- * which automatically generates an HTML5 video tag including the URL sources for the main formats
- * supported by web browsers (webm, mp4 and ogv by default), as well as a poster thumbnail image,
- * which is automatically generated from a frame in the video.
- * Browsers can automatically select and play the video format that they best support,
- * and the video files are created dynamically when first accessed by your users.
- *
- * You can optionally include `cld-transformation` components to define transformations to apply to the delivered video.
- *
- * For more information see
- * <a href="https://cloudinary.com/documentation/vue_video_manipulation#cldvideo_component" target="_blank">
- * cld-video component</a> and
- * <a href="https://cloudinary.com/documentation/video_manipulation_and_delivery#embedding_videos_in_web_pages"
- * target="_blank">embedding videos in web pages</a>
- */
-
-/* harmony default export */ var CldVideovue_type_script_lang_js_ = ({
-  name: "CldVideo",
-  inheritAttrs: false,
-  provide: function provide() {
-    return {
-      registerPoster: this.registerPoster
-    };
-  },
-  mixins: [lazy, withOptions],
-  render: function render(h) {
-    return h("video", this.videoAttrs, this.sources.map(function (attrs) {
-      return h("source", {
-        key: attrs.mimeType,
-        attrs: attrs
-      });
-    }).concat(this.$slots.default));
-  },
-  props: {
-    /**
-     * The unique identifier of an uploaded video.
-     */
-    publicId: {
-      type: String,
-      default: "",
-      required: true
-    },
-
-    /**
-     * An ordered array of the video source types to include in the HTML5 tag, where the type is mapped to the mime type.
-     * You can also add a specific transformation for each specified video format by adding a transformation struct. Example:
-     *
-     * `<CldVideo :sourceTypes="{ mp4: { quality: 10 } }" />`
-     */
-    sourceTypes: {
-      type: Object,
-      default: function _default() {
-        return external_cloudinary_core_["Cloudinary"].DEFAULT_VIDEO_PARAMS.source_types.reduce(function (currSrc, type) {
-          return CldVideovue_type_script_lang_js_objectSpread({}, currSrc, _defineProperty({}, type, {}));
-        }, {});
-      }
-    }
-  },
-  methods: {
-    registerPoster: function registerPoster(posterOptions) {//TODO: need to implement
-    }
-  },
-  computed: {
-    videoAttrs: function videoAttrs() {
-      if (!this.publicId || !!findInTransformations(this.options, function (t) {
-        return t.width === 0 || t.height === 0;
-      })) {
-        return {
-          class: className
-        };
-      }
-
-      var htmlAttrs = CldVideovue_type_script_lang_js_objectSpread({
-        poster: this.poster
-      }, attributes_getHTMLAttributes(this.options));
-
-      return {
-        class: className,
-        attrs: CldVideovue_type_script_lang_js_objectSpread({}, normalizeNonCloudinary(this.$attrs), {}, htmlAttrs)
-      };
-    },
-    sources: function sources() {
-      var _this = this;
-
-      if (!this.publicId || this.lazy && !this.visible) {
-        return [];
-      }
-
-      return Object.keys(this.sourceTypes).map(function (srcType) {
-        var videoChainedTransformation = _this.options.transformation || [];
-        var sourceTypeChainedTransformation = Array.isArray(_this.sourceTypes[srcType]) ? _this.sourceTypes[srcType].map(normalizeTransformation) : [normalizeTransformation(_this.sourceTypes[srcType])];
-        var src = external_cloudinary_core_["Cloudinary"].new(CldVideovue_type_script_lang_js_objectSpread({}, _this.configuration, {}, normalizeConfiguration(_this.sourceTypes[srcType]))).url(_this.publicId, CldVideovue_type_script_lang_js_objectSpread({
-          resource_type: "video",
-          format: srcType
-        }, _this.options, {
-          transformation: [].concat(_toConsumableArray(videoChainedTransformation), _toConsumableArray(sourceTypeChainedTransformation))
-        }));
-        var htmlAttrs = normalizeNonCloudinary(_this.sourceTypes[srcType] || {});
-        return CldVideovue_type_script_lang_js_objectSpread({}, htmlAttrs, {
-          mimeType: "video/".concat(srcType === "ogv" ? "ogg" : srcType),
-          src: src
-        });
-      });
-    },
-    poster: function poster() {
-      // <cld-video poster="url" />
-      if (this.$attrs.poster && typeof this.$attrs.poster === "string") {
-        return this.$attrs.poster;
-      } // <cld-video :poster="{publicId:'x'}" />
-
-
-      if (this.$attrs.poster && typeof_typeof(this.$attrs.poster) === "object") {
-        return external_cloudinary_core_["Cloudinary"].new(CldVideovue_type_script_lang_js_objectSpread({}, this.configuration, {}, normalizeConfiguration(this.$attrs.poster))).url(this.$attrs.poster.publicId || this.publicId, CldVideovue_type_script_lang_js_objectSpread({
-          resource_type: this.$attrs.poster.publicId ? "image" : "video",
-          format: this.$attrs.poster.publicId ? null : 'jpeg'
-        }, this.options, {
-          transformation: [].concat(_toConsumableArray(this.options.transformation ? this.options.transformation : []), _toConsumableArray((Array.isArray(this.$attrs.poster) ? this.$attrs.poster : [this.$attrs.poster]).map(normalizeTransformation)))
-        }));
-      } // <cld-video> <cld-poster publicId="x" /> </cld-video>
-
-
-      var posterChild = this.$slots.default ? find_find(this.$slots.default, function (child) {
-        return child.componentOptions && child.componentOptions.Ctor.options.render === CldPoster.render;
-      }) : null;
-
-      if (posterChild) {
-        var posterAttrs = normalizeTransformation(posterChild.data && posterChild.data.attrs || {});
-        var posterId = (posterChild.data && posterChild.data.attrs || {}).publicId;
-        var posterTransformations = (posterChild.componentOptions.children || []).filter(function (child) {
-          return child.componentOptions && child.componentOptions.Ctor.options.render === CldTransformation.render;
-        });
-        return external_cloudinary_core_["Cloudinary"].new(CldVideovue_type_script_lang_js_objectSpread({}, this.configuration, {}, normalizeConfiguration(posterAttrs))).url(posterId || this.publicId, CldVideovue_type_script_lang_js_objectSpread({
-          resource_type: posterId ? "image" : "video",
-          format: posterId ? null : 'jpeg'
-        }, posterAttrs, {
-          transformation: [].concat(_toConsumableArray(posterAttrs.transformation || []), _toConsumableArray(posterTransformations.map(function (posterTransformation) {
-            return normalizeTransformation(posterTransformation.data && posterTransformation.data.attrs || {});
-          })))
-        }));
-      } // default poster
-
-
-      return external_cloudinary_core_["Cloudinary"].new(this.configuration).url(this.publicId, CldVideovue_type_script_lang_js_objectSpread({
-        resource_type: "video",
-        format: "jpeg"
-      }, this.options));
-    }
-  }
-});
-// CONCATENATED MODULE: ./src/components/CldVideo/CldVideo.vue?vue&type=script&lang=js&
- /* harmony default export */ var CldVideo_CldVideovue_type_script_lang_js_ = (CldVideovue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./src/components/CldVideo/CldVideo.vue
-var CldVideo_render, CldVideo_staticRenderFns
-
-
-
-
-/* normalize component */
-
-var CldVideo_component = normalizeComponent(
-  CldVideo_CldVideovue_type_script_lang_js_,
-  CldVideo_render,
-  CldVideo_staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* harmony default export */ var CldVideo = (CldVideo_component.exports);
 // CONCATENATED MODULE: ./src/plugin.js
 
 
@@ -1609,27 +1655,8 @@ function plugin_objectSpread(target) { for (var i = 1; i < arguments.length; i++
 
 
 
-var allComponents = [CldContext, CldImage, CldVideo, CldTransformation];
-/**
- * Returns object of props whose default value are mapped to the `configurations`' properties
- * @param {Object} configurations 
- */
 
-var computeDefaultProps = function computeDefaultProps() {
-  var configurations = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var computedProps = {};
-
-  for (var key in configurations) {
-    var value = configurations[key];
-    computedProps[key] = {
-      default: value
-    };
-  }
-
-  console.log(computedProps);
-  return computedProps;
-};
-
+var allComponents = [CldContext, CldImage, CldVideo, CldTransformation, CldPoster];
 function install(Vue) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 

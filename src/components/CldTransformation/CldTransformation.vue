@@ -12,7 +12,7 @@ export default {
   },
   created() {
     if (this.registerTransformation) {
-      this.registerTransformation(this.$attrs);
+      this.registerTransformation(this.$attrs || {});
     }
   },
   render() {

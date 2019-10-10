@@ -18,6 +18,7 @@ import { getPlaceholderURL } from "../../helpers/getPlaceholderURL";
 import { size } from "../../mixins/size";
 import { lazy } from "../../mixins/lazy";
 import { withOptions } from "../../mixins/withOptions";
+import { generateUrl } from '../../helpers/URLGenerator';
 
 /**
  * Deliver images and specify image transformations using the cld-image (CldImage) component,
@@ -149,9 +150,10 @@ export default {
 
       const htmlAttrs = getHTMLAttributes(this.options);
 
-      const src = Cloudinary.new(this.configuration).url(
-        this.publicId,
-        {
+      const src = generateUrl({
+        publicId: this.publicId,
+        configuration: this.configuration,
+        transformation: {
           ...this.options,
           transformation: [
             ...this.transformOptions.transformation,
@@ -163,7 +165,7 @@ export default {
             ...(this.progressive ? [{ flags: ["progressive"] }] : [])
           ]
         }
-      );
+      });
 
       return {
           ...this.nonCldAttrs,
@@ -171,7 +173,6 @@ export default {
           src
       };
     },
-
     shouldMeasureSize() {
       return !this.responsive;
     }

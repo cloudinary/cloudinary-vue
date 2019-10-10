@@ -5,14 +5,14 @@ import { sourcesOfVideo } from "./sourcesOfVideo";
 
 describe("CldVideo", () => {
   it("should render a video without sources if publicId is not defined", async () => {
-    const video = mount({
+    const wrapper = mount({
       template: `
         <cld-video cloudName="demo" publicId="" />
       `,
       components: { CldVideo }
     });
 
-    await Vue.nextTick();
+    const video = wrapper.find('video');
 
     expect(video.is("video")).toBe(true);
     expect(sourcesOfVideo(video)).toEqual({});

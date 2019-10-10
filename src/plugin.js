@@ -1,10 +1,11 @@
 import CldContext from "./components/CldContext/CldContext";
 import CldImage from "./components/CldImage/CldImage";
 import CldVideo from "./components/CldVideo/CldVideo";
+import CldPoster from './components/CldVideo/CldPoster';
 import CldTransformation from './components/CldTransformation/CldTransformation';
 import { find } from "./utils";
 
-const allComponents = [CldContext, CldImage, CldVideo, CldTransformation];
+const allComponents = [CldContext, CldImage, CldVideo, CldTransformation, CldPoster];
 
 export function install(Vue, options = {}) {
   if (Vue.CldInstalled) {

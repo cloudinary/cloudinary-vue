@@ -4,7 +4,7 @@ import CldVideo from "../../src/components/CldVideo/CldVideo.vue";
 
 describe("CldVideo", () => {
   it("respects poster object-attribute", async () => {
-    const video = mount({
+    const wrapper = mount({
       template: `
         <cld-video
           cloudName="demo"
@@ -15,7 +15,7 @@ describe("CldVideo", () => {
       components: { CldVideo }
     });
 
-    await Vue.nextTick();
+    const video = wrapper.find('video');
 
     expect(video.is("video")).toBe(true);
     expect(video.attributes("poster")).toBe(

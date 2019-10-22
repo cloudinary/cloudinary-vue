@@ -7,25 +7,6 @@ import { find } from "./utils";
 
 const allComponents = [CldContext, CldImage, CldVideo, CldTransformation, CldPoster];
 
-/**
- * Returns object of props whose default value are mapped to the `configurations`' properties
- * @param {Object} configurations 
- */
-const computeDefaultProps = (configurations = {}) => {
-  const computedProps = {};
-  for (var key in configurations) {
-    const value = configurations[key];
-
-    computedProps[key] = {
-      default: value,
-    }
-  }
-
-  console.log(computedProps)
-
-  return computedProps;
-}
-
 export function install(Vue, options = {}) {
   if (Vue.CldInstalled) {
     throw new Error("Cloudinary plugin already installed");

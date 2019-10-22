@@ -134,7 +134,6 @@ an optional `CldVideo` child element that will specify image resource to be prov
 
 ## ⚠️ Known Issues
 
-- SSR (Server-side rendering) is not currently supported.
 - If you want to work with the SDK in CodeSandbox, start with this Vue.js SDK CodeSandbox template.
 
 ## Additional resources

@@ -59,7 +59,7 @@ export function getResizeTransformation(mode, size, breakpoints) {
         : {
             width: Math.floor(size.width),
             height: Math.floor(size.height)
-          }
+          };
       return normalizeTransformation({
         ...getDPRAttr(),
         crop: "fill",
@@ -72,21 +72,18 @@ export function getResizeTransformation(mode, size, breakpoints) {
         ...getDPRAttr(),
         crop: "scale",
         width: Math.floor(
-          breakpoints
-            ? findBreakpoint(breakpoints, size.width)
-            : size.width
+          breakpoints ? findBreakpoint(breakpoints, size.width) : size.width
         )
       });
 
     case "height":
-        return normalizeTransformation({
-          ...getDPRAttr(),
-          crop: "scale",
-          height: Math.floor(breakpoints
-              ? findBreakpoint(breakpoints, size.height)
-              : size.height
-          )
-        });
+      return normalizeTransformation({
+        ...getDPRAttr(),
+        crop: "scale",
+        height: Math.floor(
+          breakpoints ? findBreakpoint(breakpoints, size.height) : size.height
+        )
+      });
     default:
       return {};
   }

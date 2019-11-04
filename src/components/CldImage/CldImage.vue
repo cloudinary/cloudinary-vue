@@ -1,13 +1,19 @@
 <template>
-  <div class="cld-image">
-    <img v-bind="imageAttrs" :style="style"/>
+  <div class="cld-image" :style="style">
+    <img v-bind="imageAttrs" :style="style" />
     <slot></slot>
   </div>
 </template>
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, range } from "../../utils";
-import { normalizeNonCloudinary, normalizeTransformation, normalizeConfiguration, getHTMLAttributes, hasZeroSizeTransformation } from "../../helpers/attributes";
+import {
+  normalizeNonCloudinary,
+  normalizeTransformation,
+  normalizeConfiguration,
+  getHTMLAttributes,
+  hasZeroSizeTransformation
+} from "../../helpers/attributes";
 import { evalBreakpoints } from "../../helpers/evalBreakpoints";
 import {
   getResizeTransformation,
@@ -18,7 +24,7 @@ import { getPlaceholderURL } from "../../helpers/getPlaceholderURL";
 import { size } from "../../mixins/size";
 import { lazy } from "../../mixins/lazy";
 import { withOptions } from "../../mixins/withOptions";
-import { generateUrl } from '../../helpers/URLGenerator';
+import { generateUrl } from "../../helpers/URLGenerator";
 
 /**
  * Deliver images and specify image transformations using the cld-image (CldImage) component,
@@ -37,7 +43,7 @@ export default {
   name: "CldImage",
   provide() {
     return {
-      registerTransformation: this.registerTransformation,
+      registerTransformation: this.registerTransformation
     };
   },
   inject: {
@@ -99,16 +105,19 @@ export default {
   },
   methods: {
     registerTransformation(transformation) {
-      this.transformations = [...this.transformations, normalizeTransformation(transformation)];
+      this.transformations = [
+        ...this.transformations,
+        normalizeTransformation(transformation)
+      ];
     },
     computeLazyLoadSrc() {
       const src = getPlaceholderURL(
-          this.placeholder,
-          this.publicId,
-          this.configuration,
-          this.transformOptions
-        );
-      
+        this.placeholder,
+        this.publicId,
+        this.configuration,
+        this.transformOptions
+      );
+
       return {
         ...this.nonCldAttrs,
         src
@@ -117,15 +126,17 @@ export default {
   },
   computed: {
     isWithoutTransformation() {
-      return !this.publicId ||
+      return (
+        !this.publicId ||
         hasZeroSizeTransformation(this.transformations) ||
         (this.responsive && !this.size)
+      );
     },
     style() {
-      return getResponsiveStyle(this.responsive)
+      return getResponsiveStyle(this.responsive);
     },
     nonCldAttrs() {
-      return normalizeNonCloudinary(this.$attrs)
+      return normalizeNonCloudinary(this.$attrs);
     },
     transformOptions() {
       return {
@@ -134,10 +145,10 @@ export default {
           ...(this.options.transformation || []),
           ...this.transformations
         ]
-      }
+      };
     },
     isLazyLoadInvisible() {
-      return this.lazy && !this.visible
+      return this.lazy && !this.visible;
     },
     imageAttrs() {
       if (this.isWithoutTransformation) {
@@ -168,14 +179,14 @@ export default {
       });
 
       return {
-          ...this.nonCldAttrs,
-          ...htmlAttrs,
-          src
+        ...this.nonCldAttrs,
+        ...htmlAttrs,
+        src
       };
     },
     shouldMeasureSize() {
-      return !this.responsive;
+      return this.responsive !== false;
     }
-  },
+  }
 };
 </script>

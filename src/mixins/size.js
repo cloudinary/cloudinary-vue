@@ -1,6 +1,5 @@
 import { pick, debounce } from "../utils";
 
-
 /**
  * If necessary posts root element
  * size information
@@ -25,8 +24,12 @@ export const size = {
           this.cancelSizeListener = watchElementSize(this.$el, size => {
             if (!size) return;
 
-            if (!this.size || this.size.width !== size.width || this.size.height !== size.height) {
-              this.size = { ...size };
+            if (
+              !this.size ||
+              this.size.width !== size.width ||
+              this.size.height !== size.height
+            ) {
+              this.size = size;
             }
           });
         }
@@ -35,7 +38,7 @@ export const size = {
           this.cancelSizeListener();
         }
       }
-    },
+    }
   },
 
   created() {
@@ -71,8 +74,10 @@ function watchElementSize(element, cb) {
     if ("ResizeObserver" in window) {
       const resizeObserver = new ResizeObserver(entries => {
         for (const entry of entries) {
-          const size = pick(entry.contentRect, ["width", "height"]);
-          delayedCallback(size);
+          delayedCallback({
+            width: entry.contentRect.width,
+            height: entry.contentRect.height
+          });
         }
       });
       resizeObserver.observe(element);
@@ -85,8 +90,8 @@ function watchElementSize(element, cb) {
       };
     } else {
       const handleWindowResize = () => {
-        const size = pick(element.getBoundingClientRect(), ["width", "height"]);
-        delayedCallback(size);
+        const rect = element.getBoundingClientRect();
+        delayedCallback({ width: rect.width, height: rect.height });
       };
       window.addEventListener("resize", handleWindowResize);
       handleWindowResize();

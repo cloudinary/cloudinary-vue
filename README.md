@@ -18,6 +18,24 @@ This is a BETA version. Things are still due to changes.
 
 ### Installation
 
+**🎉We now support installing via Vue CLI 3.0**
+
+### Install with Vue-CLI
+
+1. After create your application with Vue-CLI, navigate to the created app folder, and install Cloudinary SDK by:
+
+```bash
+vue add cloudinary
+```
+
+2. Set up your cloudName and pick the components to use (or use all 😃)
+
+![Set up with cloudName and options](http://bit.ly/2WSKTf0)
+
+A `cloudinary.js` file will be added to your src directory, same level with your `main.js` file. Feel free to customize it if you like. And have fun with Cloudinary! 🤟
+
+More information on the plugin, check out [our Vue-CLI plugin for Cloudinary Repo](https://github.com/cloudinary/vue-cli-plugin-cloudinary)
+
 #### Install the library with npm
 
 Install the package in your project with

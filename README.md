@@ -1,4 +1,4 @@
-# Cloudinary Vue SDK 
+# Cloudinary Vue SDK
 
 [![Build Status](https://travis-ci.org/cloudinary/cloudinary-vue.svg?branch=master)](https://travis-ci.org/cloudinary/cloudinary-vue)
 
@@ -140,19 +140,14 @@ For example:
 ```jsx
 <cld-image cloudName="demo" publicId="sample">
   <cld-transformation angle="-45" />
-  <cld-transformation effect="trim" angle="45" crop="scale" width="600">
-    <cld-transformation overlay="text:Arial_100:Hello" />
-  </cld-transformation>
+  <cld-transformation effect="trim" angle="45" crop="scale" width="600" />
+  <cld-transformation overlay="text:Arial_100:Hello" />
 </cld-image>
 ```
 
 #### CldPoster
 
 an optional `CldVideo` child element that will specify image resource to be provided to `poster` attribute of the `video` element.
-
-## ⚠️ Known Issues
-
-- If you want to work with the SDK in CodeSandbox, start with this Vue.js SDK CodeSandbox template.
 
 ## Additional resources
 

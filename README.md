@@ -175,44 +175,6 @@ Impact the product, hear updates, test drive new features and more! Join [here](
 
 Released under the MIT license.
 
-## Development
+## Contributing
 
-### Installation
-
-```
-// in repository folder
-npm i -g @vue/cli
-npm i
-```
-
-### Compile and minify for production
-
-```
-npm run build
-```
-
-### Documentation
-
-#### Run local styleguidist server
-
-```
-npm run styleguide
-```
-
-#### Build styleguidist output
-
-```
-npm run build:styleguide
-```
-
-### Lint files
-
-```
-npm run lint
-```
-
-### Run all tests
-
-```
-npm t
-```
+See [contributing guidelines](/CONTRIBUTING.md) in a separate file.

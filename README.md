@@ -2,21 +2,17 @@
 
 [![Build Status](https://travis-ci.org/cloudinary/cloudinary-vue.svg?branch=master)](https://travis-ci.org/cloudinary/cloudinary-vue)
 
-Cloudinary is a cloud service that offers a solution to a web application's entire image management pipeline.
+> This is a BETA version. Things are still due to changes.
 
-Easily upload images to the cloud. Automatically perform smart image resizing, cropping and conversion without installing any complex software. Integrate Facebook or Twitter profile image extraction in a snap, in any dimension and style to match your website’s graphics requirements. Images are seamlessly delivered through a fast CDN, and much much more.
+Cloudinary is a cloud-based service that provides an end-to-end image and video management solution including uploads, storage, manipulations, optimizations and delivery. All your media resources are optimized and delivered through a fast CDN using industry best practices.
 
-Cloudinary offers comprehensive APIs and administration capabilities and is easy to integrate with any web application, existing or new.
+Using Cloudinary's Vue.js SDK, you can easily perform smart image and video manipulations using code that integrates seamlessly with your existing Vue.js application, and deliver optimized and responsive media to your users.
 
-Cloudinary provides URL and HTTP based APIs that can be easily integrated with any Web development framework.
+_This Readme provides basic installation and usage information. For the complete documentation, see the [Vue.js SDK guide](https://cloudinary.com/documentation/vue_integration)_
 
-## BETA
+## 🛠️ How to install
 
-This is a BETA version. Things are still due to changes.
-
-## Installation
-
-**🎉We now support installing via Vue CLI 3.0**
+**🎉We now support installing via Vue CLI 3.0 🎉**
 
 ### Install with Vue-CLI
 
@@ -41,12 +37,12 @@ Install the package in your project with
 ```bash
 npm install cloudinary-vue
 
-//OR
+#OR
 
 yarn add cloudinary-vue
 ```
 
-## Configure
+## 💻 Configure
 
 ### Configure Cloudinary options
 
@@ -173,10 +169,10 @@ For example:
 Additional resources are available at:
 
 - [Website](http://cloudinary.com)
-- [Documentation](http://cloudinary.com/documentation)
+- [Documentation](https://cloudinary.com/documentation/vue_integration)
 - [Knowledge Base](http://support.cloudinary.com/forums)
 - [Image transformations documentation](http://cloudinary.com/documentation/image_transformations)
-- [Reference guide](https://cloudinary.github.io/cloudinary-vue/)
+- [Video transformations documentation](https://cloudinary.com/documentation/video_manipulation_and_delivery#video_transformations_reference)
 - [Cli plugin for Cloudinary Vue](https://github.com/cloudinary/vue-cli-plugin-cloudinary)
 
 ## Support

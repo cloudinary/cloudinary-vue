@@ -5,15 +5,14 @@ import CldVideo from "./components/CldVideo/CldVideo";
 import CldPoster from './components/CldVideo/CldPoster';
 import CldTransformation from './components/CldTransformation/CldTransformation';
 
-const allComponents = { CldContext, CldImage, CldVideo, CldTransformation, CldPoster };
-
 const Cloudinary = {
   install: (Vue, options = {}) => {
-    plugin.install.call(plugin, Vue, options.components ? options : { ...options, components: allComponents })
+    plugin.install(Vue, options.components ? options : { ...options, components: { CldContext, CldImage, CldVideo, CldTransformation, CldPoster }})
   }
 };
 
 export {
   Cloudinary as default,
+  Cloudinary,
   CldContext, CldImage, CldVideo, CldTransformation, CldPoster
 };

@@ -4,7 +4,7 @@
 
 > This is a BETA version. Things are still due to changes.
 
-Cloudinary is a cloud-based service that provides an end-to-end image and video management solution including uploads, storage, manipulations, optimizations and delivery. All your media resources are optimized and delivered through a fast CDN using industry best practices.
+Cloudinary is a [cloud-based service](https://cloudinary.com/solutions) that provides an end-to-end image and video management solution including uploads, storage, manipulations, optimizations and delivery. All your media resources are optimized and delivered through a fast CDN using industry best practices.
 
 Using Cloudinary's Vue.js SDK, you can easily perform smart image and video manipulations using code that integrates seamlessly with your existing Vue.js application, and deliver optimized and responsive media to your users.
 

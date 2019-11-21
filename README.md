@@ -149,6 +149,10 @@ For example:
 
 an optional `CldVideo` child element that will specify image resource to be provided to `poster` attribute of the `video` element.
 
+## How to contribute?
+
+See [contributing guidelines](/CONTRIBUTING.md) in a separate file.
+
 ## Additional resources
 
 Additional resources are available at:
@@ -174,7 +178,3 @@ Impact the product, hear updates, test drive new features and more! Join [here](
 ## License
 
 Released under the MIT license.
-
-## Contributing
-
-See [contributing guidelines](/CONTRIBUTING.md) in a separate file.

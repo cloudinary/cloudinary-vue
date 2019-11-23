@@ -1,9 +1,3 @@
-<template>
-  <div class="cld-image" :style="style">
-    <img v-bind="imageAttrs" :style="style" />
-    <slot></slot>
-  </div>
-</template>
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, range } from "../../utils";
@@ -41,6 +35,17 @@ import { generateUrl } from "../../helpers/URLGenerator";
  */
 export default {
   name: "CldImage",
+    render: function (createElement) {
+    let self = this
+    return createElement(
+      self.tag,
+      { class: 'cld-image' },
+      [
+        createElement('img', { attrs: self.imageAttrs, style: self.style} ),
+        self.$slots.default
+      ]
+    )
+  },
   provide() {
     return {
       registerTransformation: this.registerTransformation
@@ -54,6 +59,10 @@ export default {
   // mixins: [size, lazy, withOptions],
   mixins: [lazy, size, withOptions],
   props: {
+    /**
+     * The wrapping elemenet
+    */
+    tag: { type: String, default: "div" },
     /**
      * The unique identifier of an uploaded image.
      */

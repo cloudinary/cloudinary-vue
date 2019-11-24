@@ -149,6 +149,10 @@ For example:
 
 an optional `CldVideo` child element that will specify image resource to be provided to `poster` attribute of the `video` element.
 
+## How to contribute?
+
+See [contributing guidelines](/CONTRIBUTING.md) in a separate file.
+
 ## Additional resources
 
 Additional resources are available at:
@@ -174,45 +178,3 @@ Impact the product, hear updates, test drive new features and more! Join [here](
 ## License
 
 Released under the MIT license.
-
-## Development
-
-### Installation
-
-```
-// in repository folder
-npm i -g @vue/cli
-npm i
-```
-
-### Compile and minify for production
-
-```
-npm run build
-```
-
-### Documentation
-
-#### Run local styleguidist server
-
-```
-npm run styleguide
-```
-
-#### Build styleguidist output
-
-```
-npm run build:styleguide
-```
-
-### Lint files
-
-```
-npm run lint
-```
-
-### Run all tests
-
-```
-npm t
-```

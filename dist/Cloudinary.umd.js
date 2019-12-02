@@ -257,7 +257,7 @@ module.exports = require("core-js/modules/es6.array.sort");
 __webpack_require__.r(__webpack_exports__);
 var plugin_namespaceObject = {};
 __webpack_require__.r(plugin_namespaceObject);
-__webpack_require__.d(plugin_namespaceObject, "install", function() { return install; });
+__webpack_require__.d(plugin_namespaceObject, "install", function() { return plugin_install; });
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
 // This file is imported into lib/wc client bundles.
@@ -279,12 +279,112 @@ if (typeof window !== 'undefined') {
 // EXTERNAL MODULE: external "core-js/modules/es7.object.get-own-property-descriptors"
 var es7_object_get_own_property_descriptors_ = __webpack_require__("12d2");
 
+// EXTERNAL MODULE: external "core-js/modules/web.dom.iterable"
+var web_dom_iterable_ = __webpack_require__("80a8");
+
 // EXTERNAL MODULE: external "core-js/modules/es6.array.iterator"
 var es6_array_iterator_ = __webpack_require__("2c92");
 
 // EXTERNAL MODULE: external "core-js/modules/es6.object.keys"
 var es6_object_keys_ = __webpack_require__("6e74");
 
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/define-property.js
+var define_property = __webpack_require__("85f2");
+var define_property_default = /*#__PURE__*/__webpack_require__.n(define_property);
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/defineProperty.js
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    define_property_default()(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+// EXTERNAL MODULE: external "core-js/modules/es6.function.name"
+var es6_function_name_ = __webpack_require__("25fc");
+
+// CONCATENATED MODULE: ./src/plugin.js
+
+
+
+
+
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function plugin_install(Vue) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  if (Vue.CldInstalled) {
+    throw new Error("Cloudinary plugin already installed");
+  }
+
+  Vue.CldInstalled = true;
+  initComponents(Vue, options);
+}
+
+function registerComponents(Vue) {
+  var components = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var defaultConfigurations = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  if (!components) {
+    throw new Error("No component found.");
+  }
+
+  var _loop = function _loop(key) {
+    var component = components[key];
+
+    if (component) {
+      Vue.component(key, _objectSpread({}, component, {
+        data: function data() {
+          return _objectSpread({}, component.data ? component.data() : {}, {
+            defaultConfigurations: defaultConfigurations
+          });
+        }
+      }));
+    }
+  };
+
+  for (var key in components) {
+    _loop(key);
+  }
+}
+
+function initComponents(Vue, options) {
+  var configuration = options.configuration;
+  var components = Array.isArray(options.components) ? options.components.reduce(function (obj, component) {
+    return _objectSpread({}, obj, _defineProperty({}, component.name, component));
+  }, {}) : options.components;
+  registerComponents(Vue, components, configuration);
+}
+// EXTERNAL MODULE: external "cloudinary-core"
+var external_cloudinary_core_ = __webpack_require__("3c59");
+
+// CONCATENATED MODULE: ./src/utils/debounce.js
+var debounce = function debounce(fn, timeout) {
+  var forceUpdateTimeoutToken = null;
+  return function () {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    clearTimeout(forceUpdateTimeoutToken);
+    forceUpdateTimeoutToken = setTimeout(function () {
+      return fn.apply(void 0, args);
+    }, timeout);
+  };
+};
 // EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/symbol/iterator.js
 var iterator = __webpack_require__("5d58");
 var iterator_default = /*#__PURE__*/__webpack_require__.n(iterator);
@@ -312,49 +412,6 @@ function typeof_typeof(obj) {
 
   return typeof_typeof(obj);
 }
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/define-property.js
-var define_property = __webpack_require__("85f2");
-var define_property_default = /*#__PURE__*/__webpack_require__.n(define_property);
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/defineProperty.js
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    define_property_default()(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-// EXTERNAL MODULE: external "core-js/modules/es6.function.name"
-var es6_function_name_ = __webpack_require__("25fc");
-
-// EXTERNAL MODULE: external "core-js/modules/web.dom.iterable"
-var web_dom_iterable_ = __webpack_require__("80a8");
-
-// EXTERNAL MODULE: external "cloudinary-core"
-var external_cloudinary_core_ = __webpack_require__("3c59");
-
-// CONCATENATED MODULE: ./src/utils/debounce.js
-var debounce = function debounce(fn, timeout) {
-  var forceUpdateTimeoutToken = null;
-  return function () {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    clearTimeout(forceUpdateTimeoutToken);
-    forceUpdateTimeoutToken = setTimeout(function () {
-      return fn.apply(void 0, args);
-    }, timeout);
-  };
-};
 // CONCATENATED MODULE: ./src/utils/find.js
 
 
@@ -488,9 +545,9 @@ var attributes_getHTMLAttributes = function getHTMLAttributes(options) {
 
 
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function withOptions_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function withOptions_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { withOptions_ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { withOptions_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
 /**
@@ -501,7 +558,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 var withOptions = {
   computed: {
     configuration: function configuration() {
-      return normalizeConfiguration(_objectSpread({}, this.defaultConfigurations || [], {}, this.$props || [], {}, this.contextConfiguration, {}, this.$attrs));
+      return normalizeConfiguration(withOptions_objectSpread({}, this.defaultConfigurations || [], {}, this.$props || [], {}, this.contextConfiguration, {}, this.$attrs));
     },
     options: function options() {
       return normalizeTransformation(this.$attrs);
@@ -656,12 +713,12 @@ var CldContext_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldContext = (CldContext_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ee099d80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldImage/CldImage.vue?vue&type=template&id=d42551ee&
-var CldImagevue_type_template_id_d42551ee_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cld-image"},[_c('img',_vm._b({style:(_vm.style)},'img',_vm.imageAttrs,false)),_vm._t("default")],2)}
-var CldImagevue_type_template_id_d42551ee_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ee099d80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldImage/CldImage.vue?vue&type=template&id=6d90b5f3&
+var CldImagevue_type_template_id_6d90b5f3_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cld-image",style:(_vm.style)},[_c('img',_vm._b({style:(_vm.style)},'img',_vm.imageAttrs,false)),_vm._t("default")],2)}
+var CldImagevue_type_template_id_6d90b5f3_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/CldImage/CldImage.vue?vue&type=template&id=d42551ee&
+// CONCATENATED MODULE: ./src/components/CldImage/CldImage.vue?vue&type=template&id=6d90b5f3&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js
 var is_array = __webpack_require__("a745");
@@ -908,15 +965,6 @@ var es6_symbol_ = __webpack_require__("1750");
 
 
 
-
-
-
-
-function size_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function size_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { size_ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { size_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-
 /**
  * If necessary posts root element
  * size information
@@ -945,7 +993,7 @@ var size_size = {
             if (!size) return;
 
             if (!_this.size || _this.size.width !== size.width || _this.size.height !== size.height) {
-              _this.size = size_objectSpread({}, size);
+              _this.size = size;
             }
           });
         }
@@ -992,10 +1040,10 @@ function watchElementSize(element, cb) {
         try {
           for (var _iterator = entries[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var entry = _step.value;
-
-            var _size = pick(entry.contentRect, ["width", "height"]);
-
-            delayedCallback(_size);
+            delayedCallback({
+              width: entry.contentRect.width,
+              height: entry.contentRect.height
+            });
           }
         } catch (err) {
           _didIteratorError = true;
@@ -1023,8 +1071,11 @@ function watchElementSize(element, cb) {
       };
     } else {
       var handleWindowResize = function handleWindowResize() {
-        var size = pick(element.getBoundingClientRect(), ["width", "height"]);
-        delayedCallback(size);
+        var rect = element.getBoundingClientRect();
+        delayedCallback({
+          width: rect.width,
+          height: rect.height
+        });
       };
 
       window.addEventListener("resize", handleWindowResize);
@@ -1302,7 +1353,7 @@ function CldImagevue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
       });
     },
     shouldMeasureSize: function shouldMeasureSize() {
-      return !this.responsive;
+      return this.responsive !== false;
     }
   }
 });
@@ -1318,8 +1369,8 @@ function CldImagevue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
 
 var CldImage_component = normalizeComponent(
   CldImage_CldImagevue_type_script_lang_js_,
-  CldImagevue_type_template_id_d42551ee_render,
-  CldImagevue_type_template_id_d42551ee_staticRenderFns,
+  CldImagevue_type_template_id_6d90b5f3_render,
+  CldImagevue_type_template_id_6d90b5f3_staticRenderFns,
   false,
   null,
   null,
@@ -1646,112 +1697,53 @@ var CldTransformation_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldTransformation = (CldTransformation_component.exports);
-// CONCATENATED MODULE: ./src/plugin.js
-
-
-
-
-
-
-
-
-function plugin_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function plugin_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { plugin_ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { plugin_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-
-
-
-
-
-
-var allComponents = [CldContext, CldImage, CldVideo, CldTransformation, CldPoster];
-function install(Vue) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-  if (Vue.CldInstalled) {
-    throw new Error("Cloudinary plugin already installed");
-  }
-
-  Vue.CldInstalled = true; // const configurations = normalizeConfiguration(options.configuration || {});  
-
-  allComponents.forEach(function (component) {
-    var userComponentName = getUserComponentName(options.components, component.name);
-
-    if (userComponentName != null) {
-      Vue.component(userComponentName, plugin_objectSpread({}, component, {
-        data: function data() {
-          return plugin_objectSpread({}, component.data ? component.data() : {}, {
-            defaultConfigurations: options.configuration || {}
-          });
-        }
-      }));
-    }
-  });
-}
-
-function getUserComponentName(components, name) {
-  if (!components) {
-    return name;
-  } // { components: ['CldImage'] }
-  // and
-  // { components: [CldImage] }
-
-
-  if (Array.isArray(components)) {
-    var entry = find_find(components, function (component) {
-      return typeof component === "string" && component === name || typeof_typeof(component) === "object" && component != null && component.name === name;
-    });
-
-    if (entry == null) {
-      return null;
-    }
-
-    if (typeof entry === "string") {
-      return entry;
-    }
-
-    return entry.name;
-  } // { components: { CldImage: true } }
-
-
-  if (typeof components[name] === "boolean") {
-    return components[name] === true ? name : null;
-  } // { components: { CldImage: 'CloudinaryImage' } }
-
-
-  if (typeof components[name] === "string") {
-    return components[name];
-  } // { components: { CloudinaryImage: 'CldImage' } }
-  // and
-  // { components: { CloudinaryImage: CldImage } }
-
-
-  var found = find_find(Object.keys(components), function (k) {
-    return typeof components[k] === "string" && components[k] === name || typeof_typeof(components[k]) === "object" && components[k] != null && components[k].name === name;
-  });
-  return found === undefined ? null : found;
-}
 // CONCATENATED MODULE: ./src/index.js
 
 
 
 
-var src_components = {
+
+
+function src_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function src_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { src_ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { src_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+
+
+
+var allComponents = {
   CldContext: CldContext,
   CldImage: CldImage,
-  CldVideo: CldVideo
+  CldVideo: CldVideo,
+  CldTransformation: CldTransformation,
+  CldPoster: CldPoster
 };
+var Cloudinary = {
+  install: function install(Vue) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    plugin_install.call(plugin_namespaceObject, Vue, options.components ? options : src_objectSpread({}, options, {
+      components: allComponents
+    }));
+  }
+}; // const components = {
+//   CldContext,
+//   CldImage,
+//   CldVideo
+// };
+
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
-/* concated harmony reexport plugin */__webpack_require__.d(__webpack_exports__, "plugin", function() { return plugin_namespaceObject; });
-/* concated harmony reexport components */__webpack_require__.d(__webpack_exports__, "components", function() { return src_components; });
 /* concated harmony reexport CldContext */__webpack_require__.d(__webpack_exports__, "CldContext", function() { return CldContext; });
 /* concated harmony reexport CldImage */__webpack_require__.d(__webpack_exports__, "CldImage", function() { return CldImage; });
 /* concated harmony reexport CldVideo */__webpack_require__.d(__webpack_exports__, "CldVideo", function() { return CldVideo; });
+/* concated harmony reexport CldTransformation */__webpack_require__.d(__webpack_exports__, "CldTransformation", function() { return CldTransformation; });
+/* concated harmony reexport CldPoster */__webpack_require__.d(__webpack_exports__, "CldPoster", function() { return CldPoster; });
 
 
-/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (plugin_namespaceObject);
+/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (Cloudinary);
 
 
 

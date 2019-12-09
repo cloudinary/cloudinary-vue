@@ -1,6 +1,6 @@
 {
   "name": "cloudinary-vue",
-  "version": "1.0.0-beta3",
+  "version": "1.0.0",
   "scripts": {
     "build": "vue-cli-service lint --fix; npm run build:styleguide; npm run build:lib",
     "test": "vue-cli-service test:unit",

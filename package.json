@@ -11,8 +11,7 @@
     "storybook:serve": "vue-cli-service storybook:serve -p 6006 -c config/storybook",
     "styleguide": "node docs-sources/generateDocsLinks.js; vue-cli-service lint --fix; STYLEGUIDE=1 vue-styleguidist server"
   },
-  "main": "dist/Cloudinary.common.js",
-  "browser": "src/index.js",
+  "main": "dist/Cloudinary.umd.js",
   "unpkg": "dist/Cloudinary.umd.min.js",
   "dependencies": {
     "cloudinary-core": "^2.6.3",

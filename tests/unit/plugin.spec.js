@@ -24,68 +24,31 @@ describe("CLD plugin", () => {
       const localVue = createLocalVue();
       localVue.use(Cloudinary, { components: [] });
 
-      const wrapper = mount(
-        {
-          template: `<cld-image cloudName="demo" publicId="face_top" />`
-        },
-        { localVue }
-      );
-      expect(wrapper.is("img")).toBe(false);
+      expect(Object.hasOwnProperty.call(localVue.options.components, 'CldImage')).toBe(false);
     });
 
     it("empty object installs no component", async () => {
       const localVue = createLocalVue();
       localVue.use(Cloudinary, { components: {} });
 
-      const wrapper = mount(
-        {
-          template: `<cld-image cloudName="demo" publicId="face_top" />`
-        },
-        { localVue }
-      );
-      expect(wrapper.is("img")).toBe(false);
+      expect(Object.hasOwnProperty.call(localVue.options.components, 'CldImage')).toBe(false);
     });
 
     it("array should contain cld component(s)", async () => {
       const localVue = createLocalVue();
       localVue.use(Cloudinary, { components: [CldImage] });
 
-      const wrapper = mount(
-        {
-          template: `<cld-image cloudName="demo" publicId="face_top" />`
-        },
-        { localVue }
-      );
-      expect(wrapper.contains("img")).toBe(true);
-
-      const wrapper2 = mount(
-        {
-          template: `<cld-video cloudName="demo" publicId="face_top" />`
-        },
-        { localVue }
-      );
-      expect(wrapper2.is("video")).toBe(false);
+      expect(Object.hasOwnProperty.call(localVue.options.components, 'CldImage')).toBe(true);
+      expect(Object.hasOwnProperty.call(localVue.options.components, 'CldVideo')).toBe(false);
     });
 
-        it("object with a cld component specifies under what name a component should be installed", async () => {
+    it("object with a cld component specifies under what name a component should be installed", async () => {
+      const componentName = 'CloudinaryImage';
       const localVue = createLocalVue();
-      localVue.use(Cloudinary, { components: { CloudinaryImage: CldImage } });
+      localVue.use(Cloudinary, { components: { [componentName]: CldImage } });
 
-      const wrapper = mount(
-        {
-          template: `<cloudinary-image cloudName="demo" publicId="face_top" />`
-        },
-        { localVue }
-      );
-      expect(wrapper.contains("img")).toBe(true);
-
-      const wrapper2 = mount(
-        {
-          template: `<cld-image cloudName="demo" publicId="face_top" />`
-        },
-        { localVue }
-      );
-      expect(wrapper2.contains("img")).toBe(false);
+      expect(Object.hasOwnProperty.call(localVue.options.components, componentName)).toBe(true);
+      expect(Object.hasOwnProperty.call(localVue.options.components, 'CldImage')).toBe(false);
     });
   });
 });

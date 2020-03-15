@@ -24,22 +24,29 @@ describe("CLD plugin", () => {
       const localVue = createLocalVue();
       localVue.use(Cloudinary, { components: [] });
 
-      expect(Object.hasOwnProperty.call(localVue.options.components, 'CldImage')).toBe(false);
+      const isComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'CldImage');
+
+      expect(isComponentInstalled).toBe(false);
     });
 
     it("empty object installs no component", async () => {
       const localVue = createLocalVue();
       localVue.use(Cloudinary, { components: {} });
 
-      expect(Object.hasOwnProperty.call(localVue.options.components, 'CldImage')).toBe(false);
+      const isComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'CldImage');
+
+      expect(isComponentInstalled).toBe(false);
     });
 
     it("array should contain cld component(s)", async () => {
       const localVue = createLocalVue();
       localVue.use(Cloudinary, { components: [CldImage] });
 
-      expect(Object.hasOwnProperty.call(localVue.options.components, 'CldImage')).toBe(true);
-      expect(Object.hasOwnProperty.call(localVue.options.components, 'CldVideo')).toBe(false);
+      const isImageComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'CldImage');
+      const isVideoComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'CldVideo');
+
+      expect(isImageComponentInstalled).toBe(true);
+      expect(isVideoComponentInstalled).toBe(false);
     });
 
     it("object with a cld component specifies under what name a component should be installed", async () => {
@@ -47,8 +54,11 @@ describe("CLD plugin", () => {
       const localVue = createLocalVue();
       localVue.use(Cloudinary, { components: { [componentName]: CldImage } });
 
-      expect(Object.hasOwnProperty.call(localVue.options.components, componentName)).toBe(true);
-      expect(Object.hasOwnProperty.call(localVue.options.components, 'CldImage')).toBe(false);
+      const isNamedComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, componentName);
+      const isImageComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'CldImage');
+
+      expect(isNamedComponentInstalled).toBe(true);
+      expect(isImageComponentInstalled).toBe(false);
     });
   });
 });

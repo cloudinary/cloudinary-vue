@@ -16,7 +16,7 @@
   "dependencies": {
     "cloudinary-core": "^2.6.3",
     "cloudinary-video-player": "^1.1.1",
-    "core-js": "2.6.9",
+    "core-js": "^3.0.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {

@@ -7,6 +7,7 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, range } from "../../utils";
+import {accessibilityTransformations} from '../../constants';
 import {
   normalizeNonCloudinary,
   normalizeTransformation,
@@ -96,6 +97,14 @@ export default {
     breakpoints: {
       type: [Array, Function, String],
       default: () => range(100, 4000, 100)
+    },
+
+    /**
+     * One of [monochrome, darkmode, brightmode, colorblind]
+     */
+    accessibility: {
+      type: String,
+      default: ""
     }
   },
   data() {
@@ -161,6 +170,8 @@ export default {
 
       const htmlAttrs = getHTMLAttributes(this.options);
 
+      const accessibilityTrans = this.accessibility && accessibilityTransformations[this.accessibility] || {};
+
       const src = generateUrl({
         publicId: this.publicId,
         configuration: this.configuration,
@@ -173,7 +184,9 @@ export default {
               this.size,
               evalBreakpoints(this.breakpoints)
             ),
-            ...(this.progressive ? [{ flags: ["progressive"] }] : [])
+            ...(this.progressive ? [{ flags: ["progressive"] }] : []),
+            // if accessibility mode is present, include it as a transformation
+            accessibilityTrans
           ]
         }
       });

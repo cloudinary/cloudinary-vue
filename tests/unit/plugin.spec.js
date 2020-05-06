@@ -24,68 +24,41 @@ describe("CLD plugin", () => {
       const localVue = createLocalVue();
       localVue.use(Cloudinary, { components: [] });
 
-      const wrapper = mount(
-        {
-          template: `<cld-image cloudName="demo" publicId="face_top" />`
-        },
-        { localVue }
-      );
-      expect(wrapper.is("img")).toBe(false);
+      const isComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'CldImage');
+
+      expect(isComponentInstalled).toBe(false);
     });
 
     it("empty object installs no component", async () => {
       const localVue = createLocalVue();
       localVue.use(Cloudinary, { components: {} });
 
-      const wrapper = mount(
-        {
-          template: `<cld-image cloudName="demo" publicId="face_top" />`
-        },
-        { localVue }
-      );
-      expect(wrapper.is("img")).toBe(false);
+      const isComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'CldImage');
+
+      expect(isComponentInstalled).toBe(false);
     });
 
     it("array should contain cld component(s)", async () => {
       const localVue = createLocalVue();
       localVue.use(Cloudinary, { components: [CldImage] });
 
-      const wrapper = mount(
-        {
-          template: `<cld-image cloudName="demo" publicId="face_top" />`
-        },
-        { localVue }
-      );
-      expect(wrapper.contains("img")).toBe(true);
+      const isImageComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'CldImage');
+      const isVideoComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'CldVideo');
 
-      const wrapper2 = mount(
-        {
-          template: `<cld-video cloudName="demo" publicId="face_top" />`
-        },
-        { localVue }
-      );
-      expect(wrapper2.is("video")).toBe(false);
+      expect(isImageComponentInstalled).toBe(true);
+      expect(isVideoComponentInstalled).toBe(false);
     });
 
-        it("object with a cld component specifies under what name a component should be installed", async () => {
+    it("object with a cld component specifies under what name a component should be installed", async () => {
+      const componentName = 'CloudinaryImage';
       const localVue = createLocalVue();
-      localVue.use(Cloudinary, { components: { CloudinaryImage: CldImage } });
+      localVue.use(Cloudinary, { components: { [componentName]: CldImage } });
 
-      const wrapper = mount(
-        {
-          template: `<cloudinary-image cloudName="demo" publicId="face_top" />`
-        },
-        { localVue }
-      );
-      expect(wrapper.contains("img")).toBe(true);
+      const isNamedComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, componentName);
+      const isImageComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'CldImage');
 
-      const wrapper2 = mount(
-        {
-          template: `<cld-image cloudName="demo" publicId="face_top" />`
-        },
-        { localVue }
-      );
-      expect(wrapper2.contains("img")).toBe(false);
+      expect(isNamedComponentInstalled).toBe(true);
+      expect(isImageComponentInstalled).toBe(false);
     });
   });
 });

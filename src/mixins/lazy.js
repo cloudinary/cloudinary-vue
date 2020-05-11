@@ -6,10 +6,20 @@ export const lazy = {
   props: {
     /**
      * Whether to only load the asset when it needs to be displayed instead of when the page first loads.
+     * @deprecated
      */
     lazy: {
       type: Boolean,
       default: false
+    },
+
+    /**
+     * Set loading type for the component
+     * use loading='lazy' to lazyload
+     */
+    loading: {
+      type: String,
+      default: ''
     }
   },
 
@@ -19,7 +29,7 @@ export const lazy = {
 
   methods: {
     updateVisibilityObservation() {
-      if (this.lazy) {
+      if (this.lazy || this.loading === 'lazy') {
         if (this.$el && !this.cancelVisibilityListener) {
           this.cancelVisibilityListener = watchElementVisibility(
             this.$el,

@@ -148,7 +148,12 @@ export default {
       };
     },
     isLazyLoadInvisible() {
-      return this.lazy && !this.visible;
+      if (this.lazy) {
+        console.warn ('"The prop lazy" has been deprecated, please use loading="lazy"');
+      }
+      const shouldLazyLoad = this.lazy || this.loading === 'lazy';
+
+      return shouldLazyLoad && !this.visible;
     },
     imageAttrs() {
       if (this.isWithoutTransformation) {

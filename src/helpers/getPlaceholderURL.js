@@ -1,27 +1,6 @@
 import { Cloudinary } from "cloudinary-core";
-import { merge } from "../utils";
 
-const placeholderTransformations = {
-  lqip: [
-    {
-      variables: [["$nh", "ih"], ["$nw", "iw"]],
-      crop: "scale",
-      width: "20",
-      quality: "auto"
-    },
-    { crop: "scale", width: "$nw", height: "$nh" }
-  ],
-  color: [
-    {
-      variables: [["$nh", "ih"], ["$nw", "iw"]],
-      crop: "scale",
-      width: "1",
-      quality: "1"
-    },
-    { crop: "scale", width: "$nw", height: "$nh" }
-  ],
-  pixelate: [{ effect: "pixelate:100" }]
-};
+import {placeholderTransformations, predominantColorTransformPxl} from '../constants';
 
 /** Get media URL with some transformations
  * that will make the image lighter
@@ -39,17 +18,32 @@ export function getPlaceholderURL(
 ) {
   if (typeof mode === "string") {
     if (mode in placeholderTransformations) {
+      let placeholderTransformation = {};
+      let hasWidth = transformation.width;
+      let hasHeight = transformation.height;
+      let isPredominant = mode === 'predominant-color';
+
+      if (hasWidth && hasHeight && isPredominant) {
+        placeholderTransformation = predominantColorTransformPxl;
+      } else{
+        placeholderTransformation = placeholderTransformations[mode];
+      }
+
       return Cloudinary.new(configuration).url(
         publicId, {
           ...transformation,
           transformation: [
             ...(transformation.transformation || []),
-            ...placeholderTransformations[mode]
+            ...placeholderTransformation
           ]
         }
       );
+    } else {
+      // eslint-disable-next-line
+      console.warn('Unknown placeholder selected: ', mode);
     }
     return mode;
   }
+
   return "";
 }

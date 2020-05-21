@@ -1,6 +1,6 @@
 <template>
-  <div class="cld-image" :style="style">
-    <img v-bind="imageAttrs" :style="style" />
+  <div class="cld-image" :style="wrapperStyle">
+    <img @load="onImageLoad" v-bind="imageAttrs" :style="style"/>
     <slot></slot>
   </div>
 </template>
@@ -42,17 +42,6 @@ import { generateUrl } from "../../helpers/URLGenerator";
  */
 export default {
   name: "CldImage",
-  provide() {
-    return {
-      registerTransformation: this.registerTransformation
-    };
-  },
-  inject: {
-    contextConfiguration: {
-      default: {}
-    }
-  },
-  // mixins: [size, lazy, withOptions],
   mixins: [lazy, size, withOptions],
   props: {
     /**
@@ -107,12 +96,48 @@ export default {
       default: ""
     }
   },
+  provide() {
+    return {
+      registerTransformation: this.registerTransformation,
+      getTransformOptions: () => {
+        return this.transformOptions;
+      },
+      configuration: this.configuration,
+      publicId: this.publicId,
+      isImageLoaded: () => {
+        return this.imageLoaded;
+      },
+      registerPlaceHolder: () => {
+        this.hasPlaceholderComponent = true;
+      },
+      getImageWidth: () => {
+        // This gets populated from the <cld-image width=500/> tag
+        return this.transformOptions.width;
+      },
+      getImageHeight: () => {
+        // This gets populated from the <cld-image height=500/> tag
+        return this.transformOptions.height;
+      }
+    };
+  },
+  inject: {
+    contextConfiguration: {
+      default: {}
+    }
+  },
   data() {
     return {
-      transformations: []
+      transformations: [],
+      imageLoaded: false,
+      hasPlaceholderComponent: false
     };
   },
   methods: {
+    onImageLoad() {
+      this.imageLoaded = true;
+      // Flag the placeholder as removed when image loads
+      this.hasPlaceholderComponent = false;
+    },
     registerTransformation(transformation) {
       this.transformations = [
         ...this.transformations,
@@ -141,8 +166,19 @@ export default {
         (this.responsive && !this.size)
       );
     },
+    wrapperStyle() {
+      return getResponsiveStyle(this.responsive)
+    },
     style() {
-      return getResponsiveStyle(this.responsive);
+      if (this.hasPlaceholderComponent) {
+        return {
+          ...getResponsiveStyle(this.responsive),
+          opacity: this.hasPlaceholderComponent ? '0' : '1',
+          position: this.hasPlaceholderComponent ? 'absolute' : 'inline'
+        };
+      } else {
+        return getResponsiveStyle(this.responsive);
+      }
     },
     nonCldAttrs() {
       return normalizeNonCloudinary(this.$attrs);
@@ -158,26 +194,17 @@ export default {
     },
     isLazyLoadInvisible() {
       if (this.lazy) {
+        // eslint-disable-next-line
         console.warn ('"The prop lazy" has been deprecated, please use loading="lazy"');
       }
       const shouldLazyLoad = this.lazy || this.loading === 'lazy';
 
       return shouldLazyLoad && !this.visible;
     },
-    imageAttrs() {
-      if (this.isWithoutTransformation) {
-        return this.nonCldAttrs;
-      }
-
-      if (this.isLazyLoadInvisible) {
-        return this.computeLazyLoadSrc();
-      }
-
-      const htmlAttrs = getHTMLAttributes(this.options);
-
+    imageSrc() {
       const accessibilityTrans = this.accessibility && accessibilityTransformations[this.accessibility] || {};
 
-      const src = generateUrl({
+      return generateUrl({
         publicId: this.publicId,
         configuration: this.configuration,
         transformation: {
@@ -195,6 +222,18 @@ export default {
           ]
         }
       });
+    },
+    imageAttrs() {
+      if (this.isWithoutTransformation) {
+        return this.nonCldAttrs;
+      }
+
+      if (this.isLazyLoadInvisible) {
+        return this.computeLazyLoadSrc();
+      }
+
+      const htmlAttrs = getHTMLAttributes(this.options);
+      const src = this.imageSrc;
 
       return {
         ...this.nonCldAttrs,

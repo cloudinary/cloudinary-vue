@@ -145,6 +145,12 @@ export default {
       ];
     },
     computeLazyLoadSrc() {
+      // This is the 'old' placeholder functionality,
+      // Deprecating for now, will be deleted in the future
+      if (this.placeholder) {
+        // eslint-disable-next-line
+        console.warn ('The prop "placeholder" has been deprecated, please use the cld-placeholder component');
+      }
       const src = getPlaceholderURL(
         this.placeholder,
         this.publicId,
@@ -195,7 +201,7 @@ export default {
     isLazyLoadInvisible() {
       if (this.lazy) {
         // eslint-disable-next-line
-        console.warn ('"The prop lazy" has been deprecated, please use loading="lazy"');
+        console.warn ('The prop "lazy" has been deprecated, please use loading="lazy"');
       }
       const shouldLazyLoad = this.lazy || this.loading === 'lazy';
 

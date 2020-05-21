@@ -7,26 +7,30 @@ import {placeholderTransformations, predominantColorTransformPxl} from '../const
  * so it can serve as a placeholder
  * for an actual image
  *
- * @param {'lqip'|'color'|'pixelate'} mode How savings should be made
- * @param {Object} options All currently gathered options of the resource request
+ * @param {'lqip'|'color'|'pixelate'|'predominant-color'|'vectorize'|'blur'} type Placeholder size-saving strategy
+ * @param {string} publicId
+ * @param {object} configuration - Cloudianry delivery configuration, such as cloudName
+ * @param {Object} transformation A cloudinary Transfomration Object
  */
 export function getPlaceholderURL(
-  mode,
+  type,
   publicId,
   configuration,
   transformation
 ) {
-  if (typeof mode === "string") {
-    if (mode in placeholderTransformations) {
+  // The default type is an empty string,
+  // so we need to ensure something was passed for proper warnings later
+  if (typeof type === "string" && type !== "") {
+    if (type in placeholderTransformations) {
       let placeholderTransformation = {};
       let hasWidth = transformation.width;
       let hasHeight = transformation.height;
-      let isPredominant = mode === 'predominant-color';
+      let isPredominant = type === 'predominant-color';
 
       if (hasWidth && hasHeight && isPredominant) {
         placeholderTransformation = predominantColorTransformPxl;
       } else{
-        placeholderTransformation = placeholderTransformations[mode];
+        placeholderTransformation = placeholderTransformations[type];
       }
 
       return Cloudinary.new(configuration).url(
@@ -40,9 +44,9 @@ export function getPlaceholderURL(
       );
     } else {
       // eslint-disable-next-line
-      console.warn('Unknown placeholder selected: ', mode);
+      console.warn('Unknown placeholder selected: ', type);
     }
-    return mode;
+    return type;
   }
 
   return "";

@@ -14,18 +14,15 @@ See the [Image transformation reference](https://cloudinary.com/documentation/im
 ```
 
 ### Lazy mode
-
 Set the `lazy` property to only load the image when it needs to be displayed instead of when the page first loads.
 The placeholder will be pre-rendered but the original image will only be loaded when it's in the viewport
-
-Note: This feature is dependent on [IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver) and will be disabled if it is not available.
 
 ```vue
 <template>
   <cld-image
     cloudName="demo"
     publicId="small_dinosaur"
-    lazy
+    loading="lazy"
     placeholder="color"
     @load.native="alert"
   >

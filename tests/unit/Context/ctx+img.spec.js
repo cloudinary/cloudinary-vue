@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { mount } from "@vue/test-utils";
-import CldContext from "../../src/components/CldContext/CldContext.vue";
-import CldImage from "../../src/components/CldImage/CldImage.vue";
+import CldContext from "../../../src/components/CldContext/CldContext.vue";
+import CldImage from "../../../src/components/CldImage/CldImage.vue";
 
 describe("CldContext", () => {
   it("works single-layered", async () => {

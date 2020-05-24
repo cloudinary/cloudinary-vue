@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { createRenderer } from "vue-server-renderer";
-import CldImage from "../../src/components/CldImage/CldImage.vue";
-import CldContext from "../../src/components/CldContext/CldContext.vue";
+import CldImage from "../../../src/components/CldImage/CldImage.vue";
+import CldContext from "../../../src/components/CldContext/CldContext.vue";
 
 it("SSR", async () => {
   const output = await createRenderer({

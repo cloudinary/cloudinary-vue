@@ -1,15 +1,14 @@
 import { mount } from "@vue/test-utils";
-import CldImage from "../../src/components/CldImage/CldImage.vue";
+import CldImage from "../../../src/components/CldImage/CldImage.vue";
 
-describe("CldImage::responsive", () => {
-  it("as flag", async () => {
+describe("CldImage::responsive=width", () => {
+  it("renders", async () => {
     const wrapper = mount({
       template: `
-        <cld-image cloudName="demo" publicId="face_top" responsive />
+        <cld-image cloudName="demo" publicId="face_top" responsive="width" />
       `,
       components: { CldImage }
     });
-
     const image = wrapper.find('img');
 
     expect(image.is("img")).toBe(true);

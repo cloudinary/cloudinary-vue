@@ -701,12 +701,12 @@ var CldContext_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldContext = (CldContext_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4b46aac3-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldImage/CldImage.vue?vue&type=template&id=6d90b5f3&
-var CldImagevue_type_template_id_6d90b5f3_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cld-image",style:(_vm.style)},[_c('img',_vm._b({style:(_vm.style)},'img',_vm.imageAttrs,false)),_vm._t("default")],2)}
-var CldImagevue_type_template_id_6d90b5f3_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"05f59bea-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldImage/CldImage.vue?vue&type=template&id=5ab73b3d&
+var CldImagevue_type_template_id_5ab73b3d_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cld-image",style:(_vm.wrapperStyle)},[_c('img',_vm._b({style:(_vm.style),on:{"load":_vm.onImageLoad}},'img',_vm.imageAttrs,false)),_vm._t("default")],2)}
+var CldImagevue_type_template_id_5ab73b3d_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/CldImage/CldImage.vue?vue&type=template&id=6d90b5f3&
+// CONCATENATED MODULE: ./src/components/CldImage/CldImage.vue?vue&type=template&id=5ab73b3d&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js
 var is_array = __webpack_require__("a745");
@@ -748,6 +748,104 @@ function _nonIterableSpread() {
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
 }
+// CONCATENATED MODULE: ./src/constants.js
+
+
+
+
+
+
+function constants_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function constants_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { constants_ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { constants_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+var accessibilityTransformations = {
+  'darkmode': {
+    effect: 'tint:75:black'
+  },
+  'brightmode': {
+    effect: 'tint:50:white'
+  },
+  'monochrome': {
+    effect: 'grayscale'
+  },
+  'colorblind': {
+    effect: 'assist_colorblind'
+  }
+};
+var predominantColorTransformPxl = [{
+  width: 'iw_div_2',
+  aspect_ratio: 1,
+  crop: 'pad',
+  background: 'auto'
+}, {
+  crop: 'crop',
+  width: 1,
+  height: 1,
+  gravity: 'north_east'
+}, {
+  fetch_format: 'auto',
+  quality: 'auto'
+}];
+var predominantColorTransform = [{
+  variables: [['$currWidth', 'w'], ['$currHeight', 'h']]
+}, {
+  width: 'iw_div_2',
+  aspect_ratio: 1,
+  crop: 'pad',
+  background: 'auto'
+}, {
+  crop: 'crop',
+  width: 10,
+  height: 10,
+  gravity: 'north_east'
+}, {
+  width: '$currWidth',
+  height: '$currHeight',
+  crop: 'fill'
+}, {
+  fetch_format: 'auto',
+  quality: 'auto'
+}];
+var placeholderImageOptions = {
+  'vectorize': [{
+    effect: 'vectorize:3:0.1',
+    fetch_format: 'svg'
+  }],
+  'pixelate': [{
+    effect: 'pixelate',
+    quality: 1,
+    fetch_format: 'auto'
+  }],
+  'blur': [{
+    effect: 'blur:2000',
+    quality: 1,
+    fetch_format: 'auto'
+  }],
+  'predominant-color': predominantColorTransform
+};
+var placeholderTransformations = constants_objectSpread({
+  lqip: [{
+    variables: [["$nh", "ih"], ["$nw", "iw"]],
+    crop: "scale",
+    width: "20",
+    quality: "auto"
+  }, {
+    crop: "scale",
+    width: "$nw",
+    height: "$nh"
+  }],
+  color: [{
+    variables: [["$nh", "ih"], ["$nw", "iw"]],
+    crop: "scale",
+    width: "1",
+    quality: "1"
+  }, {
+    crop: "scale",
+    width: "$nw",
+    height: "$nh"
+  }]
+}, placeholderImageOptions);
 // CONCATENATED MODULE: ./src/helpers/evalBreakpoints.js
 /**
  * Normalizes `breakpoint` component attribute to an array of numbers
@@ -894,49 +992,42 @@ function getPlaceholderURL_objectSpread(target) { for (var i = 1; i < arguments.
 
 
 
-var placeholderTransformations = {
-  lqip: [{
-    variables: [["$nh", "ih"], ["$nw", "iw"]],
-    crop: "scale",
-    width: "20",
-    quality: "auto"
-  }, {
-    crop: "scale",
-    width: "$nw",
-    height: "$nh"
-  }],
-  color: [{
-    variables: [["$nh", "ih"], ["$nw", "iw"]],
-    crop: "scale",
-    width: "1",
-    quality: "1"
-  }, {
-    crop: "scale",
-    width: "$nw",
-    height: "$nh"
-  }],
-  pixelate: [{
-    effect: "pixelate:100"
-  }]
-};
 /** Get media URL with some transformations
  * that will make the image lighter
  * so it can serve as a placeholder
  * for an actual image
  *
- * @param {'lqip'|'color'|'pixelate'} mode How savings should be made
- * @param {Object} options All currently gathered options of the resource request
+ * @param {'lqip'|'color'|'pixelate'|'predominant-color'|'vectorize'|'blur'} type Placeholder size-saving strategy
+ * @param {string} publicId
+ * @param {object} configuration - Cloudianry delivery configuration, such as cloudName
+ * @param {Object} transformation A cloudinary Transfomration Object
  */
 
-function getPlaceholderURL(mode, publicId, configuration, transformation) {
-  if (typeof mode === "string") {
-    if (mode in placeholderTransformations) {
+function getPlaceholderURL(type, publicId, configuration, transformation) {
+  // The default type is an empty string,
+  // so we need to ensure something was passed for proper warnings later
+  if (typeof type === "string" && type !== "") {
+    if (type in placeholderTransformations) {
+      var placeholderTransformation = {};
+      var hasWidth = transformation.width;
+      var hasHeight = transformation.height;
+      var isPredominant = type === 'predominant-color';
+
+      if (hasWidth && hasHeight && isPredominant) {
+        placeholderTransformation = predominantColorTransformPxl;
+      } else {
+        placeholderTransformation = placeholderTransformations[type];
+      }
+
       return external_cloudinary_core_["Cloudinary"].new(configuration).url(publicId, getPlaceholderURL_objectSpread({}, transformation, {
-        transformation: [].concat(_toConsumableArray(transformation.transformation || []), _toConsumableArray(placeholderTransformations[mode]))
+        transformation: [].concat(_toConsumableArray(transformation.transformation || []), _toConsumableArray(placeholderTransformation))
       }));
+    } else {
+      // eslint-disable-next-line
+      console.warn('Unknown placeholder selected: ', type);
     }
 
-    return mode;
+    return type;
   }
 
   return "";
@@ -1091,10 +1182,20 @@ var lazy = {
   props: {
     /**
      * Whether to only load the asset when it needs to be displayed instead of when the page first loads.
+     * @deprecated
      */
     lazy: {
       type: Boolean,
       default: false
+    },
+
+    /**
+     * Set loading type for the component
+     * use loading='lazy' to lazyload
+     */
+    loading: {
+      type: String,
+      default: ''
     }
   },
   data: function data() {
@@ -1106,7 +1207,7 @@ var lazy = {
     updateVisibilityObservation: function updateVisibilityObservation() {
       var _this = this;
 
-      if (this.lazy) {
+      if (this.lazy || this.loading === 'lazy') {
         if (this.$el && !this.cancelVisibilityListener) {
           this.cancelVisibilityListener = watchElementVisibility(this.$el, function (visible) {
             _this.visible = _this.visible || visible;
@@ -1197,6 +1298,7 @@ function CldImagevue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
 
 
 
+
 /**
  * Deliver images and specify image transformations using the cld-image (CldImage) component,
  * which automatically generates an `<img>` tag including the dynamic URL of the image source.
@@ -1213,17 +1315,6 @@ function CldImagevue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
 
 /* harmony default export */ var CldImagevue_type_script_lang_js_ = ({
   name: "CldImage",
-  provide: function provide() {
-    return {
-      registerTransformation: this.registerTransformation
-    };
-  },
-  inject: {
-    contextConfiguration: {
-      default: {}
-    }
-  },
-  // mixins: [size, lazy, withOptions],
   mixins: [lazy, size_size, withOptions],
   props: {
     /**
@@ -1281,18 +1372,71 @@ function CldImagevue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
       default: function _default() {
         return range(100, 4000, 100);
       }
+    },
+
+    /**
+     * One of [monochrome, darkmode, brightmode, colorblind]
+     */
+    accessibility: {
+      type: String,
+      default: ""
+    }
+  },
+  provide: function provide() {
+    var _this = this;
+
+    return {
+      registerTransformation: this.registerTransformation,
+      getTransformOptions: function getTransformOptions() {
+        return _this.transformOptions;
+      },
+      configuration: this.configuration,
+      publicId: this.publicId,
+      isImageLoaded: function isImageLoaded() {
+        return _this.imageLoaded;
+      },
+      registerPlaceHolder: function registerPlaceHolder() {
+        _this.hasPlaceholderComponent = true;
+      },
+      getImageWidth: function getImageWidth() {
+        // This gets populated from the <cld-image width=500/> tag
+        return _this.transformOptions.width;
+      },
+      getImageHeight: function getImageHeight() {
+        // This gets populated from the <cld-image height=500/> tag
+        return _this.transformOptions.height;
+      }
+    };
+  },
+  inject: {
+    contextConfiguration: {
+      default: {}
     }
   },
   data: function data() {
     return {
-      transformations: []
+      transformations: [],
+      imageLoaded: false,
+      hasPlaceholderComponent: false
     };
   },
   methods: {
+    onImageLoad: function onImageLoad() {
+      this.imageLoaded = true; // Flag the placeholder as removed when image loads
+
+      this.hasPlaceholderComponent = false;
+    },
     registerTransformation: function registerTransformation(transformation) {
       this.transformations = [].concat(_toConsumableArray(this.transformations), [normalizeTransformation(transformation)]);
     },
     computeLazyLoadSrc: function computeLazyLoadSrc() {
+      // This is the 'old' placeholder functionality,
+      // Deprecating for now, will be deleted in the future
+      if (this.placeholder) {
+        // eslint-disable-next-line
+        console.warn('The prop "placeholder" has been deprecated, please use the cld-placeholder component');
+      }
+
       var src = getPlaceholderURL(this.placeholder, this.publicId, this.configuration, this.transformOptions);
       return CldImagevue_type_script_lang_js_objectSpread({}, this.nonCldAttrs, {
         src: src
@@ -1303,8 +1447,18 @@ function CldImagevue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
     isWithoutTransformation: function isWithoutTransformation() {
       return !this.publicId || attributes_hasZeroSizeTransformation(this.transformations) || this.responsive && !this.size;
     },
-    style: function style() {
+    wrapperStyle: function wrapperStyle() {
       return getResponsiveStyle(this.responsive);
+    },
+    style: function style() {
+      if (this.hasPlaceholderComponent) {
+        return CldImagevue_type_script_lang_js_objectSpread({}, getResponsiveStyle(this.responsive), {
+          opacity: this.hasPlaceholderComponent ? '0' : '1',
+          position: this.hasPlaceholderComponent ? 'absolute' : 'inline'
+        });
+      } else {
+        return getResponsiveStyle(this.responsive);
+      }
     },
     nonCldAttrs: function nonCldAttrs() {
       return normalizeNonCloudinary(this.$attrs);
@@ -1315,7 +1469,26 @@ function CldImagevue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
       });
     },
     isLazyLoadInvisible: function isLazyLoadInvisible() {
-      return this.lazy && !this.visible;
+      if (this.lazy) {
+        // eslint-disable-next-line
+        console.warn('The prop "lazy" has been deprecated, please use loading="lazy"');
+      }
+
+      var shouldLazyLoad = this.lazy || this.loading === 'lazy';
+      return shouldLazyLoad && !this.visible;
+    },
+    imageSrc: function imageSrc() {
+      var accessibilityTrans = this.accessibility && accessibilityTransformations[this.accessibility] || {};
+      return URLGenerator_generateUrl({
+        publicId: this.publicId,
+        configuration: this.configuration,
+        transformation: CldImagevue_type_script_lang_js_objectSpread({}, this.options, {
+          transformation: [].concat(_toConsumableArray(this.transformOptions.transformation), [getResizeTransformation(this.responsive, this.size, evalBreakpoints(this.breakpoints))], _toConsumableArray(this.progressive ? [{
+            flags: ["progressive"]
+          }] : []), [// if accessibility mode is present, include it as a transformation
+          accessibilityTrans])
+        })
+      });
     },
     imageAttrs: function imageAttrs() {
       if (this.isWithoutTransformation) {
@@ -1327,15 +1500,7 @@ function CldImagevue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
       }
 
       var htmlAttrs = attributes_getHTMLAttributes(this.options);
-      var src = URLGenerator_generateUrl({
-        publicId: this.publicId,
-        configuration: this.configuration,
-        transformation: CldImagevue_type_script_lang_js_objectSpread({}, this.options, {
-          transformation: [].concat(_toConsumableArray(this.transformOptions.transformation), [getResizeTransformation(this.responsive, this.size, evalBreakpoints(this.breakpoints))], _toConsumableArray(this.progressive ? [{
-            flags: ["progressive"]
-          }] : []))
-        })
-      });
+      var src = this.imageSrc;
       return CldImagevue_type_script_lang_js_objectSpread({}, this.nonCldAttrs, {}, htmlAttrs, {
         src: src
       });
@@ -1357,8 +1522,8 @@ function CldImagevue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
 
 var CldImage_component = normalizeComponent(
   CldImage_CldImagevue_type_script_lang_js_,
-  CldImagevue_type_template_id_6d90b5f3_render,
-  CldImagevue_type_template_id_6d90b5f3_staticRenderFns,
+  CldImagevue_type_template_id_5ab73b3d_render,
+  CldImagevue_type_template_id_5ab73b3d_staticRenderFns,
   false,
   null,
   null,
@@ -1367,7 +1532,7 @@ var CldImage_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldImage = (CldImage_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4b46aac3-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldVideo/CldVideo.vue?vue&type=template&id=cf33497c&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"05f59bea-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldVideo/CldVideo.vue?vue&type=template&id=cf33497c&
 var CldVideovue_type_template_id_cf33497c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cld-video"},[_c('video',_vm._b({},'video',_vm.videoAttrs,false),_vm._l((_vm.sources),function(source,index){return _c('source',_vm._b({key:index},'source',source,false))}),0),_vm._t("default")],2)}
 var CldVideovue_type_template_id_cf33497c_staticRenderFns = []
 
@@ -1685,6 +1850,91 @@ var CldTransformation_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldTransformation = (CldTransformation_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"05f59bea-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldPlaceholder/CldPlaceholder.vue?vue&type=template&id=33ca8f12&
+var CldPlaceholdervue_type_template_id_33ca8f12_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (!_vm.isImageLoaded())?_c('img',{staticClass:"cld-placeholder",attrs:{"src":_vm.src,"width":this.width,"height":this.height}}):_vm._e()}
+var CldPlaceholdervue_type_template_id_33ca8f12_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/CldPlaceholder/CldPlaceholder.vue?vue&type=template&id=33ca8f12&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldPlaceholder/CldPlaceholder.vue?vue&type=script&lang=js&
+//
+//
+//
+
+/* harmony default export */ var CldPlaceholdervue_type_script_lang_js_ = ({
+  name: "CldPlaceholder",
+  data: function data() {
+    return {
+      src: '',
+      width: 0,
+      height: 0
+    };
+  },
+  props: {
+    // type is a prop name, unfortunately confusing.
+    type: {
+      type: String,
+      default: function _default() {
+        return 'blur';
+      }
+    }
+  },
+  inject: {
+    contextConfiguration: {
+      default: {}
+    },
+    getTransformOptions: {
+      default: function _default() {}
+    },
+    configuration: {
+      default: {}
+    },
+    publicId: {
+      default: ""
+    },
+    isImageLoaded: {
+      default: function _default() {
+        return false;
+      }
+    },
+    registerPlaceHolder: {},
+    getImageWidth: {},
+    getImageHeight: {}
+  },
+  created: function created() {
+    this.registerPlaceHolder();
+    this.width = this.getImageWidth();
+    this.height = this.getImageHeight();
+    var src = getPlaceholderURL(this.type, // This is a prop from THIS component
+    this.publicId, // PublicID, from parent
+    this.configuration || {}, this.getTransformOptions());
+    this.src = src;
+  },
+  methods: {}
+});
+// CONCATENATED MODULE: ./src/components/CldPlaceholder/CldPlaceholder.vue?vue&type=script&lang=js&
+ /* harmony default export */ var CldPlaceholder_CldPlaceholdervue_type_script_lang_js_ = (CldPlaceholdervue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/CldPlaceholder/CldPlaceholder.vue
+
+
+
+
+
+/* normalize component */
+
+var CldPlaceholder_component = normalizeComponent(
+  CldPlaceholder_CldPlaceholdervue_type_script_lang_js_,
+  CldPlaceholdervue_type_template_id_33ca8f12_render,
+  CldPlaceholdervue_type_template_id_33ca8f12_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var CldPlaceholder = (CldPlaceholder_component.exports);
 // CONCATENATED MODULE: ./src/index.js
 
 
@@ -1702,6 +1952,7 @@ function src_objectSpread(target) { for (var i = 1; i < arguments.length; i++) {
 
 
 
+
 var Cloudinary = {
   install: function install(Vue) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -1711,7 +1962,8 @@ var Cloudinary = {
         CldImage: CldImage,
         CldVideo: CldVideo,
         CldTransformation: CldTransformation,
-        CldPoster: CldPoster
+        CldPoster: CldPoster,
+        CldPlaceholder: CldPlaceholder
       }
     }));
   }

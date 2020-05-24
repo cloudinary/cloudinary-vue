@@ -2,6 +2,7 @@
 - [Install core components](#/Install%20core%20components)
     - [CldContext](#/Install%20core%20components/CldContext)
     - [CldImage](#/Install%20core%20components/CldImage)
+    - [CldPlaceholder](#/Install%20core%20components/CldPlaceholder)
     - [CldTransformation](#/Install%20core%20components/CldTransformation)
     - [CldPoster](#/Install%20core%20components/CldPoster)
     - [CldVideo](#/Install%20core%20components/CldVideo)

@@ -16,6 +16,10 @@
         "name": "CldImage"
       },
       {
+        "href": "#/Install core components/CldPlaceholder",
+        "name": "CldPlaceholder"
+      },
+      {
         "href": "#/Install core components/CldTransformation",
         "name": "CldTransformation"
       },

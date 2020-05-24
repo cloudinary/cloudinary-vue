@@ -18,7 +18,7 @@ describe("CldImage", () => {
       }).find('img');
       expect(image.is("img")).toBe(true);
       expect(image.attributes("src")).toEqual(
-        `http://res.cloudinary.com/demo/image/upload/e_pixelate:100/face_top`
+        `http://res.cloudinary.com/demo/image/upload/e_pixelate,f_auto,q_1/face_top`
       );
       await new Promise(r => Vue.nextTick(r));
       expect(image.attributes("src")).toEqual(

@@ -14,7 +14,7 @@ See the [Image transformation reference](https://cloudinary.com/documentation/im
 ```
 
 ### Lazy mode
-Set the `lazy` property to only load the image when it needs to be displayed instead of when the page first loads.
+Set the `loading` property to `lazy` to only load the image when it needs to be displayed instead of when the page first loads.
 The placeholder will be pre-rendered but the original image will only be loaded when it's in the viewport
 
 ```vue

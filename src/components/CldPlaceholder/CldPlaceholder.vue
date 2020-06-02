@@ -1,5 +1,5 @@
 <template>
-  <img v-if="!isImageLoaded()" class="cld-placeholder" :src="src" :width="this.width" :height="this.height"/>
+  <img v-if="!isImageLoaded()" class="cld-placeholder" :src="src" :width="this.width" :height="this.height" v-bind="nonCldAttrs"/>
 </template>
 <script>
   import {getPlaceholderURL} from "../../helpers/getPlaceholderURL";
@@ -23,6 +23,9 @@
       },
     },
     inject: {
+      getNonCldAttrs: {
+        default: {}
+      },
       contextConfiguration: {
         default: {}
       },
@@ -46,6 +49,7 @@
       this.registerPlaceHolder();
       this.width = this.getImageWidth();
       this.height = this.getImageHeight();
+      this.nonCldAttrs = this.getNonCldAttrs();
 
       const src = getPlaceholderURL(
         this.type, // This is a prop from THIS component
@@ -55,7 +59,6 @@
       );
 
       this.src = src;
-    },
-    methods: {}
+    }
   };
 </script>

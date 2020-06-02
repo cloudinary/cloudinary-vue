@@ -4,6 +4,28 @@ import CldImage from "../../../src/components/CldImage/CldImage.vue";
 import CldPlaceholder from "../../../src/components/CldPlaceholder/CldPlaceholder";
 
 describe("CldPlaceholder", () => {
+  it('should pass down non cloudinary attributes', async () => {
+    const ALT_TEXT = 'Test Alt';
+
+    let wrapper = mount(
+      {
+        template: `
+          <cld-image cloudName="demo" publicId="face_top" alt="${ALT_TEXT}">
+            <cld-placeholder></cld-placeholder>
+          </cld-image>
+        `
+      },
+      {
+        components: {CldImage, CldPlaceholder}
+      }
+    );
+
+    let cldPlaceholder = wrapper.findAll("img").at(1);
+    await Vue.nextTick();
+
+    expect(cldPlaceholder.attributes('alt')).toBe(ALT_TEXT);
+  });
+
   it("Placeholder should have default type blur", async () => {
     let wrapper = mount(
       {
@@ -42,6 +64,11 @@ describe("CldPlaceholder", () => {
     );
 
     let cldPlaceholder = wrapper.findAll("img").at(1);
+
+    await Vue.nextTick();
+    cldPlaceholder.setProps({
+      type: 'bar'
+    });
 
     await Vue.nextTick();
 

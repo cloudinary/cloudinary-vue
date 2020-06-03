@@ -1,55 +1,53 @@
 import { Cloudinary } from "cloudinary-core";
-import { merge } from "../utils";
 
-const placeholderTransformations = {
-  lqip: [
-    {
-      variables: [["$nh", "ih"], ["$nw", "iw"]],
-      crop: "scale",
-      width: "20",
-      quality: "auto"
-    },
-    { crop: "scale", width: "$nw", height: "$nh" }
-  ],
-  color: [
-    {
-      variables: [["$nh", "ih"], ["$nw", "iw"]],
-      crop: "scale",
-      width: "1",
-      quality: "1"
-    },
-    { crop: "scale", width: "$nw", height: "$nh" }
-  ],
-  pixelate: [{ effect: "pixelate:100" }]
-};
+import {placeholderTransformations, predominantColorTransformPxl} from '../constants';
 
 /** Get media URL with some transformations
  * that will make the image lighter
  * so it can serve as a placeholder
  * for an actual image
  *
- * @param {'lqip'|'color'|'pixelate'} mode How savings should be made
- * @param {Object} options All currently gathered options of the resource request
+ * @param {'lqip'|'color'|'pixelate'|'predominant-color'|'vectorize'|'blur'} type Placeholder size-saving strategy
+ * @param {string} publicId
+ * @param {object} configuration - Cloudianry delivery configuration, such as cloudName
+ * @param {Object} transformation A cloudinary Transfomration Object
  */
 export function getPlaceholderURL(
-  mode,
+  type,
   publicId,
   configuration,
   transformation
 ) {
-  if (typeof mode === "string") {
-    if (mode in placeholderTransformations) {
+  // The default type is an empty string,
+  // so we need to ensure something was passed for proper warnings later
+  if (typeof type === "string" && type !== "") {
+    if (type in placeholderTransformations) {
+      let placeholderTransformation = {};
+      let hasWidth = transformation.width;
+      let hasHeight = transformation.height;
+      let isPredominant = type === 'predominant-color';
+
+      if (hasWidth && hasHeight && isPredominant) {
+        placeholderTransformation = predominantColorTransformPxl;
+      } else{
+        placeholderTransformation = placeholderTransformations[type];
+      }
+
       return Cloudinary.new(configuration).url(
         publicId, {
           ...transformation,
           transformation: [
             ...(transformation.transformation || []),
-            ...placeholderTransformations[mode]
+            ...placeholderTransformation
           ]
         }
       );
+    } else {
+      // eslint-disable-next-line
+      console.warn('Unknown placeholder selected: ', type);
     }
-    return mode;
+    return type;
   }
+
   return "";
 }

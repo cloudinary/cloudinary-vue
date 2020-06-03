@@ -2,11 +2,11 @@ const bundlewatchConfig = {
   files: [
     {
       path: './dist/Cloudinary.umd.js',
-      maxSize: '12kb'
+      maxSize: '14kb'
     },
     {
       path: './dist/Cloudinary.umd.min.js',
-      maxSize: '6kb'
+      maxSize: '7kb'
     }
   ],
   defaultCompression: 'gzip',

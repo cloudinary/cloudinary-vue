@@ -117,6 +117,9 @@ export default {
       getImageHeight: () => {
         // This gets populated from the <cld-image height=500/> tag
         return this.transformOptions.height;
+      },
+      getNonCldAttrs: () => {
+        return this.nonCldAttrs;
       }
     };
   },
@@ -179,8 +182,8 @@ export default {
       if (this.hasPlaceholderComponent) {
         return {
           ...getResponsiveStyle(this.responsive),
-          opacity: this.hasPlaceholderComponent ? '0' : '1',
-          position: this.hasPlaceholderComponent ? 'absolute' : 'inline'
+          opacity: '0',
+          position: 'absolute'
         };
       } else {
         return getResponsiveStyle(this.responsive);

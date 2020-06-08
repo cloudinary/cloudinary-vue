@@ -1,5 +1,5 @@
 import { shallowMount, mount } from "@vue/test-utils";
-import CldImage from "../../src/components/CldImage/CldImage.vue";
+import CldImage from "../../../src/components/CldImage/CldImage.vue";
 
 
 

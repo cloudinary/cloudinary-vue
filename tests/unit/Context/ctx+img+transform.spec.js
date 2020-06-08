@@ -1,8 +1,8 @@
 import Vue from "vue";
 import { mount } from "@vue/test-utils";
-import CldTransformation from "../../src/components/CldTransformation/CldTransformation.vue";
-import CldImage from "../../src/components/CldImage/CldImage.vue";
-import CldContext from "../../src/components/CldContext/CldContext.vue";
+import CldTransformation from "../../../src/components/CldTransformation/CldTransformation.vue";
+import CldImage from "../../../src/components/CldImage/CldImage.vue";
+import CldContext from "../../../src/components/CldContext/CldContext.vue";
 
 describe("CldImage", () => {
   it("with CldTransformation and CldContext", async () => {

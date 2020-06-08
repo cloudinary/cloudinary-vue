@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import CldImage from "../../src/components/CldImage/CldImage.vue";
+import CldImage from "../../../src/components/CldImage/CldImage.vue";
 
 describe("CldImage::responsive", () => {
   it("boolean true", async () => {

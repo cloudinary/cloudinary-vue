@@ -1,8 +1,8 @@
 import Vue from "vue";
 import { createRenderer } from "vue-server-renderer";
-import CldImage from "../../src/components/CldImage/CldImage.vue";
-import CldContext from "../../src/components/CldContext/CldContext.vue";
-import CldPlaceholder from "../../src/components/CldPlaceholder/CldPlaceholder";
+import CldImage from "../../../src/components/CldImage/CldImage.vue";
+import CldContext from "../../../src/components/CldContext/CldContext.vue";
+import CldPlaceholder from "../../../src/components/CldPlaceholder/CldPlaceholder";
 
 describe('SSR Tests', () => {
   it("SSR", async () => {

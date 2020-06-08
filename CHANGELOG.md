@@ -1,3 +1,16 @@
+1.1.0 / 2020-06-08
+==================
+
+New functionality and features
+  * Feature/aic placeholder (#76)
+  * Add support for accessibility mode
+
+Other Changes
+  * Add missing current-script-polyfill as a dependency (#73)
+  * Add bundlewatch validation step to build script (#71)
+  * Deprecate prop lazy and introduce loading=lazy (#74)
+
+
 1.0.1 / 2020-03-18
 ==================
 

@@ -1,3 +1,10 @@
+1.1.1 / 2020-06-14
+==================
+
+Other Changes
+* Fix missing export for the CldPlaceholder component
+
+
 1.1.0 / 2020-06-08
 ==================
 

@@ -15,5 +15,5 @@ const Cloudinary = {
 export {
   Cloudinary as default,
   Cloudinary,
-  CldContext, CldImage, CldVideo, CldTransformation, CldPoster
+  CldContext, CldImage, CldVideo, CldTransformation, CldPoster, CldPlaceholder
 };

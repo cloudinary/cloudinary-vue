@@ -13,5 +13,19 @@ module.exports = {
   testMatch: [
     "**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)"
   ],
-  testURL: "http://localhost/"
+  "reporters": [
+    "default",
+    "jest-html-reporters"
+  ],
+  testURL: "http://localhost/",
+  "collectCoverage": true,
+  "collectCoverageFrom": ["src/**/*.{js,vue}", "!**/node_modules/**", "!src/stories/**"],
+  "coverageThreshold": {
+    "global": {
+      "branches": 70,
+      "functions": 80,
+      "lines": 85,
+      "statements": 85
+    }
+  }
 };

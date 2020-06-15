@@ -7560,6 +7560,11 @@ jest-haste-map@^23.6.0:
     micromatch "^2.3.11"
     sane "^2.0.0"
 
+jest-html-reporters@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/jest-html-reporters/-/jest-html-reporters-1.2.1.tgz#74610de7373910e822387bbf7a59eaff65c3ca85"
+  integrity sha512-Ea2zxV7Hhg3pE6cZ+70pS5PkiBywKG8pLuyBc9/JgR6ifnKm2U3t6kvAPX9UNID6YwsPBZjD9sANZ0p49rN4pA==
+
 jest-jasmine2@^23.6.0:
   version "23.6.0"
   resolved "https://registry.yarnpkg.com/jest-jasmine2/-/jest-jasmine2-23.6.0.tgz#840e937f848a6c8638df24360ab869cc718592e0"

@@ -4,6 +4,7 @@
   "scripts": {
     "build": "vue-cli-service lint --fix; npm run build:styleguide; npm run build:lib",
     "test": "vue-cli-service test:unit",
+    "tdd": "yarn run test --watch --coverage=false",
     "bundlewatch": "bundlewatch --config ./bundlewatch.config.js",
     "lint": "vue-cli-service lint",
     "build:lib": "vue-cli-service build --target lib --name Cloudinary src/index.js && npm run bundlewatch",
@@ -20,6 +21,7 @@
     "cloudinary-video-player": "^1.1.1",
     "core-js": "2.6.9",
     "current-script-polyfill": "1.0.0",
+    "jest-html-reporters": "^1.2.1",
     "vue": "2.6.10"
   },
   "devDependencies": {

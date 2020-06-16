@@ -54,6 +54,7 @@ describe("CldPlaceholder", () => {
 
     // load the image (as if time has passed)
     cldImageVM.onImageLoad();
+    await Vue.nextTick();
 
     // Step 4 - Placeholder component should not exist
     expect(wrapper.findAll('.cld-placeholder').length).toBe(0);

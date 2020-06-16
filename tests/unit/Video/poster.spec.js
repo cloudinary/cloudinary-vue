@@ -19,7 +19,6 @@ describe("CldVideo Component tests", () => {
     await Vue.nextTick();
 
     const video = wrapper.find('video');
-    expect(video.is("video")).toBe(true);
 
     expect(video.attributes("poster")).toBe(
       "http://res.cloudinary.com/demo/image/upload/small_dinosaur"
@@ -34,7 +33,6 @@ describe("CldVideo Component tests", () => {
 
     const video = wrapper.find('video');
 
-    expect(video.is("video")).toBe(true);
     expect(video.attributes("poster")).toBe("zxc");
   });
 
@@ -56,7 +54,6 @@ describe("CldVideo Component tests", () => {
     await Vue.nextTick();
     wrapper.vm.$forceUpdate();
 
-    expect(video.is("video")).toBe(true);
     expect(video.attributes("poster")).toBe(
       "http://res.cloudinary.com/demo/video/upload/e_blur/face_top.jpeg"
     );
@@ -80,7 +77,6 @@ describe("CldVideo Component tests", () => {
     await Vue.nextTick();
     wrapper.vm.$forceUpdate();
 
-    expect(video.is("video")).toBe(true);
     expect(video.attributes("poster")).toBe(
       "http://res.cloudinary.com/demo/image/upload/e_blur/small_dinosaur"
     );
@@ -94,7 +90,6 @@ describe("CldVideo Component tests", () => {
 
     const video = wrapper.find('video');
 
-    expect(video.is("video")).toBe(true);
     expect(video.attributes("poster")).toBe(
       "http://res.cloudinary.com/demo/video/upload/face_top.jpeg"
     );
@@ -114,7 +109,6 @@ describe("CldVideo Component tests", () => {
 
     const video = wrapper.find('video');
 
-    expect(video.is("video")).toBe(true);
     expect(video.attributes("poster")).toBe(
       "http://res.cloudinary.com/demo/image/upload/e_blur/small_dinosaur"
     );

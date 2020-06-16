@@ -18,6 +18,7 @@ describe('SSR Tests', () => {
         components: { CldContext, CldImage }
       })
     );
+
     expect(output).toBe(
       '<div data-server-rendered="true" class="cld-context">' +
       '<div class="cld-image">' +

@@ -16,7 +16,6 @@ describe("CldImage with CldTransformation ", () => {
 
     await Vue.nextTick();
 
-    expect(wrapper.is("img")).toBe(true);
     expect(wrapper.attributes("src")).toEqual(
       `http://res.cloudinary.com/demo/image/upload/e_sepia:20/face_top`
     );

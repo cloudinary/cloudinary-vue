@@ -25,7 +25,7 @@ describe("Tests for CldContext", () => {
     expect(getImageSRC(wrapper)).toBe(expectedURL);
   });
 
-  it ('Works correctly with a nested cld-transformation', () => {
+  it ('Works correctly with a nested cld-transformation', async () => {
     const wrapper = mount(
       {
         template: `
@@ -40,6 +40,8 @@ describe("Tests for CldContext", () => {
         components: { CldTransformation, CldImage, CldContext }
       }
     );
+
+    await Vue.nextTick();
 
     const expectedURL = `${cloudinaryDomain}/demo/image/upload/c_scale,h_100,w_100/face_top`;
     expect(getImageSRC(wrapper)).toBe(expectedURL);

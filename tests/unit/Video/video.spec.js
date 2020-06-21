@@ -14,7 +14,6 @@ describe("CldVideo Component tests", () => {
 
     const video = wrapper.find('video');
 
-    expect(video.is("video")).toBe(true);
     expect(sourcesOfVideo(video)).toEqual({
       "video/webm": "http://res.cloudinary.com/demo/video/upload/face_top.webm",
       "video/mp4": "http://res.cloudinary.com/demo/video/upload/face_top.mp4",
@@ -30,7 +29,6 @@ describe("CldVideo Component tests", () => {
 
     const video = wrapper.find('video');
 
-    expect(video.is("video")).toBe(true);
     expect(sourcesOfVideo(video)).toEqual({});
   });
 
@@ -44,7 +42,6 @@ describe("CldVideo Component tests", () => {
 
     const video = wrapper.find('video');
 
-    expect(video.is("video")).toBe(true);
     expect(sourcesOfVideo(wrapper)).toEqual({
       "video/webm":"http://res.cloudinary.com/demo/video/upload/e_sepia/face_top.webm",
       "video/mp4":"http://res.cloudinary.com/demo/video/upload/e_sepia/face_top.mp4",
@@ -62,7 +59,6 @@ describe("CldVideo Component tests", () => {
 
     const video = wrapper.find('video');
 
-    expect(video.is("video")).toBe(true);
     expect(video.attributes("aria-hidden")).toBe("true");
     expect(video.attributes("cloudName")).toBe(undefined);
   });

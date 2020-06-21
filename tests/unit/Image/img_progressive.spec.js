@@ -13,7 +13,6 @@ describe("CldImage", () => {
         `,
       components: { CldImage }
     }).find('img');
-    expect(image.is("img")).toBe(true);
     expect(image.attributes("src")).toEqual(
       `http://res.cloudinary.com/demo/image/upload/fl_progressive/face_top`
     );

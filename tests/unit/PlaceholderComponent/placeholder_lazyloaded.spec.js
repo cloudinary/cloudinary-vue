@@ -48,11 +48,14 @@ describe("CldPlaceholder", () => {
       isIntersecting: true
     }]);
 
+    await Vue.nextTick();
+
     // expect cloudinary image to be populated
     expect(cldImage.attributes().src).toBe('http://res.cloudinary.com/demo/image/upload/face_top');
 
     // fake image load
     cldImageVM.onImageLoad();
+    await Vue.nextTick();
 
     // expect placeholder to be gone
     expect(wrapper.findAll("img").length).toBe(1);

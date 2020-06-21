@@ -18,7 +18,6 @@ describe("CldImage with CldTransformation ", () => {
 
     await Vue.nextTick();
 
-    expect(wrapper.is("img")).toBe(true);
     expect(wrapper.attributes("src")).toEqual(
       "http://res.cloudinary.com/demo/image/upload/c_scale,w_100/c_pad,w_200/a_30/sample"
     );

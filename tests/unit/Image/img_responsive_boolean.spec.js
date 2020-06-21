@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import { mount } from "@vue/test-utils";
 import CldImage from "../../../src/components/CldImage/CldImage.vue";
 
@@ -14,12 +15,11 @@ describe("CldImage::responsive", () => {
     });
     const image = wrapper.find('img');
 
-    expect(image.is("img")).toBe(true);
     expect(image.attributes("src")).toEqual(undefined);
 
     wrapper.vm.$children[0].size = { width: 100, height: 100 };
+    await Vue.nextTick();
 
-    expect(image.is("img")).toBe(true);
     expect(image.attributes("src")).toEqual(
       `http://res.cloudinary.com/demo/image/upload/c_scale,dpr_1.0,w_100/face_top`
     );
@@ -36,7 +36,6 @@ describe("CldImage::responsive", () => {
       }
     }).find('img');
 
-    expect(wrapper.is("img")).toBe(true);
     expect(wrapper.attributes("src")).toEqual(
       `http://res.cloudinary.com/demo/image/upload/face_top`
     );

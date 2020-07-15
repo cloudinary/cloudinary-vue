@@ -3366,10 +3366,10 @@ clone@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
 
-cloudinary-core@^2.6.3:
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/cloudinary-core/-/cloudinary-core-2.7.3.tgz#20c091f412e4970e5518ea0d7f06f4f3013b609b"
-  integrity sha512-orF0sjYsiDkE9pl82RNXFwjgKynSIpNNdtLT8GEIxEYZLKlxW/JliArILqzyZdsdkuF0R2foFxxPnZvtymfWpQ==
+cloudinary-core@^2.10.3:
+  version "2.10.3"
+  resolved "https://registry.yarnpkg.com/cloudinary-core/-/cloudinary-core-2.10.3.tgz#57706cf966bc627706ad8e1ee78db478ea69a6c5"
+  integrity sha512-uI7jASEcfjYBdoTb2uj4wgTB0cWPDwrQV4paYFOgEdU22z74eeJ1zI83ew2kuNnXBnbuPZFt310H329UfiHG2w==
 
 cloudinary-video-player@^1.1.1:
   version "1.2.1"

@@ -17,7 +17,7 @@
   "unpkg": "dist/Cloudinary.umd.min.js",
   "dependencies": {
     "@types/jest": "^25.2.3",
-    "cloudinary-core": "^2.6.3",
+    "cloudinary-core": "^2.10.3",
     "cloudinary-video-player": "^1.1.1",
     "core-js": "2.6.9",
     "current-script-polyfill": "1.0.0",

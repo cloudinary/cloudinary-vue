@@ -1,5 +1,7 @@
+import Vue from "vue";
 import {mount} from "@vue/test-utils";
 import CldImage from "../../../src/components/CldImage/CldImage.vue";
+import CldTransformation from '../../../src/components/CldTransformation/CldTransformation';
 
 import testWithMockedIntersectionObserver from './utils/testWithMockedIntersectionObserver';
 import mountImageComponent from './utils/mountImageComponent';
@@ -130,5 +132,25 @@ describe("Tests for CldImage", () => {
     expect(image.attributes("src")).toBe(`http://res.cloudinary.com/demo/image/upload/face_top`);
     expect(image.attributes("width")).toBe("100");
     expect(image.attributes("height")).toBe("200");
+  });
+
+  it("Accepts Variable as argument", async () => {
+    let wrapper = mount({
+      template: `
+        <cld-image
+                cloudName="demo"
+                publicId="face_top"
+                placeholder="color">
+          <cld-transformation :variables="[['$imgWidth','150']]"></cld-transformation>
+        </cld-image>
+      `,
+      components: {CldImage, CldTransformation},
+    });
+
+    await Vue.nextTick();
+
+    let image = wrapper.find('img');
+
+    expect(image.attributes("src")).toBe('http://res.cloudinary.com/demo/image/upload/$imgWidth_150/face_top');
   });
 });

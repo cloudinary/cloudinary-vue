@@ -60,7 +60,7 @@ This Readme provides basic installation and usage information. For the complete 
         ```
       **Notes**: By default, if `components` is not passed to the Cloudinary plugin, the plugin will _automatically_ install all available Cloudinary components.
 
-2. **A Local setup** - You can also import the cloudinary components manually in each cof your components.
+2. **A Local setup** - You can also import the cloudinary components manually in each of your components.
 
 ## Vue 2.x - Setup and configuration
 1. **A Global setup** - Include CloudinaryVue globally
@@ -77,7 +77,7 @@ This Readme provides basic installation and usage information. For the complete 
     });
     ```
    
-2. **A Local setup** - You can also import the cloudinary components manually in each cof your components.
+2. **A Local setup** - You can also import the cloudinary components manually in each of your components.
 
 
 

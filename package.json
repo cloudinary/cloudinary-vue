@@ -17,15 +17,18 @@
   "main": "dist/Cloudinary.umd.js",
   "unpkg": "dist/Cloudinary.umd.min.js",
   "dependencies": {
-    "@types/jest": "^25.2.3",
     "cloudinary-core": "^2.10.3",
     "cloudinary-video-player": "^1.1.1",
     "core-js": "2.6.9",
-    "current-script-polyfill": "1.0.0",
-    "jest-html-reporters": "^1.2.1",
-    "vue": "2.6.10"
+    "current-script-polyfill": "1.0.0"
+  },
+  "peerDependencies": {
+    "vue": "^2.0.0"
   },
   "devDependencies": {
+    "vue": "2.6.10",
+    "@types/jest": "^25.2.3",
+    "jest-html-reporters": "^1.2.1",
     "@storybook/addon-actions": "^5.0.0",
     "@storybook/addon-knobs": "^5.0.0",
     "@storybook/addon-links": "^5.0.0",

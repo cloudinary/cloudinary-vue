@@ -1,3 +1,15 @@
+1.1.2 / 2020-09-06
+==================
+
+*  Move Vue to PeerDepdency instead of Dependency (#102)
+*  Add yarn serve to use as a local dev environment (#100)
+* Add tests for user variables (#94)
+* Fix codebase to support Carets in the package.json (auto update packages) (#87)
+* Add test-coverage enforcement to the test process (#85)
+
+
+
+
 1.1.1 / 2020-06-14
 ==================
 

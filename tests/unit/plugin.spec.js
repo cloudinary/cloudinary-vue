@@ -2,6 +2,80 @@ import { mount, createLocalVue } from "@vue/test-utils";
 import Cloudinary, { CldImage } from "../../src";
 
 describe("CLD plugin", () => {
+  // const originalWarn = console.warning
+  // const mockConsoleWarn = jest.fn()
+
+  // beforeEach(() => {
+  //   console.warning = mockConsoleWarn
+  //   jest.mock('console', () => {
+  //     warning: mockConsoleWarn
+  //   })
+  // })
+
+  // afterAll(() => {
+  //   console.warning = originalWarn
+  // })
+
+  it('already installed', async () => {
+    const localVue = createLocalVue();
+    localVue.CldInstalled = true
+
+    let error = ''
+
+    try {
+      localVue.use(Cloudinary)
+    } catch (e) {
+      error = e.message
+    }
+
+    expect(error).toBe('Cloudinary plugin already installed')
+  })
+
+  it('display warning when default configurations passed with falsy value', async () => {
+    const localVue = createLocalVue();
+
+    const consoleSpy = jest.spyOn(global.console, 'warn').mockImplementation(() => {})
+
+    await localVue.use(Cloudinary, { components: '', configuration: '' })
+
+
+    expect(consoleSpy).toBeCalledWith('🛑 There is no default configuration for Cloudinary found!')
+  })
+
+  it('not installing illegal component', async () => {
+    const localVue = createLocalVue();
+    const vueComponentSpy = jest.spyOn(localVue, 'component').mockImplementation(() => {})
+    
+    localVue.use(Cloudinary, { components: {
+      CldImage,
+      CldVideo: undefined
+
+    }, configuration: '' })
+
+    expect(vueComponentSpy).toBeCalledTimes(1)
+  })
+
+  it('will run component.data() if present', async () => {
+    const localVue = createLocalVue();
+    const vueComponentSpy = jest.spyOn(localVue, 'component').mockImplementation(() => {})
+    const mockData = jest.fn(() => ({}))
+    
+    localVue.use(Cloudinary, { 
+      components: {
+        CldVideo: {
+          data: mockData,
+          template: '<div class="cld-video" />'
+        }
+      },
+      configuration: { 
+        cloudName: "demo2" 
+      }
+    })
+
+    expect(vueComponentSpy).toBeCalled()
+    expect(mockData).toBeCalled()
+  })
+
   it("allows specifying Cloudinary configuration", async () => {
     const localVue = createLocalVue();
     localVue.use(Cloudinary, { configuration: { cloudName: "demo2" } });
@@ -13,7 +87,7 @@ describe("CLD plugin", () => {
       { localVue }
     );
 
-    expect(wrapper.contains("img")).toBe(true);
+    expect(wrapper.find("img").exists()).toBe(true);
     expect(wrapper.find('img').attributes("src")).toEqual(
       `http://res.cloudinary.com/demo2/image/upload/face_top`
     );
@@ -42,7 +116,7 @@ describe("CLD plugin", () => {
       const localVue = createLocalVue();
       localVue.use(Cloudinary, { components: [CldImage] });
 
-      const isImageComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'CldImage');
+      const isImageComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'cld-image');
       const isVideoComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'CldVideo');
 
       expect(isImageComponentInstalled).toBe(true);

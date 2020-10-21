@@ -1,8 +1,8 @@
 import Vue from "vue";
 import { mount } from "@vue/test-utils";
-import CldContext from "../../../src/components/CldContext/CldContext.vue";
-import CldImage from "../../../src/components/CldImage/CldImage.vue";
-import CldTransformation from "../../../src/components/CldTransformation/CldTransformation";
+import CldContext from "../../../src/components/CldContext";
+import CldImage from "../../../src/components/CldImage";
+import CldTransformation from "../../../src/components/CldTransformation";
 
 
 const cloudinaryDomain = 'http://res.cloudinary.com';
@@ -22,28 +22,6 @@ describe("Tests for CldContext", () => {
     });
 
     const expectedURL = `${cloudinaryDomain}/demo/image/upload/face_top`;
-    expect(getImageSRC(wrapper)).toBe(expectedURL);
-  });
-
-  it ('Works correctly with a nested cld-transformation', async () => {
-    const wrapper = mount(
-      {
-        template: `
-          <cld-context cloudName="demo">
-            <cld-image publicId="face_top">
-              <cld-transformation crop="scale" width="100" height="100" />
-            </cld-image>
-          </cld-context>          
-        `
-      },
-      {
-        components: { CldTransformation, CldImage, CldContext }
-      }
-    );
-
-    await Vue.nextTick();
-
-    const expectedURL = `${cloudinaryDomain}/demo/image/upload/c_scale,h_100,w_100/face_top`;
     expect(getImageSRC(wrapper)).toBe(expectedURL);
   });
 

@@ -1,10 +1,10 @@
 import * as plugin from "./plugin";
-import CldContext from "./components/CldContext/CldContext";
-import CldImage from "./components/CldImage/CldImage";
+import CldContext from "./components/CldContext";
+import CldImage from "./components/CldImage";
 import CldVideo from "./components/CldVideo/CldVideo";
 import CldPoster from './components/CldVideo/CldPoster';
-import CldTransformation from './components/CldTransformation/CldTransformation';
-import CldPlaceholder from './components/CldPlaceholder/CldPlaceholder';
+import CldTransformation from './components/CldTransformation';
+import CldPlaceholder from './components/CldPlaceholder';
 
 const Cloudinary = {
   install: (Vue, options = {}) => {

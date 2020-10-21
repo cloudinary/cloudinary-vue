@@ -1,11 +1,11 @@
-### Attributes
+# Attributes
 
 Refer to the base [Cloudinary JS SDK](https://github.com/cloudinary/cloudinary_js#configuration) for configuration options.
 
 See the [Image transformation reference](https://cloudinary.com/documentation/image_transformation_reference) documentation for all the options accepted by the `CldImage` and `CldTransformation` components.
 
 
-### Events
+## Events
 
 Use `v-on:*.native` to listen to native DOM events. `CldImage` outputs an `img` element that does not have any events by default.
 
@@ -35,7 +35,7 @@ export default {
 </script>
 ```
 
-### Usage
+## Usage
 
 ```jsx
 <cld-image cloudName="demo" publicId="small_dinosaur" />
@@ -95,6 +95,8 @@ Responsive mode, but adjusting to height instead:
 ```
 
 ### Lazy mode
+
+*Deprecated*
 
 Set the `lazy` property to only load the image when it needs to be displayed instead of when the page first loads.
 

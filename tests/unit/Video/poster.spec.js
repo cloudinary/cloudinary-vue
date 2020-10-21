@@ -3,7 +3,7 @@ import { mount } from "@vue/test-utils";
 import CldVideo from "../../../src/components/CldVideo/CldVideo.vue";
 import { sourcesOfVideo } from "../TestUtils/sourcesOfVideo";
 import CldPoster from "../../../src/components/CldVideo/CldPoster";
-import CldTransformation from "../../../src/components/CldTransformation/CldTransformation";
+import CldTransformation from "../../../src/components/CldTransformation";
 
 describe("CldVideo Component tests", () => {
   it("should render a video poster", async () => {

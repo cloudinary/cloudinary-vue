@@ -1,5 +1,4 @@
 
-<script>
 import { normalizeNonCloudinary } from "../../helpers/attributes";
 import { withOptions } from "../../mixins/withOptions";
 
@@ -15,7 +14,9 @@ export default {
 
   provide() {
     return {
-      contextConfiguration: this.configuration
+      contextConfiguration: this.configuration,
+      contextOptions: this.options,
+      options: this.$attrs
     };
   },
 
@@ -25,7 +26,7 @@ export default {
     }
   },
 
-  render(h) {
+  render(h) {    
     return h(
       "div",
       {
@@ -36,4 +37,3 @@ export default {
     );
   }
 };
-</script>

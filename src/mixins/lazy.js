@@ -1,3 +1,5 @@
+import { watchElementVisibility } from '../helpers/visibility'
+import { LAZY_LOADING, CLD_IMAGE_WRAPPER_CLASS, IMAGE_CLASSES } from '../constants'
 /**
  * If necessary watches for root elements visibility
  * and posts the result to components data
@@ -22,72 +24,37 @@ export const lazy = {
       default: ''
     }
   },
-
   data() {
     return { visible: false };
   },
-
   methods: {
     updateVisibilityObservation() {
-      if (this.lazy || this.loading === 'lazy') {
-        if (this.$el && !this.cancelVisibilityListener) {
-          this.cancelVisibilityListener = watchElementVisibility(
-            this.$el,
-            visible => {
-              this.visible = this.visible || visible;
-            }
-          );
-        }
-      } else {
-        this.visible = true;
-        if (this.cancelVisibilityListener) {
-          const { cancelVisibilityListener } = this;
-          this.cancelVisibilityListener = null;
-          cancelVisibilityListener();
-        }
+      if (!this.hasLazyLoading) {
+        this.visibility = true
+        this.cancelVisibilityListener && this.cancelVisibilityListener()
+        return
       }
+
+      const isElementRendered = this.$el?.classList?.contains(IMAGE_CLASSES.DEFAULT) || this.$el?.classList?.contains(CLD_IMAGE_WRAPPER_CLASS)
+
+      if (!isElementRendered || this.cancelVisibilityListener) return
+
+      this.cancelVisibilityListener = watchElementVisibility(
+        this.$el,
+        visible => {
+          this.visible = this.visible || visible;
+        }
+      );
     }
   },
-
-  created() {
-    this.updateVisibilityObservation();
+  computed: {
+    hasLazyLoading() {
+      return this.lazy || this.loading === LAZY_LOADING
+    }
   },
-
-  mounted() {
-    this.updateVisibilityObservation();
-  },
-
-  updated() {
-    this.updateVisibilityObservation();
-  },
-
   destroyed() {
     if (this.cancelVisibilityListener) {
       this.cancelVisibilityListener();
     }
   }
 };
-
-function watchElementVisibility(element, listener) {
-  if (typeof window === "object" && "IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.target === element) {
-            listener(entry.isIntersecting);
-          }
-        });
-      },
-      { threshold: [0, 0.01] }
-    );
-    observer.observe(element);
-    return () => {
-      observer.disconnect();
-    };
-  } else {
-    listener(true);
-    return noop;
-  }
-}
-
-function noop() {}

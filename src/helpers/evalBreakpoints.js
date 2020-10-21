@@ -7,10 +7,10 @@ export function evalBreakpoints(valueOrGetter) {
     return valueOrGetter();
   }
   if (typeof valueOrGetter === "string") {
-    return JSON.parse(
-      (valueOrGetter.slice(0, 1) === "[" ? "" : "[") +
-        valueOrGetter +
-        (valueOrGetter.slice(0, 1) === "]" ? "" : "]")
+    const firstChar = valueOrGetter.slice(0, 1)
+    const lastChar = valueOrGetter.slice(-1)
+
+    return JSON.parse(`${firstChar === '[' ? '' : '['}${valueOrGetter}${lastChar === ']' ? '' : ']'}`
     );
   }
   return valueOrGetter;

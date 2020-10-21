@@ -11,8 +11,8 @@ export const withOptions = {
   computed: {
     configuration() {
       return normalizeConfiguration({
-        ...(this.defaultConfigurations || []),
-        ...(this.$props || []),
+        // ...(this.defaultConfigurations || []),
+        // ...(this.$props || []),
         ...this.contextConfiguration,
         ...this.$attrs,
       })

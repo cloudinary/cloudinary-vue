@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/vue";
 import { action } from "@storybook/addon-actions";
 // import { linkTo } from "@storybook/addon-links";
 
-import CldImage from "../components/CldImage/CldImage.vue";
+import CldImage from "../components/CldImage";
 
 storiesOf("CldImage", module).add("simple", () => ({
   components: { CldImage },

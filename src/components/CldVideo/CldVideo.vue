@@ -1,6 +1,6 @@
 <template>
   <div class="cld-video">
-    <video v-bind="videoAttrs">
+    <video v-bind="$attrs" :poster="posterUrl">
       <source v-for="(source, index) in sources" :key="index" v-bind="source"/>
     </video>
     <slot></slot>
@@ -77,29 +77,29 @@ export default {
     },
   },
   computed: {
-    videoAttrs() {
-      if (
-        !this.publicId ||
-        !!findInTransformations(
-          this.options,
-          t => t.width === 0 || t.height === 0
-        )
-      ) {
-        return {};
-      }
+    // videoAttrs() {
+    //   if (
+    //     !this.publicId ||
+    //     !!findInTransformations(
+    //       this.options,
+    //       t => t.width === 0 || t.height === 0
+    //     )
+    //   ) {
+    //     return {};
+    //   }
 
-      const htmlAttrs = {
-        poster: this.posterUrl,
-        ...getHTMLAttributes(this.options)
-      };
+    //   const htmlAttrs = {
+    //     poster: this.posterUrl,
+    //     ...getHTMLAttributes(this.options)
+    //   };
 
-      const normalizedNonCloudinaryAttrs = normalizeNonCloudinary(this.$attrs);
+    //   const normalizedNonCloudinaryAttrs = normalizeNonCloudinary(this.$attrs);
 
-      return {
-          ...normalizedNonCloudinaryAttrs,
-          ...htmlAttrs
-      };
-    },
+    //   return {
+    //       ...normalizedNonCloudinaryAttrs,
+    //       ...htmlAttrs
+    //   };
+    // },
     sources() {
       if (!this.publicId || (this.lazy && !this.visible)) {
         return [];

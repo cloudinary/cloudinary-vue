@@ -28,8 +28,10 @@ describe('evalBreakpoints', () => {
 }) 
 
 describe('watchElementSize', () => {
+  const nativeResizeObserver = global.ResizeObserver;
   afterEach(() => {
     jest.clearAllMocks()
+    window.ResizeObserver = nativeResizeObserver
   })
   it(' there is no resizeObserver', () => {
     window.ResizeObserver = null
@@ -106,8 +108,11 @@ describe('watchElementSize', () => {
   })
 
   describe('watchElementVisibility', () => {
+    const nativeIntersectionObserver = window.IntersectionObserver;
+    
     afterEach(() => {
       jest.clearAllMocks()
+      window.IntersectionObserver = nativeIntersectionObserver
     })
     it(' there is no IntersectionObserver', () => {
       window.IntersectionObserver = null
@@ -117,8 +122,7 @@ describe('watchElementSize', () => {
       const callback = watchElementVisibility({}, listenerMock)
   
       expect(listenerMock).toBeCalledWith(true)
-      expect(callback).toEqual(noop)
-  
+      expect(callback).toEqual(noop)  
     })
   
     it(' there is IntersectionObserver', () => {

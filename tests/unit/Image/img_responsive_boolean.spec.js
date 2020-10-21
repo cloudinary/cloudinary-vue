@@ -2,7 +2,7 @@ import Vue from 'vue';
 import { mount } from "@vue/test-utils";
 import CldImage from "../../../src/components/CldImage";
 
-describe.skip("CldImage::responsive", () => {
+describe("CldImage::responsive", () => {
   it("boolean true", async () => {
     const wrapper = mount({
       template: `
@@ -15,10 +15,10 @@ describe.skip("CldImage::responsive", () => {
     });
     const image = wrapper.find('img');
 
-    // expect(image.attributes("src")).toEqual(undefined);
+    expect(image.attributes("src")).toEqual('');
 
     wrapper.vm.$children[0].size = { width: 100, height: 100 };
-    // await Vue.nextTick();
+    await Vue.nextTick();
 
     expect(image.attributes("src")).toEqual(
       `http://res.cloudinary.com/demo/image/upload/c_scale,dpr_1.0,w_100/face_top`

@@ -34,6 +34,11 @@ export const responsive = {
       size: {},
     }
   },
+  computed: {
+    hasResponsiveActive() {
+      return this.responsive && this.size.width && this.size.height
+    }
+  },
   methods: {
     updateSizeObservation() {
       if (!this.responsive) {
@@ -56,10 +61,19 @@ export const responsive = {
         }
       });
     },
-    destroyed() {
-      if (this.cancelSizeListener) {
-        this.cancelSizeListener();
-      }
-    }, 
-  }
+  },
+  created() {
+    this.updateSizeObservation()
+  },
+  mounted() {
+    this.updateSizeObservation()
+  },
+  updated() {
+    this.updateSizeObservation()
+  },
+  destroyed() {
+    if (this.cancelSizeListener) {
+      this.cancelSizeListener();
+    }
+  }, 
 }

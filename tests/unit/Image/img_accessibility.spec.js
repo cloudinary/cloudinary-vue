@@ -3,9 +3,12 @@ import mountImageComponent from './utils/mountImageComponent';
 
 describe('CldImage::accessibility', () => {
   it("Ignores an unknown accessibility mode", () => {
+    const consoleSpy = jest.spyOn(global.console, 'error').mockImplementation(() => {})
     let {imgSrc} = mountImageComponent({
       accessibility: 'UNSUPPORTED_ACCESSIBILITY_MODE'
     });
+
+    expect(consoleSpy).toBeCalled()
 
     expect(imgSrc).toBe(`http://res.cloudinary.com/demo/image/upload/face_top`);
   });

@@ -60,10 +60,7 @@ export default {
     registerTransformation(options) {
       this.extraTransformations.push(options);
     },
-    renderImageOnly(options, hasPlaceholder = false) {
-      // const hasLazyOrResponsive = (this.responsive && !this.size.width && !this.size.height) || (!this.hasLazyLoading && !this.visible)
-
-      const src = this.cloudinary.image.url(this.publicId, options)
+    renderImageOnly(src, hasPlaceholder = false) {
       const imgClass = `${IMAGE_CLASSES.DEFAULT} ${!this.isImgLoaded ? IMAGE_CLASSES.LOADING : IMAGE_CLASSES.LOADED}`
       const style = {
         ...(this.responsive ? RESPONSIVE_CSS[this.responsive] : {}),
@@ -81,23 +78,13 @@ export default {
         />
       )
     }, 
-    renderPlaceholder(options) {
-      const placeholder = this.cloudinary.image.url(this.publicId, options)
-      const displayPlaceholder = !this.isImgLoaded && placeholder
-
-      return displayPlaceholder ? (
-        <img
-          src={placeholder}
-          attrs={this.$attrs}
-          class={PLACEHOLDER_CLASS}
-          style={IMAGE_WITH_PLACEHOLDER_CSS[PLACEHOLDER_CLASS]}
-        />
-      ) : null
-    },
     renderComp(children) {
       this.setup(this.$attrs)
+      const responsiveModeNoSize = this.responsive && (this.size.width === undefined || this.size.height === undefined)
+      const lazyModeInvisible = this.hasLazyLoading && !this.visible
 
       const options = this.computeURLOptions()
+      const src = responsiveModeNoSize || lazyModeInvisible ? '' : this.cloudinary.image.url(this.publicId, options)
       
       const cldPlaceholder = getCldPlaceholder(children)
       const cldPlaceholderType = cldPlaceholder ? (cldPlaceholder.componentOptions?.propsData?.type || 'blur') : ''
@@ -105,15 +92,22 @@ export default {
       const placeholderOptions = placeholderType ? computePlaceholder(placeholderType, options) : null
 
       if (!placeholderOptions) {
-        return this.renderImageOnly(options)
+        return this.renderImageOnly(src)
       }
 
-      const Placeholder = this.renderPlaceholder(placeholderOptions)
+      const placeholder = responsiveModeNoSize ? '' : this.cloudinary.image.url(this.publicId, placeholderOptions)
+      const displayPlaceholder = !this.isImgLoaded && placeholder
 
       return (
         <div class={CLD_IMAGE_WRAPPER_CLASS}>
-          { this.renderImageOnly(options, true) }
-          { Placeholder }
+          { this.renderImageOnly(src, true) }
+          { displayPlaceholder && (
+            <img
+              src={placeholder}
+              attrs={this.$attrs}
+              class={PLACEHOLDER_CLASS}
+              style={IMAGE_WITH_PLACEHOLDER_CSS[PLACEHOLDER_CLASS]}
+            />) }
         </div>
       )
     },
@@ -125,22 +119,15 @@ export default {
   },
   render() {
     if (!this.publicId) return null
-
     const children = this.$slots.default || []
     const hasExtraTransformations = children.length > 1 || (children.length === 1 && !isCldPlaceholder(children[0]))
 
     /* Render the children first to get the extra transformations (if there is any) */
     if (hasExtraTransformations && !this.extraTransformations.length) {
       return (
-        <div> {this.$slots.default} </div>
+      <div attrs={this.$attrs} class={IMAGE_CLASSES.LOADING} style="display:block; height: 100%;"> {this.$slots.default} </div>
       )
     }
-
-    /* Start listening to responsive if the component is being rendered */
-    this.responsive && this.updateSizeObservation();
-
-    /** Start lazy loading */
-    (this.lazy || this.loading) && this.updateVisibilityObservation()
 
     return this.renderComp(children)
   }

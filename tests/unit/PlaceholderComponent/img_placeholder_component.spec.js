@@ -31,7 +31,7 @@ describe("CldPlaceholder", () => {
 
     expect(cldImageEl.exists()).toBe(true)
     expect(cldImageEl.classes()).toContain(IMAGE_CLASSES.LOADING)
-    expect(cldImageEl.attributes('style')).toBe('opacity: 0; position: absolute; height: 0px; width: 0px;');
+    expect(cldImageEl.attributes('style')).toBe('opacity: 0; position: absolute;');
 
     expect(cldPlaceholderEl.exists()).toBe(true)
     expect(cldPlaceholderEl.attributes('src')).toBe('http://res.cloudinary.com/demo/image/upload/c_scale,h_100,w_100/e_sepia/e_blur/e_pixelate,f_auto,q_1/face_top')

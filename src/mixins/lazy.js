@@ -52,6 +52,15 @@ export const lazy = {
       return this.lazy || this.loading === LAZY_LOADING
     }
   },
+  created() {
+    this.updateVisibilityObservation()
+  },
+  mounted() {
+    this.updateVisibilityObservation()
+  },
+  updated() {
+    this.updateVisibilityObservation()
+  },
   destroyed() {
     if (this.cancelVisibilityListener) {
       this.cancelVisibilityListener();

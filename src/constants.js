@@ -122,8 +122,6 @@ export const IMAGE_WITH_PLACEHOLDER_CSS = {
   [IMAGE_CLASSES.LOADING]: {
     opacity: 0,
     position: 'absolute',
-    height: 0,
-    width: 0
   }, 
   [PLACEHOLDER_CLASS]: {
     display: 'inline-block'

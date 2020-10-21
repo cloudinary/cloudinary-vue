@@ -11,7 +11,7 @@ import { evalBreakpoints } from "./evalBreakpoints";
  * @param {array} breakpoints
  */
 export function getResizeTransformation(mode, size, originalBP) {
-  if (!mode || !size.width || !size.height) {
+  if (!mode || (!size.width && !size.height)) {
     return {};
   }
 

@@ -2,6 +2,7 @@ import Vue from "vue";
 import {mount} from "@vue/test-utils";
 import CldImage from "../../../src/components/CldImage";
 import CldTransformation from '../../../src/components/CldTransformation';
+import { PLACEHOLDER_CLASS, IMAGE_CLASSES } from '../../../src/constants'
 
 import testWithMockedIntersectionObserver from './utils/testWithMockedIntersectionObserver';
 import mountImageComponent from './utils/mountImageComponent';
@@ -26,7 +27,7 @@ describe("Tests for CldImage", () => {
     expect(imgSrc).toBe(`http://res.cloudinary.com/demo/image/upload/sample123`);
   });
 
-  it.skip('Loads the image only when in viewport (intersection observer)', () => {
+  it('Loads the image only when in viewport (intersection observer)', () => {
     testWithMockedIntersectionObserver((mockIntersectionCallback) => {
       // Create an instance
       let {wrapper} = mountImageComponent({
@@ -48,15 +49,20 @@ describe("Tests for CldImage", () => {
     });
   });
 
-  it.skip('Shows the placeholder while the image is still loading(lazyload)', () => {
+  it('Shows the placeholder while the image is still loading(lazyload)', () => {
     testWithMockedIntersectionObserver(() => {
-      let {imgSrc} = mountImageComponent({
+      let {wrapper} = mountImageComponent({
         loading: 'lazy',
         placeholder: 'color'
       });
 
-      // Show placeholder
-      expect(imgSrc).toBe(`http://res.cloudinary.com/demo/image/upload/$nh_ih,$nw_iw,c_scale,q_1,w_1/c_scale,h_$nh,w_$nw/face_top`);
+      let cldImageEl = wrapper.find(`.${IMAGE_CLASSES.DEFAULT}`);
+      let cldPlaceholder = wrapper.find(`.${PLACEHOLDER_CLASS}`);
+
+      expect(cldImageEl.attributes("src")).toBe('');
+      expect(cldPlaceholder.attributes("src")).toBe(
+        `http://res.cloudinary.com/demo/image/upload/$nh_ih,$nw_iw,c_scale,q_1,w_1/c_scale,h_$nh,w_$nw/face_top`
+      );
     });
   });
 
@@ -100,20 +106,18 @@ describe("Tests for CldImage", () => {
   /**
    * There is an issue with provide/inject with render component - https://github.com/vuejs/vue/issues/9822
    */
-  it.skip("Accepts Variable as argument", async () => {
+  it("Accepts Variable as argument", async () => {
     let wrapper = mount({
       template: `
-        <cld-image
-          cloudName="demo"
-          publicId="face_top"
-          placeholder="color">
-          <cld-transformation :variables="[['$imgWidth','150']]"></cld-transformation>
+        <cld-image cloudName="demo" publicId="face_top" placeholder="color">
+          <cld-transformation :variables="[['$imgWidth','150']]" />
         </cld-image>
-      `,
+      ` 
+    },{
       components: {CldImage, CldTransformation},
     });
 
-    // await Vue.nextTick();
+    await Vue.nextTick();
 
     let image = wrapper.find('img');
 

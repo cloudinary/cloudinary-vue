@@ -83,3 +83,5 @@ export const getCldPlaceholder = (children = []) => {
  * @returns {Boolean} true if component is CldPlaceholder
  */
 export const isCldPlaceholder = (component) => component.componentOptions?.Ctor?.extendOptions?.name === COMPONENTS.CldPlaceholder
+
+export const isCldPoster = (component) => component.componentOptions?.Ctor?.extendOptions?.name === COMPONENTS.CldPoster

@@ -2,6 +2,7 @@ import { setup } from '../../mixins/setup';
 import { compute } from '../../mixins/compute';
 import { lazy } from '../../mixins/lazy';
 import { responsive } from '../../mixins/responsive'
+import { register } from '../../mixins/register';
 import { computePlaceholder, getCldPlaceholder, isCldPlaceholder } from '../../cloudinary/helpers'
 import { 
   A11Y_TRANSFORMS, 
@@ -17,11 +18,10 @@ import {
 
 export default {
   name: COMPONENTS.CldImage,
-  mixins: [setup, compute, lazy, responsive],
+  mixins: [setup, compute, lazy, responsive, register],
   data() {
     return {
       isImgLoaded: false,
-      extraTransformations: [],
       cloudinary: null,
     }
   },
@@ -56,9 +56,6 @@ export default {
   methods: {
     load() {
       this.isImgLoaded = true
-    },
-    registerTransformation(options) {
-      this.extraTransformations.push(options);
     },
     renderImageOnly(src, hasPlaceholder = false) {
       const imgClass = `${IMAGE_CLASSES.DEFAULT} ${!this.isImgLoaded ? IMAGE_CLASSES.LOADING : IMAGE_CLASSES.LOADED}`
@@ -112,21 +109,19 @@ export default {
       )
     },
   },
-  provide() {
-    return {
-      registerTransformation: this.registerTransformation,
-    }
-  },
-  render() {
+  render(h) {
     if (!this.publicId) return null
     const children = this.$slots.default || []
     const hasExtraTransformations = children.length > 1 || (children.length === 1 && !isCldPlaceholder(children[0]))
 
     /* Render the children first to get the extra transformations (if there is any) */
     if (hasExtraTransformations && !this.extraTransformations.length) {
-      return (
-      <div attrs={this.$attrs} class={IMAGE_CLASSES.LOADING} style="display:block; height: 100%;"> {this.$slots.default} </div>
-      )
+      return h(
+        "img", {
+          attrs: this.attrs
+        },
+        this.$slots.default
+      );
     }
 
     return this.renderComp(children)

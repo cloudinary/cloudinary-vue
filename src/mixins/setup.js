@@ -14,7 +14,7 @@ export const setup = {
     },
     contextOptions: {
       default: {}
-    }
+    },
   },
   methods: {
     setup(extraConfigs) {      
@@ -22,7 +22,7 @@ export const setup = {
         this.cloudinary = new CloudinaryAPI(this.defaultConfigurations)
       }
       
-      this.cloudinary.config(this.contextConfiguration)
+      this.cloudinary.config(this.contextOptions)
 
       if (extraConfigs) {
         this.cloudinary.config(extraConfigs)

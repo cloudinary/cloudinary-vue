@@ -1,37 +1,20 @@
-
-import { normalizeNonCloudinary } from "../../helpers/attributes";
-import { withOptions } from "../../mixins/withOptions";
-
 /**
  * Cloudinary context providing element
  */
 export default {
   name: "CldContext",
-
   inheritAttrs: false,
-
-  mixins: [withOptions],
-
   provide() {
     return {
-      contextConfiguration: this.configuration,
-      contextOptions: this.options,
-      options: this.$attrs
+      contextOptions: this.$attrs,
     };
   },
-
-  computed: {
-    attributes() {
-      return normalizeNonCloudinary(this.$attrs)
-    }
-  },
-
   render(h) {    
     return h(
       "div",
       {
         class: { "cld-context": true },
-        attrs: this.attributes
+        attrs: this.$attrs
       },
       this.$slots.default
     );

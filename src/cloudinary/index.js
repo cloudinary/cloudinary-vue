@@ -6,7 +6,7 @@ export const computeCldConfigs = (configs = {}) => pick(Util.withSnakeCaseKeys(c
 
 class CloudinaryAPI {
   constructor(configs = {}) {
-    const _sdk = new Cloudinary(Util.withSnakeCaseKeys(configs))
+    const _sdk = new Cloudinary(computeCldConfigs(configs))
 
     this.config = (newConfigs = {}) => _sdk.config(computeCldConfigs(newConfigs))
 

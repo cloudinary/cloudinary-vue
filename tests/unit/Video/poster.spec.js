@@ -82,20 +82,21 @@ describe("CldVideo Component tests", () => {
     );
   });
 
-  it.skip("will contain default poster if no poster data is provided", async () => {
+  it("will contain default poster if no poster data is provided", async () => {
     const wrapper = mount({
       template: `<cld-video cloudName="demo" publicId="face_top"/>`,
       components: { CldVideo }
     });
 
+    await Vue.nextTick();
     const video = wrapper.find('video');
 
     expect(video.attributes("poster")).toBe(
-      "http://res.cloudinary.com/demo/video/upload/face_top.jpeg"
+      "http://res.cloudinary.com/demo/image/upload/face_top"
     );
   });
 
-  it.skip("accepts poster properties as an object", async () => {
+  it("accepts poster properties as an object", async () => {
     const wrapper = mount({
       template: `
         <cld-video
@@ -106,7 +107,8 @@ describe("CldVideo Component tests", () => {
       `,
       components: { CldVideo }
     });
-
+    
+    await Vue.nextTick();
     const video = wrapper.find('video');
 
     expect(video.attributes("poster")).toBe(

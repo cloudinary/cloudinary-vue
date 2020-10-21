@@ -3,11 +3,12 @@ import { computeOptions } from '../cloudinary/helpers'
 
 export const compute = {
   methods: {
-    computeURLOptions() {
+    computeURLOptions(inheritOptions = {}) {
       const responsiveOptions = getResizeTransformation(this.responsive, this.size, this.breakpoints)
   
       const baseOptions = {
         ...this.contextOptions,
+        ...inheritOptions,
         ...this.$attrs,
         ...responsiveOptions
       }

@@ -3,7 +3,7 @@ import { setup } from '../../mixins/setup';
 import { compute } from '../../mixins/compute';
 import { lazy } from '../../mixins/lazy';
 import { register } from '../../mixins/register';
-import { extendOptions, isCldPoster } from "../../cloudinary/helpers";
+import { extendOptions, getCldPoster } from "../../cloudinary/helpers";
 import { COMPONENTS } from '../../constants';
 
 const defaultSourceTypes = Cloudinary.DEFAULT_VIDEO_SOURCE_TYPES.reduce((types, type) => ({ ...types, [type]: {} }), {})
@@ -26,6 +26,9 @@ export default {
       type: Object,
       default: () => defaultSourceTypes,
       validator: value => typeof value !== 'Object'
+    },
+    poster: {
+      type: [String, Object, Array],
     }
   },
   data() {
@@ -37,7 +40,15 @@ export default {
   provide() {
     return {
       registerPoster: this.registerPoster,
-      videoPublicId: this.publicId
+      getConfig: () => this.cloudinary?.config() || {},
+      getOptions: () => {
+        if (this.poster && (typeof this.poster === 'string')) return {}
+        
+        return {
+          publicId: this.publicId,
+          ...(this.poster || {})
+        }
+      }
     }
   },
   methods: {
@@ -65,12 +76,25 @@ export default {
     registerPoster(posterUrl) {
       this.posterUrl = posterUrl
     },
+    getPosterUrl() {
+      const isPosterAnUrl = (typeof this.poster) === 'string'
+
+      if (isPosterAnUrl) return this.poster
+
+      const hasInlinePosterOptions = this.poster && !isPosterAnUrl
+
+      const options = hasInlinePosterOptions ? this.poster : {}
+
+      return this.cloudinary.image.url(this.poster?.publicId || this.publicId, options)
+    }
   },
   render(h) {
     if (!this.publicId) return null
         
     const children = this.$slots.default || []
-    const hasExtraTransformations = children.length > 1 || (children.length === 1 && !isCldPoster(children[0]))
+
+    const cldPoster = getCldPoster(children)
+    const hasExtraTransformations = children.length > 1 || (children.length === 1 && !cldPoster)
 
     /* Render the children first to get the extra transformations (if there is any) */
     if (hasExtraTransformations && !this.extraTransformations.length) {
@@ -80,15 +104,17 @@ export default {
         },
         this.$slots.default
       );
-    }
+    }    
 
     this.setup(this.$attrs)
 
     const sources = this.getSources()
 
+    const poster = cldPoster ? this.posterUrl : this.getPosterUrl()
+
     //Get poster
     return (
-      <video attrs={this.$attrs} poster={this.posterUrl || this.$attrs.poster}>
+      <video attrs={this.$attrs} poster={poster}>
         { sources.map((source, index) => <source key={index} attrs={source} />)}
         { this.$slots.default }
       </video>

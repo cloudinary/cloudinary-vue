@@ -1,5 +1,4 @@
 import { findBreakpoint } from "./findBreakpoint";
-import { normalizeTransformation } from "./attributes";
 import { evalBreakpoints } from "./evalBreakpoints";
 
 /**
@@ -31,30 +30,30 @@ export function getResizeTransformation(mode, size, originalBP) {
             width: Math.floor(size.width),
             height: Math.floor(size.height)
           };
-      return normalizeTransformation({
+      return {
         ...getDPRAttr(),
         crop: "fill",
         ...computedSize
-      });
+      };
 
     case true:
     case "width":
-      return normalizeTransformation({
+      return {
         ...getDPRAttr(),
         crop: "scale",
         width: Math.floor(
           breakpoints ? findBreakpoint(breakpoints, size.width) : size.width
         )
-      });
+      };
 
     case "height":
-      return normalizeTransformation({
+      return {
         ...getDPRAttr(),
         crop: "scale",
         height: Math.floor(
           breakpoints ? findBreakpoint(breakpoints, size.height) : size.height
         )
-      });
+      };
     default:
       return {};
   }

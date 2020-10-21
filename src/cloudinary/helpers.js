@@ -78,6 +78,10 @@ export const getCldPlaceholder = (children = []) => {
   return children?.find(child => isCldPlaceholder(child))
 }
 
+export const getCldPoster = (children = []) => {
+  return children?.find(child => isCldPoster(child))
+}
+
 /**
  * @param {VNode} component 
  * @returns {Boolean} true if component is CldPlaceholder

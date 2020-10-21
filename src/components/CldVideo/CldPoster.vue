@@ -1,5 +1,4 @@
 <script>
-import { normalizeTransformation, normalizeConfiguration } from "../../helpers/attributes";
 import { setup } from '../../mixins/setup';
 import { register } from '../../mixins/register';
 import { compute } from '../../mixins/compute';
@@ -18,18 +17,21 @@ export default {
     registerPoster: {
       default: null
     },
-    videoPublicId: {
-      default: null
+    getConfig: {
+      default: () => ({})
+    },
+    getOptions: {
+      default: () => ({})
     }
   },
   props: {
     publicId: {
       type: String,
-      require: true
     }
   },
   render(h) {
-    const publicId = this.publicId || this.videoPublicId
+    const baseOptions = this.getOptions()
+    const publicId = this.publicId || baseOptions.publicId
     if (!publicId || !this.registerPoster) return null
 
     const children = this.$slots.default || []
@@ -44,11 +46,12 @@ export default {
     }
 
     this.setup({
-      ...(this.$parent.cloudinary?.config() || {}),
+      ...this.getConfig(),
+      ...baseOptions,
       ...this.$attrs
     })
 
-    const options = this.computeURLOptions()
+    const options = this.computeURLOptions(baseOptions)
 
     this.registerPoster(this.cloudinary.image.url(publicId, options))
     

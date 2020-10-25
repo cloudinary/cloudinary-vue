@@ -2,7 +2,7 @@
 import { setup } from '../../mixins/setup';
 import { compute } from '../../mixins/compute';
 import { lazy } from '../../mixins/lazy';
-import { responsive } from '../../mixins/responsive'
+import { responsive } from '../../mixins/size'
 import { register } from '../../mixins/register';
 import { computePlaceholder, getCldPlaceholder, isCldPlaceholder } from '../../cloudinary/helper'
 import { 

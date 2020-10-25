@@ -7,7 +7,7 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, range } from "../../utils";
-import {accessibilityTransformations} from '../../constants';
+import {A11Y_TRANSFORMS, COMPONENTS, PLACEHOLDER_OPTIONS } from '../../constants';
 import {
   normalizeNonCloudinary,
   normalizeTransformation,
@@ -41,7 +41,7 @@ import { generateUrl } from "../../helpers/URLGenerator";
  * target="_blank">embedding images in web pages</a> documentation.
  */
 export default {
-  name: "CldImage",
+  name:COMPONENTS.CldImage,
   mixins: [lazy, size, withOptions],
   props: {
     /**
@@ -65,7 +65,8 @@ export default {
      */
     placeholder: {
       type: String,
-      default: ""
+      default: "",
+      validator: value => !value || !!PLACEHOLDER_OPTIONS[value]
     },
     /**
      * How to make the image responsive to the available size based on layout. Possible values:
@@ -93,7 +94,8 @@ export default {
      */
     accessibility: {
       type: String,
-      default: ""
+      default: "",
+      validator: value => !value || !!A11Y_TRANSFORMS[value]
     }
   },
   provide() {
@@ -211,7 +213,7 @@ export default {
       return shouldLazyLoad && !this.visible;
     },
     imageSrc() {
-      const accessibilityTrans = this.accessibility && accessibilityTransformations[this.accessibility] || {};
+      const accessibilityTrans = this.accessibility && A11Y_TRANSFORMS[this.accessibility] || {};
 
       return generateUrl({
         publicId: this.publicId,

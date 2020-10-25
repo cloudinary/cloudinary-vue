@@ -2,10 +2,11 @@
   <img v-if="!isImageLoaded()" class="cld-placeholder" :src="src" :width="this.width" :height="this.height" v-bind="nonCldAttrs"/>
 </template>
 <script>
+  import { COMPONENTS, PLACEHOLDER_OPTIONS } from '../../constants';
   import {getPlaceholderURL} from "../../helpers/getPlaceholderURL";
 
   export default {
-    name: "CldPlaceholder",
+    name: COMPONENTS.CldPlaceholder,
     data() {
       return {
         src: '',
@@ -17,9 +18,8 @@
       // type is a prop name, unfortunately confusing.
       type: {
         type: String,
-        default: () => {
-          return 'blur';
-        }
+        default: 'blur',
+        validator: value => !!PLACEHOLDER_OPTIONS[value]
       },
     },
     inject: {

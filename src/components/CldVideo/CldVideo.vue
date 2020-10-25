@@ -19,6 +19,7 @@ import {
 import { lazy } from "../../mixins/lazy";
 import { withOptions } from "../../mixins/withOptions";
 import { generateUrl } from '../../helpers/URLGenerator';
+import { COMPONENTS } from '../../constants';
 
 /**
  * Deliver videos and specify video transformations using the `cld-video` (CldVideo) element,
@@ -37,7 +38,7 @@ import { generateUrl } from '../../helpers/URLGenerator';
  * target="_blank">embedding videos in web pages</a>
  */
 export default {
-  name: "CldVideo",
+  name: COMPONENTS.CldVideo,
   inheritAttrs: false,
   provide() {
     return {

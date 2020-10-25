@@ -9,17 +9,19 @@ export function install(Vue, options = {}) {
 }
 
 function registerComponents(Vue, components = {}, defaultConfigurations = {}) {
-  if (!components) { throw new Error("No component found.") }
+  if (!defaultConfigurations) { console.warn('🛑 There is no default configuration for Cloudinary found!') }
 
   for (let key in components) {
     const component = components[key];
 
     if (component) {
+      const data = component.data ? component.data() : {}
+
       Vue.component(key, {
         ...component,
         data() {
           return {
-            ...(component.data ? component.data() : {}),
+            ...data,
             defaultConfigurations
           }
         }

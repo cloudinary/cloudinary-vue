@@ -1,48 +1,31 @@
-<template>
-  <div class="cld-image" :style="wrapperStyle">
-    <img @load="onImageLoad" v-bind="imageAttrs" :style="style"/>
-    <slot></slot>
-  </div>
-</template>
 <script>
-import { Cloudinary, Transformation } from "cloudinary-core";
-import { merge, range } from "../../utils";
-import {A11Y_TRANSFORMS, COMPONENTS, PLACEHOLDER_OPTIONS } from '../../constants';
-import {
-  normalizeNonCloudinary,
-  normalizeTransformation,
-  normalizeConfiguration,
-  getHTMLAttributes,
-  hasZeroSizeTransformation
-} from "../../helpers/attributes";
-import { evalBreakpoints } from "../../helpers/evalBreakpoints";
-import {
-  getResizeTransformation,
-  getResponsiveStyle
-} from "../../helpers/responsiveness";
-import { getPlaceholderURL } from "../../helpers/getPlaceholderURL";
+import { setup } from '../../mixins/setup';
+import { compute } from '../../mixins/compute';
+import { lazy } from '../../mixins/lazy';
+import { responsive } from '../../mixins/responsive'
+import { register } from '../../mixins/register';
+import { computePlaceholder, getCldPlaceholder, isCldPlaceholder } from '../../cloudinary/helper'
+import { 
+  A11Y_TRANSFORMS, 
+  COMPONENTS,
+  PLACEHOLDER_OPTIONS, 
+  RESPONSIVE_CSS, 
+  IMAGE_CLASSES, 
+  PLACEHOLDER_CLASS, 
+  IMAGE_WITH_PLACEHOLDER_CSS, 
+  LAZY_LOADING, 
+  CLD_IMAGE_WRAPPER_CLASS
+} from '../../constants';
 
-import { size } from "../../mixins/size";
-import { lazy } from "../../mixins/lazy";
-import { withOptions } from "../../mixins/withOptions";
-import { generateUrl } from "../../helpers/URLGenerator";
-
-/**
- * Deliver images and specify image transformations using the cld-image (CldImage) component,
- * which automatically generates an `<img>` tag including the dynamic URL of the image source.
- *
- *
- * You can optionally include [cld-transformation](#cldtransformation) components to define transformations to apply to the delivered image.
- *
- * For more information see the
- * <a href="https://cloudinary.com/documentation/vue_image_manipulation#cldvideo_component" target="_blank">
- * cld-image component</a> and
- * <a href="https://cloudinary.com/documentation/image_transformations#embedding_images_in_web_pages"
- * target="_blank">embedding images in web pages</a> documentation.
- */
 export default {
-  name:COMPONENTS.CldImage,
-  mixins: [lazy, size, withOptions],
+  name: COMPONENTS.CldImage,
+  mixins: [setup, compute, lazy, responsive, register],
+  data() {
+    return {
+      isImgLoaded: false,
+      cloudinary: null,
+    }
+  },
   props: {
     /**
      * The unique identifier of an uploaded image.
@@ -52,209 +35,97 @@ export default {
      * Whether to generate a JPEG using the [progressive (interlaced) JPEG
      * format](https://cloudinary.com/documentation/transformation_flags#delivery_and_image_format_flags).
      */
-    progressive: {
-      type: Boolean,
-      default: false
-    },
+    progressive: { type: Boolean, default: false },
     /**
-     * The placeholder image to use while the image is loading. Possible values:
-     *
-     * - `"lqip"` to use a low quality image
-     * - `"color"` to use an average color image
-     * - `"pixelate"` to use a pixelated image
-     */
-    placeholder: {
-      type: String,
-      default: "",
-      validator: value => !value || !!PLACEHOLDER_OPTIONS[value]
-    },
-    /**
-     * How to make the image responsive to the available size based on layout. Possible values:
-     *
-     * - `false` turns the feature off
-     * - `"width"` and `true` uses the available image *width* and allows image *height* to be set dynamically
-     * - `"height"` uses the available image *height* and allows image *width* to be set dynamically
-     * - `"fill"` uses the available image *width* and *height*
-     */
-    responsive: { type: [Boolean, String], default: false },
-    /**
-     * The set of possible breakpoint values to be used together with the responsive property. Either:
-     *
-     * - an array of numbers
-     * - a comma separated list of numbers as a single string
-     * - a function that returns an array of numbers
-     */
-    breakpoints: {
-      type: [Array, Function, String],
-      default: () => range(100, 4000, 100)
-    },
-
-    /**
-     * One of [monochrome, darkmode, brightmode, colorblind]
+     * Accepted value: monochrome | darkmode | brightmode | colorblind
      */
     accessibility: {
       type: String,
       default: "",
       validator: value => !value || !!A11Y_TRANSFORMS[value]
-    }
-  },
-  provide() {
-    return {
-      registerTransformation: this.registerTransformation,
-      getTransformOptions: () => {
-        return this.transformOptions;
-      },
-      configuration: this.configuration,
-      publicId: this.publicId,
-      isImageLoaded: () => {
-        return this.imageLoaded;
-      },
-      registerPlaceHolder: () => {
-        this.hasPlaceholderComponent = true;
-      },
-      getImageWidth: () => {
-        // This gets populated from the <cld-image width=500/> tag
-        return this.transformOptions.width;
-      },
-      getImageHeight: () => {
-        // This gets populated from the <cld-image height=500/> tag
-        return this.transformOptions.height;
-      },
-      getNonCldAttrs: () => {
-        return this.nonCldAttrs;
-      }
-    };
-  },
-  inject: {
-    contextConfiguration: {
-      default: {}
-    }
-  },
-  data() {
-    return {
-      transformations: [],
-      imageLoaded: false,
-      hasPlaceholderComponent: false
-    };
+    },
+    /**
+     * Type of placeholder
+     * @deprecated
+     */
+    placeholder: {
+      type: String,
+      default: '',
+      validator: value => !value || !!PLACEHOLDER_OPTIONS[value]
+    },
   },
   methods: {
-    onImageLoad() {
-      this.imageLoaded = true;
-      // Flag the placeholder as removed when image loads
-      this.hasPlaceholderComponent = false;
+    load() {
+      this.isImgLoaded = true
     },
-    registerTransformation(transformation) {
-      this.transformations = [
-        ...this.transformations,
-        normalizeTransformation(transformation)
-      ];
-    },
-    computeLazyLoadSrc() {
-      // This is the 'old' placeholder functionality,
-      // Deprecating for now, will be deleted in the future
-      if (this.placeholder) {
-        // eslint-disable-next-line
-        console.warn ('The prop "placeholder" has been deprecated, please use the cld-placeholder component');
+    renderImageOnly(src, hasPlaceholder = false) {
+      const imgClass = `${IMAGE_CLASSES.DEFAULT} ${!this.isImgLoaded ? IMAGE_CLASSES.LOADING : IMAGE_CLASSES.LOADED}`
+      const style = {
+        ...(this.responsive ? RESPONSIVE_CSS[this.responsive] : {}),
+        ...(!this.isImgLoaded && hasPlaceholder ? IMAGE_WITH_PLACEHOLDER_CSS[IMAGE_CLASSES.LOADING] : {})
       }
-      const src = getPlaceholderURL(
-        this.placeholder,
-        this.publicId,
-        this.configuration,
-        this.transformOptions
-      );
 
-      return {
-        ...this.nonCldAttrs,
-        src
-      };
-    }
-  },
-  computed: {
-    isWithoutTransformation() {
       return (
-        !this.publicId ||
-        hasZeroSizeTransformation(this.transformations) ||
-        (this.responsive && !this.size)
+        <img 
+          attrs={this.$attrs}
+          src={src}
+          loading={this.hasLazyLoading ? LAZY_LOADING : null}
+          class={imgClass}
+          onLoad={this.load}
+          style={style}
+        />
+      )
+    }, 
+    renderComp(children) {
+      this.setup(this.$attrs)
+      const responsiveModeNoSize = this.responsive && (this.size.width === undefined || this.size.height === undefined)
+      const lazyModeInvisible = this.hasLazyLoading && !this.visible
+
+      const options = this.computeURLOptions()
+      const src = responsiveModeNoSize || lazyModeInvisible ? '' : this.cloudinary.image.url(this.publicId, options)
+
+      const cldPlaceholder = getCldPlaceholder(children)
+      const cldPlaceholderType = cldPlaceholder ? (cldPlaceholder.componentOptions?.propsData?.type || 'blur') : ''
+      const placeholderType = cldPlaceholderType || this.placeholder
+      const placeholderOptions = placeholderType ? computePlaceholder(placeholderType, options) : null
+
+      if (!placeholderOptions) {
+        return this.renderImageOnly(src)
+      }
+
+      const placeholder = responsiveModeNoSize ? '' : this.cloudinary.image.url(this.publicId, placeholderOptions)
+      const displayPlaceholder = !this.isImgLoaded && placeholder
+
+      return (
+        <div class={CLD_IMAGE_WRAPPER_CLASS}>
+          { this.renderImageOnly(src, true) }
+          { displayPlaceholder && (
+            <img
+              src={placeholder}
+              attrs={this.$attrs}
+              class={PLACEHOLDER_CLASS}
+              style={IMAGE_WITH_PLACEHOLDER_CSS[PLACEHOLDER_CLASS]}
+            />) }
+        </div>
+      )
+    },
+  },
+  render(h) {
+    if (!this.publicId) return null
+    const children = this.$slots.default || []
+    const hasExtraTransformations = children.length > 1 || (children.length === 1 && !isCldPlaceholder(children[0]))
+
+    /* Render the children first to get the extra transformations (if there is any) */
+    if (hasExtraTransformations && !this.extraTransformations.length) {
+      return h(
+        "img", {
+          attrs: this.attrs
+        },
+        this.$slots.default
       );
-    },
-    wrapperStyle() {
-      return getResponsiveStyle(this.responsive)
-    },
-    style() {
-      if (this.hasPlaceholderComponent) {
-        return {
-          ...getResponsiveStyle(this.responsive),
-          opacity: '0',
-          position: 'absolute'
-        };
-      } else {
-        return getResponsiveStyle(this.responsive);
-      }
-    },
-    nonCldAttrs() {
-      return normalizeNonCloudinary(this.$attrs);
-    },
-    transformOptions() {
-      return {
-        ...this.options,
-        transformation: [
-          ...(this.options.transformation || []),
-          ...this.transformations
-        ]
-      };
-    },
-    isLazyLoadInvisible() {
-      if (this.lazy) {
-        // eslint-disable-next-line
-        console.warn ('The prop "lazy" has been deprecated, please use loading="lazy"');
-      }
-      const shouldLazyLoad = this.lazy || this.loading === 'lazy';
-
-      return shouldLazyLoad && !this.visible;
-    },
-    imageSrc() {
-      const accessibilityTrans = this.accessibility && A11Y_TRANSFORMS[this.accessibility] || {};
-
-      return generateUrl({
-        publicId: this.publicId,
-        configuration: this.configuration,
-        transformation: {
-          ...this.options,
-          transformation: [
-            ...this.transformOptions.transformation,
-            getResizeTransformation(
-              this.responsive,
-              this.size,
-              evalBreakpoints(this.breakpoints)
-            ),
-            ...(this.progressive ? [{ flags: ["progressive"] }] : []),
-            // if accessibility mode is present, include it as a transformation
-            accessibilityTrans
-          ]
-        }
-      });
-    },
-    imageAttrs() {
-      if (this.isWithoutTransformation) {
-        return this.nonCldAttrs;
-      }
-
-      if (this.isLazyLoadInvisible) {
-        return this.computeLazyLoadSrc();
-      }
-
-      const htmlAttrs = getHTMLAttributes(this.options);
-      const src = this.imageSrc;
-
-      return {
-        ...this.nonCldAttrs,
-        ...htmlAttrs,
-        src
-      };
-    },
-    shouldMeasureSize() {
-      return this.responsive !== false;
     }
+
+    return this.renderComp(children)
   }
-};
+} 
 </script>

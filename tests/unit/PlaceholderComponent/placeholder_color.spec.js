@@ -1,4 +1,5 @@
 import {mount} from "@vue/test-utils";
+import { PLACEHOLDER_CLASS } from '../../../src/constants'
 import CldImage from "../../../src/components/CldImage/CldImage";
 import CldPlaceholder from "../../../src/components/CldPlaceholder/CldPlaceholder";
 import Vue from "vue";
@@ -18,9 +19,7 @@ describe("CldPlaceholder", () => {
       }
     );
 
-    let cldPlaceholder = wrapper.findAll("img").at(1);
-
-    await Vue.nextTick();
+    let cldPlaceholder = wrapper.find(`.${PLACEHOLDER_CLASS}`);
 
     expect(cldPlaceholder.attributes("src")).toBe(
       `http://res.cloudinary.com/demo/image/upload/$currWidth_w,$currHeight_h/ar_1,b_auto,c_pad,w_iw_div_2/c_crop,g_north_east,h_10,w_10/c_fill,h_$currHeight,w_$currWidth/f_auto,q_auto/face_top`
@@ -41,10 +40,7 @@ describe("CldPlaceholder", () => {
       }
     );
 
-    let cldPlaceholder = wrapper.findAll("img").at(1);
-
-    await Vue.nextTick();
-
+    let cldPlaceholder = wrapper.find(`.${PLACEHOLDER_CLASS}`);
 
     expect(cldPlaceholder.attributes().width).toBe('100');
     expect(cldPlaceholder.attributes().height).toBe('200');
@@ -53,4 +49,3 @@ describe("CldPlaceholder", () => {
     );
   });
 });
-

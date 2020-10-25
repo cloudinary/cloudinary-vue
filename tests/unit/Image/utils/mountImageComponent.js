@@ -10,7 +10,7 @@ function mountImageComponent(props) {
   });
 
   let image = wrapper.find('img');
-  let imgSrc = image.attributes('src');
+  let imgSrc = image && image.attributes ? image.attributes('src') : '';
 
   return {
     wrapper,

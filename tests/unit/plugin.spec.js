@@ -73,7 +73,7 @@ describe("CLD plugin", () => {
       { localVue }
     );
 
-    expect(wrapper.contains("img")).toBe(true);
+    expect(wrapper.find("img").exists()).toBe(true);
     expect(wrapper.find('img').attributes("src")).toEqual(
       `http://res.cloudinary.com/demo2/image/upload/face_top`
     );

@@ -46,13 +46,15 @@ export const computeOptions = ({ accessibility, withProgressive, baseOptions = {
 export const extendOptions = (baseOptions = {}, extra) => {
   let transformation = baseOptions.transformation ? [...baseOptions.transformation] : []
 
-  if (extra) {
+  if (Array.isArray(extra)) {
+    extra.forEach(effect => transformation.push(effect))
+  } else if (extra) {
     transformation.push(extra)
   }
 
   return {
     ...baseOptions,
-    transformation: transformation.flat()
+    transformation
   }
 }
 

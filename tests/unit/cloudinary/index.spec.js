@@ -8,7 +8,7 @@ describe("computeOptions", () => {
     }
 
     expect(computeOptions(options)).toEqual({
-      transformation: [{ flags: ["progressive"] }, {}],
+      transformation: [{ flags: ["progressive"] }],
     })
   })
 
@@ -16,7 +16,7 @@ describe("computeOptions", () => {
     const options = {}
 
     expect(computeOptions(options)).toEqual({
-      transformation: [{}, {}],
+      transformation: [{}],
     })
   })
 })

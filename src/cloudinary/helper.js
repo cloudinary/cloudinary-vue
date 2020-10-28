@@ -1,4 +1,4 @@
-import { A11Y_TRANSFORMS, progressive, PLACEHOLDER_OPTIONS, COMPONENTS, predominantColorTransformPxl } from '../constants';
+import { progressive, PLACEHOLDER_OPTIONS, COMPONENTS, predominantColorTransformPxl } from '../constants';
 
 /**
  * 
@@ -11,30 +11,25 @@ const addProgressive = (enable = false) => {
 
 /**
  * 
- * @param {'darkmode'|'brightmode'|'monochrome'|'colorblind'} type 
- * @returns {Object} transformation effect for a11y support based on type
- */
-const addA11y = (type) => {
-  return A11Y_TRANSFORMS[type] || {}
-}
-
-/**
- * 
  * @param {Object} object contains accessibility, withProgressive, cldTransforms and baseOptions
  * @returns {Object} options for generating delivery URL of a media component 
  */
 export const computeOptions = ({ accessibility, withProgressive, baseOptions = {}, extra = [] }) => {
   const transformation = [...extra]
-  const a11y = addA11y(accessibility)
   const progressive = addProgressive(withProgressive)
 
   transformation.push(progressive)
-  transformation.push(a11y)
 
-  return {
+  const res = {
     ...baseOptions,
-    transformation,
+    transformation
   }
+
+  if (accessibility) {
+    res.accessibility = accessibility
+  }
+
+  return res
 }
 
 /**

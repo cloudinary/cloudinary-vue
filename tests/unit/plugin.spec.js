@@ -84,7 +84,7 @@ describe("CLD plugin", () => {
       const localVue = createLocalVue();
       localVue.use(Cloudinary, { components: [] });
 
-      const isComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'CldImage');
+      const isComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'cld-image');
 
       expect(isComponentInstalled).toBe(false);
     });
@@ -93,7 +93,7 @@ describe("CLD plugin", () => {
       const localVue = createLocalVue();
       localVue.use(Cloudinary, { components: {} });
 
-      const isComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'CldImage');
+      const isComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'cld-image');
 
       expect(isComponentInstalled).toBe(false);
     });
@@ -103,7 +103,7 @@ describe("CLD plugin", () => {
       localVue.use(Cloudinary, { components: [CldImage] });
 
       const isImageComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'cld-image');
-      const isVideoComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'CldVideo');
+      const isVideoComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'cld-video');
 
       expect(isImageComponentInstalled).toBe(true);
       expect(isVideoComponentInstalled).toBe(false);
@@ -115,7 +115,7 @@ describe("CLD plugin", () => {
       localVue.use(Cloudinary, { components: { [componentName]: CldImage } });
 
       const isNamedComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, componentName);
-      const isImageComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'CldImage');
+      const isImageComponentInstalled = Object.hasOwnProperty.call(localVue.options.components, 'cld-image');
 
       expect(isNamedComponentInstalled).toBe(true);
       expect(isImageComponentInstalled).toBe(false);

@@ -28,7 +28,7 @@ export const RESPONSIVE_TYPES = {
   AUTO: true
 }
 
-export const A11Y_TRANSFORMS = {
+export const ACCESSIBILITY_TRANSFORMATIONS = {
   [A11Y_TYPES.DARK_MODE]: { effect: 'tint:75:black' },
   [A11Y_TYPES.BRIGHT_MODE]: { effect: 'tint:50:white' },
   [A11Y_TYPES.MONOCHROME]: { effect: 'grayscale' },
@@ -37,7 +37,7 @@ export const A11Y_TRANSFORMS = {
 
 export const LAZY_LOADING = 'lazy'
 
-export const PLACEHOLDER_OPTIONS = {
+export const PLACEHOLDER_TRANSFORMATIONS = {
   [PLACEHOLDER_TYPES.VECTORIZE]: {
     effect: 'vectorize:3:0.1', fetch_format: 'svg'
   },

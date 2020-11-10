@@ -1,6 +1,6 @@
 <script>
   
-import { COMPONENTS, PLACEHOLDER_OPTIONS } from '../../constants';
+import { COMPONENTS, PLACEHOLDER_TRANSFORMATIONS } from '../../constants';
 
 export default {
   name: COMPONENTS.CldPlaceholder,
@@ -8,7 +8,7 @@ export default {
     type: {
       type: String,
       default: 'blur',
-      validator: value => !!PLACEHOLDER_OPTIONS[value]
+      validator: value => !!PLACEHOLDER_TRANSFORMATIONS[value]
     }
   },
   render() {

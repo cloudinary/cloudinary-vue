@@ -6,9 +6,9 @@ import { responsive } from '../../mixins/size'
 import { register } from '../../mixins/register';
 import { computePlaceholder, getCldPlaceholder, isCldPlaceholder } from '../../cloudinary/helper'
 import { 
-  A11Y_TRANSFORMS, 
+  ACCESSIBILITY_TRANSFORMATIONS, 
   COMPONENTS,
-  PLACEHOLDER_OPTIONS, 
+  PLACEHOLDER_TRANSFORMATIONS, 
   RESPONSIVE_CSS, 
   IMAGE_CLASSES, 
   PLACEHOLDER_CLASS, 
@@ -42,7 +42,7 @@ export default {
     accessibility: {
       type: String,
       default: "",
-      validator: value => !value || !!A11Y_TRANSFORMS[value]
+      validator: value => !value || !!ACCESSIBILITY_TRANSFORMATIONS[value]
     },
     /**
      * Type of placeholder
@@ -51,7 +51,7 @@ export default {
     placeholder: {
       type: String,
       default: '',
-      validator: value => !value || !!PLACEHOLDER_OPTIONS[value]
+      validator: value => !value || !!PLACEHOLDER_TRANSFORMATIONS[value]
     },
   },
   methods: {

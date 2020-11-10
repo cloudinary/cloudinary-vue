@@ -1,4 +1,4 @@
-import { progressive, PLACEHOLDER_OPTIONS, COMPONENTS, predominantColorTransformPxl } from '../constants';
+import { progressive, PLACEHOLDER_TRANSFORMATIONS, COMPONENTS, predominantColorTransformPxl } from '../constants';
 
 /**
  * 
@@ -61,7 +61,7 @@ export const extendOptions = (baseOptions = {}, extra) => {
  */
 export const computePlaceholder = (type, imgOptions = {}) => {
   const isPredominantWithSize = type === 'predominant-color' && imgOptions.width && imgOptions.height
-  const placeholder = isPredominantWithSize ? predominantColorTransformPxl : (PLACEHOLDER_OPTIONS[type] || {})
+  const placeholder = isPredominantWithSize ? predominantColorTransformPxl : (PLACEHOLDER_TRANSFORMATIONS[type] || {})
 
   return extendOptions(imgOptions, placeholder)
 }

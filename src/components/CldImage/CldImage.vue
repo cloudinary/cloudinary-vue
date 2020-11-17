@@ -7,7 +7,7 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, range } from "../../utils";
-import { ACCESSIBILITY_TRANSFORMATIONS, PLACEHOLDER_TRANSFORMATIONS } from '../../constants';
+import { ACCESSIBILITY_TRANSFORMATIONS, PLACEHOLDER_TRANSFORMATIONS, COMPONENTS } from '../../constants';
 import {
   normalizeNonCloudinary,
   normalizeTransformation,
@@ -41,7 +41,7 @@ import { generateUrl } from "../../helpers/URLGenerator";
  * target="_blank">embedding images in web pages</a> documentation.
  */
 export default {
-  name: "CldImage",
+  name: COMPONENTS.CldImage,
   mixins: [lazy, size, withOptions],
   props: {
     /**

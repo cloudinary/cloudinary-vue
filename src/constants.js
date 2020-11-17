@@ -43,3 +43,12 @@ export const PLACEHOLDER_TRANSFORMATIONS = {
 };
 
 export const progressive = { flags: ["progressive"] }
+
+export const COMPONENTS = {
+  CldImage: 'CldImage',
+  CldPlaceholder: 'CldPlaceholder',
+  CldVideo: 'CldVideo',
+  CldPoster: 'CldPoster',
+  CldTransformation: 'CldTransformation',
+  CldContext: 'CldContext'
+}

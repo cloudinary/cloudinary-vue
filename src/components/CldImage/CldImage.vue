@@ -7,7 +7,7 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, range } from "../../utils";
-import {accessibilityTransformations} from '../../constants';
+import {ACCESSIBILITY_TRANSFORMATIONS} from '../../constants';
 import {
   normalizeNonCloudinary,
   normalizeTransformation,
@@ -93,7 +93,8 @@ export default {
      */
     accessibility: {
       type: String,
-      default: ""
+      default: "",
+      validator: value => !value || !!ACCESSIBILITY_TRANSFORMATIONS[value]
     }
   },
   provide() {
@@ -211,7 +212,7 @@ export default {
       return shouldLazyLoad && !this.visible;
     },
     imageSrc() {
-      const accessibilityTrans = this.accessibility && accessibilityTransformations[this.accessibility] || {};
+      const accessibilityTrans = ACCESSIBILITY_TRANSFORMATIONS[this.accessibility] || {};
 
       return generateUrl({
         publicId: this.publicId,

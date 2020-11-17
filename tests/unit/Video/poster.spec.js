@@ -13,6 +13,7 @@ describe("CldVideo Component tests", () => {
           <cld-poster publicId="small_dinosaur" />
         </cld-video>
       `,
+    }, {
       components: { CldVideo, CldPoster }
     });
 

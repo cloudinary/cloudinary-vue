@@ -41,3 +41,5 @@ export const PLACEHOLDER_TRANSFORMATIONS = {
     { crop: "scale", width: "$nw", height: "$nh" }
   ]
 };
+
+export const progressive = { flags: ["progressive"] }

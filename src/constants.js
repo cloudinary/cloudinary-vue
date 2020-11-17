@@ -1,4 +1,4 @@
-export const accessibilityTransformations = {
+export const ACCESSIBILITY_TRANSFORMATIONS = {
   'darkmode': {effect: 'tint:75:black'},
   'brightmode': {effect: 'tint:50:white'},
   'monochrome': {effect: 'grayscale'},

@@ -52,3 +52,23 @@ export const COMPONENTS = {
   CldTransformation: 'CldTransformation',
   CldContext: 'CldContext'
 }
+
+export const RESPONSIVE_CSS_DEFAULT = Object.freeze({
+  display: "block",
+  width: "100%"
+})
+
+export const RESPONSIVE_CSS = {
+  height: {
+    display: "block",
+    height: "100%",
+    width: "auto"
+  },
+  true: RESPONSIVE_CSS_DEFAULT,
+  auto: RESPONSIVE_CSS_DEFAULT,
+  width: RESPONSIVE_CSS_DEFAULT,
+  fill: {
+    ...RESPONSIVE_CSS_DEFAULT,
+    height: "100%"
+  },
+}

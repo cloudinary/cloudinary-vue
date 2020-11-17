@@ -1,4 +1,6 @@
 import { watchElementSize } from '../helpers/size'
+import { range } from "../utils";
+import { RESPONSIVE_CSS } from '../constants';
 
 /**
  * If necessary posts root element
@@ -6,11 +8,25 @@ import { watchElementSize } from '../helpers/size'
  * into components data
  */
 export const size = {
+  props: {
+    responsive: { 
+      type: [Boolean, String], 
+      default: false,
+      validator: value => !value || RESPONSIVE_CSS[value]
+    },
+    breakpoints: {
+      type: [Array, Function, String],
+      default: () => range(100, 4000, 100)
+    },
+  },
   data() {
     return { size: null };
   },
 
   computed: {
+    hasResponsiveActive() {
+      return this.responsive && this.size && this.size.width && this.size.height
+    },
     /* should be overriden */
     shouldMeasureSize() {
       return false;
@@ -19,25 +35,27 @@ export const size = {
 
   methods: {
     updateSizeObservation() {
-      if (this.shouldMeasureSize) {
-        if (this.$el && !this.cancelSizeListener) {
-          this.cancelSizeListener = watchElementSize(this.$el, size => {
-            if (!size) return;
-
-            if (
-              !this.size ||
-              this.size.width !== size.width ||
-              this.size.height !== size.height
-            ) {
-              this.size = size;
-            }
-          });
-        }
-      } else {
-        if (this.cancelSizeListener) {
-          this.cancelSizeListener();
-        }
+      if (!this.responsive) {
+        this.cancelSizeListener && this.cancelSizeListener()
+        return
       }
+
+      const isElementRendered = !!this.$el
+
+      if (!isElementRendered || this.cancelSizeListener) return
+
+      this.cancelSizeListener = watchElementSize(this.$el, newSize => {
+        if (!newSize) return;
+
+        if (
+          !this.size ||
+          this.size.width !== newSize.width ||
+          this.size.height !== newSize.height
+        ) {
+          this.size = newSize;
+        }
+      });
+
     }
   },
 

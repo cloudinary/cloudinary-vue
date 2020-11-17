@@ -1,4 +1,5 @@
 import { watchElementVisibility } from '../helpers/visibility'
+import { LAZY_LOADING } from '../constants'
 
 /**
  * If necessary watches for root elements visibility
@@ -29,25 +30,30 @@ export const lazy = {
     return { visible: false };
   },
 
+  computed: {
+    hasLazyLoading() {
+      return this.lazy || this.loading === LAZY_LOADING
+    }
+  },
+
   methods: {
     updateVisibilityObservation() {
-      if (this.lazy || this.loading === 'lazy') {
-        if (this.$el && !this.cancelVisibilityListener) {
-          this.cancelVisibilityListener = watchElementVisibility(
-            this.$el,
-            visible => {
-              this.visible = this.visible || visible;
-            }
-          );
-        }
-      } else {
-        this.visible = true;
-        if (this.cancelVisibilityListener) {
-          const { cancelVisibilityListener } = this;
-          this.cancelVisibilityListener = null;
-          cancelVisibilityListener();
-        }
+      if (!this.hasLazyLoading) {
+        this.visible = true
+        this.cancelVisibilityListener && this.cancelVisibilityListener()
+        return
       }
+
+      const isElementRendered = !!this.$el
+
+      if (!isElementRendered || this.cancelVisibilityListener) return
+
+      this.cancelVisibilityListener = watchElementVisibility(
+        this.$el,
+        isVisible => {
+          this.visible = this.visible || isVisible;
+        }
+      );
     }
   },
 

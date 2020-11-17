@@ -72,3 +72,5 @@ export const RESPONSIVE_CSS = {
     height: "100%"
   },
 }
+
+export const LAZY_LOADING = 'lazy'

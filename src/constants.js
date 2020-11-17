@@ -17,14 +17,11 @@ export const predominantColorTransform  = [
   {width: '$currWidth', height: '$currHeight', crop: 'fill'},
   {fetch_format: 'auto', quality: 'auto'}];
 
-export const placeholderImageOptions = {
-  'vectorize': [{effect: 'vectorize:3:0.1', fetch_format: 'svg'}],
-  'pixelate': [{effect: 'pixelate', quality: 1, fetch_format: 'auto'}],
-  'blur': [{effect: 'blur:2000', quality: 1, fetch_format: 'auto'}],
-  'predominant-color': predominantColorTransform
-};
-
-export const placeholderTransformations = {
+export const PLACEHOLDER_TRANSFORMATIONS = {
+  vectorize: [{effect: 'vectorize:3:0.1', fetch_format: 'svg'}],
+  pixelate: [{effect: 'pixelate', quality: 1, fetch_format: 'auto'}],
+  blur: [{effect: 'blur:2000', quality: 1, fetch_format: 'auto'}],
+  'predominant-color': predominantColorTransform,
   lqip: [
     {
       variables: [["$nh", "ih"], ["$nw", "iw"]],
@@ -42,6 +39,5 @@ export const placeholderTransformations = {
       quality: "1"
     },
     { crop: "scale", width: "$nw", height: "$nh" }
-  ],
-  ...placeholderImageOptions
+  ]
 };

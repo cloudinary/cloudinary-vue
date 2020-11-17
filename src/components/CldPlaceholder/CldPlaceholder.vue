@@ -3,6 +3,7 @@
 </template>
 <script>
   import {getPlaceholderURL} from "../../helpers/getPlaceholderURL";
+  import { PLACEHOLDER_TRANSFORMATIONS } from '../../constants'
 
   export default {
     name: "CldPlaceholder",
@@ -17,9 +18,8 @@
       // type is a prop name, unfortunately confusing.
       type: {
         type: String,
-        default: () => {
-          return 'blur';
-        }
+        default: 'blur',
+        validator: value => !!PLACEHOLDER_TRANSFORMATIONS[value]
       },
     },
     inject: {

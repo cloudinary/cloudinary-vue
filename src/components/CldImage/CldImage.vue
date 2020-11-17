@@ -7,7 +7,7 @@
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
 import { merge, range } from "../../utils";
-import {accessibilityTransformations} from '../../constants';
+import {accessibilityTransformations, PLACEHOLDER_TRANSFORMATIONS } from '../../constants';
 import {
   normalizeNonCloudinary,
   normalizeTransformation,
@@ -65,7 +65,8 @@ export default {
      */
     placeholder: {
       type: String,
-      default: ""
+      default: "",
+      validator: value => !value || !!PLACEHOLDER_TRANSFORMATIONS[value]
     },
     /**
      * How to make the image responsive to the available size based on layout. Possible values:

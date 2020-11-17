@@ -1,5 +1,6 @@
 import { findBreakpoint } from "./findBreakpoint";
 import { normalizeTransformation } from "./attributes";
+import { evalBreakpoints } from "./evalBreakpoints";
 
 /**
  * Return styles according to a responsive mode
@@ -41,10 +42,12 @@ export function getResponsiveStyle(mode) {
  * @param {object} size
  * @param {array} breakpoints
  */
-export function getResizeTransformation(mode, size, breakpoints) {
-  if (!size) {
+export function getResizeTransformation(mode, size, originalBP) {
+  if (!mode || !size) {
     return {};
   }
+
+  const breakpoints = evalBreakpoints(originalBP)
 
   switch (mode) {
     case "fill":

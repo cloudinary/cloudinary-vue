@@ -1,4 +1,4 @@
-import { pick, debounce } from "../utils";
+import { watchElementSize } from '../helpers/size'
 
 /**
  * If necessary posts root element
@@ -59,49 +59,3 @@ export const size = {
     }
   }
 };
-
-/**
- * Call back a provided function
- * whenever element changed it's size
- * @param {HTMLElement} element
- * @param {Function} cb
- */
-function watchElementSize(element, cb) {
-  const delayedCallback = debounce(cb, 150);
-  let cancelled = false;
-
-  if (window && typeof window === "object") {
-    if ("ResizeObserver" in window) {
-      const resizeObserver = new ResizeObserver(entries => {
-        for (const entry of entries) {
-          delayedCallback({
-            width: entry.contentRect.width,
-            height: entry.contentRect.height
-          });
-        }
-      });
-      resizeObserver.observe(element);
-      return () => {
-        if (cancelled) {
-          return;
-        }
-        cancelled = true;
-        resizeObserver.disconnect();
-      };
-    } else {
-      const handleWindowResize = () => {
-        const rect = element.getBoundingClientRect();
-        delayedCallback({ width: rect.width, height: rect.height });
-      };
-      window.addEventListener("resize", handleWindowResize);
-      handleWindowResize();
-      return () => {
-        if (cancelled) {
-          return;
-        }
-        cancelled = true;
-        window.removeEventListener("resize", handleWindowResize);
-      };
-    }
-  }
-}

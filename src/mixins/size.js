@@ -1,4 +1,6 @@
-import { pick, debounce } from "../utils";
+import { watchElementSize } from '../helpers/size'
+import { range } from "../utils";
+import { RESPONSIVE_CSS } from '../constants';
 
 /**
  * If necessary posts root element
@@ -6,11 +8,25 @@ import { pick, debounce } from "../utils";
  * into components data
  */
 export const size = {
+  props: {
+    responsive: { 
+      type: [Boolean, String], 
+      default: false,
+      validator: value => !value || RESPONSIVE_CSS[value]
+    },
+    breakpoints: {
+      type: [Array, Function, String],
+      default: () => range(100, 4000, 100)
+    },
+  },
   data() {
     return { size: null };
   },
 
   computed: {
+    hasResponsiveActive() {
+      return this.responsive && this.size && this.size.width && this.size.height
+    },
     /* should be overriden */
     shouldMeasureSize() {
       return false;
@@ -19,25 +35,27 @@ export const size = {
 
   methods: {
     updateSizeObservation() {
-      if (this.shouldMeasureSize) {
-        if (this.$el && !this.cancelSizeListener) {
-          this.cancelSizeListener = watchElementSize(this.$el, size => {
-            if (!size) return;
-
-            if (
-              !this.size ||
-              this.size.width !== size.width ||
-              this.size.height !== size.height
-            ) {
-              this.size = size;
-            }
-          });
-        }
-      } else {
-        if (this.cancelSizeListener) {
-          this.cancelSizeListener();
-        }
+      if (!this.responsive) {
+        this.cancelSizeListener && this.cancelSizeListener()
+        return
       }
+
+      const isElementRendered = !!this.$el
+
+      if (!isElementRendered || this.cancelSizeListener) return
+
+      this.cancelSizeListener = watchElementSize(this.$el, newSize => {
+        if (!newSize) return;
+
+        if (
+          !this.size ||
+          this.size.width !== newSize.width ||
+          this.size.height !== newSize.height
+        ) {
+          this.size = newSize;
+        }
+      });
+
     }
   },
 
@@ -59,49 +77,3 @@ export const size = {
     }
   }
 };
-
-/**
- * Call back a provided function
- * whenever element changed it's size
- * @param {HTMLElement} element
- * @param {Function} cb
- */
-function watchElementSize(element, cb) {
-  const delayedCallback = debounce(cb, 150);
-  let cancelled = false;
-
-  if (window && typeof window === "object") {
-    if ("ResizeObserver" in window) {
-      const resizeObserver = new ResizeObserver(entries => {
-        for (const entry of entries) {
-          delayedCallback({
-            width: entry.contentRect.width,
-            height: entry.contentRect.height
-          });
-        }
-      });
-      resizeObserver.observe(element);
-      return () => {
-        if (cancelled) {
-          return;
-        }
-        cancelled = true;
-        resizeObserver.disconnect();
-      };
-    } else {
-      const handleWindowResize = () => {
-        const rect = element.getBoundingClientRect();
-        delayedCallback({ width: rect.width, height: rect.height });
-      };
-      window.addEventListener("resize", handleWindowResize);
-      handleWindowResize();
-      return () => {
-        if (cancelled) {
-          return;
-        }
-        cancelled = true;
-        window.removeEventListener("resize", handleWindowResize);
-      };
-    }
-  }
-}

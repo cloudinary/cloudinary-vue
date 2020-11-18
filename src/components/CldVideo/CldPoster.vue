@@ -1,5 +1,6 @@
 <script>
 import { normalizeTransformation, normalizeConfiguration } from "../../helpers/attributes";
+import { COMPONENTS } from '../../constants'
 
 /**
  * The image to be shown while a video is downloading or until the user hits the play button.
@@ -8,7 +9,7 @@ import { normalizeTransformation, normalizeConfiguration } from "../../helpers/a
  * If this component is not given then the poster image defaults to the middle frame of the source video in jpg format.
  */
 export default {
-  name: "CldPoster",
+  name: COMPONENTS.CldPoster,
   inject: {
     registerPoster: {
       default: null

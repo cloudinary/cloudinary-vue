@@ -1,3 +1,5 @@
+import { watchElementVisibility } from '../helpers/visibility'
+
 /**
  * If necessary watches for root elements visibility
  * and posts the result to components data
@@ -67,27 +69,3 @@ export const lazy = {
     }
   }
 };
-
-function watchElementVisibility(element, listener) {
-  if (typeof window === "object" && "IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.target === element) {
-            listener(entry.isIntersecting);
-          }
-        });
-      },
-      { threshold: [0, 0.01] }
-    );
-    observer.observe(element);
-    return () => {
-      observer.disconnect();
-    };
-  } else {
-    listener(true);
-    return noop;
-  }
-}
-
-function noop() {}

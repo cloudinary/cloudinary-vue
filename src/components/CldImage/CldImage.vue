@@ -6,8 +6,7 @@
 </template>
 <script>
 import { Cloudinary, Transformation } from "cloudinary-core";
-import { merge, range } from "../../utils";
-import {ACCESSIBILITY_TRANSFORMATIONS} from '../../constants';
+import { ACCESSIBILITY_TRANSFORMATIONS, PLACEHOLDER_TRANSFORMATIONS, COMPONENTS } from '../../constants';
 import {
   normalizeNonCloudinary,
   normalizeTransformation,
@@ -41,7 +40,7 @@ import { generateUrl } from "../../helpers/URLGenerator";
  * target="_blank">embedding images in web pages</a> documentation.
  */
 export default {
-  name: "CldImage",
+  name: COMPONENTS.CldImage,
   mixins: [lazy, size, withOptions],
   props: {
     /**
@@ -65,27 +64,8 @@ export default {
      */
     placeholder: {
       type: String,
-      default: ""
-    },
-    /**
-     * How to make the image responsive to the available size based on layout. Possible values:
-     *
-     * - `false` turns the feature off
-     * - `"width"` and `true` uses the available image *width* and allows image *height* to be set dynamically
-     * - `"height"` uses the available image *height* and allows image *width* to be set dynamically
-     * - `"fill"` uses the available image *width* and *height*
-     */
-    responsive: { type: [Boolean, String], default: false },
-    /**
-     * The set of possible breakpoint values to be used together with the responsive property. Either:
-     *
-     * - an array of numbers
-     * - a comma separated list of numbers as a single string
-     * - a function that returns an array of numbers
-     */
-    breakpoints: {
-      type: [Array, Function, String],
-      default: () => range(100, 4000, 100)
+      default: "",
+      validator: value => !value || !!PLACEHOLDER_TRANSFORMATIONS[value]
     },
 
     /**

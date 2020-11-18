@@ -1,6 +1,6 @@
 import { Cloudinary } from "cloudinary-core";
 
-import {placeholderTransformations, predominantColorTransformPxl} from '../constants';
+import {PLACEHOLDER_TRANSFORMATIONS, predominantColorTransformPxl} from '../constants';
 
 /** Get media URL with some transformations
  * that will make the image lighter
@@ -21,7 +21,7 @@ export function getPlaceholderURL(
   // The default type is an empty string,
   // so we need to ensure something was passed for proper warnings later
   if (typeof type === "string" && type !== "") {
-    if (type in placeholderTransformations) {
+    if (type in PLACEHOLDER_TRANSFORMATIONS) {
       let placeholderTransformation = {};
       let hasWidth = transformation.width;
       let hasHeight = transformation.height;
@@ -30,7 +30,7 @@ export function getPlaceholderURL(
       if (hasWidth && hasHeight && isPredominant) {
         placeholderTransformation = predominantColorTransformPxl;
       } else{
-        placeholderTransformation = placeholderTransformations[type];
+        placeholderTransformation = PLACEHOLDER_TRANSFORMATIONS[type];
       }
 
       return Cloudinary.new(configuration).url(

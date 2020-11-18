@@ -17,14 +17,11 @@ export const predominantColorTransform  = [
   {width: '$currWidth', height: '$currHeight', crop: 'fill'},
   {fetch_format: 'auto', quality: 'auto'}];
 
-export const placeholderImageOptions = {
-  'vectorize': [{effect: 'vectorize:3:0.1', fetch_format: 'svg'}],
-  'pixelate': [{effect: 'pixelate', quality: 1, fetch_format: 'auto'}],
-  'blur': [{effect: 'blur:2000', quality: 1, fetch_format: 'auto'}],
-  'predominant-color': predominantColorTransform
-};
-
-export const placeholderTransformations = {
+export const PLACEHOLDER_TRANSFORMATIONS = {
+  vectorize: [{effect: 'vectorize:3:0.1', fetch_format: 'svg'}],
+  pixelate: [{effect: 'pixelate', quality: 1, fetch_format: 'auto'}],
+  blur: [{effect: 'blur:2000', quality: 1, fetch_format: 'auto'}],
+  'predominant-color': predominantColorTransform,
   lqip: [
     {
       variables: [["$nh", "ih"], ["$nw", "iw"]],
@@ -42,6 +39,36 @@ export const placeholderTransformations = {
       quality: "1"
     },
     { crop: "scale", width: "$nw", height: "$nh" }
-  ],
-  ...placeholderImageOptions
+  ]
 };
+
+export const progressive = { flags: ["progressive"] }
+
+export const COMPONENTS = {
+  CldImage: 'CldImage',
+  CldPlaceholder: 'CldPlaceholder',
+  CldVideo: 'CldVideo',
+  CldPoster: 'CldPoster',
+  CldTransformation: 'CldTransformation',
+  CldContext: 'CldContext'
+}
+
+export const RESPONSIVE_CSS_DEFAULT = Object.freeze({
+  display: "block",
+  width: "100%"
+})
+
+export const RESPONSIVE_CSS = {
+  height: {
+    display: "block",
+    height: "100%",
+    width: "auto"
+  },
+  true: RESPONSIVE_CSS_DEFAULT,
+  auto: RESPONSIVE_CSS_DEFAULT,
+  width: RESPONSIVE_CSS_DEFAULT,
+  fill: {
+    ...RESPONSIVE_CSS_DEFAULT,
+    height: "100%"
+  },
+}

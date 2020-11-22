@@ -1,38 +1,5 @@
 import { findBreakpoint } from "./findBreakpoint";
-import { normalizeTransformation } from "./attributes";
 import { evalBreakpoints } from "./evalBreakpoints";
-
-/**
- * Return styles according to a responsive mode
- * @param {'fill'|'width'|'height'|boolean} mode
- */
-export function getResponsiveStyle(mode) {
-  switch (mode) {
-    case "height":
-      return {
-        display: "block",
-        height: "100%",
-        width: "auto"
-      };
-
-    case true:
-    case "width":
-      return {
-        display: "block",
-        width: "100%"
-      };
-
-    case "fill":
-      return {
-        display: "block",
-        width: "100%",
-        height: "100%"
-      };
-
-    default:
-      return {};
-  }
-}
 
 /**
  * Based an selected mode
@@ -63,30 +30,30 @@ export function getResizeTransformation(mode, size, originalBP) {
             width: Math.floor(size.width),
             height: Math.floor(size.height)
           };
-      return normalizeTransformation({
+      return {
         ...getDPRAttr(),
         crop: "fill",
         ...computedSize
-      });
+      };
 
     case true:
     case "width":
-      return normalizeTransformation({
+      return {
         ...getDPRAttr(),
         crop: "scale",
         width: Math.floor(
           breakpoints ? findBreakpoint(breakpoints, size.width) : size.width
         )
-      });
+      };
 
     case "height":
-      return normalizeTransformation({
+      return {
         ...getDPRAttr(),
         crop: "scale",
         height: Math.floor(
           breakpoints ? findBreakpoint(breakpoints, size.height) : size.height
         )
-      });
+      };
     default:
       return {};
   }

@@ -1,4 +1,5 @@
 import {mount} from "@vue/test-utils";
+import { PLACEHOLDER_CLASS } from '../../../src/constants'
 import CldImage from "../../../src/components/CldImage/CldImage";
 import CldPlaceholder from "../../../src/components/CldPlaceholder/CldPlaceholder";
 import Vue from "vue";
@@ -18,9 +19,7 @@ describe("CldPlaceholder", () => {
       }
     );
 
-    let cldPlaceholder = wrapper.findAll("img").at(1);
-
-    await Vue.nextTick();
+    let cldPlaceholder = wrapper.find(`.${PLACEHOLDER_CLASS}`);
 
     expect(cldPlaceholder.attributes("src")).toBe(
       `http://res.cloudinary.com/demo/image/upload/e_vectorize:3:0.1,f_svg/face_top`

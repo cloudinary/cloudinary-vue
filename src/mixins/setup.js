@@ -1,4 +1,4 @@
-import { Cloudinary } from 'cloudinary-core';
+import { Cloudinary, Util } from 'cloudinary-core';
 /**
  * To set up Cloudinary instance in component
  */
@@ -19,14 +19,17 @@ export const setup = {
   methods: {
     setup(extraConfigs) {      
       if (!this.cloudinary) {
-        this.cloudinary = new Cloudinary(this.defaultConfigurations)
+        this.cloudinary = new Cloudinary(this.toSnakeCase(this.defaultConfigurations))
       }
 
-      this.cloudinary.config(this.contextOptions)
+      this.cloudinary.config(this.toSnakeCase(this.contextOptions))
 
       if (extraConfigs) {
-        this.cloudinary.config(extraConfigs)
+        this.cloudinary.config(this.toSnakeCase(extraConfigs))
       }
+    },
+    toSnakeCase(options) {
+      return Util.withSnakeCaseKeys(options)
     }
   }
 }; 

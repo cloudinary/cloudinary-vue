@@ -1,5 +1,5 @@
 import { getResizeTransformation } from "../helpers/responsiveness";
-import { computeOptions } from '../cloudinary/helper'
+import { computeOptions } from '../helpers/computeOptions'
 
 export const compute = {
   methods: {

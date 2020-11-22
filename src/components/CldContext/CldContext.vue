@@ -1,7 +1,5 @@
 
 <script>
-import { normalizeNonCloudinary } from "../../helpers/attributes";
-import { withOptions } from "../../mixins/withOptions";
 import { COMPONENTS } from '../../constants'
 
 /**
@@ -11,8 +9,6 @@ export default {
   name: COMPONENTS.CldContext,
 
   inheritAttrs: false,
-
-  mixins: [withOptions],
 
   provide() {
     return {

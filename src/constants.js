@@ -74,3 +74,22 @@ export const RESPONSIVE_CSS = {
 }
 
 export const LAZY_LOADING = 'lazy'
+
+export const IMAGE_CLASSES = {
+  LOADING: 'cld-image-loading',
+  LOADED: 'cld-image-loaded',
+  DEFAULT: 'cld-image'
+}
+export const PLACEHOLDER_CLASS = 'cld-placeholder'
+
+export const IMAGE_WITH_PLACEHOLDER_CSS = {
+  [IMAGE_CLASSES.LOADING]: {
+    opacity: 0,
+    position: 'absolute',
+  }, 
+  [PLACEHOLDER_CLASS]: {
+    display: 'inline-block'
+  }
+}
+
+export const CLD_IMAGE_WRAPPER_CLASS = "cld-image-wrapper" 

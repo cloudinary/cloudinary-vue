@@ -8,7 +8,6 @@ describe('watchElementSize', () => {
  })
  it(' there is no resizeObserver', () => {
    window.ResizeObserver = null
-   // const resizeObserverSpy = jest.spyOn(global, 'ResizeObserver').mockImplementation(null)
    const addEventListenerSpy = jest.spyOn(global, 'addEventListener').mockImplementation(null)
    const removeEventListenerSpy = jest.spyOn(global, 'removeEventListener').mockImplementation(null)
 

@@ -1,5 +1,5 @@
 import { watchElementVisibility } from '../helpers/visibility'
-import { LAZY_LOADING } from '../constants'
+import { LAZY_LOADING, CLD_IMAGE_WRAPPER_CLASS, IMAGE_CLASSES } from '../constants'
 
 /**
  * If necessary watches for root elements visibility
@@ -44,7 +44,7 @@ export const lazy = {
         return
       }
 
-      const isElementRendered = !!this.$el
+      const isElementRendered = !!this.$el && (this.$el.classList?.contains(IMAGE_CLASSES.DEFAULT) || this.$el.classList?.contains(CLD_IMAGE_WRAPPER_CLASS))
 
       if (!isElementRendered || this.cancelVisibilityListener) return
 

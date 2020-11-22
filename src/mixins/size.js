@@ -1,6 +1,6 @@
 import { watchElementSize } from '../helpers/size'
 import { range } from "../utils";
-import { RESPONSIVE_CSS } from '../constants';
+import { RESPONSIVE_CSS, CLD_IMAGE_WRAPPER_CLASS, IMAGE_CLASSES } from '../constants';
 
 /**
  * If necessary posts root element
@@ -40,7 +40,7 @@ export const size = {
         return
       }
 
-      const isElementRendered = !!this.$el
+      const isElementRendered = !!this.$el && (this.$el.classList?.contains(IMAGE_CLASSES.DEFAULT) || this.$el.classList?.contains(CLD_IMAGE_WRAPPER_CLASS))
 
       if (!isElementRendered || this.cancelSizeListener) return
 
@@ -52,7 +52,7 @@ export const size = {
           this.size.width !== newSize.width ||
           this.size.height !== newSize.height
         ) {
-          this.size = newSize;
+          this.size = newSize
         }
       });
 

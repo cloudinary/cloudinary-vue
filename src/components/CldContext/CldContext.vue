@@ -16,7 +16,8 @@ export default {
 
   provide() {
     return {
-      contextConfiguration: this.configuration
+      contextConfiguration: this.configuration,
+      contextOptions: this.$attrs,
     };
   },
 
@@ -31,7 +32,7 @@ export default {
       "div",
       {
         class: { "cld-context": true },
-        attrs: this.attributes
+        attrs: this.$attrs
       },
       this.$slots.default
     );

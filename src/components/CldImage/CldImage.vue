@@ -204,7 +204,7 @@ export default {
             getResizeTransformation(
               this.responsive,
               this.size,
-              evalBreakpoints(this.breakpoints)
+              this.breakpoints
             ),
             ...(this.progressive ? [{ flags: ["progressive"] }] : []),
             // if accessibility mode is present, include it as a transformation

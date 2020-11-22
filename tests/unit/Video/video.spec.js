@@ -29,7 +29,7 @@ describe("CldVideo Component tests", () => {
 
     const video = wrapper.find('video');
 
-    expect(sourcesOfVideo(video)).toEqual({});
+    expect(video.exists()).toBe(false);
   });
 
   it("allows transformation as props", async () => {
@@ -39,8 +39,6 @@ describe("CldVideo Component tests", () => {
       `,
       components: { CldVideo }
     });
-
-    const video = wrapper.find('video');
 
     expect(sourcesOfVideo(wrapper)).toEqual({
       "video/webm":"http://res.cloudinary.com/demo/video/upload/e_sepia/face_top.webm",

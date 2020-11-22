@@ -20,7 +20,7 @@ describe('SSR Tests', () => {
     );
 
     expect(output).toBe(
-      '<div data-server-rendered="true" class="cld-context">' +
+      '<div cloudName="demo" data-server-rendered="true" class="cld-context">' +
       '<div class="cld-image">' +
       '<img src="http://res.cloudinary.com/demo/image/upload/small_dinosaur"> ' +
       '</div>' +

@@ -15,7 +15,7 @@ describe("CldImage::responsive", () => {
     });
     const image = wrapper.find('img');
 
-    expect(image.attributes("src")).toEqual(undefined);
+    expect(image.attributes("src")).toEqual('');
 
     wrapper.vm.$children[0].size = { width: 100, height: 100 };
     await Vue.nextTick();

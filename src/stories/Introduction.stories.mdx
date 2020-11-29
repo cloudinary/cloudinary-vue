@@ -1,0 +1,158 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import Code from './assets/code-brackets.svg';
+import Comments from './assets/comments.svg';
+import Flow from './assets/flow.svg';
+import Plugin from './assets/plugin.svg';
+import Repo from './assets/repo.svg';
+import StackAlt from './assets/stackalt.svg';
+
+<Meta title="Introduction" />
+
+<style>{`
+  .subheading {
+    --mediumdark: '#999999';
+    font-weight: 900;
+    font-size: 13px;
+    color: #999;
+    letter-spacing: 6px;
+    line-height: 24px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+  }
+
+  .subheading img {
+    height: 40px;
+    width: 40px;
+    margin-right: 15px;
+    flex: none;
+  }
+
+  .link-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 10px;
+  }
+
+  @media (min-width: 620px) {
+    .link-list {
+      row-gap: 20px;
+      column-gap: 20px;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media all and (-ms-high-contrast:none) {
+  .link-list {
+      display: -ms-grid;
+      -ms-grid-columns: 1fr 1fr;
+      -ms-grid-rows: 1fr 1fr;
+    }
+  }
+
+  .link-item {
+    display: block;
+    padding: 20px 30px 20px 15px;
+    border: 1px solid #00000010;
+    border-radius: 5px;
+    transition: background 150ms ease-out, border 150ms ease-out, transform 150ms ease-out;
+    color: #333333;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .link-item:hover {
+    border-color: #1EA7FD50;
+    transform: translate3d(0, -3px, 0);
+    box-shadow: rgba(0, 0, 0, 0.08) 0 3px 10px 0;
+  }
+
+  .link-item:active {
+    border-color: #1EA7FD;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .link-item strong {
+    font-weight: 700;
+    display: block;
+    margin-bottom: 2px;
+  }
+  
+  .link-item img {
+    height: 40px;
+    width: 40px;
+    margin-right: 15px;
+    flex: none;
+  }
+
+  .link-item span {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  
+`}</style>
+
+# Cloudinary Vue SDK - Storybook
+
+[Cloudinary](https://cloudinary.com) is a cloud-based service that provides an end-to-end image and video management solution including uploads,storage, manipulations, optimizations and delivery. All your media resources are optimized and delivered through a fast CDN using industry best practices.
+
+## Features
+
+The Vue SDK developed by Cloudinary provides a solution for smart on-demand image and video manipulations within your Vue.js-based applications, including the following:
+
+* Responsive and reactive image & video components.
+* Auto-detect optimized format per browser for images and videos.
+* Fast loading speed with progressive images.
+* Out-of-the-box placeholder for image components.
+* Out-of-the-box accessibility support.
+* Lazy loading image and video components.
+
+<div className="subheading">Learn</div>
+
+<div className="link-list">
+  <a className="link-item" href="http://cloudinary.com/documentation/image_transformations" target="_blank">
+    <img src={Repo} alt="repo" />
+    <span>
+      <strong>Image Transformations documentation</strong>
+      How to transform your images using Cloudinary parameters
+    </span>
+  </a>
+  <a className="link-item" href="https://cloudinary.com/documentation/video_manipulation_and_delivery#video_transformations_reference" target="_blank">
+    <img src={StackAlt} alt="stack" />
+    <span>
+      <strong>Video Transformations documentation</strong>
+      How to transform your videos using Cloudinary parameters
+    </span>
+  </a>
+  <a className="link-item" href="https://github.com/cloudinary/cloudinary-vue" target="_blank">
+    <img src={Code} alt="code" />
+    <span>
+      <strong>Vue SDK Repo</strong>
+      View the source and add issues
+    </span>
+  </a>
+  <a className="link-item" href="http://support.cloudinary.com/forums" target="_blank">
+    <img src={Comments} alt="comments" />
+    <span>
+      <strong>Cloudinary forums</strong>
+      Connect with other Cloudinarian experts
+    </span>
+  </a>
+  <a className="link-item" href="https://cloudinary.com/documentation/vue_integration" target="_blank">
+    <img src={Flow} alt="flow" />
+    <span>
+      <strong>Cloudinary Vue Integration Documentation</strong>
+      Details about the Vue integration
+    </span>
+  </a>
+  <a className="link-item" href="https://github.com/cloudinary/vue-cli-plugin-cloudinary" target="_blank">
+    <img src={Plugin} alt="repo" />
+    <span>
+      <strong>CLI Plugin for Vue SDK</strong>
+      View the CLI plugin repo for Vue SDK
+    </span>
+  </a>
+</div>

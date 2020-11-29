@@ -49,10 +49,12 @@ export default {
     },
     /**
      * The placeholder image to use while the image is loading. Possible values:
-     *
+     * - `"blur"` to use blur placeholder
      * - `"lqip"` to use a low quality image
      * - `"color"` to use an average color image
      * - `"pixelate"` to use a pixelated image
+     * - `"vectorize"` to use a vectorized image
+     * - `"predominant-color" to use a predominant color image
      */
     placeholder: {
       type: String,
@@ -61,7 +63,7 @@ export default {
     },
 
     /**
-     * One of [monochrome, darkmode, brightmode, colorblind]
+     * Out-of-the-box support for accessibility mode, including colorblind and dark/light mode
      */
     accessibility: {
       type: String,

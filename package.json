@@ -18,7 +18,8 @@
   "unpkg": "dist/Cloudinary.umd.min.js",
   "dependencies": {
     "cloudinary-core": "^2.10.3",
-    "current-script-polyfill": "1.0.0"
+    "current-script-polyfill": "1.0.0",
+    "core-js": "^3.8.0"
   },
   "peerDependencies": {
     "vue": "^2.0.0"

@@ -55,27 +55,27 @@ export const lazy = {
       this.cancelVisibilityListener = watchElementVisibility(
         this.$el,
         isVisible => {
-          this.visible = this.visible || isVisible
+          this.visible = this.visible || isVisible;
         }
       )
     }
   },
 
   created() {
-    this.updateVisibilityObservation()
+    this.updateVisibilityObservation();
   },
 
   mounted() {
-    this.updateVisibilityObservation()
+    this.updateVisibilityObservation();
   },
 
   updated() {
-    this.updateVisibilityObservation()
+    this.updateVisibilityObservation();
   },
 
   destroyed() {
     if (this.cancelVisibilityListener) {
-      this.cancelVisibilityListener()
+      this.cancelVisibilityListener();
     }
   }
-}
+};

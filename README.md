@@ -3,34 +3,31 @@
 [![Build Status](https://travis-ci.org/cloudinary/cloudinary-vue.svg?branch=master)](https://travis-ci.org/cloudinary/cloudinary-vue)
 
 Cloudinary is a [cloud-based service](https://cloudinary.com/solutions) that provides an end-to-end image and video management solution
-including uploads,storage, manipulations, optimizations and delivery.
+including uploads,storage, manipulations, optimizations and delivery. 
 All your media resources are optimized and delivered through a fast CDN using industry best practices.
 
-Using Cloudinary's Vue.js SDK, you can easily perform smart image and video manipulations
+Using Cloudinary's Vue.js SDK, you can easily perform smart image and video manipulations 
 using code that integrates seamlessly with your existing Vue.js application, and deliver optimized and responsive media to your users.
 
-This Readme provides basic installation and usage information. For the complete documentation, see the [Vue.js SDK guide](https://cloudinary.com/documentation/vue_integration)\_
+This Readme provides basic installation and usage information. For the complete documentation, see the [Vue.js SDK guide](https://cloudinary.com/documentation/vue_integration)_
 
-## 🛠️ Installation
-
-### Vue 2.x
-
+# 🛠️ Installation 
+## Vue 2.x
 1. Install using Vue-CLI
-
-   - After you create your application with Vue-CLI, navigate to the created app folder, and install Cloudinary SDK by:
-     ```bash
-     vue add cloudinary
-     ```
-   - Set up your cloudName and pick the components to use (or use all 😃)
-     ![Set up with cloudName and options](http://bit.ly/2WSKTf0)
-   - A `cloudinary.js` file will be added to your src directory, same level with your `main.js` file. Feel free to customize it if you like. And have fun with Cloudinary! 🤟
-   - More information on the plugin, check out [our Vue-CLI plugin for Cloudinary Repo](https://github.com/cloudinary/vue-cli-plugin-cloudinary)
+    - After you create your application with Vue-CLI, navigate to the created app folder, and install Cloudinary SDK by:
+        ```bash
+        vue add cloudinary
+        ```
+    - Set up your cloudName and pick the components to use (or use all 😃)
+    ![Set up with cloudName and options](http://bit.ly/2WSKTf0)
+    - A `cloudinary.js` file will be added to your src directory, same level with your `main.js` file. Feel free to customize it if you like. And have fun with Cloudinary! 🤟
+    - More information on the plugin, check out [our Vue-CLI plugin for Cloudinary Repo](https://github.com/cloudinary/vue-cli-plugin-cloudinary)
 
 2. install using your favorite package manager (yarn, npm)
-   ```bash
-   npm install cloudinary-vue
-   yarn add cloudinary-vue
-   ```
+    ```bash
+    npm install cloudinary-vue
+    yarn add cloudinary-vue
+    ```
 
 ### Nuxt.js
 
@@ -38,52 +35,46 @@ Please use [Cloudinary module](https://cloudinary.nuxtjs.org/) for [Nuxt.js](htt
 
 ```
 yarn add @nuxtjs/cloudinary
-
 #OR
-
 npm i @nuxtjs/cloudinary
 ```
 
 ## Setup and configuration
 
 ### Vue 2.x - Setup and configuration
-
 1. **A Global setup** - Include CloudinaryVue globally
-
-   ```javascript
-   import Vue from "vue";
-   import Cloudinary, { CldImage, CldTransformation } from "cloudinary-vue";
-
-   Vue.use(Cloudinary, {
-     configuration: { cloudName: "demo" },
-     components: {
-       CldImage,
-       CldTransformation,
-     },
-   });
-   ```
-
+    ```javascript
+    import Vue from 'vue';
+    import Cloudinary, { CldImage, CldTransformation } from "cloudinary-vue";
+    
+    Vue.use(Cloudinary, {
+      configuration: { cloudName: "demo" },
+      components: {
+        CldImage,
+        CldTransformation
+      }
+    });
+    ```
+   
 2. **A Local setup** - You can also import the cloudinary components manually in each of your components.
 
-## Plugin Configuration
-
+# Plugin Configuration
 The CloudinaryVue Plugin accepts a `components` object with the Cloudinary components to install
 
-- `components` can also be passed as an array:
+   - `components` can also be passed as an array: 
+      ```javascript
+      components:[CldImage. CldTransformation]
+      ```
+ 
+   - `components` can also be used to rename the cloudinary components:   
+       ```javascript
+           components: {
+               myImage: CldImage,
+               myTransformation : CldTransformation
+           }
+       ```
 
-  ```javascript
-    components: [ CldImage. CldTransformation ]
-  ```
-
-- `components` can also be used to rename the cloudinary components:
-  ```javascript
-      components: {
-          myImage: CldImage,
-          myTransformation : CldTransformation
-      }
-  ```
-
-## General usage
+# General usage
 
 In order to properly use this library you have to provide it with a few configuration parameters. All configuration parameters can be applied directly to the element, using a `CldContext` component or while installing a plugin (second argument of `Vue.use`).
 
@@ -134,7 +125,6 @@ outputs HTML `img` tag with a correct `src` attribute for provided Cloudinary re
 outputs HTML `video` tag with a correct `sources` for provided Cloudinary resource, based on configuration and transformation parameters provided as attributes of this component instance, parent `CldContext` and children `CldTransformation` instances.
 
 #### CldPoster (optional)
-
 specify image resource to be provided to `poster` attribute of the `video` element
 
 #### CldTransformation

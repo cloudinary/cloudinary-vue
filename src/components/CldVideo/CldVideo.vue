@@ -127,7 +127,7 @@ export default {
     const poster = cldPoster ? this.posterUrl : this.getPosterUrl()
 
     return (
-      <video controls attrs={this.$attrs} poster={poster}>
+      <video attrs={this.$attrs} poster={poster}>
         { sources.map((source, index) => <source key={index} attrs={source} />)}
         { this.$slots.default }
       </video>

@@ -1,9 +1,9 @@
-import { watchElementVisibility } from "../helpers/visibility";
+import { watchElementVisibility } from "../helpers/visibility"
 import {
   LAZY_LOADING,
   CLD_IMAGE_WRAPPER_CLASS,
   IMAGE_CLASSES,
-} from "../constants";
+} from "../constants"
 
 /**
  * If necessary watches for root elements visibility
@@ -17,7 +17,7 @@ export const lazy = {
      */
     lazy: {
       type: Boolean,
-      default: false,
+      default: false
     },
 
     /**
@@ -26,8 +26,8 @@ export const lazy = {
      */
     loading: {
       type: String,
-      default: "",
-    },
+      default: ''
+    }
   },
 
   data() {
@@ -36,49 +36,46 @@ export const lazy = {
 
   computed: {
     hasLazyLoading() {
-      return this.lazy || this.loading === LAZY_LOADING;
-    },
+      return this.lazy || this.loading === LAZY_LOADING
+    }
   },
 
   methods: {
     updateVisibilityObservation() {
       if (!this.hasLazyLoading) {
-        this.visible = true;
-        this.cancelVisibilityListener && this.cancelVisibilityListener();
-        return;
+        this.visible = true
+        this.cancelVisibilityListener && this.cancelVisibilityListener()
+        return
       }
 
-      const isElementRendered =
-        !!this.$el &&
-        (this.$el.classList?.contains(IMAGE_CLASSES.DEFAULT) ||
-          this.$el.classList?.contains(CLD_IMAGE_WRAPPER_CLASS));
+      const isElementRendered = !!this.$el && (this.$el.classList?.contains(IMAGE_CLASSES.DEFAULT) || this.$el.classList?.contains(CLD_IMAGE_WRAPPER_CLASS))
 
-      if (!isElementRendered || this.cancelVisibilityListener) return;
+      if (!isElementRendered || this.cancelVisibilityListener) return
 
       this.cancelVisibilityListener = watchElementVisibility(
         this.$el,
-        (isVisible) => {
-          this.visible = this.visible || isVisible;
+        isVisible => {
+          this.visible = this.visible || isVisible
         }
-      );
-    },
+      )
+    }
   },
 
   created() {
-    this.updateVisibilityObservation();
+    this.updateVisibilityObservation()
   },
 
   mounted() {
-    this.updateVisibilityObservation();
+    this.updateVisibilityObservation()
   },
 
   updated() {
-    this.updateVisibilityObservation();
+    this.updateVisibilityObservation()
   },
 
   destroyed() {
     if (this.cancelVisibilityListener) {
-      this.cancelVisibilityListener();
+      this.cancelVisibilityListener()
     }
-  },
-};
+  }
+}

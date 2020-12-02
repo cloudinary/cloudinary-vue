@@ -9,6 +9,7 @@ export function install(Vue, options = {}) {
 }
 
 function registerComponents(Vue, components = {}, defaultConfigurations = {}) {
+  /* eslint-disable-next-line */
   if (!defaultConfigurations) { console.warn('🛑 There is no default configuration for Cloudinary found!') }
 
   for (let key in components) {

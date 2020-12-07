@@ -1,0 +1,414 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import Code from './assets/code-brackets.svg';
+import Flow from './assets/flow.svg';
+import Plugin from './assets/plugin.svg';
+import StackAlt from './assets/stackalt.svg';
+import Image from './assets/image.svg';
+import Video from './assets/video.svg';
+import Component from './assets/component.svg';
+
+<Meta title="Setup" />
+
+<style>{`
+  h3.sbdocs {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f1f1f1;
+    margin-bottom: 1rem;
+  }
+
+  .subheading {
+    --mediumdark: '#999999';
+    font-weight: 900;
+    font-size: 13px;
+    color: #999;
+    letter-spacing: 6px;
+    line-height: 24px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+  }
+
+  .subheading img {
+    height: 40px;
+    width: 40px;
+    margin-right: 15px;
+    flex: none;
+  }
+
+  .link-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 10px;
+  }
+
+  pre.prismjs {
+    background-color: #F8F8F8 !important;
+  }
+
+  @media (min-width: 620px) {
+    .link-list {
+      row-gap: 20px;
+      column-gap: 20px;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media all and (-ms-high-contrast:none) {
+  .link-list {
+      display: -ms-grid;
+      -ms-grid-columns: 1fr 1fr;
+      -ms-grid-rows: 1fr 1fr;
+    }
+  }
+
+  .link-item {
+    display: block;
+    padding: 20px 30px 20px 15px;
+    border: 1px solid #00000010;
+    border-radius: 5px;
+    transition: background 150ms ease-out, border 150ms ease-out, transform 150ms ease-out;
+    color: #333333;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .link-item:hover {
+    border-color: #1EA7FD50;
+    transform: translate3d(0, -3px, 0);
+    box-shadow: rgba(0, 0, 0, 0.08) 0 3px 10px 0;
+  }
+
+  .link-item:active {
+    border-color: #1EA7FD;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .link-item strong {
+    font-weight: 700;
+    display: block;
+    margin-bottom: 2px;
+  }
+  
+  .link-item img {
+    height: 40px;
+    width: 40px;
+    margin-right: 15px;
+    flex: none;
+  }
+
+  .link-item span {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .tip {
+    display: inline-block;
+    border-radius: 1em;
+    font-size: 11px;
+    line-height: 12px;
+    font-weight: 700;
+    background: #E7FDD8;
+    color: #66BF3C;
+    padding: 4px 12px;
+    margin-right: 10px;
+    vertical-align: top;
+  }
+
+  .tip-wrapper {
+    font-size: 13px;
+    line-height: 20px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+
+  
+`}</style>
+
+# Setup Cloudinary Vue SDK
+
+<div className="tip-wrapper">
+<span className="tip">Tip</span> To use the Vue SDK, you need a Cloudinary account first. <a href="https://cloudinary.com/users/register/free">Register for a free account</a> if you haven't got one yet.
+</div>
+
+You can set up the Cloudinary module easily in the following steps:
+
+
+<h2 className="subheading" id="installation">
+  <img src={StackAlt} alt="Build" />
+  <span>Installation</span>
+</h2>
+
+You can install and use Cloudinary components for any Vue.js-based projects using one of the following approaches:
+
+<h3 className="subheading" id="vue2">Vue 2.x</h3>
+
+<h4 className="subheading-2">1. Install using Vue-CLI</h4>
+
+   - After you create your application with Vue-CLI, navigate to the created app folder, and install Cloudinary SDK by:
+
+     ```bash
+     vue add cloudinary
+     ```
+
+   - Set up your `cloudName` and pick the components to use (or use all 😃&nbsp;)
+
+     ![Set up with cloudName and options](http://bit.ly/2WSKTf0)
+
+   - A `cloudinary.js` file will be added to your src directory, same level with your `main.js` file. Feel free to customize it if you like. And have fun with Cloudinary! 🤟
+   - More information on the plugin, check out [our Vue-CLI plugin for Cloudinary Repo](https://github.com/cloudinary/vue-cli-plugin-cloudinary)
+
+<h4 className="subheading-2">2. Install using your favorite package manager (yarn, npm)</h4>
+
+   ```bash
+   npm install cloudinary-vue
+
+   #OR
+   yarn add cloudinary-vue
+   ```
+
+<h3 className="subheading" id="nuxtjs">Nuxt.js</h3>
+
+Please use [Cloudinary module](https://cloudinary.nuxtjs.org/) for [Nuxt.js](https://nuxtjs.org) projects. You can set it up by using the following:
+
+```bash
+yarn add @nuxtjs/cloudinary
+
+#OR
+
+npm i @nuxtjs/cloudinary
+```
+
+And [follow the instructions to setup the module](https://cloudinary.nuxtjs.org/setup/#configure) in your Nuxt.js project.
+
+<h2 className="subheading" id="configure">
+  <img src={Plugin} alt="Configure" />
+  <span>Configure</span>
+</h2>
+
+  The following is the setup instructions for **Vue 2.x projects**. The Vue 3.x support is under development!
+
+<p className="subheading-2">1. Global setup</p>
+
+  - You can globally initialize Cloudinary configuration by passing the configuration params to `configuration` object, as show below:
+
+  ```javascript
+   
+   import Vue from "vue";
+   import Cloudinary from "cloudinary-vue";
+
+   Vue.use(Cloudinary, {
+     configuration: { cloudName: "demo" },
+   });
+
+   ```
+
+  See [Configuration Params](#configuration-params) for more details on the available parameters.
+
+  - You can also select which components to use. By default, all components will be included.
+
+   ```javascript
+   /* main.js */
+
+   import Vue from "vue";
+   import Cloudinary, { CldImage, CldTransformation } from "cloudinary-vue";
+
+   Vue.use(Cloudinary, {
+     configuration: { cloudName: "demo" },
+     components: {
+       CldImage,
+       CldTransformation,
+     },
+   });
+
+   ```
+
+<p className="subheading-2">2. A Local setup</p>
+
+  - You can also import the cloudinary components manually in each of your components.
+
+  ```javascript
+  /*component.vue*/
+
+  import { CldImage } from 'cloudinary-vue'
+
+  export default {
+    components: { CldImage }
+  }
+
+  ```
+
+  - Or configure Cloudinary per component use.
+
+  ```html
+  <template>
+    <cld-image cloudName="demo" public-id="sample" />
+  </template>
+  ```
+
+<h2 className="subheading" id="configuration-params">
+  <img src={Code} alt="Configure params" />
+  <span>Configuration Params</span>
+</h2>
+
+### `cloudName`
+
+* Type: `string`
+* **Required**
+
+The cloud name associated with your Cloudinary account. It is used to configure and enable Cloudinary features such as generating delivery asset URL.
+
+```javascript
+import Vue from "vue";
+import Cloudinary from "cloudinary-vue";
+
+Vue.use(Cloudinary, {
+  cloudName: 'your-cloud-name'
+})
+```
+
+Cloud name presents in every delivered URL from Cloudinary, hence it's important to have it configured correctly. 
+You can find your cloud name details in **Dashboard** page, or in **Account Settings** page in [Cloudinary console](https://cloudinary.com/console).
+
+
+### `secure`
+
+* Type: `Boolean`
+
+Force secure HTTPS delivery urls for all assets (images + videos) generated by Cloudinary, even if they are embedded in HTTP originally.
+
+Disable this flag to have all delivery urls built with HTTP protocol instead.
+
+```javascript
+import Vue from "vue";
+import Cloudinary from "cloudinary-vue";
+
+Vue.use(Cloudinary, {
+  secure: true
+})
+```
+
+### `secureDistribution`
+
+* Type: String
+* Relevant only when `secure` is `true`
+
+Set custom domain name for building secure HTTPS urls.
+
+```javascript
+import Vue from "vue";
+import Cloudinary from "cloudinary-vue";
+
+Vue.use(Cloudinary, {
+  secureDistribution: 'your-custom-domain-name'
+})
+```
+
+Only relevant if you are Advanced plan Cloudinary user with private CDN distribution and custom CNAME set. You can see [more details here](https://cloudinary.com/documentation/advanced_url_delivery_options#private_cdns_and_cnames)
+
+### `cname`
+
+* Type: `String`
+* Relevant only when `secure` is `false`
+
+Set custom domain name for building non-secure HTTP urls.
+
+```javascript
+import Vue from "vue";
+import Cloudinary from "cloudinary-vue";
+
+Vue.use(Cloudinary, {
+  cname: 'your-custom-domain-name'
+})
+```
+
+
+Only relevant if you are Advanced plan Cloudinary user with private CDN distribution and custom CNAME set. You can see [more details here](https://cloudinary.com/documentation/advanced_url_delivery_options#private_cdns_and_cnames)
+
+### `privateCdn`
+
+* Type: `Boolean`
+* Default: `false`
+
+Set to true if you'd like to use private CDN distribution.
+
+```javascript
+import Vue from "vue";
+import Cloudinary from "cloudinary-vue";
+
+Vue.use(Cloudinary, {
+  privateCdn: true
+})
+```
+
+
+Only relevant for Advanced plan Cloudinary users. You can see [more details here](https://cloudinary.com/documentation/advanced_url_delivery_options#private_cdns_and_cnames)
+
+<h2 className="subheading" id="components-params">
+  <img src={Component} alt="Components" />
+  <span>Components Params</span>
+</h2>
+
+The SDK accepts a `components` field containing the Cloudinary components to install and use witihin the project.
+
+- `components` as an `Object`:
+
+  ```javascript
+  import Vue from "vue";
+  import Cloudinary, { CldImage, CldTransformation } from "cloudinary-vue";
+
+  Vue.use(Cloudinary, {
+    components: { CldImage, CldTransformation }
+  })
+  ```
+
+- `components` as an `Array`:
+
+  ```javascript
+  import Vue from "vue";
+  import Cloudinary, { CldImage, CldTransformation } from "cloudinary-vue";
+
+  Vue.use(Cloudinary, {
+    components: [ CldImage, CldTransformation ]
+  })
+  ```
+
+- You can also rename the components per need:
+
+  ```javascript
+  import Vue from "vue";
+  import Cloudinary, { CldImage, CldTransformation } from "cloudinary-vue";
+
+  Vue.use(Cloudinary, {
+    components: { 
+      myImage: CldImage, 
+      myTransformation: CldTransformation 
+    }
+  })
+  ```
+
+And that's it. You can start using the components in your Vue.js-based project!
+
+<h2 className="subheading" id="features">
+  <img src={Flow} alt="Features" />
+  <span>Features</span>
+</h2>
+
+<div className="link-list">
+  <a className="link-item" href="image-cldimage--basic">
+    <img src={Image} alt="Image" />
+    <span>
+      <strong>CldImage</strong>
+      Image component with built-in Cloudinary support.
+    </span>
+  </a>
+  <a className="link-item" href="?path=/docs/image-cldimage--basic">
+    <img src={Video} alt="Image" />
+    <span>
+      <strong>CldVideo</strong>
+      Video component with built-in Cloudinary support.
+    </span>
+  </a>
+</div>

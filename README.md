@@ -29,9 +29,19 @@ This Readme provides basic installation and usage information. For the complete 
     yarn add cloudinary-vue
     ```
 
+### Nuxt.js
 
-# Setup and configuration 
-## Vue 2.x - Setup and configuration
+Please use [Cloudinary module](https://cloudinary.nuxtjs.org/) for [Nuxt.js](https://nuxtjs.org) projects. You can set it up by using the following:
+
+```
+yarn add @nuxtjs/cloudinary
+#OR
+npm i @nuxtjs/cloudinary
+```
+
+## Setup and configuration
+
+### Vue 2.x - Setup and configuration
 1. **A Global setup** - Include CloudinaryVue globally
     ```javascript
     import Vue from 'vue';
@@ -48,13 +58,13 @@ This Readme provides basic installation and usage information. For the complete 
    
 2. **A Local setup** - You can also import the cloudinary components manually in each of your components.
 
-
-
 # Plugin Configuration
-The CloudinaryVue Plugin accepts a **components** object with the Cloudinary components to install
+The CloudinaryVue Plugin accepts a `components` object with the Cloudinary components to install
 
-   - **components** can also be passed as an array: 
-     `components:[CldImage. CldTransformation]`
+   - `components` can also be passed as an array: 
+      ```javascript
+      components:[CldImage. CldTransformation]
+      ```
  
    - `components` can also be used to rename the cloudinary components:   
        ```javascript

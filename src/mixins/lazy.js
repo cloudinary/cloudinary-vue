@@ -1,5 +1,9 @@
-import { watchElementVisibility } from '../helpers/visibility'
-import { LAZY_LOADING, CLD_IMAGE_WRAPPER_CLASS, IMAGE_CLASSES } from '../constants'
+import { watchElementVisibility } from "../helpers/visibility"
+import {
+  LAZY_LOADING,
+  CLD_IMAGE_WRAPPER_CLASS,
+  IMAGE_CLASSES,
+} from "../constants"
 
 /**
  * If necessary watches for root elements visibility
@@ -8,8 +12,10 @@ import { LAZY_LOADING, CLD_IMAGE_WRAPPER_CLASS, IMAGE_CLASSES } from '../constan
 export const lazy = {
   props: {
     /**
+     * **Deprecated**
+     * 
      * Whether to only load the asset when it needs to be displayed instead of when the page first loads.
-     * @deprecated
+     * @deprecated - Use `loading` instead
      */
     lazy: {
       type: Boolean,
@@ -53,7 +59,7 @@ export const lazy = {
         isVisible => {
           this.visible = this.visible || isVisible;
         }
-      );
+      )
     }
   },
 

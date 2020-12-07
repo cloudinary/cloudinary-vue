@@ -12,6 +12,8 @@ import {
 export const lazy = {
   props: {
     /**
+     * **Deprecated**
+     * 
      * Whether to only load the asset when it needs to be displayed instead of when the page first loads.
      * @deprecated - Use `loading` instead
      */

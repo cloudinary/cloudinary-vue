@@ -48,6 +48,8 @@ export default {
       default: false
     },
     /**
+     * **Deprecated**
+     * 
      * The placeholder image to use while the image is loading. Possible values:
      * - `"blur"` to use blur placeholder
      * - `"lqip"` to use a low quality image
@@ -55,6 +57,7 @@ export default {
      * - `"pixelate"` to use a pixelated image
      * - `"vectorize"` to use a vectorized image
      * - `"predominant-color" to use a predominant color image
+     * @deprecated - Use CldPlaceholder instead
      */
     placeholder: {
       type: String,

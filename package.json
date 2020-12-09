@@ -12,7 +12,7 @@
     "build:styleguide": "rm -rf docs/*; node docs-sources/generateDocsLinks.js; vue-cli-service lint --fix; INTERNAL_DEPS=1 vue-styleguidist build",
     "styleguide": "node docs-sources/generateDocsLinks.js; vue-cli-service lint --fix; INTERNAL_DEPS=1 vue-styleguidist server",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -o docs -s ./src/stories/assets"
+    "build-storybook": "build-storybook -o docs-build -s ./src/stories/assets"
   },
   "main": "dist/Cloudinary.umd.js",
   "unpkg": "dist/Cloudinary.umd.min.js",

@@ -19,7 +19,7 @@ describe("CldImage::responsive=height", () => {
     await Vue.nextTick();
 
     expect(image.attributes("src")).toEqual(
-      `http://res.cloudinary.com/demo/image/upload/c_scale,dpr_1.0,h_200/face_top`
+      `http://res.cloudinary.com/demo/image/upload/c_scale,h_200/face_top`
     );
   });
 });

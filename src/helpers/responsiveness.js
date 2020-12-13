@@ -31,7 +31,6 @@ export function getResizeTransformation(mode, size, originalBP) {
             height: Math.floor(size.height)
           };
       return {
-        ...getDPRAttr(),
         crop: "fill",
         ...computedSize
       };
@@ -39,7 +38,6 @@ export function getResizeTransformation(mode, size, originalBP) {
     case true:
     case "width":
       return {
-        ...getDPRAttr(),
         crop: "scale",
         width: Math.floor(
           breakpoints ? findBreakpoint(breakpoints, size.width) : size.width
@@ -48,7 +46,6 @@ export function getResizeTransformation(mode, size, originalBP) {
 
     case "height":
       return {
-        ...getDPRAttr(),
         crop: "scale",
         height: Math.floor(
           breakpoints ? findBreakpoint(breakpoints, size.height) : size.height
@@ -57,9 +54,4 @@ export function getResizeTransformation(mode, size, originalBP) {
     default:
       return {};
   }
-}
-
-/** Generate DPR transformation if DPR information is available */
-export function getDPRAttr() {
-  return "devicePixelRatio" in window ? { dpr: window.devicePixelRatio } : {};
 }

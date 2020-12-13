@@ -46,6 +46,10 @@ export default {
       },
       defaultValue: false,
     },
+    breakpoints: {
+      defaultValue: range(100, 1500, 100),
+      description: "Breakpoints for responsive mode"
+    },
     ...TransformationParams,
   },
 };

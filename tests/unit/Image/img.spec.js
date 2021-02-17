@@ -110,7 +110,7 @@ describe("Tests for CldImage", () => {
     let wrapper = mount({
       template: `
         <cld-image cloudName="demo" publicId="face_top" placeholder="color">
-          <cld-transformation :variables="[['$imgWidth','150']]" />
+          <cld-transformation :variables="[['$imgWidth','150'], ['$width','150']]" />
         </cld-image>
       `,
       components: {CldImage, CldTransformation},
@@ -120,6 +120,6 @@ describe("Tests for CldImage", () => {
 
     let image = wrapper.find('img');
 
-    expect(image.attributes("src")).toBe('http://res.cloudinary.com/demo/image/upload/$imgWidth_150/face_top');
+    expect(image.attributes("src")).toBe('http://res.cloudinary.com/demo/image/upload/$imgWidth_150,$width_150/face_top');
   });
 });

@@ -75,14 +75,14 @@ export default {
     getSources() {
       const options = this.computeURLOptions()
       const sources = []
-      
+
       for(let type in this.sourceTypes) {
         const typeOptions = this.sourceTypes[type]
         const formatType = type === "ogv" ? "ogg" : type
         const srcOptions = extendOptions(options, typeOptions)
 
         srcOptions.format = type
-        
+
         sources.push({
           ...typeOptions,
           mimeType: `video/${formatType}`,
@@ -101,6 +101,9 @@ export default {
 
       return this.cloudinary.url(this.poster?.publicId || this.publicId, this.toSnakeCase(options))
     }
+  },
+  mounted() {
+    this.$videoElement = this.$refs.videoElement;
   },
   render(h) {
     if (!this.publicId) return null
@@ -127,7 +130,7 @@ export default {
     const poster = cldPoster ? this.posterUrl : this.getPosterUrl()
 
     return (
-      <video attrs={this.$attrs} poster={poster}>
+      <video attrs={this.$attrs} poster={poster} ref="videoElement">
         { sources.map((source, index) => <source key={index} attrs={source} />)}
         { this.$slots.default }
       </video>

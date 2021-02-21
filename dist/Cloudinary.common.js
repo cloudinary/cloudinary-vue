@@ -87,45 +87,66 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
-/***/ "12d2":
+/***/ "04f7":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/modules/es7.object.get-own-property-descriptors");
+module.exports = require("@babel/runtime/helpers/esm/defineProperty");
 
 /***/ }),
 
-/***/ "1750":
+/***/ "139f":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/modules/es6.symbol");
+module.exports = require("core-js/modules/es.array.for-each");
 
 /***/ }),
 
-/***/ "2579":
+/***/ "169d":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/modules/es6.string.iterator");
+module.exports = require("core-js/modules/es.array.reduce");
 
 /***/ }),
 
-/***/ "25fc":
+/***/ "18d2":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/modules/es6.function.name");
+module.exports = require("core-js/modules/es.array.concat");
 
 /***/ }),
 
-/***/ "2a3b":
+/***/ "19e6":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/library/fn/is-iterable");
+module.exports = require("@babel/runtime-corejs2/core-js/object/get-own-property-descriptors");
 
 /***/ }),
 
-/***/ "2c92":
+/***/ "255a":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/modules/es6.array.iterator");
+module.exports = require("@babel/runtime-corejs2/core-js/object/define-property");
+
+/***/ }),
+
+/***/ "25f4":
+/***/ (function(module, exports) {
+
+module.exports = require("@babel/runtime-corejs2/core-js/object/get-own-property-symbols");
+
+/***/ }),
+
+/***/ "2ae6":
+/***/ (function(module, exports) {
+
+module.exports = require("@babel/runtime-corejs2/core-js/array/is-array");
+
+/***/ }),
+
+/***/ "3732":
+/***/ (function(module, exports) {
+
+module.exports = require("@babel/runtime/helpers/esm/arrayWithoutHoles");
 
 /***/ }),
 
@@ -136,129 +157,143 @@ module.exports = require("cloudinary-core");
 
 /***/ }),
 
-/***/ "4685":
+/***/ "4a38":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/modules/es7.symbol.async-iterator");
+module.exports = require("core-js/modules/es.array.filter");
 
 /***/ }),
 
-/***/ "4764":
+/***/ "51e9":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/library/fn/array/is-array");
+module.exports = require("core-js/modules/es.symbol.description");
 
 /***/ }),
 
-/***/ "4d40":
+/***/ "5a5e":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/library/fn/object/define-property");
+module.exports = require("@vue/babel-helper-vue-jsx-merge-props");
 
 /***/ }),
 
-/***/ "5d58":
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__("8079");
-
-/***/ }),
-
-/***/ "6619":
+/***/ "5fc9":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/modules/es6.regexp.to-string");
+module.exports = require("@babel/runtime-corejs2/core-js/object/define-properties");
 
 /***/ }),
 
-/***/ "67bb":
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__("bea1");
-
-/***/ }),
-
-/***/ "6e74":
+/***/ "6049":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/modules/es6.object.keys");
+module.exports = require("core-js/modules/es.symbol");
 
 /***/ }),
 
-/***/ "774e":
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__("afb5");
-
-/***/ }),
-
-/***/ "8079":
+/***/ "61b7":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/library/fn/symbol/iterator");
+module.exports = require("@babel/runtime/helpers/esm/unsupportedIterableToArray");
 
 /***/ }),
 
-/***/ "80a8":
+/***/ "6579":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/modules/web.dom.iterable");
+module.exports = require("core-js/modules/es.array.slice");
 
 /***/ }),
 
-/***/ "85f2":
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__("4d40");
-
-/***/ }),
-
-/***/ "a745":
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__("4764");
-
-/***/ }),
-
-/***/ "afb5":
+/***/ "850c":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/library/fn/array/from");
+module.exports = require("core-js/modules/es.object.to-string");
 
 /***/ }),
 
-/***/ "bea1":
+/***/ "9bb0":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/library/fn/symbol");
+module.exports = require("@soda/get-current-script");
 
 /***/ }),
 
-/***/ "c8bb":
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__("2a3b");
-
-/***/ }),
-
-/***/ "d624":
+/***/ "bcd8":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/modules/es6.array.from");
+module.exports = require("core-js/modules/es.function.name");
 
 /***/ }),
 
-/***/ "dc65":
+/***/ "bcda":
 /***/ (function(module, exports) {
 
-module.exports = require("current-script-polyfill");
+module.exports = require("core-js/modules/web.dom-collections.for-each");
 
 /***/ }),
 
-/***/ "f61e":
+/***/ "c08d":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/modules/es6.array.sort");
+module.exports = require("@babel/runtime-corejs2/core-js/object/keys");
+
+/***/ }),
+
+/***/ "cb18":
+/***/ (function(module, exports) {
+
+module.exports = require("@babel/runtime-corejs2/core-js/object/get-own-property-descriptor");
+
+/***/ }),
+
+/***/ "daf4":
+/***/ (function(module, exports) {
+
+module.exports = require("@babel/runtime-corejs2/core-js/get-iterator");
+
+/***/ }),
+
+/***/ "df93":
+/***/ (function(module, exports) {
+
+module.exports = require("@babel/runtime-corejs2/core-js/object/freeze");
+
+/***/ }),
+
+/***/ "e3b9":
+/***/ (function(module, exports) {
+
+module.exports = require("@babel/runtime-corejs2/core-js/symbol");
+
+/***/ }),
+
+/***/ "e3f0":
+/***/ (function(module, exports) {
+
+module.exports = require("@babel/runtime-corejs2/core-js/symbol/iterator");
+
+/***/ }),
+
+/***/ "efd2":
+/***/ (function(module, exports) {
+
+module.exports = require("@babel/runtime/helpers/esm/nonIterableSpread");
+
+/***/ }),
+
+/***/ "f705":
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/es.array.map");
+
+/***/ }),
+
+/***/ "f906":
+/***/ (function(module, exports) {
+
+module.exports = require("@babel/runtime/helpers/esm/iterableToArray");
 
 /***/ }),
 
@@ -282,36 +317,116 @@ __webpack_require__.d(__webpack_exports__, "CldPlaceholder", function() { return
 // This file is imported into lib/wc client bundles.
 
 if (typeof window !== 'undefined') {
+  var currentScript = window.document.currentScript
   if (true) {
-    __webpack_require__("dc65")
+    var getCurrentScript = __webpack_require__("9bb0")
+    currentScript = getCurrentScript()
+
+    // for backward compatibility, because previously we directly included the polyfill
+    if (!('currentScript' in document)) {
+      Object.defineProperty(document, 'currentScript', { get: getCurrentScript })
+    }
   }
 
-  var setPublicPath_i
-  if ((setPublicPath_i = window.document.currentScript) && (setPublicPath_i = setPublicPath_i.src.match(/(.+\/)[^/]+\.js(\?.*)?$/))) {
-    __webpack_require__.p = setPublicPath_i[1] // eslint-disable-line
+  var setPublicPath_src = currentScript && currentScript.src.match(/(.+\/)[^/]+\.js(\?.*)?$/)
+  if (setPublicPath_src) {
+    __webpack_require__.p = setPublicPath_src[1] // eslint-disable-line
   }
 }
 
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// EXTERNAL MODULE: external "core-js/modules/es7.object.get-own-property-descriptors"
-var es7_object_get_own_property_descriptors_ = __webpack_require__("12d2");
+// EXTERNAL MODULE: external "core-js/modules/es.array.filter"
+var es_array_filter_ = __webpack_require__("4a38");
 
-// EXTERNAL MODULE: external "core-js/modules/web.dom.iterable"
-var web_dom_iterable_ = __webpack_require__("80a8");
+// EXTERNAL MODULE: external "core-js/modules/es.array.for-each"
+var es_array_for_each_ = __webpack_require__("139f");
 
-// EXTERNAL MODULE: external "core-js/modules/es6.array.iterator"
-var es6_array_iterator_ = __webpack_require__("2c92");
+// EXTERNAL MODULE: external "core-js/modules/web.dom-collections.for-each"
+var web_dom_collections_for_each_ = __webpack_require__("bcda");
 
-// EXTERNAL MODULE: external "core-js/modules/es6.object.keys"
-var es6_object_keys_ = __webpack_require__("6e74");
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/object/define-property"
+var define_property_ = __webpack_require__("255a");
+var define_property_default = /*#__PURE__*/__webpack_require__.n(define_property_);
 
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/define-property.js
-var define_property = __webpack_require__("85f2");
-var define_property_default = /*#__PURE__*/__webpack_require__.n(define_property);
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/object/define-properties"
+var define_properties_ = __webpack_require__("5fc9");
+var define_properties_default = /*#__PURE__*/__webpack_require__.n(define_properties_);
 
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/defineProperty.js
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/object/get-own-property-descriptors"
+var get_own_property_descriptors_ = __webpack_require__("19e6");
+var get_own_property_descriptors_default = /*#__PURE__*/__webpack_require__.n(get_own_property_descriptors_);
+
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/object/get-own-property-descriptor"
+var get_own_property_descriptor_ = __webpack_require__("cb18");
+var get_own_property_descriptor_default = /*#__PURE__*/__webpack_require__.n(get_own_property_descriptor_);
+
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/object/get-own-property-symbols"
+var get_own_property_symbols_ = __webpack_require__("25f4");
+var get_own_property_symbols_default = /*#__PURE__*/__webpack_require__.n(get_own_property_symbols_);
+
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/object/keys"
+var keys_ = __webpack_require__("c08d");
+var keys_default = /*#__PURE__*/__webpack_require__.n(keys_);
+
+// EXTERNAL MODULE: external "@babel/runtime/helpers/esm/defineProperty"
+var defineProperty_ = __webpack_require__("04f7");
+var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty_);
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js
+
+
+
+
+
+
+
+
+
+
+
+function ownKeys(object, enumerableOnly) {
+  var keys = keys_default()(object);
+
+  if (get_own_property_symbols_default.a) {
+    var symbols = get_own_property_symbols_default()(object);
+
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return get_own_property_descriptor_default()(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        defineProperty_default()(target, key, source[key]);
+      });
+    } else if (get_own_property_descriptors_default.a) {
+      define_properties_default()(target, get_own_property_descriptors_default()(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        define_property_default()(target, key, get_own_property_descriptor_default()(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+// EXTERNAL MODULE: external "core-js/modules/es.array.reduce"
+var es_array_reduce_ = __webpack_require__("169d");
+
+// EXTERNAL MODULE: external "core-js/modules/es.function.name"
+var es_function_name_ = __webpack_require__("bcd8");
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -327,20 +442,15 @@ function _defineProperty(obj, key, value) {
 
   return obj;
 }
-// EXTERNAL MODULE: external "core-js/modules/es6.function.name"
-var es6_function_name_ = __webpack_require__("25fc");
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/array/is-array"
+var is_array_ = __webpack_require__("2ae6");
+var is_array_default = /*#__PURE__*/__webpack_require__.n(is_array_);
 
 // CONCATENATED MODULE: ./src/plugin.js
 
 
 
 
-
-
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function plugin_install(Vue) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -357,247 +467,189 @@ function registerComponents(Vue) {
   var components = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var defaultConfigurations = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
-  if (!components) {
-    throw new Error("No component found.");
+  /* eslint-disable-next-line */
+  if (!defaultConfigurations) {
+    console.warn('🛑 There is no default configuration for Cloudinary found!');
   }
 
-  var _loop = function _loop(key) {
+  for (var key in components) {
     var component = components[key];
 
     if (component) {
-      Vue.component(key, _objectSpread(_objectSpread({}, component), {}, {
-        data: function data() {
-          return _objectSpread(_objectSpread({}, component.data ? component.data() : {}), {}, {
-            defaultConfigurations: defaultConfigurations
-          });
-        }
-      }));
-    }
-  };
+      (function () {
+        var _data = component.data ? component.data() : {};
 
-  for (var key in components) {
-    _loop(key);
+        Vue.component(key, _objectSpread2(_objectSpread2({}, component), {}, {
+          data: function data() {
+            return _objectSpread2(_objectSpread2({}, _data), {}, {
+              defaultConfigurations: defaultConfigurations
+            });
+          }
+        }));
+      })();
+    }
   }
 }
 
 function initComponents(Vue, options) {
   var configuration = options.configuration;
-  var components = Array.isArray(options.components) ? options.components.reduce(function (obj, component) {
-    return _objectSpread(_objectSpread({}, obj), {}, _defineProperty({}, component.name, component));
+  var components = is_array_default()(options.components) ? options.components.reduce(function (obj, component) {
+    return _objectSpread2(_objectSpread2({}, obj), {}, _defineProperty({}, component.name, component));
   }, {}) : options.components;
   registerComponents(Vue, components, configuration);
 }
-// EXTERNAL MODULE: external "cloudinary-core"
-var external_cloudinary_core_ = __webpack_require__("3c59");
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/object/freeze"
+var freeze_ = __webpack_require__("df93");
+var freeze_default = /*#__PURE__*/__webpack_require__.n(freeze_);
 
-// CONCATENATED MODULE: ./src/utils/debounce.js
-var debounce = function debounce(fn, timeout) {
-  var forceUpdateTimeoutToken = null;
-  return function () {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    clearTimeout(forceUpdateTimeoutToken);
-    forceUpdateTimeoutToken = setTimeout(function () {
-      return fn.apply(void 0, args);
-    }, timeout);
-  };
-};
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/symbol/iterator.js
-var iterator = __webpack_require__("5d58");
-var iterator_default = /*#__PURE__*/__webpack_require__.n(iterator);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/symbol.js
-var symbol = __webpack_require__("67bb");
-var symbol_default = /*#__PURE__*/__webpack_require__.n(symbol);
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/typeof.js
-
-
-function typeof_typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof symbol_default.a === "function" && typeof iterator_default.a === "symbol") {
-    typeof_typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    typeof_typeof = function _typeof(obj) {
-      return obj && typeof symbol_default.a === "function" && obj.constructor === symbol_default.a && obj !== symbol_default.a.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return typeof_typeof(obj);
-}
-// CONCATENATED MODULE: ./src/utils/find.js
-
-
-/**
- * Returns the first found element of `arr` that satisfies `predicate` check
- * @param {Array} arr 
- * @param {Function} predicate 
- */
-var find_find = function find(arr, predicate) {
-  if (!(arr instanceof Array)) {
-    throw new Error("find 1st arg must be Array, is: ".concat(typeof subject === "undefined" ? "undefined" : typeof_typeof(subject)));
-  }
-
-  for (var i = 0; i < arr.length; i++) {
-    var element = arr[i];
-
-    if (predicate(element)) {
-      return element;
-    }
-  }
-
-  return null;
-};
-// CONCATENATED MODULE: ./src/utils/compact.js
-/**
- * Returns free-of-falsy-element array from input `arr`
- * @param {Array} arr 
- */
-var compact = function compact(arr) {
-  return arr.filter(Boolean);
-};
-// CONCATENATED MODULE: ./src/utils/range.js
-/**
- * Returns an array containing all numbers between and including `min` and `max` in a distance of `step` from each other
- * @param {Number} min
- * @param {Number} max
- * @param {Number} step
- */
-var range = function range(min, max, step) {
-  var result = [];
-
-  for (var i = min; i <= max; i += step) {
-    result.push(i);
-  }
-
-  return result;
-};
-// CONCATENATED MODULE: ./src/utils/pick.js
-/**
- * Returns new object contains only `originalObj`'s properities that exist in `keysToPick` 
- * @param {Object} originalObj 
- * @param {Array} keysToPick 
- */
-var pick = function pick() {
-  var originalObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var keysToPick = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-  var target = {};
-
-  for (var i = 0; i < keysToPick.length; i++) {
-    var key = keysToPick[i];
-
-    if (originalObj.hasOwnProperty(key)) {
-      target[key] = originalObj[key];
-    }
-  }
-
-  return target;
-};
-// CONCATENATED MODULE: ./src/utils/index.js
+// CONCATENATED MODULE: ./src/constants.js
 
 
 
 
+var _IMAGE_WITH_PLACEHOLD;
 
-// CONCATENATED MODULE: ./src/helpers/attributes.js
-
-
-
-
-
-
-var attributes_hasZeroSizeTransformation = function hasZeroSizeTransformation(transformations) {
-  return find_find(transformations, function (t) {
-    return t.width === 0 || t.height === 0;
-  });
-};
-/** List of all configuration fields as they are needed in components attributes */
-
-var attributes_configuration = external_cloudinary_core_["Configuration"].CONFIG_PARAMS.map(external_cloudinary_core_["Util"].camelCase);
-/** List of all transformation fields as they are needed in components attributes */
-
-var attributes_transformation = external_cloudinary_core_["Transformation"].methods;
-var mappedCfgMethods = attributes_transformation.concat(attributes_configuration);
-/** Extract configuration options for provided object */
-
-function normalizeConfiguration() {
-  var cfg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var formattedConfigs = external_cloudinary_core_["Util"].withSnakeCaseKeys(cfg);
-
-  if (formattedConfigs.secure) {
-    formattedConfigs.secure = formattedConfigs.secure === true || formattedConfigs.secure === 'true';
-  }
-
-  return pick(formattedConfigs, external_cloudinary_core_["Configuration"].CONFIG_PARAMS);
-}
-/** Extract transformation options for provided object */
-
-function normalizeTransformation() {
-  var cfg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return external_cloudinary_core_["Util"].withSnakeCaseKeys(pick(cfg, attributes_transformation));
-}
-/** Extract fields that are not used for configuration nor transformation in provided object */
-
-var normalizeNonCloudinary = function normalizeNonCloudinary() {
-  var currConfig = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var cleanCfgs = {};
-  Object.keys(currConfig).forEach(function (key) {
-    if (mappedCfgMethods.indexOf(key) === -1) {
-      cleanCfgs[key] = currConfig[key];
-    }
-  });
-  return cleanCfgs;
-};
-var attributes_getHTMLAttributes = function getHTMLAttributes(options) {
-  return external_cloudinary_core_["Transformation"].new(options).toHtmlAttributes();
-};
-// CONCATENATED MODULE: ./src/mixins/withOptions.js
-
-
-
-
-
-
-function withOptions_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function withOptions_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { withOptions_ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { withOptions_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-
-/**
- * This extracts configuration and transformation options
- * from the element's own and inherited attributes
- */
-
-var withOptions = {
-  computed: {
-    configuration: function configuration() {
-      return normalizeConfiguration(withOptions_objectSpread(withOptions_objectSpread(withOptions_objectSpread(withOptions_objectSpread({}, this.defaultConfigurations || []), this.$props || []), this.contextConfiguration), this.$attrs));
-    },
-    options: function options() {
-      return normalizeTransformation(this.$attrs);
-    }
+var ACCESSIBILITY_TRANSFORMATIONS = {
+  'darkmode': {
+    effect: 'tint:75:black'
+  },
+  'brightmode': {
+    effect: 'tint:50:white'
+  },
+  'monochrome': {
+    effect: 'grayscale'
+  },
+  'colorblind': {
+    effect: 'assist_colorblind'
   }
 };
+var predominantColorTransformPxl = [{
+  width: 'iw_div_2',
+  aspect_ratio: 1,
+  crop: 'pad',
+  background: 'auto'
+}, {
+  crop: 'crop',
+  width: 1,
+  height: 1,
+  gravity: 'north_east'
+}, {
+  fetch_format: 'auto',
+  quality: 'auto'
+}];
+var predominantColorTransform = [{
+  variables: [['$currWidth', 'w'], ['$currHeight', 'h']]
+}, {
+  width: 'iw_div_2',
+  aspect_ratio: 1,
+  crop: 'pad',
+  background: 'auto'
+}, {
+  crop: 'crop',
+  width: 10,
+  height: 10,
+  gravity: 'north_east'
+}, {
+  width: '$currWidth',
+  height: '$currHeight',
+  crop: 'fill'
+}, {
+  fetch_format: 'auto',
+  quality: 'auto'
+}];
+var PLACEHOLDER_TRANSFORMATIONS = {
+  vectorize: [{
+    effect: 'vectorize:3:0.1',
+    fetch_format: 'svg'
+  }],
+  pixelate: [{
+    effect: 'pixelate',
+    quality: 1,
+    fetch_format: 'auto'
+  }],
+  blur: [{
+    effect: 'blur:2000',
+    quality: 1,
+    fetch_format: 'auto'
+  }],
+  'predominant-color': predominantColorTransform,
+  lqip: [{
+    variables: [["$nh", "ih"], ["$nw", "iw"]],
+    crop: "scale",
+    width: "20",
+    quality: "auto"
+  }, {
+    crop: "scale",
+    width: "$nw",
+    height: "$nh"
+  }],
+  color: [{
+    variables: [["$nh", "ih"], ["$nw", "iw"]],
+    crop: "scale",
+    width: "1",
+    quality: "1"
+  }, {
+    crop: "scale",
+    width: "$nw",
+    height: "$nh"
+  }]
+};
+var constants_progressive = {
+  flags: ["progressive"]
+};
+var COMPONENTS = {
+  CldImage: 'CldImage',
+  CldPlaceholder: 'CldPlaceholder',
+  CldVideo: 'CldVideo',
+  CldPoster: 'CldPoster',
+  CldTransformation: 'CldTransformation',
+  CldContext: 'CldContext'
+};
+var RESPONSIVE_CSS_DEFAULT = freeze_default()({
+  display: "block",
+  width: "100%"
+});
+var RESPONSIVE_CSS = {
+  height: {
+    display: "block",
+    height: "100%",
+    width: "auto"
+  },
+  true: RESPONSIVE_CSS_DEFAULT,
+  auto: RESPONSIVE_CSS_DEFAULT,
+  width: RESPONSIVE_CSS_DEFAULT,
+  fill: _objectSpread2(_objectSpread2({}, RESPONSIVE_CSS_DEFAULT), {}, {
+    height: "100%"
+  })
+};
+var LAZY_LOADING = 'lazy';
+var IMAGE_CLASSES = {
+  LOADING: 'cld-image-loading',
+  LOADED: 'cld-image-loaded',
+  DEFAULT: 'cld-image'
+};
+var PLACEHOLDER_CLASS = 'cld-placeholder';
+var IMAGE_WITH_PLACEHOLDER_CSS = (_IMAGE_WITH_PLACEHOLD = {}, _defineProperty(_IMAGE_WITH_PLACEHOLD, IMAGE_CLASSES.LOADING, {
+  opacity: 0,
+  position: 'absolute'
+}), _defineProperty(_IMAGE_WITH_PLACEHOLD, PLACEHOLDER_CLASS, {
+  display: 'inline-block'
+}), _IMAGE_WITH_PLACEHOLD);
+var CLD_IMAGE_WRAPPER_CLASS = "cld-image-wrapper";
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldContext/CldContext.vue?vue&type=script&lang=js&
 //
-
 
 /**
  * Cloudinary context providing element
  */
 
 /* harmony default export */ var CldContextvue_type_script_lang_js_ = ({
-  name: "CldContext",
+  name: COMPONENTS.CldContext,
   inheritAttrs: false,
-  mixins: [withOptions],
   provide: function provide() {
     return {
-      contextConfiguration: this.configuration
+      contextConfiguration: this.configuration,
+      contextOptions: this.$attrs
     };
   },
   computed: {
@@ -610,7 +662,7 @@ var withOptions = {
       class: {
         "cld-context": true
       },
-      attrs: this.attributes
+      attrs: this.$attrs
     }, this.$slots.default);
   }
 });
@@ -717,7 +769,7 @@ function normalizeComponent (
 }
 
 // CONCATENATED MODULE: ./src/components/CldContext/CldContext.vue
-var render, staticRenderFns
+var CldContext_render, staticRenderFns
 
 
 
@@ -726,7 +778,7 @@ var render, staticRenderFns
 
 var CldContext_component = normalizeComponent(
   CldContext_CldContextvue_type_script_lang_js_,
-  render,
+  CldContext_render,
   staticRenderFns,
   false,
   null,
@@ -736,170 +788,107 @@ var CldContext_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldContext = (CldContext_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4747d782-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldImage/CldImage.vue?vue&type=template&id=621bb132&
-var CldImagevue_type_template_id_621bb132_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cld-image",style:(_vm.wrapperStyle)},[_c('img',_vm._b({style:(_vm.style),on:{"load":_vm.onImageLoad}},'img',_vm.imageAttrs,false)),_vm._t("default")],2)}
-var CldImagevue_type_template_id_621bb132_staticRenderFns = []
+// EXTERNAL MODULE: external "core-js/modules/es.array.concat"
+var es_array_concat_ = __webpack_require__("18d2");
 
+// EXTERNAL MODULE: external "@vue/babel-helper-vue-jsx-merge-props"
+var babel_helper_vue_jsx_merge_props_ = __webpack_require__("5a5e");
+var babel_helper_vue_jsx_merge_props_default = /*#__PURE__*/__webpack_require__.n(babel_helper_vue_jsx_merge_props_);
 
-// CONCATENATED MODULE: ./src/components/CldImage/CldImage.vue?vue&type=template&id=621bb132&
+// EXTERNAL MODULE: external "cloudinary-core"
+var external_cloudinary_core_ = __webpack_require__("3c59");
 
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js
-var is_array = __webpack_require__("a745");
-var is_array_default = /*#__PURE__*/__webpack_require__.n(is_array);
+// CONCATENATED MODULE: ./src/mixins/setup.js
 
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/arrayLikeToArray.js
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
+/**
+ * To set up Cloudinary instance in component
+ */
 
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
+var setup_setup = {
+  data: function data() {
+    return {
+      defaultConfigurations: {}
+    };
+  },
+  inject: {
+    contextConfiguration: {
+      default: {}
+    },
+    contextOptions: {
+      default: {}
+    }
+  },
+  methods: {
+    setup: function setup(extraConfigs) {
+      if (!this.cloudinary) {
+        this.cloudinary = new external_cloudinary_core_["Cloudinary"](this.toSnakeCase(this.defaultConfigurations));
+      }
+
+      this.cloudinary.config(this.toSnakeCase(this.contextOptions));
+
+      if (extraConfigs) {
+        this.cloudinary.config(this.toSnakeCase(extraConfigs));
+      }
+    },
+    toSnakeCase: function toSnakeCase(options) {
+      return external_cloudinary_core_["Util"].withSnakeCaseKeys(options);
+    }
   }
+};
+// EXTERNAL MODULE: external "@babel/runtime/helpers/esm/arrayWithoutHoles"
+var arrayWithoutHoles_ = __webpack_require__("3732");
+var arrayWithoutHoles_default = /*#__PURE__*/__webpack_require__.n(arrayWithoutHoles_);
 
-  return arr2;
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/arrayWithoutHoles.js
+// EXTERNAL MODULE: external "@babel/runtime/helpers/esm/iterableToArray"
+var iterableToArray_ = __webpack_require__("f906");
+var iterableToArray_default = /*#__PURE__*/__webpack_require__.n(iterableToArray_);
 
+// EXTERNAL MODULE: external "@babel/runtime/helpers/esm/unsupportedIterableToArray"
+var unsupportedIterableToArray_ = __webpack_require__("61b7");
+var unsupportedIterableToArray_default = /*#__PURE__*/__webpack_require__.n(unsupportedIterableToArray_);
 
-function _arrayWithoutHoles(arr) {
-  if (is_array_default()(arr)) return _arrayLikeToArray(arr);
-}
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/from.js
-var from = __webpack_require__("774e");
-var from_default = /*#__PURE__*/__webpack_require__.n(from);
+// EXTERNAL MODULE: external "@babel/runtime/helpers/esm/nonIterableSpread"
+var nonIterableSpread_ = __webpack_require__("efd2");
+var nonIterableSpread_default = /*#__PURE__*/__webpack_require__.n(nonIterableSpread_);
 
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/is-iterable.js
-var is_iterable = __webpack_require__("c8bb");
-var is_iterable_default = /*#__PURE__*/__webpack_require__.n(is_iterable);
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/iterableToArray.js
-
-
-
-function _iterableToArray(iter) {
-  if (typeof symbol_default.a !== "undefined" && is_iterable_default()(Object(iter))) return from_default()(iter);
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/unsupportedIterableToArray.js
-
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return from_default()(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/nonIterableSpread.js
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/toConsumableArray.js
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js
 
 
 
 
 function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+  return arrayWithoutHoles_default()(arr) || iterableToArray_default()(arr) || unsupportedIterableToArray_default()(arr) || nonIterableSpread_default()();
 }
-// CONCATENATED MODULE: ./src/constants.js
+// CONCATENATED MODULE: ./src/helpers/findBreakpoint.js
 
 
 
 
+/**
+ * Finds a number in breakpoints array
+ * that provided a suggestion
+ * qualifies the most to be used as a value
+ * @param {Array<number>} stops
+ * @param {number} value
+ */
+function findBreakpoint() {
+  var stops = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var value = arguments.length > 1 ? arguments[1] : undefined;
+  var givenBreakpoints = stops && is_array_default()(stops) ? _toConsumableArray(stops) : [stops];
+  var filteredBreakpoints = givenBreakpoints.sort(function (a, b) {
+    return a - b;
+  }).filter(function (stop) {
+    return stop >= value;
+  });
+  return (filteredBreakpoints.length ? filteredBreakpoints : stops)[0];
+}
+// EXTERNAL MODULE: external "core-js/modules/es.array.slice"
+var es_array_slice_ = __webpack_require__("6579");
 
-
-function constants_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function constants_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { constants_ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { constants_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-var accessibilityTransformations = {
-  'darkmode': {
-    effect: 'tint:75:black'
-  },
-  'brightmode': {
-    effect: 'tint:50:white'
-  },
-  'monochrome': {
-    effect: 'grayscale'
-  },
-  'colorblind': {
-    effect: 'assist_colorblind'
-  }
-};
-var predominantColorTransformPxl = [{
-  width: 'iw_div_2',
-  aspect_ratio: 1,
-  crop: 'pad',
-  background: 'auto'
-}, {
-  crop: 'crop',
-  width: 1,
-  height: 1,
-  gravity: 'north_east'
-}, {
-  fetch_format: 'auto',
-  quality: 'auto'
-}];
-var predominantColorTransform = [{
-  variables: [['$currWidth', 'w'], ['$currHeight', 'h']]
-}, {
-  width: 'iw_div_2',
-  aspect_ratio: 1,
-  crop: 'pad',
-  background: 'auto'
-}, {
-  crop: 'crop',
-  width: 10,
-  height: 10,
-  gravity: 'north_east'
-}, {
-  width: '$currWidth',
-  height: '$currHeight',
-  crop: 'fill'
-}, {
-  fetch_format: 'auto',
-  quality: 'auto'
-}];
-var placeholderImageOptions = {
-  'vectorize': [{
-    effect: 'vectorize:3:0.1',
-    fetch_format: 'svg'
-  }],
-  'pixelate': [{
-    effect: 'pixelate',
-    quality: 1,
-    fetch_format: 'auto'
-  }],
-  'blur': [{
-    effect: 'blur:2000',
-    quality: 1,
-    fetch_format: 'auto'
-  }],
-  'predominant-color': predominantColorTransform
-};
-var placeholderTransformations = constants_objectSpread({
-  lqip: [{
-    variables: [["$nh", "ih"], ["$nw", "iw"]],
-    crop: "scale",
-    width: "20",
-    quality: "auto"
-  }, {
-    crop: "scale",
-    width: "$nw",
-    height: "$nh"
-  }],
-  color: [{
-    variables: [["$nh", "ih"], ["$nw", "iw"]],
-    crop: "scale",
-    width: "1",
-    quality: "1"
-  }, {
-    crop: "scale",
-    width: "$nw",
-    height: "$nh"
-  }]
-}, placeholderImageOptions);
 // CONCATENATED MODULE: ./src/helpers/evalBreakpoints.js
+
+
+
 /**
  * Normalizes `breakpoint` component attribute to an array of numbers
  * @param {Function|Array|String} valueOrGetter
@@ -910,76 +899,17 @@ function evalBreakpoints(valueOrGetter) {
   }
 
   if (typeof valueOrGetter === "string") {
-    return JSON.parse((valueOrGetter.slice(0, 1) === "[" ? "" : "[") + valueOrGetter + (valueOrGetter.slice(0, 1) === "]" ? "" : "]"));
+    var firstChar = valueOrGetter.slice(0, 1);
+    var lastChar = valueOrGetter.slice(-1);
+    return JSON.parse("".concat(firstChar === '[' ? '' : '[').concat(valueOrGetter).concat(lastChar === ']' ? '' : ']'));
   }
 
   return valueOrGetter;
-}
-// EXTERNAL MODULE: external "core-js/modules/es6.array.sort"
-var es6_array_sort_ = __webpack_require__("f61e");
-
-// CONCATENATED MODULE: ./src/helpers/findBreakpoint.js
-
-
-/**
- * Finds a number in breakpoints array
- * that provided a suggestion
- * qualifies the most to be used as a value
- * @param {Array<number>} stops
- * @param {number} value
- */
-function findBreakpoint(stops, value) {
-  return stops.concat([]).sort(function (a, b) {
-    return a - b;
-  }).filter(function (stop) {
-    return stop >= value;
-  }).concat(stop)[0];
 }
 // CONCATENATED MODULE: ./src/helpers/responsiveness.js
 
 
 
-
-
-
-function responsiveness_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function responsiveness_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { responsiveness_ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { responsiveness_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-
-
-/**
- * Return styles according to a responsive mode
- * @param {'fill'|'width'|'height'|boolean} mode
- */
-
-function getResponsiveStyle(mode) {
-  switch (mode) {
-    case "height":
-      return {
-        display: "block",
-        height: "100%",
-        width: "auto"
-      };
-
-    case true:
-    case "width":
-      return {
-        display: "block",
-        width: "100%"
-      };
-
-    case "fill":
-      return {
-        display: "block",
-        width: "100%",
-        height: "100%"
-      };
-
-    default:
-      return {};
-  }
-}
 /**
  * Based an selected mode
  * and breakpoints range
@@ -989,10 +919,12 @@ function getResponsiveStyle(mode) {
  * @param {array} breakpoints
  */
 
-function getResizeTransformation(mode, size, breakpoints) {
-  if (!size) {
+function getResizeTransformation(mode, size, originalBP) {
+  if (!mode || !size) {
     return {};
   }
+
+  var breakpoints = evalBreakpoints(originalBP);
 
   switch (mode) {
     case "fill":
@@ -1003,118 +935,389 @@ function getResizeTransformation(mode, size, breakpoints) {
         width: Math.floor(size.width),
         height: Math.floor(size.height)
       };
-      return normalizeTransformation(responsiveness_objectSpread(responsiveness_objectSpread({}, getDPRAttr()), {}, {
+      return _objectSpread2({
         crop: "fill"
-      }, computedSize));
+      }, computedSize);
 
     case true:
     case "width":
-      return normalizeTransformation(responsiveness_objectSpread(responsiveness_objectSpread({}, getDPRAttr()), {}, {
+      return {
         crop: "scale",
         width: Math.floor(breakpoints ? findBreakpoint(breakpoints, size.width) : size.width)
-      }));
+      };
 
     case "height":
-      return normalizeTransformation(responsiveness_objectSpread(responsiveness_objectSpread({}, getDPRAttr()), {}, {
+      return {
         crop: "scale",
         height: Math.floor(breakpoints ? findBreakpoint(breakpoints, size.height) : size.height)
-      }));
+      };
 
     default:
       return {};
   }
 }
-/** Generate DPR transformation if DPR information is available */
-
-function getDPRAttr() {
-  return "devicePixelRatio" in window ? {
-    dpr: window.devicePixelRatio
-  } : {};
-}
-// CONCATENATED MODULE: ./src/helpers/getPlaceholderURL.js
+// CONCATENATED MODULE: ./src/helpers/computeOptions.js
 
 
 
 
 
 
-
-function getPlaceholderURL_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function getPlaceholderURL_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { getPlaceholderURL_ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { getPlaceholderURL_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-
-
-/** Get media URL with some transformations
- * that will make the image lighter
- * so it can serve as a placeholder
- * for an actual image
- *
- * @param {'lqip'|'color'|'pixelate'|'predominant-color'|'vectorize'|'blur'} type Placeholder size-saving strategy
- * @param {string} publicId
- * @param {object} configuration - Cloudianry delivery configuration, such as cloudName
- * @param {Object} transformation A cloudinary Transfomration Object
+/**
+ * 
+ * @param {Boolean} enable 
+ * @returns {Object} transformation object for progressive effect
  */
 
-function getPlaceholderURL(type, publicId, configuration, transformation) {
-  // The default type is an empty string,
-  // so we need to ensure something was passed for proper warnings later
-  if (typeof type === "string" && type !== "") {
-    if (type in placeholderTransformations) {
-      var placeholderTransformation = {};
-      var hasWidth = transformation.width;
-      var hasHeight = transformation.height;
-      var isPredominant = type === 'predominant-color';
+var computeOptions_addProgressive = function addProgressive() {
+  var enable = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  return enable ? constants_progressive : {};
+};
+/**
+ * 
+ * @param {Object} baseOptions 
+ * @param {Object} extra 
+ * @returns {Object} new options Object with extra inside transformation
+ */
 
-      if (hasWidth && hasHeight && isPredominant) {
-        placeholderTransformation = predominantColorTransformPxl;
-      } else {
-        placeholderTransformation = placeholderTransformations[type];
-      }
 
-      return external_cloudinary_core_["Cloudinary"].new(configuration).url(publicId, getPlaceholderURL_objectSpread(getPlaceholderURL_objectSpread({}, transformation), {}, {
-        transformation: [].concat(_toConsumableArray(transformation.transformation || []), _toConsumableArray(placeholderTransformation))
-      }));
-    } else {
-      // eslint-disable-next-line
-      console.warn('Unknown placeholder selected: ', type);
-    }
+var computeOptions_extendOptions = function extendOptions() {
+  var baseOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var extra = arguments.length > 1 ? arguments[1] : undefined;
+  var transformation = baseOptions.transformation ? _toConsumableArray(baseOptions.transformation) : [];
 
-    return type;
+  if (is_array_default()(extra)) {
+    extra.forEach(function (effect) {
+      return transformation.push(effect);
+    });
+  } else if (extra) {
+    transformation.push(extra);
   }
 
-  return "";
+  return _objectSpread2(_objectSpread2({}, baseOptions), {}, {
+    transformation: transformation
+  });
+};
+/**
+ * 
+ * @param {'lqip'|'color'|'pixelate'|'predominant-color'|'vectorize'|'blur'} type 
+ * @param {Option} imgOptions
+ * @returns {Object} options for generating delivery URL of a placeholder image
+ */
+
+var computeOptions_computePlaceholder = function computePlaceholder(type) {
+  var imgOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var isPredominantWithSize = type === 'predominant-color' && imgOptions.width && imgOptions.height;
+  var placeholder = isPredominantWithSize ? predominantColorTransformPxl : PLACEHOLDER_TRANSFORMATIONS[type] || {};
+  return computeOptions_extendOptions(imgOptions, placeholder);
+};
+/**
+ * 
+ * @param {Object} object contains accessibility, withProgressive, cldTransforms and baseOptions
+ * @returns {Object} options for generating delivery URL of a media component 
+ */
+
+var computeOptions_computeOptions = function computeOptions(_ref) {
+  var accessibility = _ref.accessibility,
+      withProgressive = _ref.withProgressive,
+      _ref$baseOptions = _ref.baseOptions,
+      baseOptions = _ref$baseOptions === void 0 ? {} : _ref$baseOptions,
+      _ref$extra = _ref.extra,
+      extra = _ref$extra === void 0 ? [] : _ref$extra;
+
+  var transformation = _toConsumableArray(extra);
+
+  var progressive = computeOptions_addProgressive(withProgressive);
+  transformation.push(progressive);
+
+  var res = _objectSpread2(_objectSpread2({}, baseOptions), {}, {
+    transformation: transformation
+  });
+
+  if (accessibility) {
+    res.accessibility = accessibility;
+  }
+
+  return res;
+};
+// CONCATENATED MODULE: ./src/mixins/compute.js
+
+
+
+var compute = {
+  methods: {
+    computeURLOptions: function computeURLOptions() {
+      var inheritOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var responsiveOptions = getResizeTransformation(this.responsive, this.size, this.breakpoints);
+
+      var baseOptions = _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, this.contextOptions), inheritOptions), this.$attrs), responsiveOptions);
+
+      var options = computeOptions_computeOptions({
+        accessibility: this.accessibility,
+        withProgressive: this.progressive,
+        baseOptions: baseOptions,
+        extra: this.extraTransformations
+      });
+      return options;
+    }
+  }
+};
+// CONCATENATED MODULE: ./src/mixins/registerTransformation.js
+var register = {
+  provide: function provide() {
+    return {
+      registerTransformation: this.registerTransformation
+    };
+  },
+  data: function data() {
+    return {
+      extraTransformations: []
+    };
+  },
+  methods: {
+    registerTransformation: function registerTransformation(options) {
+      this.extraTransformations.push(options);
+    }
+  }
+};
+// EXTERNAL MODULE: external "core-js/modules/es.array.find"
+var es_array_find_ = __webpack_require__("fe0e");
+
+// CONCATENATED MODULE: ./src/helpers/findComponent.js
+
+
+
+/**
+ * 
+ * @param {Array<VNode>} children - nested Vue components
+ * @returns {Object | null} cld-placeholder component if found.
+ */
+
+var getCldPlaceholder = function getCldPlaceholder() {
+  var children = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  return children === null || children === void 0 ? void 0 : children.find(function (child) {
+    return findComponent_isCldPlaceholder(child);
+  });
+};
+var getCldPoster = function getCldPoster() {
+  var children = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  return children === null || children === void 0 ? void 0 : children.find(function (child) {
+    return findComponent_isCldPoster(child);
+  });
+};
+/**
+* @param {VNode} component 
+* @returns {Boolean} true if component is CldPlaceholder
+*/
+
+var findComponent_isCldPlaceholder = function isCldPlaceholder(component) {
+  var _component$componentO, _component$componentO2, _component$componentO3;
+
+  return ((_component$componentO = component.componentOptions) === null || _component$componentO === void 0 ? void 0 : (_component$componentO2 = _component$componentO.Ctor) === null || _component$componentO2 === void 0 ? void 0 : (_component$componentO3 = _component$componentO2.extendOptions) === null || _component$componentO3 === void 0 ? void 0 : _component$componentO3.name) === COMPONENTS.CldPlaceholder;
+};
+var findComponent_isCldPoster = function isCldPoster(component) {
+  var _component$componentO4, _component$componentO5, _component$componentO6;
+
+  return ((_component$componentO4 = component.componentOptions) === null || _component$componentO4 === void 0 ? void 0 : (_component$componentO5 = _component$componentO4.Ctor) === null || _component$componentO5 === void 0 ? void 0 : (_component$componentO6 = _component$componentO5.extendOptions) === null || _component$componentO6 === void 0 ? void 0 : _component$componentO6.name) === COMPONENTS.CldPoster;
+};
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/get-iterator"
+var get_iterator_ = __webpack_require__("daf4");
+var get_iterator_default = /*#__PURE__*/__webpack_require__.n(get_iterator_);
+
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/symbol/iterator"
+var iterator_ = __webpack_require__("e3f0");
+var iterator_default = /*#__PURE__*/__webpack_require__.n(iterator_);
+
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/symbol"
+var symbol_ = __webpack_require__("e3b9");
+var symbol_default = /*#__PURE__*/__webpack_require__.n(symbol_);
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
+
+
+
+
+
+function _createForOfIteratorHelper(o, allowArrayLike) {
+  var it;
+
+  if (typeof symbol_default.a === "undefined" || o[iterator_default.a] == null) {
+    if (is_array_default()(o) || (it = unsupportedIterableToArray_default()(o)) || allowArrayLike && o && typeof o.length === "number") {
+      if (it) o = it;
+      var i = 0;
+
+      var F = function F() {};
+
+      return {
+        s: F,
+        n: function n() {
+          if (i >= o.length) return {
+            done: true
+          };
+          return {
+            done: false,
+            value: o[i++]
+          };
+        },
+        e: function e(_e) {
+          throw _e;
+        },
+        f: F
+      };
+    }
+
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  var normalCompletion = true,
+      didErr = false,
+      err;
+  return {
+    s: function s() {
+      it = get_iterator_default()(o);
+    },
+    n: function n() {
+      var step = it.next();
+      normalCompletion = step.done;
+      return step;
+    },
+    e: function e(_e2) {
+      didErr = true;
+      err = _e2;
+    },
+    f: function f() {
+      try {
+        if (!normalCompletion && it["return"] != null) it["return"]();
+      } finally {
+        if (didErr) throw err;
+      }
+    }
+  };
 }
-// EXTERNAL MODULE: external "core-js/modules/es7.symbol.async-iterator"
-var es7_symbol_async_iterator_ = __webpack_require__("4685");
+// EXTERNAL MODULE: external "core-js/modules/es.symbol"
+var es_symbol_ = __webpack_require__("6049");
 
-// EXTERNAL MODULE: external "core-js/modules/es6.symbol"
-var es6_symbol_ = __webpack_require__("1750");
+// EXTERNAL MODULE: external "core-js/modules/es.symbol.description"
+var es_symbol_description_ = __webpack_require__("51e9");
 
-// EXTERNAL MODULE: external "core-js/modules/es6.string.iterator"
-var es6_string_iterator_ = __webpack_require__("2579");
+// EXTERNAL MODULE: external "core-js/modules/es.object.to-string"
+var es_object_to_string_ = __webpack_require__("850c");
 
-// EXTERNAL MODULE: external "core-js/modules/es6.array.from"
-var es6_array_from_ = __webpack_require__("d624");
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/typeof.js
 
-// EXTERNAL MODULE: external "core-js/modules/es6.regexp.to-string"
-var es6_regexp_to_string_ = __webpack_require__("6619");
 
+
+
+
+function typeof_typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof symbol_default.a === "function" && typeof iterator_default.a === "symbol") {
+    typeof_typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    typeof_typeof = function _typeof(obj) {
+      return obj && typeof symbol_default.a === "function" && obj.constructor === symbol_default.a && obj !== symbol_default.a.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return typeof_typeof(obj);
+}
+// CONCATENATED MODULE: ./src/utils/debounce.js
+var debounce = function debounce(fn, timeout) {
+  var forceUpdateTimeoutToken = null;
+  return function () {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    clearTimeout(forceUpdateTimeoutToken);
+    forceUpdateTimeoutToken = setTimeout(function () {
+      return fn.apply(void 0, args);
+    }, timeout);
+  };
+};
+// CONCATENATED MODULE: ./src/utils/range.js
+/**
+ * Returns an array containing all numbers between and including `min` and `max` in a distance of `step` from each other
+ * @param {Number} min
+ * @param {Number} max
+ * @param {Number} step
+ */
+var range = function range(min, max, step) {
+  var result = [];
+
+  for (var i = min; i <= max; i += step) {
+    result.push(i);
+  }
+
+  return result;
+};
+// CONCATENATED MODULE: ./src/utils/index.js
+
+
+// CONCATENATED MODULE: ./src/helpers/size.js
+
+
+
+/**
+ * Call back a provided function
+ * whenever element changed it's size
+ * @param {HTMLElement} element
+ * @param {Function} cb
+ */
+
+var size_watchElementSize = function watchElementSize(element, cb) {
+  if (!window || (typeof window === "undefined" ? "undefined" : typeof_typeof(window)) !== "object") return;
+  var delayedCallback = debounce(cb, 150);
+  var cancelled = false;
+
+  if (window.ResizeObserver) {
+    var resizeObserver = new ResizeObserver(function (entries) {
+      var _iterator = _createForOfIteratorHelper(entries),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var entry = _step.value;
+          delayedCallback({
+            width: entry.contentRect.width,
+            height: entry.contentRect.height
+          });
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+    });
+    resizeObserver.observe(element);
+    return function () {
+      if (cancelled) return;
+      cancelled = true;
+      resizeObserver.disconnect();
+    };
+  } else {
+    var handleWindowResize = function handleWindowResize() {
+      var rect = element.getBoundingClientRect();
+      delayedCallback({
+        width: rect.width,
+        height: rect.height
+      });
+    };
+
+    window.addEventListener("resize", handleWindowResize);
+    handleWindowResize();
+    return function () {
+      if (cancelled) return;
+      cancelled = true;
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }
+};
 // CONCATENATED MODULE: ./src/mixins/size.js
 
-
-
-
-
-
-
-
-
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = size_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function size_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return size_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return size_arrayLikeToArray(o, minLen); }
-
-function size_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
 /**
@@ -1124,12 +1327,31 @@ function size_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) 
  */
 
 var size_size = {
+  props: {
+    responsive: {
+      type: [Boolean, String],
+      default: false,
+      validator: function validator(value) {
+        return !value || RESPONSIVE_CSS[value];
+      }
+    },
+    breakpoints: {
+      type: [Array, Function, String],
+      default: function _default() {
+        return range(100, 4000, 100);
+      }
+    }
+  },
   data: function data() {
     return {
       size: null
     };
   },
   computed: {
+    hasResponsiveActive: function hasResponsiveActive() {
+      return this.responsive && this.size && this.size.width && this.size.height;
+    },
+
     /* should be overriden */
     shouldMeasureSize: function shouldMeasureSize() {
       return false;
@@ -1137,23 +1359,24 @@ var size_size = {
   },
   methods: {
     updateSizeObservation: function updateSizeObservation() {
-      var _this = this;
+      var _this$$el$classList,
+          _this$$el$classList2,
+          _this = this;
 
-      if (this.shouldMeasureSize) {
-        if (this.$el && !this.cancelSizeListener) {
-          this.cancelSizeListener = watchElementSize(this.$el, function (size) {
-            if (!size) return;
-
-            if (!_this.size || _this.size.width !== size.width || _this.size.height !== size.height) {
-              _this.size = size;
-            }
-          });
-        }
-      } else {
-        if (this.cancelSizeListener) {
-          this.cancelSizeListener();
-        }
+      if (!this.responsive) {
+        this.cancelSizeListener && this.cancelSizeListener();
+        return;
       }
+
+      var isElementRendered = !!this.$el && (((_this$$el$classList = this.$el.classList) === null || _this$$el$classList === void 0 ? void 0 : _this$$el$classList.contains(IMAGE_CLASSES.DEFAULT)) || ((_this$$el$classList2 = this.$el.classList) === null || _this$$el$classList2 === void 0 ? void 0 : _this$$el$classList2.contains(CLD_IMAGE_WRAPPER_CLASS)));
+      if (!isElementRendered || this.cancelSizeListener) return;
+      this.cancelSizeListener = size_watchElementSize(this.$el, function (newSize) {
+        if (!newSize) return;
+
+        if (!_this.size || _this.size.width !== newSize.width || _this.size.height !== newSize.height) {
+          _this.size = newSize;
+        }
+      });
     }
   },
   created: function created() {
@@ -1171,81 +1394,48 @@ var size_size = {
     }
   }
 };
-/**
- * Call back a provided function
- * whenever element changed it's size
- * @param {HTMLElement} element
- * @param {Function} cb
- */
+// CONCATENATED MODULE: ./src/helpers/visibility.js
 
-function watchElementSize(element, cb) {
-  var delayedCallback = debounce(cb, 150);
-  var cancelled = false;
 
-  if (window && (typeof window === "undefined" ? "undefined" : typeof_typeof(window)) === "object") {
-    if ("ResizeObserver" in window) {
-      var resizeObserver = new ResizeObserver(function (entries) {
-        var _iterator = _createForOfIteratorHelper(entries),
-            _step;
 
-        try {
-          for (_iterator.s(); !(_step = _iterator.n()).done;) {
-            var entry = _step.value;
-            delayedCallback({
-              width: entry.contentRect.width,
-              height: entry.contentRect.height
-            });
-          }
-        } catch (err) {
-          _iterator.e(err);
-        } finally {
-          _iterator.f();
+var visibility_watchElementVisibility = function watchElementVisibility(element, listener) {
+  if (!window || (typeof window === "undefined" ? "undefined" : typeof_typeof(window)) !== "object") return;
+
+  if (window.IntersectionObserver) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.target === element) {
+          listener(entry.isIntersecting);
         }
       });
-      resizeObserver.observe(element);
-      return function () {
-        if (cancelled) {
-          return;
-        }
-
-        cancelled = true;
-        resizeObserver.disconnect();
-      };
-    } else {
-      var handleWindowResize = function handleWindowResize() {
-        var rect = element.getBoundingClientRect();
-        delayedCallback({
-          width: rect.width,
-          height: rect.height
-        });
-      };
-
-      window.addEventListener("resize", handleWindowResize);
-      handleWindowResize();
-      return function () {
-        if (cancelled) {
-          return;
-        }
-
-        cancelled = true;
-        window.removeEventListener("resize", handleWindowResize);
-      };
-    }
+    }, {
+      threshold: [0, 0.01]
+    });
+    observer.observe(element);
+    return function () {
+      observer.disconnect();
+    };
+  } else {
+    listener(true);
+    return noop;
   }
-}
+};
+var noop = function noop() {};
 // CONCATENATED MODULE: ./src/mixins/lazy.js
-
 
 
 /**
  * If necessary watches for root elements visibility
  * and posts the result to components data
  */
+
 var lazy = {
   props: {
     /**
+     * **Deprecated**
+     * 
      * Whether to only load the asset when it needs to be displayed instead of when the page first loads.
-     * @deprecated
+     * @deprecated - Use `loading` instead
      */
     lazy: {
       type: Boolean,
@@ -1266,25 +1456,28 @@ var lazy = {
       visible: false
     };
   },
+  computed: {
+    hasLazyLoading: function hasLazyLoading() {
+      return this.lazy || this.loading === LAZY_LOADING;
+    }
+  },
   methods: {
     updateVisibilityObservation: function updateVisibilityObservation() {
-      var _this = this;
+      var _this$$el$classList,
+          _this$$el$classList2,
+          _this = this;
 
-      if (this.lazy || this.loading === 'lazy') {
-        if (this.$el && !this.cancelVisibilityListener) {
-          this.cancelVisibilityListener = watchElementVisibility(this.$el, function (visible) {
-            _this.visible = _this.visible || visible;
-          });
-        }
-      } else {
+      if (!this.hasLazyLoading) {
         this.visible = true;
-
-        if (this.cancelVisibilityListener) {
-          var cancelVisibilityListener = this.cancelVisibilityListener;
-          this.cancelVisibilityListener = null;
-          cancelVisibilityListener();
-        }
+        this.cancelVisibilityListener && this.cancelVisibilityListener();
+        return;
       }
+
+      var isElementRendered = !!this.$el && (((_this$$el$classList = this.$el.classList) === null || _this$$el$classList === void 0 ? void 0 : _this$$el$classList.contains(IMAGE_CLASSES.DEFAULT)) || ((_this$$el$classList2 = this.$el.classList) === null || _this$$el$classList2 === void 0 ? void 0 : _this$$el$classList2.contains(CLD_IMAGE_WRAPPER_CLASS)));
+      if (!isElementRendered || this.cancelVisibilityListener) return;
+      this.cancelVisibilityListener = visibility_watchElementVisibility(this.$el, function (isVisible) {
+        _this.visible = _this.visible || isVisible;
+      });
     }
   },
   created: function created() {
@@ -1302,55 +1495,8 @@ var lazy = {
     }
   }
 };
-
-function watchElementVisibility(element, listener) {
-  if ((typeof window === "undefined" ? "undefined" : typeof_typeof(window)) === "object" && "IntersectionObserver" in window) {
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.target === element) {
-          listener(entry.isIntersecting);
-        }
-      });
-    }, {
-      threshold: [0, 0.01]
-    });
-    observer.observe(element);
-    return function () {
-      observer.disconnect();
-    };
-  } else {
-    listener(true);
-    return noop;
-  }
-}
-
-function noop() {}
-// CONCATENATED MODULE: ./src/helpers/URLGenerator.js
-
-var URLGenerator_generateUrl = function generateUrl(_ref) {
-  var publicId = _ref.publicId,
-      configuration = _ref.configuration,
-      transformation = _ref.transformation;
-  return external_cloudinary_core_["Cloudinary"].new(configuration).url(publicId, transformation);
-};
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldImage/CldImage.vue?vue&type=script&lang=js&
 
-
-
-
-
-
-
-function CldImagevue_type_script_lang_js_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function CldImagevue_type_script_lang_js_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { CldImagevue_type_script_lang_js_ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { CldImagevue_type_script_lang_js_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-//
-//
-//
-//
-//
-//
 
 
 
@@ -1377,8 +1523,8 @@ function CldImagevue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
  */
 
 /* harmony default export */ var CldImagevue_type_script_lang_js_ = ({
-  name: "CldImage",
-  mixins: [lazy, size_size, withOptions],
+  name: COMPONENTS.CldImage,
+  mixins: [setup_setup, compute, lazy, size_size, register],
   props: {
     /**
      * The unique identifier of an uploaded image.
@@ -1399,187 +1545,126 @@ function CldImagevue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
     },
 
     /**
+     * **Deprecated**
+     * 
      * The placeholder image to use while the image is loading. Possible values:
-     *
+     * - `"blur"` to use blur placeholder
      * - `"lqip"` to use a low quality image
      * - `"color"` to use an average color image
      * - `"pixelate"` to use a pixelated image
+     * - `"vectorize"` to use a vectorized image
+     * - `"predominant-color" to use a predominant color image
+     * @deprecated - Use CldPlaceholder instead
      */
     placeholder: {
       type: String,
-      default: ""
-    },
-
-    /**
-     * How to make the image responsive to the available size based on layout. Possible values:
-     *
-     * - `false` turns the feature off
-     * - `"width"` and `true` uses the available image *width* and allows image *height* to be set dynamically
-     * - `"height"` uses the available image *height* and allows image *width* to be set dynamically
-     * - `"fill"` uses the available image *width* and *height*
-     */
-    responsive: {
-      type: [Boolean, String],
-      default: false
-    },
-
-    /**
-     * The set of possible breakpoint values to be used together with the responsive property. Either:
-     *
-     * - an array of numbers
-     * - a comma separated list of numbers as a single string
-     * - a function that returns an array of numbers
-     */
-    breakpoints: {
-      type: [Array, Function, String],
-      default: function _default() {
-        return range(100, 4000, 100);
+      default: "",
+      validator: function validator(value) {
+        return !value || !!PLACEHOLDER_TRANSFORMATIONS[value];
       }
     },
 
     /**
-     * One of [monochrome, darkmode, brightmode, colorblind]
+     * Out-of-the-box support for accessibility mode, including colorblind and dark/light mode
      */
     accessibility: {
       type: String,
-      default: ""
-    }
-  },
-  provide: function provide() {
-    var _this = this;
-
-    return {
-      registerTransformation: this.registerTransformation,
-      getTransformOptions: function getTransformOptions() {
-        return _this.transformOptions;
-      },
-      configuration: this.configuration,
-      publicId: this.publicId,
-      isImageLoaded: function isImageLoaded() {
-        return _this.imageLoaded;
-      },
-      registerPlaceHolder: function registerPlaceHolder() {
-        _this.hasPlaceholderComponent = true;
-      },
-      getImageWidth: function getImageWidth() {
-        // This gets populated from the <cld-image width=500/> tag
-        return _this.transformOptions.width;
-      },
-      getImageHeight: function getImageHeight() {
-        // This gets populated from the <cld-image height=500/> tag
-        return _this.transformOptions.height;
-      },
-      getNonCldAttrs: function getNonCldAttrs() {
-        return _this.nonCldAttrs;
+      default: "",
+      validator: function validator(value) {
+        return !value || !!ACCESSIBILITY_TRANSFORMATIONS[value];
       }
-    };
-  },
-  inject: {
-    contextConfiguration: {
-      default: {}
     }
   },
   data: function data() {
     return {
-      transformations: [],
       imageLoaded: false,
-      hasPlaceholderComponent: false
+      cloudinary: null
     };
   },
   methods: {
-    onImageLoad: function onImageLoad() {
-      this.imageLoaded = true; // Flag the placeholder as removed when image loads
+    load: function load() {
+      this.imageLoaded = true;
+    },
+    renderImageOnly: function renderImageOnly(src) {
+      var hasPlaceholder = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var h = this.$createElement;
+      var imgClass = "".concat(IMAGE_CLASSES.DEFAULT, " ").concat(!this.imageLoaded ? IMAGE_CLASSES.LOADING : IMAGE_CLASSES.LOADED);
 
-      this.hasPlaceholderComponent = false;
+      var style = _objectSpread2(_objectSpread2({}, this.responsive ? RESPONSIVE_CSS[this.responsive] : {}), !this.imageLoaded && hasPlaceholder ? IMAGE_WITH_PLACEHOLDER_CSS[IMAGE_CLASSES.LOADING] : {});
+
+      return h("img", babel_helper_vue_jsx_merge_props_default()([{}, {
+        "attrs": this.$attrs
+      }, {
+        "attrs": {
+          "src": src,
+          "loading": this.hasLazyLoading ? LAZY_LOADING : null
+        },
+        "class": imgClass,
+        "on": {
+          "load": this.load
+        },
+        "style": style
+      }]));
     },
-    registerTransformation: function registerTransformation(transformation) {
-      this.transformations = [].concat(_toConsumableArray(this.transformations), [normalizeTransformation(transformation)]);
-    },
-    computeLazyLoadSrc: function computeLazyLoadSrc() {
-      // This is the 'old' placeholder functionality,
-      // Deprecating for now, will be deleted in the future
+    renderComp: function renderComp(children) {
+      var _cldPlaceholder$compo, _cldPlaceholder$compo2;
+
+      var h = this.$createElement;
+      this.setup(this.$attrs);
+
       if (this.placeholder) {
         // eslint-disable-next-line
         console.warn('The prop "placeholder" has been deprecated, please use the cld-placeholder component');
       }
 
-      var src = getPlaceholderURL(this.placeholder, this.publicId, this.configuration, this.transformOptions);
-      return CldImagevue_type_script_lang_js_objectSpread(CldImagevue_type_script_lang_js_objectSpread({}, this.nonCldAttrs), {}, {
-        src: src
-      });
+      var responsiveModeNoSize = this.responsive && !this.size;
+      var lazyModeInvisible = this.hasLazyLoading && !this.visible;
+      var options = this.computeURLOptions();
+      var src = responsiveModeNoSize || lazyModeInvisible ? '' : this.cloudinary.url(this.publicId, this.toSnakeCase(options));
+      var cldPlaceholder = getCldPlaceholder(children);
+      var cldPlaceholderType = cldPlaceholder ? ((_cldPlaceholder$compo = cldPlaceholder.componentOptions) === null || _cldPlaceholder$compo === void 0 ? void 0 : (_cldPlaceholder$compo2 = _cldPlaceholder$compo.propsData) === null || _cldPlaceholder$compo2 === void 0 ? void 0 : _cldPlaceholder$compo2.type) || 'blur' : '';
+      var placeholderType = cldPlaceholderType || this.placeholder;
+      var placeholderOptions = placeholderType ? this.toSnakeCase(computeOptions_computePlaceholder(placeholderType, options)) : null;
+
+      if (!placeholderOptions) {
+        return this.renderImageOnly(src);
+      }
+
+      var placeholder = responsiveModeNoSize ? '' : this.cloudinary.url(this.publicId, placeholderOptions);
+      var displayPlaceholder = !this.imageLoaded && placeholder;
+      return h("div", {
+        "class": CLD_IMAGE_WRAPPER_CLASS
+      }, [this.renderImageOnly(src, true), displayPlaceholder && h("img", babel_helper_vue_jsx_merge_props_default()([{
+        "attrs": {
+          "src": placeholder
+        }
+      }, {
+        "attrs": this.$attrs
+      }, {
+        "class": PLACEHOLDER_CLASS,
+        "style": IMAGE_WITH_PLACEHOLDER_CSS[PLACEHOLDER_CLASS]
+      }]))]);
     }
   },
-  computed: {
-    isWithoutTransformation: function isWithoutTransformation() {
-      return !this.publicId || attributes_hasZeroSizeTransformation(this.transformations) || this.responsive && !this.size;
-    },
-    wrapperStyle: function wrapperStyle() {
-      return getResponsiveStyle(this.responsive);
-    },
-    style: function style() {
-      if (this.hasPlaceholderComponent) {
-        return CldImagevue_type_script_lang_js_objectSpread(CldImagevue_type_script_lang_js_objectSpread({}, getResponsiveStyle(this.responsive)), {}, {
-          opacity: '0',
-          position: 'absolute'
-        });
-      } else {
-        return getResponsiveStyle(this.responsive);
-      }
-    },
-    nonCldAttrs: function nonCldAttrs() {
-      return normalizeNonCloudinary(this.$attrs);
-    },
-    transformOptions: function transformOptions() {
-      return CldImagevue_type_script_lang_js_objectSpread(CldImagevue_type_script_lang_js_objectSpread({}, this.options), {}, {
-        transformation: [].concat(_toConsumableArray(this.options.transformation || []), _toConsumableArray(this.transformations))
-      });
-    },
-    isLazyLoadInvisible: function isLazyLoadInvisible() {
-      if (this.lazy) {
-        // eslint-disable-next-line
-        console.warn('The prop "lazy" has been deprecated, please use loading="lazy"');
-      }
+  render: function render(h) {
+    if (!this.publicId) return null;
+    var children = this.$slots.default || [];
+    var hasExtraTransformations = children.length > 1 || children.length === 1 && !findComponent_isCldPlaceholder(children[0]);
+    /* Render the children first to get the extra transformations (if there is any) */
 
-      var shouldLazyLoad = this.lazy || this.loading === 'lazy';
-      return shouldLazyLoad && !this.visible;
-    },
-    imageSrc: function imageSrc() {
-      var accessibilityTrans = this.accessibility && accessibilityTransformations[this.accessibility] || {};
-      return URLGenerator_generateUrl({
-        publicId: this.publicId,
-        configuration: this.configuration,
-        transformation: CldImagevue_type_script_lang_js_objectSpread(CldImagevue_type_script_lang_js_objectSpread({}, this.options), {}, {
-          transformation: [].concat(_toConsumableArray(this.transformOptions.transformation), [getResizeTransformation(this.responsive, this.size, evalBreakpoints(this.breakpoints))], _toConsumableArray(this.progressive ? [{
-            flags: ["progressive"]
-          }] : []), [// if accessibility mode is present, include it as a transformation
-          accessibilityTrans])
-        })
-      });
-    },
-    imageAttrs: function imageAttrs() {
-      if (this.isWithoutTransformation) {
-        return this.nonCldAttrs;
-      }
-
-      if (this.isLazyLoadInvisible) {
-        return this.computeLazyLoadSrc();
-      }
-
-      var htmlAttrs = attributes_getHTMLAttributes(this.options);
-      var src = this.imageSrc;
-      return CldImagevue_type_script_lang_js_objectSpread(CldImagevue_type_script_lang_js_objectSpread(CldImagevue_type_script_lang_js_objectSpread({}, this.nonCldAttrs), htmlAttrs), {}, {
-        src: src
-      });
-    },
-    shouldMeasureSize: function shouldMeasureSize() {
-      return this.responsive !== false;
+    if (hasExtraTransformations && !this.extraTransformations.length) {
+      return h("img", {
+        attrs: this.attrs
+      }, this.$slots.default);
     }
+
+    return this.renderComp(children);
   }
 });
 // CONCATENATED MODULE: ./src/components/CldImage/CldImage.vue?vue&type=script&lang=js&
  /* harmony default export */ var CldImage_CldImagevue_type_script_lang_js_ = (CldImagevue_type_script_lang_js_); 
 // CONCATENATED MODULE: ./src/components/CldImage/CldImage.vue
-
+var CldImage_render, CldImage_staticRenderFns
 
 
 
@@ -1588,8 +1673,8 @@ function CldImagevue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
 
 var CldImage_component = normalizeComponent(
   CldImage_CldImagevue_type_script_lang_js_,
-  CldImagevue_type_template_id_621bb132_render,
-  CldImagevue_type_template_id_621bb132_staticRenderFns,
+  CldImage_render,
+  CldImage_staticRenderFns,
   false,
   null,
   null,
@@ -1598,22 +1683,9 @@ var CldImage_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldImage = (CldImage_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4747d782-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldVideo/CldVideo.vue?vue&type=template&id=cf33497c&
-var CldVideovue_type_template_id_cf33497c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cld-video"},[_c('video',_vm._b({},'video',_vm.videoAttrs,false),_vm._l((_vm.sources),function(source,index){return _c('source',_vm._b({key:index},'source',source,false))}),0),_vm._t("default")],2)}
-var CldVideovue_type_template_id_cf33497c_staticRenderFns = []
+// EXTERNAL MODULE: external "core-js/modules/es.array.map"
+var es_array_map_ = __webpack_require__("f705");
 
-
-// CONCATENATED MODULE: ./src/components/CldVideo/CldVideo.vue?vue&type=template&id=cf33497c&
-
-// CONCATENATED MODULE: ./src/helpers/findInTransformations.js
-
-function findInTransformations(transformations, predicate) {
-  if (!transformations) {
-    return undefined;
-  }
-
-  return find_find([].concat(transformations).concat(transformations.transformation || []), predicate);
-}
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldVideo/CldVideo.vue?vue&type=script&lang=js&
 
 
@@ -1622,18 +1694,6 @@ function findInTransformations(transformations, predicate) {
 
 
 
-function CldVideovue_type_script_lang_js_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function CldVideovue_type_script_lang_js_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { CldVideovue_type_script_lang_js_ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { CldVideovue_type_script_lang_js_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -1641,6 +1701,9 @@ function CldVideovue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
 
 
 
+var defaultSourceTypes = external_cloudinary_core_["Cloudinary"].DEFAULT_VIDEO_SOURCE_TYPES.reduce(function (types, type) {
+  return _objectSpread2(_objectSpread2({}, types), {}, _defineProperty({}, type, {}));
+}, {});
 /**
  * Deliver videos and specify video transformations using the `cld-video` (CldVideo) element,
  * which automatically generates an HTML5 video tag including the URL sources for the main formats
@@ -1659,15 +1722,26 @@ function CldVideovue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
  */
 
 /* harmony default export */ var CldVideovue_type_script_lang_js_ = ({
-  name: "CldVideo",
-  inheritAttrs: false,
+  name: COMPONENTS.CldVideo,
+  mixins: [setup_setup, compute, lazy, register],
   provide: function provide() {
+    var _this = this;
+
     return {
-      registerTransformation: this.registerTransformation,
-      registerPoster: this.registerPoster
+      registerPoster: this.registerPoster,
+      getConfig: function getConfig() {
+        var _this$cloudinary;
+
+        return ((_this$cloudinary = _this.cloudinary) === null || _this$cloudinary === void 0 ? void 0 : _this$cloudinary.config()) || {};
+      },
+      getOptions: function getOptions() {
+        if (_this.poster && typeof _this.poster === 'string') return {};
+        return _objectSpread2({
+          publicId: _this.publicId
+        }, _this.poster || {});
+      }
     };
   },
-  mixins: [lazy, withOptions],
   props: {
     /**
      * The unique identifier of an uploaded video.
@@ -1679,7 +1753,7 @@ function CldVideovue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
     },
 
     /**
-     * An ordered array of the video source types to include in the HTML5 tag, where the type is mapped to the mime type.
+     * The video source types to include in the HTML5 tag, where the type is mapped to the mime type.
      * You can also add a specific transformation for each specified video format by adding a transformation struct. Example:
      *
      * `<CldVideo :sourceTypes="{ mp4: { quality: 10 } }" />`
@@ -1687,104 +1761,93 @@ function CldVideovue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
     sourceTypes: {
       type: Object,
       default: function _default() {
-        return external_cloudinary_core_["Cloudinary"].DEFAULT_VIDEO_PARAMS.source_types.reduce(function (currSrc, type) {
-          return CldVideovue_type_script_lang_js_objectSpread(CldVideovue_type_script_lang_js_objectSpread({}, currSrc), {}, _defineProperty({}, type, {}));
-        }, {});
+        return defaultSourceTypes;
+      },
+      validator: function validator(value) {
+        return typeof value !== 'Object';
       }
+    },
+    poster: {
+      type: [String, Object, Array]
     }
   },
   data: function data() {
     return {
-      transformations: [],
-      posterAttrs: {}
+      posterUrl: '',
+      cloudinary: null
     };
   },
   methods: {
-    registerPoster: function registerPoster(posterOptions) {
-      this.posterAttrs = CldVideovue_type_script_lang_js_objectSpread(CldVideovue_type_script_lang_js_objectSpread({}, this.posterAttrs), posterOptions);
+    registerPoster: function registerPoster(posterUrl) {
+      this.posterUrl = posterUrl;
     },
-    registerTransformation: function registerTransformation(transformation) {
-      this.transformations = [].concat(_toConsumableArray(this.transformations), [normalizeTransformation(transformation)]);
-    }
-  },
-  computed: {
-    videoAttrs: function videoAttrs() {
-      if (!this.publicId || !!findInTransformations(this.options, function (t) {
-        return t.width === 0 || t.height === 0;
-      })) {
-        return {};
+    getSources: function getSources() {
+      var options = this.computeURLOptions();
+      var sources = [];
+
+      for (var type in this.sourceTypes) {
+        var typeOptions = this.sourceTypes[type];
+        var formatType = type === "ogv" ? "ogg" : type;
+        var srcOptions = computeOptions_extendOptions(options, typeOptions);
+        srcOptions.format = type;
+        sources.push(_objectSpread2(_objectSpread2({}, typeOptions), {}, {
+          mimeType: "video/".concat(formatType),
+          type: "video/".concat(formatType),
+          src: this.cloudinary.video_url(this.publicId, this.toSnakeCase(srcOptions))
+        }));
       }
 
-      var htmlAttrs = CldVideovue_type_script_lang_js_objectSpread({
-        poster: this.posterUrl
-      }, attributes_getHTMLAttributes(this.options));
-
-      var normalizedNonCloudinaryAttrs = normalizeNonCloudinary(this.$attrs);
-      return CldVideovue_type_script_lang_js_objectSpread(CldVideovue_type_script_lang_js_objectSpread({}, normalizedNonCloudinaryAttrs), htmlAttrs);
-    },
-    sources: function sources() {
-      var _this = this;
-
-      if (!this.publicId || this.lazy && !this.visible) {
-        return [];
-      }
-
-      var sources = Object.keys(this.sourceTypes).map(function (srcType) {
-        var srcTypeOptions = _this.sourceTypes[srcType];
-        var srcTypeChainedTransformation = Array.isArray(srcTypeOptions) ? srcTypeOptions.map(normalizeTransformation) : [normalizeTransformation(srcTypeOptions)];
-        var src = URLGenerator_generateUrl({
-          configuration: CldVideovue_type_script_lang_js_objectSpread(CldVideovue_type_script_lang_js_objectSpread({}, _this.configuration), normalizeConfiguration(_this.sourceTypes[srcType])),
-          publicId: _this.publicId,
-          transformation: CldVideovue_type_script_lang_js_objectSpread(CldVideovue_type_script_lang_js_objectSpread({
-            resource_type: "video",
-            format: srcType
-          }, _this.options), {}, {
-            transformation: [].concat(_toConsumableArray(_this.options.transformation || []), _toConsumableArray(srcTypeChainedTransformation), _toConsumableArray(_this.transformations))
-          })
-        });
-        var htmlAttrs = normalizeNonCloudinary(_this.sourceTypes[srcType] || {});
-        return CldVideovue_type_script_lang_js_objectSpread(CldVideovue_type_script_lang_js_objectSpread({}, htmlAttrs), {}, {
-          mimeType: "video/".concat(srcType === "ogv" ? "ogg" : srcType),
-          type: "video/".concat(srcType === "ogv" ? "ogg" : srcType),
-          src: src
-        });
-      });
       return sources;
     },
-    posterUrl: function posterUrl() {
-      // <cld-video poster="url" />
-      if (this.$attrs.poster && typeof this.$attrs.poster === "string") {
-        return this.$attrs.poster;
-      }
+    getPosterUrl: function getPosterUrl() {
+      var _this$poster;
 
-      var attrPosterOptions = this.$attrs.poster || {};
-      var posterOptions = this.posterAttrs || {};
-      var injectedOptions = this.options || {};
-      var normalizedAttrsTransformation = normalizeTransformation(attrPosterOptions);
-
-      var configuration = CldVideovue_type_script_lang_js_objectSpread(CldVideovue_type_script_lang_js_objectSpread(CldVideovue_type_script_lang_js_objectSpread({}, this.configuration), normalizeConfiguration(attrPosterOptions)), posterOptions.configuration);
-
-      var transformation = [].concat(_toConsumableArray(injectedOptions.transformation || []), [normalizedAttrsTransformation], _toConsumableArray(posterOptions.transformation || [])); // <cld-video :poster="{publicId:'x'}" />
-      // <cld-video> <cld-poster publicId="x" /> </cld-video>
-
-      var poster = {
-        configuration: configuration,
-        publicId: posterOptions.publicId || attrPosterOptions.publicId || this.publicId,
-        transformation: CldVideovue_type_script_lang_js_objectSpread(CldVideovue_type_script_lang_js_objectSpread({
-          resource_type: posterOptions.publicId || attrPosterOptions.publicId ? "image" : "video",
-          format: posterOptions.publicId || attrPosterOptions.publicId ? null : 'jpeg'
-        }, posterOptions || injectedOptions), {}, {
-          transformation: transformation
-        })
-      };
-      return URLGenerator_generateUrl(poster);
+      var isPosterAnUrl = typeof this.poster === 'string';
+      if (isPosterAnUrl) return this.poster;
+      var hasInlinePosterOptions = this.poster && !isPosterAnUrl;
+      var options = hasInlinePosterOptions ? this.poster : {};
+      return this.cloudinary.url(((_this$poster = this.poster) === null || _this$poster === void 0 ? void 0 : _this$poster.publicId) || this.publicId, this.toSnakeCase(options));
     }
+  },
+  mounted: function mounted() {
+    this.$videoElement = this.$refs.videoElement;
+  },
+  render: function render(h) {
+    if (!this.publicId) return null;
+    var children = this.$slots.default || [];
+    var cldPoster = getCldPoster(children);
+    var hasExtraTransformations = children.length > 1 || children.length === 1 && !cldPoster;
+    /* Render the children first to get the extra transformations (if there is any) */
+
+    if (hasExtraTransformations && !this.extraTransformations.length) {
+      return h("div", {
+        attrs: this.attrs
+      }, this.$slots.default);
+    }
+
+    this.setup(this.$attrs);
+    var sources = this.getSources();
+    var poster = cldPoster ? this.posterUrl : this.getPosterUrl();
+    return h("video", babel_helper_vue_jsx_merge_props_default()([{}, {
+      "attrs": this.$attrs
+    }, {
+      "attrs": {
+        "poster": poster
+      },
+      "ref": "videoElement"
+    }]), [sources.map(function (source, index) {
+      return h("source", babel_helper_vue_jsx_merge_props_default()([{
+        "key": index
+      }, {
+        "attrs": source
+      }]));
+    }), this.$slots.default]);
   }
 });
 // CONCATENATED MODULE: ./src/components/CldVideo/CldVideo.vue?vue&type=script&lang=js&
  /* harmony default export */ var CldVideo_CldVideovue_type_script_lang_js_ = (CldVideovue_type_script_lang_js_); 
 // CONCATENATED MODULE: ./src/components/CldVideo/CldVideo.vue
-
+var CldVideo_render, CldVideo_staticRenderFns
 
 
 
@@ -1793,8 +1856,8 @@ function CldVideovue_type_script_lang_js_objectSpread(target) { for (var i = 1; 
 
 var CldVideo_component = normalizeComponent(
   CldVideo_CldVideovue_type_script_lang_js_,
-  CldVideovue_type_template_id_cf33497c_render,
-  CldVideovue_type_template_id_cf33497c_staticRenderFns,
+  CldVideo_render,
+  CldVideo_staticRenderFns,
   false,
   null,
   null,
@@ -1806,49 +1869,55 @@ var CldVideo_component = normalizeComponent(
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldVideo/CldPoster.vue?vue&type=script&lang=js&
 
 
+
+
+
 /**
  * The image to be shown while a video is downloading or until the user hits the play button.
- * This component must be added as a child of the [CldVideo](#cldvideo) component.
+ * This component must be added as a direct child of the [CldVideo](#cldvideo) component.
  *
  * If this component is not given then the poster image defaults to the middle frame of the source video in jpg format.
  */
 
 /* harmony default export */ var CldPostervue_type_script_lang_js_ = ({
-  name: "CldPoster",
+  name: COMPONENTS.CldPoster,
+  mixins: [register, setup_setup, compute],
   inject: {
     registerPoster: {
       default: null
+    },
+    getConfig: {
+      default: function _default() {
+        return {};
+      }
+    },
+    getOptions: {
+      default: function _default() {
+        return {};
+      }
     }
   },
-  provide: function provide() {
-    return {
-      registerTransformation: this.registerTransformation
-    };
-  },
-  data: function data() {
-    return {
-      transformations: []
-    };
-  },
-  mounted: function mounted() {
-    if (this.registerPoster) {
-      var posterAttrs = this.$attrs || {};
-      var configuration = normalizeConfiguration(posterAttrs);
-      var transformation = [normalizeTransformation(posterAttrs)].concat(_toConsumableArray(this.transformations));
-      this.registerPoster({
-        configuration: configuration,
-        publicId: posterAttrs.publicId,
-        transformation: transformation
-      }); // this.registerPoster({...(this.$attrs || {}), transformation: this.transformations });
-    }
-  },
-  methods: {
-    registerTransformation: function registerTransformation(transformation) {
-      this.transformations = [].concat(_toConsumableArray(this.transformations), [normalizeTransformation(transformation)]);
+  props: {
+    publicId: {
+      type: String
     }
   },
   render: function render(h) {
-    return h("div", {}, this.$slots.default);
+    var baseOptions = this.getOptions();
+    var publicId = this.publicId || baseOptions.publicId;
+    if (!publicId || !this.registerPoster) return null;
+    var children = this.$slots.default || [];
+    var hasExtraTransformations = children.length > 0;
+    /* Render the children first to get the extra transformations (if there is any) */
+
+    if (hasExtraTransformations && !this.extraTransformations.length) {
+      return h("div", {}, this.$slots.default);
+    }
+
+    this.setup(_objectSpread2(_objectSpread2(_objectSpread2({}, this.getConfig()), baseOptions), this.$attrs));
+    var options = this.computeURLOptions(baseOptions);
+    this.registerPoster(this.cloudinary.url(publicId, options));
+    return null;
   }
 });
 // CONCATENATED MODULE: ./src/components/CldVideo/CldPoster.vue?vue&type=script&lang=js&
@@ -1874,12 +1943,14 @@ var CldPoster_component = normalizeComponent(
 
 /* harmony default export */ var CldPoster = (CldPoster_component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldTransformation/CldTransformation.vue?vue&type=script&lang=js&
+
 /**
  * One or more [transformation parameters](https://cloudinary.com/documentation/image_transformation_reference)
  * in a single component, or a set of [chained transformations](https://cloudinary.com/documentation/image_transformations#chained_transformations) in multiple components.
  */
+
 /* harmony default export */ var CldTransformationvue_type_script_lang_js_ = ({
-  name: "CldTransformation",
+  name: COMPONENTS.CldTransformation,
   inject: {
     registerTransformation: {
       default: null
@@ -1916,76 +1987,28 @@ var CldTransformation_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldTransformation = (CldTransformation_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4747d782-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldPlaceholder/CldPlaceholder.vue?vue&type=template&id=505e71c4&
-var CldPlaceholdervue_type_template_id_505e71c4_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (!_vm.isImageLoaded())?_c('img',_vm._b({staticClass:"cld-placeholder",attrs:{"src":_vm.src,"width":this.width,"height":this.height}},'img',_vm.nonCldAttrs,false)):_vm._e()}
-var CldPlaceholdervue_type_template_id_505e71c4_staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./src/components/CldPlaceholder/CldPlaceholder.vue?vue&type=template&id=505e71c4&
-
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldPlaceholder/CldPlaceholder.vue?vue&type=script&lang=js&
-//
-//
-//
 
 /* harmony default export */ var CldPlaceholdervue_type_script_lang_js_ = ({
-  name: "CldPlaceholder",
-  data: function data() {
-    return {
-      src: '',
-      width: 0,
-      height: 0
-    };
-  },
+  name: COMPONENTS.CldPlaceholder,
   props: {
     // type is a prop name, unfortunately confusing.
     type: {
       type: String,
-      default: function _default() {
-        return 'blur';
+      default: 'blur',
+      validator: function validator(value) {
+        return !!PLACEHOLDER_TRANSFORMATIONS[value];
       }
     }
   },
-  inject: {
-    getNonCldAttrs: {
-      default: {}
-    },
-    contextConfiguration: {
-      default: {}
-    },
-    getTransformOptions: {
-      default: function _default() {}
-    },
-    configuration: {
-      default: {}
-    },
-    publicId: {
-      default: ""
-    },
-    isImageLoaded: {
-      default: function _default() {
-        return false;
-      }
-    },
-    registerPlaceHolder: {},
-    getImageWidth: {},
-    getImageHeight: {}
-  },
-  created: function created() {
-    this.registerPlaceHolder();
-    this.width = this.getImageWidth();
-    this.height = this.getImageHeight();
-    this.nonCldAttrs = this.getNonCldAttrs();
-    var src = getPlaceholderURL(this.type, // This is a prop from THIS component
-    this.publicId, // PublicID, from parent
-    this.configuration || {}, this.getTransformOptions());
-    this.src = src;
+  render: function render() {
+    return null;
   }
 });
 // CONCATENATED MODULE: ./src/components/CldPlaceholder/CldPlaceholder.vue?vue&type=script&lang=js&
  /* harmony default export */ var CldPlaceholder_CldPlaceholdervue_type_script_lang_js_ = (CldPlaceholdervue_type_script_lang_js_); 
 // CONCATENATED MODULE: ./src/components/CldPlaceholder/CldPlaceholder.vue
-
+var CldPlaceholder_render, CldPlaceholder_staticRenderFns
 
 
 
@@ -1994,8 +2017,8 @@ var CldPlaceholdervue_type_template_id_505e71c4_staticRenderFns = []
 
 var CldPlaceholder_component = normalizeComponent(
   CldPlaceholder_CldPlaceholdervue_type_script_lang_js_,
-  CldPlaceholdervue_type_template_id_505e71c4_render,
-  CldPlaceholdervue_type_template_id_505e71c4_staticRenderFns,
+  CldPlaceholder_render,
+  CldPlaceholder_staticRenderFns,
   false,
   null,
   null,
@@ -2011,21 +2034,12 @@ var CldPlaceholder_component = normalizeComponent(
 
 
 
-function src_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function src_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { src_ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { src_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-
-
-
-
-
 
 
 var Cloudinary = {
   install: function install(Vue) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    plugin_install(Vue, options.components ? options : src_objectSpread(src_objectSpread({}, options), {}, {
+    plugin_install(Vue, options.components ? options : _objectSpread2(_objectSpread2({}, options), {}, {
       components: {
         CldContext: CldContext,
         CldImage: CldImage,
@@ -2044,6 +2058,13 @@ var Cloudinary = {
 /* harmony default export */ var entry_lib = __webpack_exports__["default"] = (Cloudinary);
 
 
+
+/***/ }),
+
+/***/ "fe0e":
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/es.array.find");
 
 /***/ })
 

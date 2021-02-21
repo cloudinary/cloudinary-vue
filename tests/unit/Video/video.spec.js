@@ -60,4 +60,29 @@ describe("CldVideo Component tests", () => {
     expect(video.attributes("aria-hidden")).toBe("true");
     expect(video.attributes("cloudName")).toBe(undefined);
   });
+
+  it("Exposes the video element ref", () => {
+    const wrapper = mount({
+      template: `
+        <cld-video cloudName="demo" publicId="face_top" aria-hidden="true" ref="cldVideo"/>
+      `,
+      components: {CldVideo}
+    });
+
+    const endUserComponent = wrapper.vm;
+    // Access the cloudinary video component from within the user component
+    const cldVideoComponent = endUserComponent.$refs.cldVideo;
+    // Access the videoElement
+    const videoElementFromRef = cldVideoComponent.$videoElement;
+
+    // Ensure that ref exposes the same video element that's found by a document selector
+    // sort-of equiv to document.getElementByTag(...)
+    const videoWrapperFromSelector = wrapper.find('video');
+    // The result is a test wrapper, so we need to access the element first
+    expect(videoWrapperFromSelector.element).toBe(videoElementFromRef);
+
+    ['play', 'pause', 'canPlayType', 'addTextTrack'].forEach((funcName) => {
+      expect(typeof videoElementFromRef[funcName]).toBe('function');
+    });
+  });
 });

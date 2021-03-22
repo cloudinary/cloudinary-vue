@@ -2,7 +2,7 @@ import Vue from 'vue';
 import { mount } from "@vue/test-utils";
 import CldImage from "../../../src/components/CldImage/CldImage.vue";
 
-describe("CldImage::responsive=fill", async () => {
+describe("CldImage::responsive=fill",() => {
   it("renders", async () => {
     const wrapper = mount({
       template: `

@@ -3,14 +3,12 @@
   "version": "1.1.2",
   "scripts": {
     "serve": "INTERNAL_DEPS=1 vue-cli-service serve ./playground/main.js",
-    "build": "vue-cli-service lint --fix; npm run build:styleguide; npm run build:lib",
+    "build": "vue-cli-service lint --fix && npm run build:lib",
     "test": "vue-cli-service test:unit",
     "tdd": "yarn run test --watch --coverage=false",
     "bundlewatch": "bundlewatch --config ./bundlewatch.config.js",
     "lint": "vue-cli-service lint",
     "build:lib": "vue-cli-service build --target lib --name Cloudinary src/index.js && npm run bundlewatch",
-    "build:styleguide": "rm -rf docs/*; node docs-sources/generateDocsLinks.js; vue-cli-service lint --fix; INTERNAL_DEPS=1 vue-styleguidist build",
-    "styleguide": "node docs-sources/generateDocsLinks.js; vue-cli-service lint --fix; INTERNAL_DEPS=1 vue-styleguidist server",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o docs-build -s ./src/stories/assets"
   },

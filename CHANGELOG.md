@@ -1,3 +1,12 @@
+1.2.0 / 2021-04-04
+==================
+
+New functionality and features
+  * Feature/add ref access to video element (#126)
+  * Remove automatic DPR settings when responsive is set (#122)
+  * Add Storybook Documentation  (#118)
+
+
 1.1.2 / 2020-09-06
 ==================
 

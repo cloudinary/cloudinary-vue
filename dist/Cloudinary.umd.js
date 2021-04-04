@@ -96,31 +96,17 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
-/***/ "04f7":
+/***/ "0d58":
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/esm/defineProperty");
+module.exports = require("core-js/modules/es.array.find.js");
 
 /***/ }),
 
-/***/ "139f":
+/***/ "13e3":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/modules/es.array.for-each");
-
-/***/ }),
-
-/***/ "169d":
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/es.array.reduce");
-
-/***/ }),
-
-/***/ "18d2":
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/es.array.concat");
+module.exports = require("core-js/modules/web.dom-collections.for-each.js");
 
 /***/ }),
 
@@ -131,10 +117,10 @@ module.exports = require("@babel/runtime-corejs2/core-js/object/get-own-property
 
 /***/ }),
 
-/***/ "255a":
+/***/ "1a89":
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime-corejs2/core-js/object/define-property");
+module.exports = require("core-js/modules/es.array.filter.js");
 
 /***/ }),
 
@@ -145,20 +131,6 @@ module.exports = require("@babel/runtime-corejs2/core-js/object/get-own-property
 
 /***/ }),
 
-/***/ "2ae6":
-/***/ (function(module, exports) {
-
-module.exports = require("@babel/runtime-corejs2/core-js/array/is-array");
-
-/***/ }),
-
-/***/ "3732":
-/***/ (function(module, exports) {
-
-module.exports = require("@babel/runtime/helpers/esm/arrayWithoutHoles");
-
-/***/ }),
-
 /***/ "3c59":
 /***/ (function(module, exports) {
 
@@ -166,17 +138,17 @@ module.exports = require("cloudinary-core");
 
 /***/ }),
 
-/***/ "4a38":
+/***/ "4391":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/modules/es.array.filter");
+module.exports = require("core-js/modules/es.array.map.js");
 
 /***/ }),
 
-/***/ "51e9":
+/***/ "53f2":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/modules/es.symbol.description");
+module.exports = require("@babel/runtime-corejs2/core-js/is-iterable");
 
 /***/ }),
 
@@ -187,38 +159,10 @@ module.exports = require("@vue/babel-helper-vue-jsx-merge-props");
 
 /***/ }),
 
-/***/ "5fc9":
+/***/ "97d3":
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime-corejs2/core-js/object/define-properties");
-
-/***/ }),
-
-/***/ "6049":
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/es.symbol");
-
-/***/ }),
-
-/***/ "61b7":
-/***/ (function(module, exports) {
-
-module.exports = require("@babel/runtime/helpers/esm/unsupportedIterableToArray");
-
-/***/ }),
-
-/***/ "6579":
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/es.array.slice");
-
-/***/ }),
-
-/***/ "850c":
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/es.object.to-string");
+module.exports = require("core-js/modules/es.object.to-string.js");
 
 /***/ }),
 
@@ -229,17 +173,17 @@ module.exports = require("@soda/get-current-script");
 
 /***/ }),
 
-/***/ "bcd8":
+/***/ "b7ac":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/modules/es.function.name");
+module.exports = require("core-js/modules/es.array.reduce.js");
 
 /***/ }),
 
-/***/ "bcda":
+/***/ "bdaf":
 /***/ (function(module, exports) {
 
-module.exports = require("core-js/modules/web.dom-collections.for-each");
+module.exports = require("@babel/runtime-corejs2/core-js/array/from");
 
 /***/ }),
 
@@ -257,10 +201,24 @@ module.exports = require("@babel/runtime-corejs2/core-js/object/get-own-property
 
 /***/ }),
 
+/***/ "ccb0":
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/es.array.concat.js");
+
+/***/ }),
+
 /***/ "daf4":
 /***/ (function(module, exports) {
 
 module.exports = require("@babel/runtime-corejs2/core-js/get-iterator");
+
+/***/ }),
+
+/***/ "db0a":
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/es.function.name.js");
 
 /***/ }),
 
@@ -285,24 +243,10 @@ module.exports = require("@babel/runtime-corejs2/core-js/symbol/iterator");
 
 /***/ }),
 
-/***/ "efd2":
+/***/ "ea12":
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/esm/nonIterableSpread");
-
-/***/ }),
-
-/***/ "f705":
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/es.array.map");
-
-/***/ }),
-
-/***/ "f906":
-/***/ (function(module, exports) {
-
-module.exports = require("@babel/runtime/helpers/esm/iterableToArray");
+module.exports = require("core-js/modules/es.array.slice.js");
 
 /***/ }),
 
@@ -346,47 +290,44 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// EXTERNAL MODULE: external "core-js/modules/es.array.filter"
-var es_array_filter_ = __webpack_require__("4a38");
+// EXTERNAL MODULE: external "core-js/modules/es.array.filter.js"
+var es_array_filter_js_ = __webpack_require__("1a89");
 
-// EXTERNAL MODULE: external "core-js/modules/es.array.for-each"
-var es_array_for_each_ = __webpack_require__("139f");
-
-// EXTERNAL MODULE: external "core-js/modules/web.dom-collections.for-each"
-var web_dom_collections_for_each_ = __webpack_require__("bcda");
-
-// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/object/define-property"
-var define_property_ = __webpack_require__("255a");
-var define_property_default = /*#__PURE__*/__webpack_require__.n(define_property_);
-
-// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/object/define-properties"
-var define_properties_ = __webpack_require__("5fc9");
-var define_properties_default = /*#__PURE__*/__webpack_require__.n(define_properties_);
-
-// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/object/get-own-property-descriptors"
-var get_own_property_descriptors_ = __webpack_require__("19e6");
-var get_own_property_descriptors_default = /*#__PURE__*/__webpack_require__.n(get_own_property_descriptors_);
-
-// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/object/get-own-property-descriptor"
-var get_own_property_descriptor_ = __webpack_require__("cb18");
-var get_own_property_descriptor_default = /*#__PURE__*/__webpack_require__.n(get_own_property_descriptor_);
-
-// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/object/get-own-property-symbols"
-var get_own_property_symbols_ = __webpack_require__("25f4");
-var get_own_property_symbols_default = /*#__PURE__*/__webpack_require__.n(get_own_property_symbols_);
+// EXTERNAL MODULE: external "core-js/modules/web.dom-collections.for-each.js"
+var web_dom_collections_for_each_js_ = __webpack_require__("13e3");
 
 // EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/object/keys"
 var keys_ = __webpack_require__("c08d");
 var keys_default = /*#__PURE__*/__webpack_require__.n(keys_);
 
-// EXTERNAL MODULE: external "@babel/runtime/helpers/esm/defineProperty"
-var defineProperty_ = __webpack_require__("04f7");
-var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty_);
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/object/get-own-property-symbols"
+var get_own_property_symbols_ = __webpack_require__("25f4");
+var get_own_property_symbols_default = /*#__PURE__*/__webpack_require__.n(get_own_property_symbols_);
 
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/object/get-own-property-descriptor"
+var get_own_property_descriptor_ = __webpack_require__("cb18");
+var get_own_property_descriptor_default = /*#__PURE__*/__webpack_require__.n(get_own_property_descriptor_);
+
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/object/get-own-property-descriptors"
+var get_own_property_descriptors_ = __webpack_require__("19e6");
+var get_own_property_descriptors_default = /*#__PURE__*/__webpack_require__.n(get_own_property_descriptors_);
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js
-
-
-
 
 
 
@@ -416,47 +357,26 @@ function _objectSpread2(target) {
 
     if (i % 2) {
       ownKeys(Object(source), true).forEach(function (key) {
-        defineProperty_default()(target, key, source[key]);
+        _defineProperty(target, key, source[key]);
       });
     } else if (get_own_property_descriptors_default.a) {
-      define_properties_default()(target, get_own_property_descriptors_default()(source));
+      Object.defineProperties(target, get_own_property_descriptors_default()(source));
     } else {
       ownKeys(Object(source)).forEach(function (key) {
-        define_property_default()(target, key, get_own_property_descriptor_default()(source, key));
+        Object.defineProperty(target, key, get_own_property_descriptor_default()(source, key));
       });
     }
   }
 
   return target;
 }
-// EXTERNAL MODULE: external "core-js/modules/es.array.reduce"
-var es_array_reduce_ = __webpack_require__("169d");
+// EXTERNAL MODULE: external "core-js/modules/es.array.reduce.js"
+var es_array_reduce_js_ = __webpack_require__("b7ac");
 
-// EXTERNAL MODULE: external "core-js/modules/es.function.name"
-var es_function_name_ = __webpack_require__("bcd8");
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    define_property_default()(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/array/is-array"
-var is_array_ = __webpack_require__("2ae6");
-var is_array_default = /*#__PURE__*/__webpack_require__.n(is_array_);
+// EXTERNAL MODULE: external "core-js/modules/es.function.name.js"
+var es_function_name_js_ = __webpack_require__("db0a");
 
 // CONCATENATED MODULE: ./src/plugin.js
-
 
 
 
@@ -502,7 +422,7 @@ function registerComponents(Vue) {
 
 function initComponents(Vue, options) {
   var configuration = options.configuration;
-  var components = is_array_default()(options.components) ? options.components.reduce(function (obj, component) {
+  var components = Array.isArray(options.components) ? options.components.reduce(function (obj, component) {
     return _objectSpread2(_objectSpread2({}, obj), {}, _defineProperty({}, component.name, component));
   }, {}) : options.components;
   registerComponents(Vue, components, configuration);
@@ -515,8 +435,8 @@ var freeze_default = /*#__PURE__*/__webpack_require__.n(freeze_);
 
 
 
-
 var _IMAGE_WITH_PLACEHOLD;
+
 
 var ACCESSIBILITY_TRANSFORMATIONS = {
   'darkmode': {
@@ -797,12 +717,12 @@ var CldContext_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldContext = (CldContext_component.exports);
-// EXTERNAL MODULE: external "core-js/modules/es.array.concat"
-var es_array_concat_ = __webpack_require__("18d2");
-
 // EXTERNAL MODULE: external "@vue/babel-helper-vue-jsx-merge-props"
 var babel_helper_vue_jsx_merge_props_ = __webpack_require__("5a5e");
 var babel_helper_vue_jsx_merge_props_default = /*#__PURE__*/__webpack_require__.n(babel_helper_vue_jsx_merge_props_);
+
+// EXTERNAL MODULE: external "core-js/modules/es.array.concat.js"
+var es_array_concat_js_ = __webpack_require__("ccb0");
 
 // EXTERNAL MODULE: external "cloudinary-core"
 var external_cloudinary_core_ = __webpack_require__("3c59");
@@ -844,32 +764,73 @@ var setup_setup = {
     }
   }
 };
-// EXTERNAL MODULE: external "@babel/runtime/helpers/esm/arrayWithoutHoles"
-var arrayWithoutHoles_ = __webpack_require__("3732");
-var arrayWithoutHoles_default = /*#__PURE__*/__webpack_require__.n(arrayWithoutHoles_);
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
 
-// EXTERNAL MODULE: external "@babel/runtime/helpers/esm/iterableToArray"
-var iterableToArray_ = __webpack_require__("f906");
-var iterableToArray_default = /*#__PURE__*/__webpack_require__.n(iterableToArray_);
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
 
-// EXTERNAL MODULE: external "@babel/runtime/helpers/esm/unsupportedIterableToArray"
-var unsupportedIterableToArray_ = __webpack_require__("61b7");
-var unsupportedIterableToArray_default = /*#__PURE__*/__webpack_require__.n(unsupportedIterableToArray_);
+  return arr2;
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js
 
-// EXTERNAL MODULE: external "@babel/runtime/helpers/esm/nonIterableSpread"
-var nonIterableSpread_ = __webpack_require__("efd2");
-var nonIterableSpread_default = /*#__PURE__*/__webpack_require__.n(nonIterableSpread_);
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/symbol"
+var symbol_ = __webpack_require__("e3b9");
+var symbol_default = /*#__PURE__*/__webpack_require__.n(symbol_);
 
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/is-iterable"
+var is_iterable_ = __webpack_require__("53f2");
+var is_iterable_default = /*#__PURE__*/__webpack_require__.n(is_iterable_);
+
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/array/from"
+var from_ = __webpack_require__("bdaf");
+var from_default = /*#__PURE__*/__webpack_require__.n(from_);
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js
+
+
+
+function _iterableToArray(iter) {
+  if (typeof symbol_default.a !== "undefined" && is_iterable_default()(Object(iter))) return from_default()(iter);
+}
+// EXTERNAL MODULE: external "core-js/modules/es.array.slice.js"
+var es_array_slice_js_ = __webpack_require__("ea12");
+
+// EXTERNAL MODULE: external "core-js/modules/es.object.to-string.js"
+var es_object_to_string_js_ = __webpack_require__("97d3");
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
+
+
+
+
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return from_default()(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js
 
 
 
 
 function _toConsumableArray(arr) {
-  return arrayWithoutHoles_default()(arr) || iterableToArray_default()(arr) || unsupportedIterableToArray_default()(arr) || nonIterableSpread_default()();
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
 // CONCATENATED MODULE: ./src/helpers/findBreakpoint.js
-
 
 
 
@@ -883,7 +844,7 @@ function _toConsumableArray(arr) {
 function findBreakpoint() {
   var stops = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var value = arguments.length > 1 ? arguments[1] : undefined;
-  var givenBreakpoints = stops && is_array_default()(stops) ? _toConsumableArray(stops) : [stops];
+  var givenBreakpoints = stops && Array.isArray(stops) ? _toConsumableArray(stops) : [stops];
   var filteredBreakpoints = givenBreakpoints.sort(function (a, b) {
     return a - b;
   }).filter(function (stop) {
@@ -891,9 +852,6 @@ function findBreakpoint() {
   });
   return (filteredBreakpoints.length ? filteredBreakpoints : stops)[0];
 }
-// EXTERNAL MODULE: external "core-js/modules/es.array.slice"
-var es_array_slice_ = __webpack_require__("6579");
-
 // CONCATENATED MODULE: ./src/helpers/evalBreakpoints.js
 
 
@@ -970,8 +928,6 @@ function getResizeTransformation(mode, size, originalBP) {
 
 
 
-
-
 /**
  * 
  * @param {Boolean} enable 
@@ -995,7 +951,7 @@ var computeOptions_extendOptions = function extendOptions() {
   var extra = arguments.length > 1 ? arguments[1] : undefined;
   var transformation = baseOptions.transformation ? _toConsumableArray(baseOptions.transformation) : [];
 
-  if (is_array_default()(extra)) {
+  if (Array.isArray(extra)) {
     extra.forEach(function (effect) {
       return transformation.push(effect);
     });
@@ -1089,8 +1045,8 @@ var register = {
     }
   }
 };
-// EXTERNAL MODULE: external "core-js/modules/es.array.find"
-var es_array_find_ = __webpack_require__("fe0e");
+// EXTERNAL MODULE: external "core-js/modules/es.array.find.js"
+var es_array_find_js_ = __webpack_require__("0d58");
 
 // CONCATENATED MODULE: ./src/helpers/findComponent.js
 
@@ -1129,20 +1085,15 @@ var findComponent_isCldPoster = function isCldPoster(component) {
 
   return ((_component$componentO4 = component.componentOptions) === null || _component$componentO4 === void 0 ? void 0 : (_component$componentO5 = _component$componentO4.Ctor) === null || _component$componentO5 === void 0 ? void 0 : (_component$componentO6 = _component$componentO5.extendOptions) === null || _component$componentO6 === void 0 ? void 0 : _component$componentO6.name) === COMPONENTS.CldPoster;
 };
-// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/get-iterator"
-var get_iterator_ = __webpack_require__("daf4");
-var get_iterator_default = /*#__PURE__*/__webpack_require__.n(get_iterator_);
-
 // EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/symbol/iterator"
 var iterator_ = __webpack_require__("e3f0");
 var iterator_default = /*#__PURE__*/__webpack_require__.n(iterator_);
 
-// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/symbol"
-var symbol_ = __webpack_require__("e3b9");
-var symbol_default = /*#__PURE__*/__webpack_require__.n(symbol_);
+// EXTERNAL MODULE: external "@babel/runtime-corejs2/core-js/get-iterator"
+var get_iterator_ = __webpack_require__("daf4");
+var get_iterator_default = /*#__PURE__*/__webpack_require__.n(get_iterator_);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
-
 
 
 
@@ -1151,7 +1102,7 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
   var it;
 
   if (typeof symbol_default.a === "undefined" || o[iterator_default.a] == null) {
-    if (is_array_default()(o) || (it = unsupportedIterableToArray_default()(o)) || allowArrayLike && o && typeof o.length === "number") {
+    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
       if (it) o = it;
       var i = 0;
 
@@ -1203,19 +1154,7 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
     }
   };
 }
-// EXTERNAL MODULE: external "core-js/modules/es.symbol"
-var es_symbol_ = __webpack_require__("6049");
-
-// EXTERNAL MODULE: external "core-js/modules/es.symbol.description"
-var es_symbol_description_ = __webpack_require__("51e9");
-
-// EXTERNAL MODULE: external "core-js/modules/es.object.to-string"
-var es_object_to_string_ = __webpack_require__("850c");
-
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/typeof.js
-
-
-
 
 
 function typeof_typeof(obj) {
@@ -1404,7 +1343,6 @@ var size_size = {
   }
 };
 // CONCATENATED MODULE: ./src/helpers/visibility.js
-
 
 
 var visibility_watchElementVisibility = function watchElementVisibility(element, listener) {
@@ -1692,8 +1630,8 @@ var CldImage_component = normalizeComponent(
 )
 
 /* harmony default export */ var CldImage = (CldImage_component.exports);
-// EXTERNAL MODULE: external "core-js/modules/es.array.map"
-var es_array_map_ = __webpack_require__("f705");
+// EXTERNAL MODULE: external "core-js/modules/es.array.map.js"
+var es_array_map_js_ = __webpack_require__("4391");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CldVideo/CldVideo.vue?vue&type=script&lang=js&
 
@@ -2067,13 +2005,6 @@ var Cloudinary = {
 /* harmony default export */ var entry_lib = __webpack_exports__["default"] = (Cloudinary);
 
 
-
-/***/ }),
-
-/***/ "fe0e":
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/es.array.find");
 
 /***/ })
 

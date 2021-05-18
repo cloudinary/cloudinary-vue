@@ -27,3 +27,5 @@ yarn-error.log*
 # report files
 coverage
 jest_html_reporters.html
+
+docs-build

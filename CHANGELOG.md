@@ -1,3 +1,9 @@
+1.2.1 / 2021-05-18
+==================
+
+Other Changes
+ * Remove require statements from the dist package (#136)
+
 1.2.0 / 2021-04-04
 ==================
 

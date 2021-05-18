@@ -1,6 +1,6 @@
 {
   "name": "cloudinary-vue",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "scripts": {
     "serve": "INTERNAL_DEPS=1 vue-cli-service serve ./playground/main.js",
     "build": "vue-cli-service lint --fix && npm run build:lib",
@@ -21,7 +21,7 @@
     "vue": "^2.0.0"
   },
   "devDependencies": {
-    "core-js" : "3.12.1",
+    "core-js": "3.12.1",
     "@babel/core": "^7.12.9",
     "@babel/plugin-proposal-optional-chaining": "^7.12.1",
     "@babel/plugin-transform-runtime": "^7.12.1",

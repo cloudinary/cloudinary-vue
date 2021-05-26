@@ -66,14 +66,15 @@ describe("Tests for CldImage", () => {
     });
   });
 
-  it("Supports transformation props", () => {
+  it("Supports transformation props, dpr_auto should not be changed when non responsive", () => {
     let {wrapper, imgSrc} = mountImageComponent({
       cloudName: 'demo',
       publicId: 'face_top',
-      effect:'sepia'
+      effect:'sepia',
+      dpr: 'auto'
     });
 
-    expect(imgSrc).toBe(`http://res.cloudinary.com/demo/image/upload/e_sepia/face_top`);
+    expect(imgSrc).toBe(`http://res.cloudinary.com/demo/image/upload/dpr_auto,e_sepia/face_top`);
   });
 
   it("Cascades non-cloudinary configuration attributes to the HTML img tag", () => {

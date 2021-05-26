@@ -116,8 +116,11 @@ export default {
       const options = this.computeURLOptions()
 
       let src = responsiveModeNoSize || lazyModeInvisible ? '' : this.cloudinary.url(this.publicId, this.toSnakeCase(options));
-      // Update dpr_auto to dpr_1.0, 2.0 etc.
-      src = src.replace(/\bdpr_(1\.0|auto)\b/g, 'dpr_' + getDevicePixelRatio(true));
+      // Update dpr_auto to dpr_1.0, 2.0 etc but only for responsive mode
+      // This matches the behaviour in other SDKs
+      if (this.responsive) {
+        src = src.replace(/\bdpr_(1\.0|auto)\b/g, 'dpr_' + getDevicePixelRatio(true));
+      }
 
       const cldPlaceholder = getCldPlaceholder(children)
       const cldPlaceholderType = cldPlaceholder ? (cldPlaceholder.componentOptions?.propsData?.type || 'blur') : ''

@@ -6,11 +6,14 @@ describe("CldImage::responsive", () => {
   it("boolean true", async () => {
     const wrapper = mount({
       template: `
-        <cld-image cloudName="demo" publicId="face_top" :responsive="responsive" />
+        <cld-image cloudName="demo" publicId="face_top" :responsive="responsive" :dpr="dpr" />
       `,
       components: { CldImage },
       data() {
-        return { responsive: true };
+        return {
+          responsive: true,
+          dpr: 'auto'
+        };
       }
     });
     const image = wrapper.find('img');
@@ -21,7 +24,7 @@ describe("CldImage::responsive", () => {
     await Vue.nextTick();
 
     expect(image.attributes("src")).toEqual(
-      `http://res.cloudinary.com/demo/image/upload/c_scale,w_100/face_top`
+      `http://res.cloudinary.com/demo/image/upload/c_scale,dpr_1.0,w_100/face_top`
     );
   });
 

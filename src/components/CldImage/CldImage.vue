@@ -4,10 +4,10 @@ import { compute } from '../../mixins/compute';
 import { register } from '../../mixins/registerTransformation'
 import { computePlaceholder } from '../../helpers/computeOptions'
 import { getCldPlaceholder, isCldPlaceholder } from '../../helpers/findComponent'
-import { 
-  ACCESSIBILITY_TRANSFORMATIONS, 
-  PLACEHOLDER_TRANSFORMATIONS, 
-  COMPONENTS, 
+import {
+  ACCESSIBILITY_TRANSFORMATIONS,
+  PLACEHOLDER_TRANSFORMATIONS,
+  COMPONENTS,
   LAZY_LOADING,
   IMAGE_CLASSES,
   IMAGE_WITH_PLACEHOLDER_CSS,
@@ -17,6 +17,7 @@ import {
 } from '../../constants';
 import { size } from "../../mixins/size";
 import { lazy } from "../../mixins/lazy";
+import {getDevicePixelRatio} from '../../utils/getDevicePixelRatio';
 
 /**
  * Deliver images and specify image transformations using the cld-image (CldImage) component,
@@ -49,7 +50,7 @@ export default {
     },
     /**
      * **Deprecated**
-     * 
+     *
      * The placeholder image to use while the image is loading. Possible values:
      * - `"blur"` to use blur placeholder
      * - `"lqip"` to use a low quality image
@@ -92,14 +93,14 @@ export default {
       }
 
       return (
-        <img 
+        <img
           attrs={this.$attrs}
           src={src}
           loading={this.hasLazyLoading ? LAZY_LOADING : null}
           class={imgClass}
           onload={this.load}
           style={style}
-        /> 
+        />
       )
     },
     renderComp(children) {
@@ -114,7 +115,13 @@ export default {
       const lazyModeInvisible = this.hasLazyLoading && !this.visible
       const options = this.computeURLOptions()
 
-      const src = responsiveModeNoSize || lazyModeInvisible ? '' : this.cloudinary.url(this.publicId, this.toSnakeCase(options))
+      let src = responsiveModeNoSize || lazyModeInvisible ? '' : this.cloudinary.url(this.publicId, this.toSnakeCase(options));
+      // Update dpr_auto to dpr_1.0, 2.0 etc but only for responsive mode
+      // This matches the behaviour in other SDKs
+      if (this.responsive) {
+        src = src.replace(/\bdpr_(1\.0|auto)\b/g, 'dpr_' + getDevicePixelRatio(true));
+      }
+
       const cldPlaceholder = getCldPlaceholder(children)
       const cldPlaceholderType = cldPlaceholder ? (cldPlaceholder.componentOptions?.propsData?.type || 'blur') : ''
       const placeholderType = cldPlaceholderType || this.placeholder
@@ -159,6 +166,6 @@ export default {
     }
 
     return this.renderComp(children)
-  }  
+  }
 };
 </script>

@@ -1,3 +1,9 @@
+1.2.2 / 2021-05-30
+==================
+
+Other Changes
+ * Restore dpr_auto support with responsive
+
 1.2.1 / 2021-05-18
 ==================
 

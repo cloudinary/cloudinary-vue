@@ -5,6 +5,26 @@ import CldPoster from "../../../src/components/CldVideo/CldPoster";
 import CldTransformation from "../../../src/components/CldTransformation/CldTransformation";
 
 describe("CldVideo Component tests", () => {
+  it("should render a video poster as a video/upload type", async () => {
+    const wrapper = mount({
+      template: `
+        <cld-video width="100" crop="fill" cloudName="demo" class="video" ref="videoElement" public-id="sample">
+          <cld-transformation effect="sepia" />
+        </cld-video>
+      `,
+    }, {
+      components: { CldVideo, CldTransformation }
+    });
+
+    await Vue.nextTick();
+
+    const video = wrapper.find('video');
+
+    expect(video.attributes("poster")).toEqual(
+      'http://res.cloudinary.com/demo/video/upload/e_sepia/c_fill,w_100/sample.jpg'
+    );
+  });
+
   it("should render a video poster", async () => {
     const wrapper = mount({
       template: `
@@ -91,7 +111,7 @@ describe("CldVideo Component tests", () => {
     const video = wrapper.find('video');
 
     expect(video.attributes("poster")).toBe(
-      "http://res.cloudinary.com/demo/image/upload/face_top"
+      "http://res.cloudinary.com/demo/video/upload/face_top.jpg"
     );
   });
 

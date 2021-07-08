@@ -19687,6 +19687,10 @@ var setup_setup = {
     }
   },
   methods: {
+    /**
+     * Set up the Cloudinary instance, allowing it later to be used to create URLs
+     * @param extraConfigs
+     */
     setup: function setup(extraConfigs) {
       if (!this.cloudinary) {
         this.cloudinary = new cloudinary_core["Cloudinary"](this.toSnakeCase(this.defaultConfigurations));
@@ -20738,35 +20742,60 @@ var defaultSourceTypes = cloudinary_core["Cloudinary"].DEFAULT_VIDEO_SOURCE_TYPE
       return sources;
     },
     getPosterUrl: function getPosterUrl() {
-      var _this$poster;
+      // Automatic poster, when no specific poster properties are passed.
+      if (!this.poster) {
+        // Take the video URL and render it as an image, applying all child transformations
+        // In a case like this: <cld-video width="100"/> the width config is already populated in the Cloudinary object
+        // All we need to do is apply the child/chained transformations
+        return this.cloudinary.url(this.publicId, this.toSnakeCase({
+          transformation: this.extraTransformations || [],
+          format: 'jpg',
+          // The video publicId is a video, we need to change it to jpg for the poster
+          resourceType: 'video' // the default resourceType is image, we need to ensure video is used.
 
-      var isPosterAnUrl = typeof this.poster === 'string';
-      if (isPosterAnUrl) return this.poster;
-      var hasInlinePosterOptions = this.poster && !isPosterAnUrl;
-      var options = hasInlinePosterOptions ? this.poster : {};
-      return this.cloudinary.url(((_this$poster = this.poster) === null || _this$poster === void 0 ? void 0 : _this$poster.publicId) || this.publicId, this.toSnakeCase(options));
+        }));
+      } // If poster is directly a string, we just return it
+      // <cld-video poster="my/path/to/poster.jpg"/>
+
+
+      if (typeof this.poster === 'string') {
+        return this.poster;
+      } // If poster is used as a child component
+      // <cld-video> <cld-poster publicId="sample" /></>cld-video>
+      // This is treated like a regular transformation
+      // All poster properties are used to calculate the transformation
+      // We ignore child transformations, and only use what was explciitly provided.
+
+
+      if (this.poster && this.poster.publicId) {
+        // const cldURLOptions = hasInlinePosterOptions ? this.poster : this.extraTransformations
+        return this.cloudinary.url(this.poster.publicId, this.toSnakeCase(this.poster));
+      } // In all other cases, return an empty string
+
+
+      return '';
     }
   },
   mounted: function mounted() {
     this.$videoElement = this.$refs.videoElement;
   },
+  created: function created() {
+    this.setup(this.$attrs);
+  },
   render: function render(h) {
     if (!this.publicId) return null;
     var children = this.$slots.default || [];
     var cldPoster = getCldPoster(children);
-    var hasExtraTransformations = children.length > 1 || children.length === 1 && !cldPoster;
-    /* Render the children first to get the extra transformations (if there is any) */
-
-    if (hasExtraTransformations && !this.extraTransformations.length) {
-      return h("div", {
-        attrs: this.attrs
-      }, this.$slots.default);
-    }
-
-    this.setup(this.$attrs);
     var sources = this.getSources();
     var poster = cldPoster ? this.posterUrl : this.getPosterUrl();
-    return h("video", helper_default()([{}, {
+    return h("video", helper_default()([{
+      "attrs": {
+        "autoplay": this.$attrs.autoplay
+      },
+      "domProps": {
+        "muted": this.$attrs.muted
+      }
+    }, {
       "attrs": this.$attrs
     }, {
       "attrs": {

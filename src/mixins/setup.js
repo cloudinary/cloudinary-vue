@@ -17,7 +17,11 @@ export const setup = {
     },
   },
   methods: {
-    setup(extraConfigs) {      
+    /**
+     * Set up the Cloudinary instance, allowing it later to be used to create URLs
+     * @param extraConfigs
+     */
+    setup(extraConfigs) {
       if (!this.cloudinary) {
         this.cloudinary = new Cloudinary(this.toSnakeCase(this.defaultConfigurations))
       }
@@ -32,4 +36,4 @@ export const setup = {
       return Util.withSnakeCaseKeys(options)
     }
   }
-}; 
+};

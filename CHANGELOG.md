@@ -1,3 +1,10 @@
+1.2.3 / 2021-07-11
+==================
+
+Other Changes
+  * Fix missing Poster functionality and Autoplay for cld-video (#141)
+
+
 1.2.2 / 2021-05-30
 ==================
 

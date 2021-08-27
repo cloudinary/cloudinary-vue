@@ -73,6 +73,14 @@ export default {
       type: String,
       default: "",
       validator: value => !value || !!ACCESSIBILITY_TRANSFORMATIONS[value]
+    },
+
+    /**
+     * The css class that will be applied to the <img> tag
+     */
+    imgClass: {
+      type: String,
+      default: "",
     }
   },
   data() {
@@ -86,7 +94,7 @@ export default {
       this.imageLoaded = true;
     },
     renderImageOnly(src, hasPlaceholder = false) {
-      const imgClass = `${IMAGE_CLASSES.DEFAULT} ${!this.imageLoaded ? IMAGE_CLASSES.LOADING : IMAGE_CLASSES.LOADED}`
+      const imgClass = `${IMAGE_CLASSES.DEFAULT} ${!this.imageLoaded ? IMAGE_CLASSES.LOADING : IMAGE_CLASSES.LOADED} ${this.imgClass}`
       const style = {
         ...(this.responsive ? RESPONSIVE_CSS[this.responsive] : {}),
         ...(!this.imageLoaded && hasPlaceholder ? IMAGE_WITH_PLACEHOLDER_CSS[IMAGE_CLASSES.LOADING] : {})

@@ -5,3 +5,8 @@ script:
   - npm run lint
   - npm run build
   - npm run test
+
+notifications:
+  email:
+    recipients:
+      - sdk_developers@cloudinary.com

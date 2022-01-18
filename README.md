@@ -1,173 +1,131 @@
-# Cloudinary Vue SDK
-
+Cloudinary Vue SDK
+=========================
 [![Build Status](https://travis-ci.org/cloudinary/cloudinary-vue.svg?branch=master)](https://travis-ci.org/cloudinary/cloudinary-vue)
+## About
+The Cloudinary Vue SDK allows you to quickly and easily integrate your application with Cloudinary.
+Effortlessly optimize and transform your cloud's assets.
 
-Cloudinary is a [cloud-based service](https://cloudinary.com/solutions) that provides an end-to-end image and video management solution
-including uploads,storage, manipulations, optimizations and delivery. 
-All your media resources are optimized and delivered through a fast CDN using industry best practices.
 
-Using Cloudinary's Vue.js SDK, you can easily perform smart image and video manipulations 
-using code that integrates seamlessly with your existing Vue.js application, and deliver optimized and responsive media to your users.
+### Additional documentation
+This Readme provides basic installation and usage information.
+For the complete documentation, see the [Vue SDK Guide](https://cloudinary.com/documentation/vue_integration).
 
-This Readme provides basic installation and usage information. For the complete documentation, see the [Vue.js SDK guide](https://cloudinary.com/documentation/vue_integration)_
 
-# 🛠️ Installation 
-## Vue 2.x
-1. Install using Vue-CLI
-    - After you create your application with Vue-CLI, navigate to the created app folder, and install Cloudinary SDK by:
-        ```bash
-        vue add cloudinary
-        ```
-    - Set up your cloudName and pick the components to use (or use all 😃)
-    ![Set up with cloudName and options](http://bit.ly/2WSKTf0)
-    - A `cloudinary.js` file will be added to your src directory, same level with your `main.js` file. Feel free to customize it if you like. And have fun with Cloudinary! 🤟
-    - More information on the plugin, check out [our Vue-CLI plugin for Cloudinary Repo](https://github.com/cloudinary/vue-cli-plugin-cloudinary)
+## Table of Contents
+- Key Features
+- Version Support
+- Requirements
+- Installation
+- Usage
+    - Setup
+    - Optimize Assets
+    -
 
-2. install using your favorite package manager (yarn, npm)
+## Key Features
+- [Transform and Optimize Assets](https://cloudinary.com/documentation/vue_image_manipulation)
+- Generate Image and Video HTML Tags
+
+
+## Version Support
+
+| SDK Version   | Vue 2    | Vue 3  |
+|---------------|----------|--------|
+| 1.0.0 - 1.2.3 | V        | X      |
+
+
+
+## Installation
+### Install using Vue-CLI
+- After you create your application with Vue-CLI, navigate to the created app folder, and install Cloudinary SDK by:
     ```bash
-    npm install cloudinary-vue
-    yarn add cloudinary-vue
+    vue add cloudinary
     ```
+- Set up your cloudName and pick the components to use (or use all 😃)
+  ![Set up with cloudName and options](http://bit.ly/2WSKTf0)
+- A `cloudinary.js` file will be added to your src directory, same level with your `main.js` file. Feel free to customize it if you like. And have fun with Cloudinary! 🤟
+- More information on the plugin, check out [our Vue-CLI plugin for Cloudinary Repo](https://github.com/cloudinary/vue-cli-plugin-cloudinary)
 
+### install using your favorite package manager (yarn, npm)
+```bash
+npm install cloudinary-vue
+yarn add cloudinary-vue
+```
 ### Nuxt.js
-
 Please use [Cloudinary module](https://cloudinary.nuxtjs.org/) for [Nuxt.js](https://nuxtjs.org) projects. You can set it up by using the following:
-
 ```
 yarn add @nuxtjs/cloudinary
 #OR
 npm i @nuxtjs/cloudinary
 ```
 
-## Setup and configuration
+## Usage 
+### Setup/Configuration
+```javascript
+import Vue from 'vue';
+import Cloudinary, { CldImage, CldTransformation } from "cloudinary-vue";
 
-### Vue 2.x - Setup and configuration
-1. **A Global setup** - Include CloudinaryVue globally
-    ```javascript
-    import Vue from 'vue';
-    import Cloudinary, { CldImage, CldTransformation } from "cloudinary-vue";
+Vue.use(Cloudinary, {
+  configuration: { cloudName: "demo" },
+  components: {
+    CldImage,
+    CldTransformation
+  }
+});
+```
+You can also import the cloudinary components manually in each of your components.
+
+### Transform and Optimize Assets 
+- [See full documentation](https://cloudinary.com/documentation/vue_integration#installation_and_setup)
     
-    Vue.use(Cloudinary, {
-      configuration: { cloudName: "demo" },
-      components: {
-        CldImage,
-        CldTransformation
-      }
-    });
+   ```jsx
+    // Apply a single transformation
+        <cld-context cloudName="demo">
+          <cld-image publicId="sample">
+            <cld-transformation crop="scale" width="200" angle="10" />
+          </cld-image>
+        </cld-context>
     ```
-   
-2. **A Local setup** - You can also import the cloudinary components manually in each of your components.
 
-# Plugin Configuration
-The CloudinaryVue Plugin accepts a `components` object with the Cloudinary components to install
-
-   - `components` can also be passed as an array: 
-      ```javascript
-      components:[CldImage. CldTransformation]
-      ```
- 
-   - `components` can also be used to rename the cloudinary components:   
-       ```javascript
-           components: {
-               myImage: CldImage,
-               myTransformation : CldTransformation
-           }
-       ```
-
-# General usage
-
-In order to properly use this library you have to provide it with a few configuration parameters. All configuration parameters can be applied directly to the element, using a `CldContext` component or while installing a plugin (second argument of `Vue.use`).
-
-```html
-<template>
-  <div>
-    <h1>Hello, world!</h1>
-
-    <cld-image cloudName="demo" publicId="sample" crop="scale" width="300" />
-
+    ```jsx
+    // Chain (Compose) multiple transformations
     <cld-context cloudName="demo">
-      <cld-image publicId="sample">
-        <cld-transformation crop="scale" width="200" angle="10" />
-      </cld-image>
-    </cld-context>
-  </div>
-</template>
-```
+       <cld-image cloudName="demo" publicId="sample">
+          <cld-transformation angle="-45" />
+          <cld-transformation effect="trim" angle="45" crop="scale" width="600" />
+          <cld-transformation overlay="text:Arial_100:Hello" />
+       </cld-image>
+  </cld-context>
+    ```
+### Generate Image and Video HTML Tags
+    - Use <cld-image> to generate image tags
+    - Use <cld-video> to generate video Tags
 
-Required:
 
-- `cloudName` - The cloudinary cloud name associated with your Cloudinary account.
-
-Optional:
-
-- `privateCdn`, `secureDistribution`, `cname`, `cdnSubdomain` - Please refer to [Cloudinary Documentation](https://cloudinary.com/documentation/react_integration#3_set_cloudinary_configuration_parameters) for information on these parameters.
-
-### Specific usage
-
-The library includes 5 components:
-
-- `CldContext`
-- `CldTransformation`
-- `CldImage`
-- `CldVideo`
-- `CldPoster` (only used together with `CldVideo`)
-
-#### CldContext
-
-`CldContext` allows you to define shared configuration and resource transformation parameters that are applied to all children elements.
-
-#### CldImage
-
-outputs HTML `img` tag with a correct `src` attribute for provided Cloudinary resource, based on configuration and transformation parameters provided as attributes of this component instance, parent `CldContext` and children `CldTransformation` instances.
-
-#### CldVideo
-
-outputs HTML `video` tag with a correct `sources` for provided Cloudinary resource, based on configuration and transformation parameters provided as attributes of this component instance, parent `CldContext` and children `CldTransformation` instances.
-
-#### CldPoster (optional)
-specify image resource to be provided to `poster` attribute of the `video` element
-
-#### CldTransformation
-
-The Transformation element allows you to defined additional transformations on the parent element. You can also use built-in `transformation` attribute available in `CldImage` and `CldVideo` for the same effect.
-
-For example:
-
-```jsx
-<cld-image cloudName="demo" publicId="sample">
-  <cld-transformation angle="-45" />
-  <cld-transformation effect="trim" angle="45" crop="scale" width="600" />
-  <cld-transformation overlay="text:Arial_100:Hello" />
-</cld-image>
-```
-
-## How to contribute?
-
+## Contributions
 See [contributing guidelines](/CONTRIBUTING.md) in a separate file.
 
-## Additional resources
 
-Additional resources are available at:
+## Get Help
+If you run into an issue or have a question, you can either:
+- Issues related to the SDK: [Open a Github issue](https://github.com/CloudinaryLtd/cloudinary_vue/issues)
+- Issues related to your account: [Open a support ticket](https://cloudinary.com/contact)
 
-- [Website](http://cloudinary.com)
-- [Documentation](https://cloudinary.com/documentation/vue_integration)
-- [Knowledge Base](http://support.cloudinary.com/forums)
-- [Image transformations documentation](http://cloudinary.com/documentation/image_transformations)
-- [Video transformations documentation](https://cloudinary.com/documentation/video_manipulation_and_delivery#video_transformations_reference)
-- [Cli plugin for Cloudinary Vue](https://github.com/cloudinary/vue-cli-plugin-cloudinary)
 
-## Support
+## About Cloudinary
+Cloudinary is a powerful media API for websites and mobile apps alike, Cloudinary enables developers to efficiently manage, transform, optimize, and deliver images and videos through multiple CDNs. Ultimately, viewers enjoy responsive and personalized visual-media experiences—irrespective of the viewing device.
 
-You can [open an issue through GitHub](https://github.com/CloudinaryLtd/cloudinary_vue/issues).
 
-Contact us at [http://cloudinary.com/contact](http://cloudinary.com/contact).
+## Additional Resources
+- [Cloudinary Transformation and REST API References](https://cloudinary.com/documentation/cloudinary_references) - Comprehensive references, including syntax and examples for all SDKs.
+- [MediaJams.dev](https://mediajams.dev/) - Bite-size use-case tutorials written by and for Cloudinary Developers
+- [DevJams](https://www.youtube.com/playlist?list=PL8dVGjLA2oMr09amgERARsZyrOz_sPvqw) - Cloudinary developer podcasts on YouTube.
+- [Cloudinary Academy](https://training.cloudinary.com/) - Free self-paced courses, instructor-led virtual courses, and on-site courses.
+- [Code Explorers and Feature Demos](https://cloudinary.com/documentation/code_explorers_demos_index) - A one-stop shop for all code explorers, Postman collections, and feature demos found in the docs.
+- [Cloudinary Roadmap](https://cloudinary.com/roadmap) - Your chance to follow, vote, or suggest what Cloudinary should develop next.
+- [Cloudinary Facebook Community](https://www.facebook.com/groups/CloudinaryCommunity) -
+- [Cloudinary Account Registration](https://cloudinary.com/users/register/free) - Free Cloudinary account registration.
+- [Cloudinary Website](https://cloudinary.com)
 
-Stay tuned for updates, tips and tutorials: [Blog](http://cloudinary.com/blog), [Twitter](https://twitter.com/cloudinary), [Facebook](http://www.facebook.com/Cloudinary).
 
-## Join the Community
-
-Impact the product, hear updates, test drive new features and more! Join [here](https://www.facebook.com/groups/CloudinaryCommunity).
-
-## License
-
+## Licence
 Released under the MIT license.

@@ -12,21 +12,20 @@ For the complete documentation, see the [Vue SDK Guide](https://cloudinary.com/d
 
 
 ## Table of Contents
-- Key Features
-- Version Support
-- Installation
+- [Key Features](#key-features)
+- [Version Support](#Version Support)
+- [Installation](#installation)
 - Usage
-    - Setup
-    - Optimize Assets
-    - [Generating Image and HTML Tags](#key-features)
+    - [Setup](#Setup)
+    - [Optimize Assets](#Transform-and-Optimize-Assets)
+    - [Generating Image and HTML Tags](#Generate-Image-and-Video-HTML-Tags)
 
 ## Key Features
-- [Transform and Optimize Assets](https://cloudinary.com/documentation/vue_image_manipulation)
-- Generate Image and Video HTML Tags
+- [Transform and Optimize Assets - Link to docs](https://cloudinary.com/documentation/vue_image_manipulation)
+- [Generate Image and Video Tags- Link to docs](https://cloudinary.com/documentation/vue_image_manipulation)
 
 
 ## Version Support
-
 | SDK Version   | Vue 2    | Vue 3  |
 |---------------|----------|--------|
 | 1.0.0 - 1.2.3 | V        | X      |
@@ -58,7 +57,7 @@ npm i @nuxtjs/cloudinary
 ```
 
 ## Usage 
-### Setup/Configuration
+### Setup
 ```javascript
 import Vue from 'vue';
 import Cloudinary, { CldImage, CldTransformation } from "cloudinary-vue";
@@ -98,6 +97,9 @@ You can also import the cloudinary components manually in each of your component
 ### Generate Image and Video HTML Tags
     - Use <cld-image> to generate image tags
     - Use <cld-video> to generate video Tags
+
+### File upload
+  This SDK does not provide file upload functionality, Please [see our available integrations](https://cloudinary.com/documentation/vue_image_and_video_upload)
 
 
 ## Contributions

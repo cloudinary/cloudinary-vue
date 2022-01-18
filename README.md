@@ -14,12 +14,11 @@ For the complete documentation, see the [Vue SDK Guide](https://cloudinary.com/d
 ## Table of Contents
 - Key Features
 - Version Support
-- Requirements
 - Installation
 - Usage
     - Setup
     - Optimize Assets
-    -
+    - [Generating Image and HTML Tags](#key-features)
 
 ## Key Features
 - [Transform and Optimize Assets](https://cloudinary.com/documentation/vue_image_manipulation)

@@ -13,7 +13,7 @@ For the complete documentation, see the [Vue SDK Guide](https://cloudinary.com/d
 
 ## Table of Contents
 - [Key Features](#key-features)
-- [Version Support](#Version Support)
+- [Version Support](#Version-Support)
 - [Installation](#installation)
 - Usage
     - [Setup](#Setup)

@@ -119,7 +119,7 @@ Cloudinary is a powerful media API for websites and mobile apps alike, Cloudinar
 
 
 ## Additional Resources
-- [Cloudinary Transformation and REST API References](https://cloudinary.com/documentation/cloudinary_references) - Comprehensive references, including syntax and examples for all SDKs.
+- [Cloudinary Transformation and REST API References](https://cloudinary.com/documentation/cloudinary_references): Comprehensive references, including syntax and examples for all SDKs.
 - [MediaJams.dev](https://mediajams.dev/) - Bite-size use-case tutorials written by and for Cloudinary Developers
 - [DevJams](https://www.youtube.com/playlist?list=PL8dVGjLA2oMr09amgERARsZyrOz_sPvqw) - Cloudinary developer podcasts on YouTube.
 - [Cloudinary Academy](https://training.cloudinary.com/) - Free self-paced courses, instructor-led virtual courses, and on-site courses.

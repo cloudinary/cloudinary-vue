@@ -99,7 +99,7 @@ You can also import the cloudinary components manually in each of your component
     - Use <cld-video> to generate video Tags
 
 ### File upload
-  This SDK does not provide file upload functionality, Please [see our available integrations](https://cloudinary.com/documentation/vue_image_and_video_upload)
+  This SDK does not provide file upload functionality, however there are [several methods of uploading from the client side](https://cloudinary.com/documentation/vue_image_and_video_upload).
 
 
 ## Contributions

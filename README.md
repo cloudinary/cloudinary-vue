@@ -75,7 +75,7 @@ Vue.use(Cloudinary, {
 You can also import the cloudinary components manually in each of your components.
 
 ### Transform and Optimize Assets 
-- [See full documentation](https://cloudinary.com/documentation/vue_integration#installation_and_setup)
+- [See full documentation](https://cloudinary.com/documentation/vue_image_manipulation)
     
    ```jsx
     // Apply a single transformation

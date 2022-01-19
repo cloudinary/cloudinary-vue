@@ -1,6 +1,6 @@
 Cloudinary Vue SDK
 =========================
-[![Build Status](https://travis-ci.org/cloudinary/cloudinary-vue.svg?branch=master)](https://travis-ci.org/cloudinary/cloudinary-vue)
+[![Build Status](https://api.travis-ci.com/cloudinary/cloudinary-vue.svg?branch=master)](https://app.travis-ci.com/github/cloudinary/cloudinary-vue)
 ## About
 The Cloudinary Vue SDK allows you to quickly and easily integrate your application with Cloudinary.
 Effortlessly optimize and transform your cloud's assets.

@@ -17,7 +17,7 @@ For the complete documentation, see the [Vue SDK Guide](https://cloudinary.com/d
 - [Installation](#installation)
 - Usage
     - [Setup](#Setup)
-    - [Optimize Assets](#Transform-and-Optimize-Assets)
+    - [Transform and Optimize Assets](#Transform-and-Optimize-Assets)
     - [Generating Image and HTML Tags](#Generate-Image-and-Video-HTML-Tags)
 
 ## Key Features

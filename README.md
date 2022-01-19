@@ -43,7 +43,7 @@ For the complete documentation, see the [Vue SDK Guide](https://cloudinary.com/d
 - A `cloudinary.js` file will be added to your src directory, at the same level as your `main.js` file. Feel free to customize it if you like. And have fun with Cloudinary! 🤟
 - More information on the plugin, check out [our Vue-CLI plugin for Cloudinary Repo](https://github.com/cloudinary/vue-cli-plugin-cloudinary)
 
-### install using your favorite package manager (yarn, npm)
+### Install using your favorite package manager (yarn, npm)
 ```bash
 npm install cloudinary-vue
 yarn add cloudinary-vue

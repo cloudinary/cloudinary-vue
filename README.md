@@ -41,7 +41,7 @@ For the complete documentation, see the [Vue SDK Guide](https://cloudinary.com/d
 - Set up your cloud name and pick the components to use (or use all 😃)
   ![Set up with cloudName and options](http://bit.ly/2WSKTf0)
 - A `cloudinary.js` file will be added to your src directory, at the same level as your `main.js` file. Feel free to customize it if you like. And have fun with Cloudinary! 🤟
-- More information on the plugin, check out [our Vue-CLI plugin for Cloudinary Repo](https://github.com/cloudinary/vue-cli-plugin-cloudinary)
+- For more information on the plugin, check out [our Vue-CLI plugin for Cloudinary Repo].(https://github.com/cloudinary/vue-cli-plugin-cloudinary)
 
 ### Install using your favorite package manager (yarn, npm)
 ```bash

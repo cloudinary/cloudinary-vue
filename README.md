@@ -103,7 +103,7 @@ You can also import the cloudinary components manually in each of your component
 
 
 ## Contributions
-See [contributing guidelines](/CONTRIBUTING.md) in a separate file.
+See [contributing guidelines](/CONTRIBUTING.md).
 
 
 ## Get Help

@@ -22,7 +22,7 @@ For the complete documentation, see the [Vue SDK Guide](https://cloudinary.com/d
 
 ## Key Features
 - [Transform and Optimize Assets - Link to docs](https://cloudinary.com/documentation/vue_image_manipulation)
-- [Generate Image and Video Tags- Link to docs](https://cloudinary.com/documentation/vue_image_manipulation)
+- Generate [image](https://cloudinary.com/documentation/vue_image_manipulation#deliver_and_transform_images) and [video](https://cloudinary.com/documentation/vue_video_manipulation#cldvideo_component) tags (links to docs).
 
 
 ## Version Support

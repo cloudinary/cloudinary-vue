@@ -60,13 +60,15 @@ npm i @nuxtjs/cloudinary
 ### Setup
 ```javascript
 import Vue from 'vue';
-import Cloudinary, { CldImage, CldTransformation } from "cloudinary-vue";
+import Cloudinary, { CldImage, CldVideo, CldTransformation, CldContext } from "cloudinary-vue";
 
 Vue.use(Cloudinary, {
   configuration: { cloudName: "demo" },
   components: {
-    CldImage,
-    CldTransformation
+    CldContext,
+    CldImage, 
+    CldVideo, 
+    CldTransformation,
   }
 });
 ```

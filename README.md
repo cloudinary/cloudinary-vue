@@ -49,7 +49,7 @@ npm install cloudinary-vue
 yarn add cloudinary-vue
 ```
 ### Nuxt.js
-Please use [Cloudinary module](https://cloudinary.nuxtjs.org/) for [Nuxt.js](https://nuxtjs.org) projects. You can set it up by using the following:
+For [Nuxt.js](https://nuxtjs.org) projects, use [Cloudinary module](https://cloudinary.nuxtjs.org/). You can set it up by using the following:
 ```
 yarn add @nuxtjs/cloudinary
 #OR

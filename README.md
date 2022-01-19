@@ -87,7 +87,7 @@ You can also import the cloudinary components manually in each of your component
     ```
 
     ```jsx
-    // Chain (Compose) multiple transformations
+    // Chain (compose) multiple transformations
     <cld-context cloudName="demo">
        <cld-image cloudName="demo" publicId="sample">
           <cld-transformation angle="-45" />

@@ -21,7 +21,7 @@ For the complete documentation, see the [Vue SDK Guide](https://cloudinary.com/d
     - [Generate Image and HTML Tags](#Generate-Image-and-Video-HTML-Tags)
 
 ## Key Features
-- [Transform and Optimize Assets - Link to docs](https://cloudinary.com/documentation/vue_image_manipulation)
+- [Transform](https://cloudinary.com/documentation/vue_video_manipulation#video_transformation_examples) and [optimize](https://cloudinary.com/documentation/vue_image_manipulation#image_optimizations) assets (links to docs).
 - Generate [image](https://cloudinary.com/documentation/vue_image_manipulation#deliver_and_transform_images) and [video](https://cloudinary.com/documentation/vue_video_manipulation#cldvideo_component) tags (links to docs).
 
 

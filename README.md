@@ -123,7 +123,7 @@ Cloudinary is a powerful media API for websites and mobile apps alike, Cloudinar
 - [MediaJams.dev](https://mediajams.dev/): Bite-size use-case tutorials written by and for Cloudinary Developers
 - [DevJams](https://www.youtube.com/playlist?list=PL8dVGjLA2oMr09amgERARsZyrOz_sPvqw): Cloudinary developer podcasts on YouTube.
 - [Cloudinary Academy](https://training.cloudinary.com/): Free self-paced courses, instructor-led virtual courses, and on-site courses.
-- [Code Explorers and Feature Demos](https://cloudinary.com/documentation/code_explorers_demos_index) - A one-stop shop for all code explorers, Postman collections, and feature demos found in the docs.
+- [Code Explorers and Feature Demos](https://cloudinary.com/documentation/code_explorers_demos_index): A one-stop shop for all code explorers, Postman collections, and feature demos found in the docs.
 - [Cloudinary Roadmap](https://cloudinary.com/roadmap) - Your chance to follow, vote, or suggest what Cloudinary should develop next.
 - [Cloudinary Facebook Community](https://www.facebook.com/groups/CloudinaryCommunity) - Learn from and offer help to other Cloudinary developers.
 - [Cloudinary Account Registration](https://cloudinary.com/users/register/free) - Free Cloudinary account registration.

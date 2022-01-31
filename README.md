@@ -110,7 +110,7 @@ See [contributing guidelines](/CONTRIBUTING.md).
 
 ## Get Help
 If you run into an issue or have a question, you can either:
-- [Open a Github issue](https://github.com/CloudinaryLtd/cloudinary_vue/issues) (for issues related to the SDK)
+- [Open a Github issue](https://github.com/cloudinary/cloudinary-vue/issues) (for issues related to the SDK)
 - [Open a support ticket](https://cloudinary.com/contact) (for issues related to your account)
 
 

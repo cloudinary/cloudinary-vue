@@ -62,5 +62,41 @@
   "license": "MIT",
   "repository": {
     "github": "https://github.com/cloudinary/cloudinary-vue"
+  },
+  "overrides": {
+    "vue-styleguidist": {
+      "react-styleguidist": {
+        "react-dev-utils": {
+          "immer": "9.0.6"
+        }
+      }
+    },
+    "@vue/cli-plugin-babel": {
+      "@vue/cli-shared-utils": {
+        "request": {
+          "http-signature": {
+            "jsprim": {
+              "json-schema": "0.4.0"
+            }
+          }
+        }
+      }
+    },
+    "@vue/cli-service": {
+      "webpack-dev-server": {
+        "@vue/cli-service": {
+          "sockjs-client": {
+            "eventsource": {
+              "original": {
+                "url-parse": "1.5.9"
+              }
+            }
+          },
+          "webpack-bundle-analyzer": {
+            "ejs": "3.1.6"
+          }
+        }
+      }
+    }
   }
 }

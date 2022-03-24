@@ -1,6 +1,6 @@
 {
   "name": "cloudinary-vue",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "scripts": {
     "serve": "INTERNAL_DEPS=1 vue-cli-service serve ./playground/main.js",
     "build": "vue-cli-service lint --fix && npm run build:lib",

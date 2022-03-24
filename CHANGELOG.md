@@ -1,3 +1,13 @@
+1.2.4 / 2022-03-24
+==================
+
+  * Bump immer
+  * Bump json-schema
+  * Bump ejs
+  * Bump node-fetch 
+  * Bump url-parse 
+
+
 1.2.3 / 2021-07-11
 ==================
 
